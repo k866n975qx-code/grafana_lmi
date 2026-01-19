@@ -1,0 +1,27 @@
+blueprint/
+blueprint_bundle/
+
+# OS/editor junk
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/
+
+# Python caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.venv/
+
+# Local env/logs
+.env
+.env.*
+*.log
+
+# Local databases
+*.sqlite
+*.db
+*.db-*
