@@ -1,0 +1,488 @@
+{
+  "__inputs": [],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    }
+  ],
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "graphTooltip": 0,
+  "id": null,
+  "panels": [
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "Total Return (1M) $",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 6,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.return_attribution_1m.total_return_dollars') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.return_attribution_1m.total_return_dollars') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Income Contribution (1M) $",
+      "gridPos": {
+        "x": 6,
+        "y": 0,
+        "w": 6,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.return_attribution_1m.income_contribution_dollars') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.return_attribution_1m.income_contribution_dollars') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "Price Contribution (1M) $",
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 6,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.return_attribution_1m.price_contribution_dollars') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.return_attribution_1m.price_contribution_dollars') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "Total Return (1M) %",
+      "gridPos": {
+        "x": 18,
+        "y": 0,
+        "w": 6,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.return_attribution_1m.total_return_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.return_attribution_1m.total_return_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 5,
+      "type": "table",
+      "title": "Top Contributors (1M)",
+      "gridPos": {
+        "x": 0,
+        "y": 5,
+        "w": 12,
+        "h": 10
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio_rollups.return_attribution_1m.top_contributors') j ORDER BY contribution_dollars DESC;",
+          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio_rollups.return_attribution_1m.top_contributors') j ORDER BY contribution_dollars DESC;"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": []
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 6,
+      "type": "table",
+      "title": "Bottom Contributors (1M)",
+      "gridPos": {
+        "x": 12,
+        "y": 5,
+        "w": 12,
+        "h": 10
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio_rollups.return_attribution_1m.bottom_contributors') j ORDER BY contribution_dollars DESC;",
+          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio_rollups.return_attribution_1m.bottom_contributors') j ORDER BY contribution_dollars DESC;"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": []
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 7,
+      "type": "table",
+      "title": "Top Contributors (3M)",
+      "gridPos": {
+        "x": 0,
+        "y": 16,
+        "w": 12,
+        "h": 10
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio_rollups.return_attribution_3m.top_contributors') j ORDER BY contribution_dollars DESC;",
+          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio_rollups.return_attribution_3m.top_contributors') j ORDER BY contribution_dollars DESC;"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": []
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 8,
+      "type": "table",
+      "title": "Bottom Contributors (3M)",
+      "gridPos": {
+        "x": 12,
+        "y": 16,
+        "w": 12,
+        "h": 10
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio_rollups.return_attribution_3m.bottom_contributors') j ORDER BY contribution_dollars DESC;",
+          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio_rollups.return_attribution_3m.bottom_contributors') j ORDER BY contribution_dollars DESC;"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": []
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 9,
+      "type": "table",
+      "title": "Top Contributors (6M)",
+      "gridPos": {
+        "x": 0,
+        "y": 26,
+        "w": 12,
+        "h": 10
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio_rollups.return_attribution_6m.top_contributors') j ORDER BY contribution_dollars DESC;",
+          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio_rollups.return_attribution_6m.top_contributors') j ORDER BY contribution_dollars DESC;"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": []
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 10,
+      "type": "table",
+      "title": "Bottom Contributors (6M)",
+      "gridPos": {
+        "x": 12,
+        "y": 26,
+        "w": 12,
+        "h": 10
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio_rollups.return_attribution_6m.bottom_contributors') j ORDER BY contribution_dollars DESC;",
+          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio_rollups.return_attribution_6m.bottom_contributors') j ORDER BY contribution_dollars DESC;"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": []
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 11,
+      "type": "table",
+      "title": "Top Contributors (12M)",
+      "gridPos": {
+        "x": 0,
+        "y": 36,
+        "w": 12,
+        "h": 10
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio_rollups.return_attribution_12m.top_contributors') j ORDER BY contribution_dollars DESC;",
+          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio_rollups.return_attribution_12m.top_contributors') j ORDER BY contribution_dollars DESC;"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": []
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 12,
+      "type": "table",
+      "title": "Bottom Contributors (12M)",
+      "gridPos": {
+        "x": 12,
+        "y": 36,
+        "w": 12,
+        "h": 10
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio_rollups.return_attribution_12m.bottom_contributors') j ORDER BY contribution_dollars DESC;",
+          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio_rollups.return_attribution_12m.bottom_contributors') j ORDER BY contribution_dollars DESC;"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": []
+        },
+        "overrides": []
+      }
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": [
+    "lmi"
+  ],
+  "time": {
+    "from": "now-90d",
+    "to": "now"
+  },
+  "timezone": "browser",
+  "title": "LMI - Attribution",
+  "uid": "lmi-attribution",
+  "version": 20,
+  "__annotations": {
+    "grafana.app/sourcePath": "dashboards/lmi-attribution.json"
+  }
+}

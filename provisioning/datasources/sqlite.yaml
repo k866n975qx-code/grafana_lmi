@@ -1,0 +1,11 @@
+apiVersion: 1
+
+datasources:
+  - name: LMI SQLite
+    uid: lmi_sqlite
+    type: frser-sqlite-datasource
+    access: proxy
+    isDefault: true
+    editable: true
+    jsonData:
+      path: /var/lib/lmi/app.db

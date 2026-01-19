@@ -1,0 +1,730 @@
+{
+  "id": null,
+  "uid": "lmi-latest-periods",
+  "title": "LMI - Latest Periods",
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "1m",
+  "tags": [
+    "lmi"
+  ],
+  "panels": [
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "WEEK Range",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 8,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value\nFROM snapshots\nWHERE period_type='WEEK'\nORDER BY period_end_date DESC\nLIMIT 1;",
+          "rawQueryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value\nFROM snapshots\nWHERE period_type='WEEK'\nORDER BY period_end_date DESC\nLIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "string"
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "WEEK Market Value (End)",
+      "gridPos": {
+        "x": 8,
+        "y": 0,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='WEEK'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;",
+          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='WEEK'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "WEEK Monthly Income (End)",
+      "gridPos": {
+        "x": 14,
+        "y": 0,
+        "w": 5,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='WEEK'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', i)) AS REAL) AS value\nFROM idx;",
+          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='WEEK'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', i)) AS REAL) AS value\nFROM idx;"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "WEEK LTV % (End)",
+      "gridPos": {
+        "x": 19,
+        "y": 0,
+        "w": 5,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='WEEK'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].margin.ltv_pct', i)) AS REAL) AS value\nFROM idx;",
+          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='WEEK'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].margin.ltv_pct', i)) AS REAL) AS value\nFROM idx;"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 5,
+      "type": "stat",
+      "title": "MONTH Range",
+      "gridPos": {
+        "x": 0,
+        "y": 4,
+        "w": 8,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value\nFROM snapshots\nWHERE period_type='MONTH'\nORDER BY period_end_date DESC\nLIMIT 1;",
+          "rawQueryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value\nFROM snapshots\nWHERE period_type='MONTH'\nORDER BY period_end_date DESC\nLIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "string"
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 6,
+      "type": "stat",
+      "title": "MONTH Market Value (End)",
+      "gridPos": {
+        "x": 8,
+        "y": 4,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='MONTH'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;",
+          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='MONTH'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 7,
+      "type": "stat",
+      "title": "MONTH Monthly Income (End)",
+      "gridPos": {
+        "x": 14,
+        "y": 4,
+        "w": 5,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='MONTH'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', i)) AS REAL) AS value\nFROM idx;",
+          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='MONTH'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', i)) AS REAL) AS value\nFROM idx;"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 8,
+      "type": "stat",
+      "title": "MONTH LTV % (End)",
+      "gridPos": {
+        "x": 19,
+        "y": 4,
+        "w": 5,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='MONTH'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].margin.ltv_pct', i)) AS REAL) AS value\nFROM idx;",
+          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='MONTH'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].margin.ltv_pct', i)) AS REAL) AS value\nFROM idx;"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 9,
+      "type": "stat",
+      "title": "QUARTER Range",
+      "gridPos": {
+        "x": 0,
+        "y": 8,
+        "w": 8,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value\nFROM snapshots\nWHERE period_type='QUARTER'\nORDER BY period_end_date DESC\nLIMIT 1;",
+          "rawQueryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value\nFROM snapshots\nWHERE period_type='QUARTER'\nORDER BY period_end_date DESC\nLIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "string"
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 10,
+      "type": "stat",
+      "title": "QUARTER Market Value (End)",
+      "gridPos": {
+        "x": 8,
+        "y": 8,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='QUARTER'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;",
+          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='QUARTER'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 11,
+      "type": "stat",
+      "title": "QUARTER Monthly Income (End)",
+      "gridPos": {
+        "x": 14,
+        "y": 8,
+        "w": 5,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='QUARTER'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', i)) AS REAL) AS value\nFROM idx;",
+          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='QUARTER'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', i)) AS REAL) AS value\nFROM idx;"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 12,
+      "type": "stat",
+      "title": "QUARTER LTV % (End)",
+      "gridPos": {
+        "x": 19,
+        "y": 8,
+        "w": 5,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='QUARTER'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].margin.ltv_pct', i)) AS REAL) AS value\nFROM idx;",
+          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='QUARTER'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].margin.ltv_pct', i)) AS REAL) AS value\nFROM idx;"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 13,
+      "type": "stat",
+      "title": "YEAR Range",
+      "gridPos": {
+        "x": 0,
+        "y": 12,
+        "w": 8,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value\nFROM snapshots\nWHERE period_type='YEAR'\nORDER BY period_end_date DESC\nLIMIT 1;",
+          "rawQueryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value\nFROM snapshots\nWHERE period_type='YEAR'\nORDER BY period_end_date DESC\nLIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "string"
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 14,
+      "type": "stat",
+      "title": "YEAR Market Value (End)",
+      "gridPos": {
+        "x": 8,
+        "y": 12,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='YEAR'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;",
+          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='YEAR'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 15,
+      "type": "stat",
+      "title": "YEAR Monthly Income (End)",
+      "gridPos": {
+        "x": 14,
+        "y": 12,
+        "w": 5,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='YEAR'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', i)) AS REAL) AS value\nFROM idx;",
+          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='YEAR'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', i)) AS REAL) AS value\nFROM idx;"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 16,
+      "type": "stat",
+      "title": "YEAR LTV % (End)",
+      "gridPos": {
+        "x": 19,
+        "y": 12,
+        "w": 5,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='YEAR'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].margin.ltv_pct', i)) AS REAL) AS value\nFROM idx;",
+          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='YEAR'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].margin.ltv_pct', i)) AS REAL) AS value\nFROM idx;"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    }
+  ]
+}
