@@ -1,0 +1,135 @@
+{
+  "__inputs": [],
+  "__requires": [{ "type": "grafana", "id": "grafana", "name": "Grafana", "version": "10.0.0" }],
+  "annotations": { "list": [] },
+  "editable": true,
+  "graphTooltip": 0,
+  "id": null,
+  "panels": [
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "Open Alerts",
+      "gridPos": { "x": 0, "y": 0, "w": 6, "h": 4 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        { "refId": "A", "format": "table", "queryType": "table",
+          "queryText": "SELECT COUNT(*) AS value FROM alert_messages WHERE status='open';",
+          "rawQueryText": "SELECT COUNT(*) AS value FROM alert_messages WHERE status='open';"
+        }
+      ],
+      "fieldConfig": { "defaults": { "decimals": 0 }, "overrides": [] }
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Oldest Open Alert (min)",
+      "gridPos": { "x": 6, "y": 0, "w": 6, "h": 4 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        { "refId": "A", "format": "table", "queryType": "table",
+          "queryText": "SELECT CAST(COALESCE((julianday('now') - julianday(MIN(created_at_utc))) * 24 * 60, 0) AS INTEGER) AS value FROM alert_messages WHERE status='open';",
+          "rawQueryText": "SELECT CAST(COALESCE((julianday('now') - julianday(MIN(created_at_utc))) * 24 * 60, 0) AS INTEGER) AS value FROM alert_messages WHERE status='open';"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "minutes", "decimals": 0 }, "overrides": [] }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "Alerts Today",
+      "gridPos": { "x": 12, "y": 0, "w": 6, "h": 4 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        { "refId": "A", "format": "table", "queryType": "table",
+          "queryText": "SELECT COUNT(*) AS value FROM alert_messages WHERE date(created_at_utc) = date('now');",
+          "rawQueryText": "SELECT COUNT(*) AS value FROM alert_messages WHERE date(created_at_utc) = date('now');"
+        }
+      ],
+      "fieldConfig": { "defaults": { "decimals": 0 }, "overrides": [] }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "Open Sev >= 8",
+      "gridPos": { "x": 18, "y": 0, "w": 6, "h": 4 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        { "refId": "A", "format": "table", "queryType": "table",
+          "queryText": "SELECT COUNT(*) AS value FROM alert_messages WHERE status='open' AND severity >= 8;",
+          "rawQueryText": "SELECT COUNT(*) AS value FROM alert_messages WHERE status='open' AND severity >= 8;"
+        }
+      ],
+      "fieldConfig": { "defaults": { "decimals": 0 }, "overrides": [] }
+    },
+    {
+      "id": 5,
+      "type": "table",
+      "title": "Alerts Today",
+      "gridPos": { "x": 0, "y": 4, "w": 24, "h": 8 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        { "refId": "A", "format": "table", "queryType": "table",
+          "queryText": "SELECT datetime(created_at_utc) AS created, severity, category AS rule, json_extract(details_json,'$.symbol') AS symbol, title FROM alert_messages WHERE date(created_at_utc) = date('now') ORDER BY created_at_utc DESC LIMIT 200;",
+          "rawQueryText": "SELECT datetime(created_at_utc) AS created, severity, category AS rule, json_extract(details_json,'$.symbol') AS symbol, title FROM alert_messages WHERE date(created_at_utc) = date('now') ORDER BY created_at_utc DESC LIMIT 200;"
+        }
+      ],
+      "options": { "showHeader": true, "cellHeight": "sm" },
+      "fieldConfig": { "defaults": {}, "overrides": [] }
+    },
+    {
+      "id": 6,
+      "type": "table",
+      "title": "Alerts by Severity (7d)",
+      "gridPos": { "x": 0, "y": 12, "w": 12, "h": 8 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        { "refId": "A", "format": "table", "queryType": "table",
+          "queryText": "SELECT date(created_at_utc) AS day, severity, COUNT(*) AS cnt FROM alert_messages WHERE created_at_utc >= datetime('now','-7 day') GROUP BY day, severity ORDER BY day DESC, cnt DESC;",
+          "rawQueryText": "SELECT date(created_at_utc) AS day, severity, COUNT(*) AS cnt FROM alert_messages WHERE created_at_utc >= datetime('now','-7 day') GROUP BY day, severity ORDER BY day DESC, cnt DESC;"
+        }
+      ],
+      "options": { "showHeader": true, "cellHeight": "sm" },
+      "fieldConfig": { "defaults": {}, "overrides": [] }
+    },
+    {
+      "id": 7,
+      "type": "table",
+      "title": "Top Alert Rules (30d)",
+      "gridPos": { "x": 12, "y": 12, "w": 12, "h": 8 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        { "refId": "A", "format": "table", "queryType": "table",
+          "queryText": "SELECT category AS rule, COUNT(*) AS fires FROM alert_messages WHERE created_at_utc >= datetime('now','-30 day') GROUP BY rule ORDER BY fires DESC LIMIT 25;",
+          "rawQueryText": "SELECT category AS rule, COUNT(*) AS fires FROM alert_messages WHERE created_at_utc >= datetime('now','-30 day') GROUP BY rule ORDER BY fires DESC LIMIT 25;"
+        }
+      ],
+      "options": { "showHeader": true, "cellHeight": "sm" },
+      "fieldConfig": { "defaults": {}, "overrides": [] }
+    },
+    {
+      "id": 8,
+      "type": "table",
+      "title": "Open Alerts by Rule + Symbol",
+      "gridPos": { "x": 0, "y": 20, "w": 24, "h": 8 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        { "refId": "A", "format": "table", "queryType": "table",
+          "queryText": "SELECT category AS rule, json_extract(details_json,'$.symbol') AS symbol, COUNT(*) AS open_cnt, datetime(MIN(created_at_utc)) AS first_seen, datetime(MAX(created_at_utc)) AS last_seen FROM alert_messages WHERE status='open' GROUP BY rule, symbol ORDER BY open_cnt DESC, last_seen DESC LIMIT 25;",
+          "rawQueryText": "SELECT category AS rule, json_extract(details_json,'$.symbol') AS symbol, COUNT(*) AS open_cnt, datetime(MIN(created_at_utc)) AS first_seen, datetime(MAX(created_at_utc)) AS last_seen FROM alert_messages WHERE status='open' GROUP BY rule, symbol ORDER BY open_cnt DESC, last_seen DESC LIMIT 25;"
+        }
+      ],
+      "options": { "showHeader": true, "cellHeight": "sm" },
+      "fieldConfig": { "defaults": {}, "overrides": [] }
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": ["lmi"],
+  "time": { "from": "now-30d", "to": "now" },
+  "timezone": "browser",
+  "title": "LMI - Alerts",
+  "uid": "lmi-alerts",
+  "version": 1
+}
