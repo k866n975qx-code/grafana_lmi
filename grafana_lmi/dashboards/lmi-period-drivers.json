@@ -26,10 +26,24 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT json_extract(payload_json,'$.period.label') AS value FROM snapshots WHERE period_type='WEEK' ORDER BY period_end_date DESC LIMIT 1;",
-          "rawQueryText": "SELECT json_extract(payload_json,'$.period.label') AS value FROM snapshots WHERE period_type='WEEK' ORDER BY period_end_date DESC LIMIT 1;"
+          "queryText": "SELECT period_start_date || ' -> ' || period_end_date AS value FROM snapshots WHERE period_type='WEEK' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT period_start_date || ' -> ' || period_end_date AS value FROM snapshots WHERE period_type='WEEK' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
       "fieldConfig": { "defaults": { "unit": "string" }, "overrides": [] }
     },
     {
@@ -132,10 +146,24 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT json_extract(payload_json,'$.period.label') AS value FROM snapshots WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;",
-          "rawQueryText": "SELECT json_extract(payload_json,'$.period.label') AS value FROM snapshots WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;"
+          "queryText": "SELECT period_start_date || ' -> ' || period_end_date AS value FROM snapshots WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT period_start_date || ' -> ' || period_end_date AS value FROM snapshots WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
       "fieldConfig": { "defaults": { "unit": "string" }, "overrides": [] }
     },
     {
@@ -238,10 +266,24 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT json_extract(payload_json,'$.period.label') AS value FROM snapshots WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;",
-          "rawQueryText": "SELECT json_extract(payload_json,'$.period.label') AS value FROM snapshots WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;"
+          "queryText": "SELECT period_start_date || ' -> ' || period_end_date AS value FROM snapshots WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT period_start_date || ' -> ' || period_end_date AS value FROM snapshots WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
       "fieldConfig": { "defaults": { "unit": "string" }, "overrides": [] }
     },
     {
@@ -344,10 +386,24 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT json_extract(payload_json,'$.period.label') AS value FROM snapshots WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;",
-          "rawQueryText": "SELECT json_extract(payload_json,'$.period.label') AS value FROM snapshots WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;"
+          "queryText": "SELECT period_start_date || ' -> ' || period_end_date AS value FROM snapshots WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT period_start_date || ' -> ' || period_end_date AS value FROM snapshots WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
       "fieldConfig": { "defaults": { "unit": "string" }, "overrides": [] }
     },
     {
@@ -453,5 +509,5 @@
   "timezone": "browser",
   "title": "LMI - Period Drivers",
   "uid": "lmi-period-drivers",
-  "version": 1
+  "version": 2
 }

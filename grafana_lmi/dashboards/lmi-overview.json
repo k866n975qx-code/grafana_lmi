@@ -14,10 +14,22 @@
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         { "refId": "A", "format": "table", "queryType": "table",
-          "queryText": "SELECT json_extract(payload_json,'$.as_of_date_local') AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT json_extract(payload_json,'$.as_of_date_local') AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT as_of_date_local AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT as_of_date_local AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
       "fieldConfig": { "defaults": { "unit": "string" }, "overrides": [] }
     },
     {
@@ -112,11 +124,38 @@
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         { "refId": "A", "format": "table", "queryType": "table",
-          "queryText": "SELECT CASE json_extract(payload_json,'$.portfolio_rollups.risk.drawdown_status.currently_in_drawdown') WHEN 1 THEN 'YES' ELSE 'NO' END AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CASE json_extract(payload_json,'$.portfolio_rollups.risk.drawdown_status.currently_in_drawdown') WHEN 1 THEN 'YES' ELSE 'NO' END AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT CASE WHEN json_extract(payload_json,'$.portfolio_rollups.risk.drawdown_status.currently_in_drawdown') THEN 1 ELSE 0 END AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CASE WHEN json_extract(payload_json,'$.portfolio_rollups.risk.drawdown_status.currently_in_drawdown') THEN 1 ELSE 0 END AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "string" }, "overrides": [] }
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": { "text": "NO", "color": "green" },
+                "1": { "text": "YES", "color": "red" }
+              }
+            }
+          ]
+        },
+        "overrides": []
+      }
     },
     {
       "id": 8,
@@ -240,5 +279,5 @@
   "timezone": "browser",
   "title": "LMI Overview",
   "uid": "lmi-overview",
-  "version": 21
+  "version": 22
 }

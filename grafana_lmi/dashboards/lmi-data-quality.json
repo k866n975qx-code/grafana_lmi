@@ -34,10 +34,24 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT json_extract(payload_json,'$.as_of_date_local') AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT json_extract(payload_json,'$.as_of_date_local') AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT as_of_date_local AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT as_of_date_local AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
       "fieldConfig": {
         "defaults": {
           "unit": "string"
@@ -68,6 +82,20 @@
           "rawQueryText": "SELECT json_extract(payload_json,'$.prices_as_of') AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
       "fieldConfig": {
         "defaults": {
           "unit": "string"
@@ -185,5 +213,5 @@
   "timezone": "browser",
   "title": "LMI - Data Quality",
   "uid": "lmi-data-quality",
-  "version": 1
+  "version": 2
 }
