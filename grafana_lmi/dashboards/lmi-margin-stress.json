@@ -1,0 +1,457 @@
+{
+  "__inputs": [],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    }
+  ],
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "graphTooltip": 0,
+  "id": null,
+  "panels": [
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "Market Value",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 6,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.totals.market_value') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.totals.market_value') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Loan Balance",
+      "gridPos": {
+        "x": 6,
+        "y": 0,
+        "w": 6,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.totals.margin_loan_balance') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.totals.margin_loan_balance') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "LTV %",
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 6,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.totals.margin_to_portfolio_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.totals.margin_to_portfolio_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 20 },
+              { "color": "red", "value": 30 }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "Net Liquidation",
+      "gridPos": {
+        "x": 18,
+        "y": 0,
+        "w": 6,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.totals.net_liquidation_value') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.totals.net_liquidation_value') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 5,
+      "type": "stat",
+      "title": "MV @ 30% LTV",
+      "gridPos": {
+        "x": 0,
+        "y": 5,
+        "w": 6,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (CAST(json_extract(payload_json,'$.totals.margin_loan_balance') AS REAL) / 0.30) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT (CAST(json_extract(payload_json,'$.totals.margin_loan_balance') AS REAL) / 0.30) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 6,
+      "type": "stat",
+      "title": "Drop to 30% %",
+      "gridPos": {
+        "x": 6,
+        "y": 5,
+        "w": 6,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (((CAST(json_extract(payload_json,'$.totals.margin_loan_balance') AS REAL) / 0.30) - CAST(json_extract(payload_json,'$.totals.market_value') AS REAL)) / CAST(json_extract(payload_json,'$.totals.market_value') AS REAL) * 100) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT (((CAST(json_extract(payload_json,'$.totals.margin_loan_balance') AS REAL) / 0.30) - CAST(json_extract(payload_json,'$.totals.market_value') AS REAL)) / CAST(json_extract(payload_json,'$.totals.market_value') AS REAL) * 100) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 1
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 7,
+      "type": "stat",
+      "title": "Max Loan @ 25%",
+      "gridPos": {
+        "x": 12,
+        "y": 5,
+        "w": 6,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (CAST(json_extract(payload_json,'$.totals.market_value') AS REAL) * 0.25) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT (CAST(json_extract(payload_json,'$.totals.market_value') AS REAL) * 0.25) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 8,
+      "type": "stat",
+      "title": "Max Loan @ 30%",
+      "gridPos": {
+        "x": 18,
+        "y": 5,
+        "w": 6,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (CAST(json_extract(payload_json,'$.totals.market_value') AS REAL) * 0.30) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT (CAST(json_extract(payload_json,'$.totals.market_value') AS REAL) * 0.30) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 9,
+      "type": "stat",
+      "title": "Monthly Interest",
+      "gridPos": {
+        "x": 0,
+        "y": 10,
+        "w": 6,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.margin_stress.current.monthly_interest_expense') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.margin_stress.current.monthly_interest_expense') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 10,
+      "type": "stat",
+      "title": "Income Coverage",
+      "gridPos": {
+        "x": 6,
+        "y": 10,
+        "w": 6,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (CAST(json_extract(payload_json,'$.income.projected_monthly_income') AS REAL) / CAST(json_extract(payload_json,'$.margin_stress.current.monthly_interest_expense') AS REAL)) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT (CAST(json_extract(payload_json,'$.income.projected_monthly_income') AS REAL) / CAST(json_extract(payload_json,'$.margin_stress.current.monthly_interest_expense') AS REAL)) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 1
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 11,
+      "type": "stat",
+      "title": "ROI on Margin 1y",
+      "gridPos": {
+        "x": 12,
+        "y": 10,
+        "w": 6,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.margin_stress.efficiency.roi_on_margin_capital_1y_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.margin_stress.efficiency.roi_on_margin_capital_1y_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 1
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 12,
+      "type": "stat",
+      "title": "Net Benefit 1y",
+      "gridPos": {
+        "x": 18,
+        "y": 10,
+        "w": 6,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.margin_stress.efficiency.net_benefit_of_leverage_1y_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.margin_stress.efficiency.net_benefit_of_leverage_1y_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 1
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 13,
+      "type": "timeseries",
+      "title": "LTV % (Last 90d)",
+      "gridPos": {
+        "x": 0,
+        "y": 15,
+        "w": 24,
+        "h": 8
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.totals.margin_to_portfolio_pct') AS REAL) AS value FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-90 day') ORDER BY as_of_date_local;",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.totals.margin_to_portfolio_pct') AS REAL) AS value FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-90 day') ORDER BY as_of_date_local;"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 1
+        },
+        "overrides": []
+      }
+    }
+  ],
+  "refresh": "2m",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": [
+    "lmi"
+  ],
+  "time": {
+    "from": "now-90d",
+    "to": "now"
+  },
+  "timezone": "browser",
+  "title": "LMI - Margin Stress",
+  "uid": "lmi-margin-stress",
+  "version": 1
+}

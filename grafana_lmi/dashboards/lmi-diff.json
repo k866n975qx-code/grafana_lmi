@@ -203,7 +203,7 @@
         "x": 0,
         "y": 5,
         "w": 24,
-        "h": 14
+        "h": 10
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -214,13 +214,13 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest_date AS (SELECT MAX(as_of_date_local) AS d FROM snapshot_daily_current),\nprev_date AS (SELECT MAX(as_of_date_local) AS d FROM snapshot_daily_current WHERE as_of_date_local < (SELECT d FROM latest_date)),\ncur AS (SELECT payload_json AS j FROM snapshot_daily_current WHERE as_of_date_local=(SELECT d FROM latest_date)),\nprev AS (SELECT payload_json AS j FROM snapshot_daily_current WHERE as_of_date_local=(SELECT d FROM prev_date)),\ncur_h AS (SELECT json_each.value AS v FROM cur, json_each(cur.j,'$.holdings')),\nprev_h AS (SELECT json_each.value AS v FROM prev, json_each(prev.j,'$.holdings'))\nSELECT\n  json_extract(c.v,'$.symbol') AS symbol,\n  (CAST(json_extract(c.v,'$.market_value') AS REAL) - CAST(json_extract(p.v,'$.market_value') AS REAL)) AS mv_delta,\n  (CAST(json_extract(c.v,'$.weight_pct') AS REAL) - CAST(json_extract(p.v,'$.weight_pct') AS REAL)) AS weight_delta,\n  (CAST(json_extract(c.v,'$.projected_monthly_dividend') AS REAL) - CAST(json_extract(p.v,'$.projected_monthly_dividend') AS REAL)) AS income_delta\nFROM cur_h c\nJOIN prev_h p ON json_extract(c.v,'$.symbol') = json_extract(p.v,'$.symbol')\nORDER BY abs(mv_delta) DESC;",
-          "rawQueryText": "WITH latest_date AS (SELECT MAX(as_of_date_local) AS d FROM snapshot_daily_current),\nprev_date AS (SELECT MAX(as_of_date_local) AS d FROM snapshot_daily_current WHERE as_of_date_local < (SELECT d FROM latest_date)),\ncur AS (SELECT payload_json AS j FROM snapshot_daily_current WHERE as_of_date_local=(SELECT d FROM latest_date)),\nprev AS (SELECT payload_json AS j FROM snapshot_daily_current WHERE as_of_date_local=(SELECT d FROM prev_date)),\ncur_h AS (SELECT json_each.value AS v FROM cur, json_each(cur.j,'$.holdings')),\nprev_h AS (SELECT json_each.value AS v FROM prev, json_each(prev.j,'$.holdings'))\nSELECT\n  json_extract(c.v,'$.symbol') AS symbol,\n  (CAST(json_extract(c.v,'$.market_value') AS REAL) - CAST(json_extract(p.v,'$.market_value') AS REAL)) AS mv_delta,\n  (CAST(json_extract(c.v,'$.weight_pct') AS REAL) - CAST(json_extract(p.v,'$.weight_pct') AS REAL)) AS weight_delta,\n  (CAST(json_extract(c.v,'$.projected_monthly_dividend') AS REAL) - CAST(json_extract(p.v,'$.projected_monthly_dividend') AS REAL)) AS income_delta\nFROM cur_h c\nJOIN prev_h p ON json_extract(c.v,'$.symbol') = json_extract(p.v,'$.symbol')\nORDER BY abs(mv_delta) DESC;"
+          "queryText": "WITH latest_date AS (SELECT MAX(as_of_date_local) AS d FROM snapshot_daily_current),\nprev_date AS (SELECT MAX(as_of_date_local) AS d FROM snapshot_daily_current WHERE as_of_date_local < (SELECT d FROM latest_date)),\ncur AS (SELECT payload_json AS j FROM snapshot_daily_current WHERE as_of_date_local=(SELECT d FROM latest_date)),\nprev AS (SELECT payload_json AS j FROM snapshot_daily_current WHERE as_of_date_local=(SELECT d FROM prev_date)),\ncur_h AS (SELECT json_each.value AS v FROM cur, json_each(cur.j,'$.holdings')),\nprev_h AS (SELECT json_each.value AS v FROM prev, json_each(prev.j,'$.holdings'))\nSELECT\n  json_extract(c.v,'$.symbol') AS symbol,\n  (CAST(json_extract(c.v,'$.market_value') AS REAL) - CAST(json_extract(p.v,'$.market_value') AS REAL)) AS mv_delta,\n  (CAST(json_extract(c.v,'$.weight_pct') AS REAL) - CAST(json_extract(p.v,'$.weight_pct') AS REAL)) AS weight_delta,\n  (CAST(json_extract(c.v,'$.projected_monthly_dividend') AS REAL) - CAST(json_extract(p.v,'$.projected_monthly_dividend') AS REAL)) AS income_delta\nFROM cur_h c\nJOIN prev_h p ON json_extract(c.v,'$.symbol') = json_extract(p.v,'$.symbol')\nORDER BY abs(mv_delta) DESC\nLIMIT 10;",
+          "rawQueryText": "WITH latest_date AS (SELECT MAX(as_of_date_local) AS d FROM snapshot_daily_current),\nprev_date AS (SELECT MAX(as_of_date_local) AS d FROM snapshot_daily_current WHERE as_of_date_local < (SELECT d FROM latest_date)),\ncur AS (SELECT payload_json AS j FROM snapshot_daily_current WHERE as_of_date_local=(SELECT d FROM latest_date)),\nprev AS (SELECT payload_json AS j FROM snapshot_daily_current WHERE as_of_date_local=(SELECT d FROM prev_date)),\ncur_h AS (SELECT json_each.value AS v FROM cur, json_each(cur.j,'$.holdings')),\nprev_h AS (SELECT json_each.value AS v FROM prev, json_each(prev.j,'$.holdings'))\nSELECT\n  json_extract(c.v,'$.symbol') AS symbol,\n  (CAST(json_extract(c.v,'$.market_value') AS REAL) - CAST(json_extract(p.v,'$.market_value') AS REAL)) AS mv_delta,\n  (CAST(json_extract(c.v,'$.weight_pct') AS REAL) - CAST(json_extract(p.v,'$.weight_pct') AS REAL)) AS weight_delta,\n  (CAST(json_extract(c.v,'$.projected_monthly_dividend') AS REAL) - CAST(json_extract(p.v,'$.projected_monthly_dividend') AS REAL)) AS income_delta\nFROM cur_h c\nJOIN prev_h p ON json_extract(c.v,'$.symbol') = json_extract(p.v,'$.symbol')\nORDER BY abs(mv_delta) DESC\nLIMIT 10;"
         }
       ],
       "options": {
         "showHeader": true,
-        "cellHeight": "sm"
+        "cellHeight": "lg"
       },
       "fieldConfig": {
         "defaults": {
@@ -230,7 +230,7 @@
       }
     }
   ],
-  "refresh": "30s",
+  "refresh": "2m",
   "schemaVersion": 39,
   "style": "dark",
   "tags": [
@@ -243,7 +243,7 @@
   "timezone": "browser",
   "title": "LMI - Diff (Daily Latest vs Previous)",
   "uid": "lmi-diff",
-  "version": 20,
+  "version": 21,
   "__annotations": {
     "grafana.app/sourcePath": "dashboards/lmi-diff.json"
   }

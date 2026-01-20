@@ -17,12 +17,12 @@
   "panels": [
     {
       "id": 1,
-      "type": "table",
-      "title": "Portfolio Risk Quality",
+      "type": "stat",
+      "title": "Risk Quality",
       "gridPos": {
         "x": 0,
         "y": 0,
-        "w": 12,
+        "w": 4,
         "h": 5
       },
       "datasource": {
@@ -34,17 +34,24 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT json_extract(payload_json,'$.portfolio_rollups.risk.portfolio_risk_quality') AS portfolio_risk_quality, json_extract(payload_json,'$.portfolio_rollups.risk.ulcer_index_category') AS ulcer_index_category FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT json_extract(payload_json,'$.portfolio_rollups.risk.portfolio_risk_quality') AS portfolio_risk_quality, json_extract(payload_json,'$.portfolio_rollups.risk.ulcer_index_category') AS ulcer_index_category FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT json_extract(payload_json,'$.portfolio_rollups.risk.portfolio_risk_quality') AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT json_extract(payload_json,'$.portfolio_rollups.risk.portfolio_risk_quality') AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
-      "options": {
-        "showHeader": true,
-        "cellHeight": "sm"
-      },
       "fieldConfig": {
         "defaults": {
-          "mappings": []
+          "unit": "string",
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "excellent": { "text": "excellent", "color": "green" },
+                "good": { "text": "good", "color": "yellow" },
+                "acceptable": { "text": "acceptable", "color": "orange" },
+                "concerning": { "text": "concerning", "color": "red" }
+              }
+            }
+          ]
         },
         "overrides": []
       }
@@ -52,149 +59,11 @@
     {
       "id": 2,
       "type": "stat",
-      "title": "Currently In Drawdown",
-      "gridPos": {
-        "x": 12,
-        "y": 0,
-        "w": 6,
-        "h": 5
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT json_extract(payload_json,'$.portfolio_rollups.risk.drawdown_status.currently_in_drawdown') AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT json_extract(payload_json,'$.portfolio_rollups.risk.drawdown_status.currently_in_drawdown') AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
-        }
-      ],
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "value",
-          "values": false
-        },
-        "textMode": "value",
-        "wideLayout": true
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "none",
-          "decimals": 0
-        },
-        "overrides": []
-      }
-    },
-    {
-      "id": 3,
-      "type": "stat",
-      "title": "Drawdown Depth %",
-      "gridPos": {
-        "x": 18,
-        "y": 0,
-        "w": 6,
-        "h": 5
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.drawdown_status.current_drawdown_depth_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.drawdown_status.current_drawdown_depth_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
-        }
-      ],
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "value",
-          "values": false
-        },
-        "textMode": "value",
-        "wideLayout": true
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "decimals": 2
-        },
-        "overrides": []
-      }
-    },
-    {
-      "id": 4,
-      "type": "stat",
-      "title": "Drawdown Duration (days)",
-      "gridPos": {
-        "x": 0,
-        "y": 5,
-        "w": 6,
-        "h": 5
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.drawdown_status.current_drawdown_duration_days') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.drawdown_status.current_drawdown_duration_days') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
-        }
-      ],
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "value",
-          "values": false
-        },
-        "textMode": "value",
-        "wideLayout": true
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "none",
-          "decimals": 0
-        },
-        "overrides": []
-      }
-    },
-    {
-      "id": 6,
-      "type": "stat",
       "title": "Vol 30d %",
       "gridPos": {
-        "x": 6,
-        "y": 5,
-        "w": 6,
+        "x": 4,
+        "y": 0,
+        "w": 4,
         "h": 5
       },
       "datasource": {
@@ -210,21 +79,161 @@
           "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.vol_30d_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "value",
-          "values": false
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 1
         },
-        "textMode": "value",
-        "wideLayout": true
+        "overrides": []
+      }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "Sharpe 1y",
+      "gridPos": {
+        "x": 8,
+        "y": 0,
+        "w": 4,
+        "h": 5
       },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.sharpe_1y') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.sharpe_1y') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "Sortino 1y",
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 4,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.sortino_1y') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.sortino_1y') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 5,
+      "type": "stat",
+      "title": "Beta",
+      "gridPos": {
+        "x": 16,
+        "y": 0,
+        "w": 4,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.beta_portfolio') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.beta_portfolio') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 6,
+      "type": "stat",
+      "title": "Corr 1y",
+      "gridPos": {
+        "x": 20,
+        "y": 0,
+        "w": 4,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.corr_1y') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.corr_1y') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 7,
+      "type": "stat",
+      "title": "VaR 95 (1d) %",
+      "gridPos": {
+        "x": 0,
+        "y": 5,
+        "w": 8,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.var_95_1d_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.var_95_1d_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
       "fieldConfig": {
         "defaults": {
           "unit": "percent",
@@ -234,14 +243,138 @@
       }
     },
     {
-      "id": 7,
+      "id": 8,
+      "type": "stat",
+      "title": "VaR 95 (1w) %",
+      "gridPos": {
+        "x": 8,
+        "y": 5,
+        "w": 8,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.var_95_1w_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.var_95_1w_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 9,
+      "type": "stat",
+      "title": "VaR 95 (1m) %",
+      "gridPos": {
+        "x": 16,
+        "y": 5,
+        "w": 8,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.var_95_1m_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.var_95_1m_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 10,
+      "type": "stat",
+      "title": "CVaR 95 (1d) %",
+      "gridPos": {
+        "x": 0,
+        "y": 9,
+        "w": 8,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.cvar_95_1d_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.cvar_95_1d_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 11,
+      "type": "stat",
+      "title": "CVaR 95 (1w) %",
+      "gridPos": {
+        "x": 8,
+        "y": 9,
+        "w": 8,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.cvar_95_1w_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.cvar_95_1w_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 12,
       "type": "stat",
       "title": "CVaR 95 (1m) %",
       "gridPos": {
-        "x": 12,
-        "y": 5,
-        "w": 6,
-        "h": 5
+        "x": 16,
+        "y": 9,
+        "w": 8,
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -256,21 +389,6 @@
           "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.cvar_95_1m_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "value",
-          "values": false
-        },
-        "textMode": "value",
-        "wideLayout": true
-      },
       "fieldConfig": {
         "defaults": {
           "unit": "percent",
@@ -280,12 +398,136 @@
       }
     },
     {
-      "id": 8,
+      "id": 13,
+      "type": "stat",
+      "title": "Ulcer Index 1y",
+      "gridPos": {
+        "x": 0,
+        "y": 13,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.ulcer_index_1y') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.ulcer_index_1y') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 14,
+      "type": "stat",
+      "title": "Track Error 1y %",
+      "gridPos": {
+        "x": 6,
+        "y": 13,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.tracking_error_1y_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.tracking_error_1y_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 15,
+      "type": "stat",
+      "title": "Max DD 1y %",
+      "gridPos": {
+        "x": 12,
+        "y": 13,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.max_drawdown_1y_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.max_drawdown_1y_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 1
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 16,
+      "type": "stat",
+      "title": "Calmar 1y",
+      "gridPos": {
+        "x": 18,
+        "y": 13,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.calmar_1y') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.calmar_1y') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 17,
       "type": "timeseries",
       "title": "Max Drawdown 1y % (365d trend)",
       "gridPos": {
         "x": 0,
-        "y": 10,
+        "y": 17,
         "w": 24,
         "h": 8
       },
@@ -337,14 +579,14 @@
       }
     },
     {
-      "id": 5,
+      "id": 18,
       "type": "table",
-      "title": "Holdings \u2014 Risk Metrics",
+      "title": "Holdings - Risk Metrics",
       "gridPos": {
         "x": 0,
-        "y": 18,
+        "y": 25,
         "w": 24,
-        "h": 14
+        "h": 10
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -355,23 +597,26 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.ultimate.risk_quality_score') AS REAL) AS risk_quality_score, json_extract(j.value,'$.ultimate.risk_quality_category') AS risk_quality_category, CAST(json_extract(j.value,'$.ultimate.max_drawdown_1y_pct') AS REAL) AS max_drawdown_1y_pct, CAST(json_extract(j.value,'$.ultimate.vol_30d_pct') AS REAL) AS vol_30d_pct, CAST(json_extract(j.value,'$.ultimate.cvar_95_1m_pct') AS REAL) AS cvar_95_1m_pct FROM latest, json_each(latest.payload_json,'$.holdings') j ORDER BY risk_quality_score DESC;",
-          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.ultimate.risk_quality_score') AS REAL) AS risk_quality_score, json_extract(j.value,'$.ultimate.risk_quality_category') AS risk_quality_category, CAST(json_extract(j.value,'$.ultimate.max_drawdown_1y_pct') AS REAL) AS max_drawdown_1y_pct, CAST(json_extract(j.value,'$.ultimate.vol_30d_pct') AS REAL) AS vol_30d_pct, CAST(json_extract(j.value,'$.ultimate.cvar_95_1m_pct') AS REAL) AS cvar_95_1m_pct FROM latest, json_each(latest.payload_json,'$.holdings') j ORDER BY risk_quality_score DESC;"
+          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(h.value,'$.symbol') AS symbol, CAST(json_extract(h.value,'$.ultimate.sortino_1y') AS REAL) AS sortino_1y, CAST(json_extract(h.value,'$.ultimate.sharpe_1y') AS REAL) AS sharpe_1y, json_extract(h.value,'$.ultimate.risk_quality_category') AS risk_quality_category FROM latest, json_each(latest.payload_json,'$.holdings') h ORDER BY json_extract(h.value,'$.weight_pct') DESC LIMIT 10;",
+          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(h.value,'$.symbol') AS symbol, CAST(json_extract(h.value,'$.ultimate.sortino_1y') AS REAL) AS sortino_1y, CAST(json_extract(h.value,'$.ultimate.sharpe_1y') AS REAL) AS sharpe_1y, json_extract(h.value,'$.ultimate.risk_quality_category') AS risk_quality_category FROM latest, json_each(latest.payload_json,'$.holdings') h ORDER BY json_extract(h.value,'$.weight_pct') DESC LIMIT 10;"
         }
       ],
       "options": {
         "showHeader": true,
-        "cellHeight": "sm"
+        "cellHeight": "lg"
       },
       "fieldConfig": {
         "defaults": {
           "mappings": []
         },
-        "overrides": []
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "sortino_1y" }, "properties": [ { "id": "decimals", "value": 2 } ] },
+          { "matcher": { "id": "byName", "options": "sharpe_1y" }, "properties": [ { "id": "decimals", "value": 2 } ] }
+        ]
       }
     }
   ],
-  "refresh": "30s",
+  "refresh": "2m",
   "schemaVersion": 39,
   "style": "dark",
   "tags": [
@@ -384,7 +629,7 @@
   "timezone": "browser",
   "title": "LMI - Risk",
   "uid": "lmi-risk",
-  "version": 20,
+  "version": 21,
   "__annotations": {
     "grafana.app/sourcePath": "dashboards/lmi-risk.json"
   }

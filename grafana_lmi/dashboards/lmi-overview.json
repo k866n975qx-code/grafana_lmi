@@ -9,8 +9,22 @@
     {
       "id": 1,
       "type": "stat",
+      "title": "As of (Local)",
+      "gridPos": { "x": 0, "y": 0, "w": 4, "h": 5 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        { "refId": "A", "format": "table", "queryType": "table",
+          "queryText": "SELECT json_extract(payload_json,'$.as_of_date_local') AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT json_extract(payload_json,'$.as_of_date_local') AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "string" }, "overrides": [] }
+    },
+    {
+      "id": 2,
+      "type": "stat",
       "title": "Market Value",
-      "gridPos": { "x": 0, "y": 0, "w": 6, "h": 5 },
+      "gridPos": { "x": 4, "y": 0, "w": 4, "h": 5 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         { "refId": "A", "format": "table", "queryType": "table",
@@ -21,24 +35,24 @@
       "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
     },
     {
-      "id": 2,
+      "id": 3,
       "type": "stat",
-      "title": "Margin Loan",
-      "gridPos": { "x": 6, "y": 0, "w": 6, "h": 5 },
+      "title": "Net Liquidation",
+      "gridPos": { "x": 8, "y": 0, "w": 4, "h": 5 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         { "refId": "A", "format": "table", "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.totals.margin_loan_balance') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.totals.margin_loan_balance') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.totals.net_liquidation_value') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.totals.net_liquidation_value') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
     },
     {
-      "id": 3,
+      "id": 4,
       "type": "stat",
-      "title": "LTV",
-      "gridPos": { "x": 12, "y": 0, "w": 6, "h": 5 },
+      "title": "LTV %",
+      "gridPos": { "x": 12, "y": 0, "w": 4, "h": 5 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         { "refId": "A", "format": "table", "queryType": "table",
@@ -46,13 +60,41 @@
           "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.totals.margin_to_portfolio_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 20 },
+              { "color": "red", "value": 30 }
+            ]
+          }
+        },
+        "overrides": []
+      }
     },
     {
-      "id": 4,
+      "id": 5,
       "type": "stat",
-      "title": "Projected Monthly Income",
-      "gridPos": { "x": 18, "y": 0, "w": 6, "h": 5 },
+      "title": "Unrealized P&L",
+      "gridPos": { "x": 16, "y": 0, "w": 4, "h": 5 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        { "refId": "A", "format": "table", "queryType": "table",
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.totals.unrealized_pnl') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.totals.unrealized_pnl') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
+    },
+    {
+      "id": 6,
+      "type": "stat",
+      "title": "Monthly Income",
+      "gridPos": { "x": 20, "y": 0, "w": 4, "h": 5 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         { "refId": "A", "format": "table", "queryType": "table",
@@ -60,14 +102,84 @@
           "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.income.projected_monthly_income') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 2 }, "overrides": [] }
+      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
     },
-
     {
-      "id": 5,
+      "id": 7,
+      "type": "stat",
+      "title": "In Drawdown",
+      "gridPos": { "x": 0, "y": 5, "w": 6, "h": 4 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        { "refId": "A", "format": "table", "queryType": "table",
+          "queryText": "SELECT CASE json_extract(payload_json,'$.portfolio_rollups.risk.drawdown_status.currently_in_drawdown') WHEN 1 THEN 'YES' ELSE 'NO' END AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CASE json_extract(payload_json,'$.portfolio_rollups.risk.drawdown_status.currently_in_drawdown') WHEN 1 THEN 'YES' ELSE 'NO' END AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "string" }, "overrides": [] }
+    },
+    {
+      "id": 8,
+      "type": "stat",
+      "title": "Drawdown Depth %",
+      "gridPos": { "x": 6, "y": 5, "w": 6, "h": 4 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        { "refId": "A", "format": "table", "queryType": "table",
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.drawdown_status.current_drawdown_depth_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.drawdown_status.current_drawdown_depth_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 5 },
+              { "color": "orange", "value": 10 },
+              { "color": "red", "value": 20 }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 9,
+      "type": "stat",
+      "title": "Days Since Peak",
+      "gridPos": { "x": 12, "y": 5, "w": 6, "h": 4 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        { "refId": "A", "format": "table", "queryType": "table",
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.drawdown_status.days_since_peak') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.drawdown_status.days_since_peak') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "none", "decimals": 0 }, "overrides": [] }
+    },
+    {
+      "id": 10,
+      "type": "stat",
+      "title": "Recovery %",
+      "gridPos": { "x": 18, "y": 5, "w": 6, "h": 4 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        { "refId": "A", "format": "table", "queryType": "table",
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.drawdown_status.recovery_progress_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.drawdown_status.recovery_progress_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 1 }, "overrides": [] }
+    },
+    {
+      "id": 11,
       "type": "timeseries",
       "title": "Market Value (Last 90d)",
-      "gridPos": { "x": 0, "y": 5, "w": 12, "h": 8 },
+      "gridPos": { "x": 0, "y": 9, "w": 12, "h": 8 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         { "refId": "A", "format": "table", "queryType": "table",
@@ -80,12 +192,11 @@
       ],
       "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
     },
-
     {
-      "id": 6,
+      "id": 12,
       "type": "timeseries",
-      "title": "Projected Monthly Income (Last 90d)",
-      "gridPos": { "x": 12, "y": 5, "w": 12, "h": 8 },
+      "title": "Monthly Income (Last 90d)",
+      "gridPos": { "x": 12, "y": 9, "w": 12, "h": 8 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         { "refId": "A", "format": "table", "queryType": "table",
@@ -96,34 +207,32 @@
       "transformations": [
         { "id": "convertFieldType", "options": { "conversions": [ { "targetField": "time", "destinationType": "time" } ] } }
       ],
-      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 2 }, "overrides": [] }
+      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
     },
-
     {
-      "id": 7,
+      "id": 13,
       "type": "table",
-      "title": "Top Holdings (Latest)",
-      "gridPos": { "x": 0, "y": 13, "w": 24, "h": 12 },
+      "title": "Top Holdings",
+      "gridPos": { "x": 0, "y": 17, "w": 24, "h": 10 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         { "refId": "A", "format": "table", "queryType": "table",
-          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.weight_pct') AS REAL) AS weight_pct, CAST(json_extract(j.value,'$.market_value') AS REAL) AS market_value, CAST(json_extract(j.value,'$.projected_monthly_dividend') AS REAL) AS projected_monthly_dividend, CAST(json_extract(j.value,'$.current_yield_pct') AS REAL) AS current_yield_pct FROM latest, json_each(latest.payload_json,'$.holdings') j ORDER BY market_value DESC LIMIT 20;",
-          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.weight_pct') AS REAL) AS weight_pct, CAST(json_extract(j.value,'$.market_value') AS REAL) AS market_value, CAST(json_extract(j.value,'$.projected_monthly_dividend') AS REAL) AS projected_monthly_dividend, CAST(json_extract(j.value,'$.current_yield_pct') AS REAL) AS current_yield_pct FROM latest, json_each(latest.payload_json,'$.holdings') j ORDER BY market_value DESC LIMIT 20;"
+          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(h.value,'$.symbol') AS symbol, CAST(json_extract(h.value,'$.weight_pct') AS REAL) AS weight_pct, CAST(json_extract(h.value,'$.market_value') AS REAL) AS market_value, CAST(json_extract(h.value,'$.current_yield_pct') AS REAL) AS current_yield_pct FROM latest, json_each(latest.payload_json,'$.holdings') h ORDER BY weight_pct DESC LIMIT 10;",
+          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(h.value,'$.symbol') AS symbol, CAST(json_extract(h.value,'$.weight_pct') AS REAL) AS weight_pct, CAST(json_extract(h.value,'$.market_value') AS REAL) AS market_value, CAST(json_extract(h.value,'$.current_yield_pct') AS REAL) AS current_yield_pct FROM latest, json_each(latest.payload_json,'$.holdings') h ORDER BY weight_pct DESC LIMIT 10;"
         }
       ],
       "fieldConfig": {
         "defaults": {},
         "overrides": [
-          { "matcher": { "id": "byName", "options": "weight_pct" }, "properties": [ { "id": "unit", "value": "percent" }, { "id": "decimals", "value": 2 } ] },
+          { "matcher": { "id": "byName", "options": "weight_pct" }, "properties": [ { "id": "unit", "value": "percent" }, { "id": "decimals", "value": 1 } ] },
           { "matcher": { "id": "byName", "options": "market_value" }, "properties": [ { "id": "unit", "value": "currencyUSD" }, { "id": "decimals", "value": 0 } ] },
-          { "matcher": { "id": "byName", "options": "projected_monthly_dividend" }, "properties": [ { "id": "unit", "value": "currencyUSD" }, { "id": "decimals", "value": 2 } ] },
-          { "matcher": { "id": "byName", "options": "current_yield_pct" }, "properties": [ { "id": "unit", "value": "percent" }, { "id": "decimals", "value": 2 } ] }
+          { "matcher": { "id": "byName", "options": "current_yield_pct" }, "properties": [ { "id": "unit", "value": "percent" }, { "id": "decimals", "value": 1 } ] }
         ]
       },
-      "options": { "showHeader": true }
+      "options": { "showHeader": true, "cellHeight": "lg" }
     }
   ],
-  "refresh": "30s",
+  "refresh": "2m",
   "schemaVersion": 39,
   "style": "dark",
   "tags": ["lmi"],
@@ -131,5 +240,5 @@
   "timezone": "browser",
   "title": "LMI Overview",
   "uid": "lmi-overview",
-  "version": 20
+  "version": 21
 }

@@ -55,7 +55,7 @@
       "fieldConfig": {
         "defaults": {
           "unit": "currencyUSD",
-          "decimals": 2
+          "decimals": 1
         },
         "overrides": []
       }
@@ -203,7 +203,7 @@
         "x": 0,
         "y": 5,
         "w": 24,
-        "h": 14
+        "h": 10
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -214,13 +214,13 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, json_extract(j.value,'$.ex_date_est') AS ex_date_est, json_extract(j.value,'$.pay_date_est') AS pay_date_est, CAST(json_extract(j.value,'$.amount_est') AS REAL) AS amount_est FROM latest, json_each(latest.payload_json,'$.dividends.projected_vs_received.alt.expected_events') j ORDER BY pay_date_est;",
-          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, json_extract(j.value,'$.ex_date_est') AS ex_date_est, json_extract(j.value,'$.pay_date_est') AS pay_date_est, CAST(json_extract(j.value,'$.amount_est') AS REAL) AS amount_est FROM latest, json_each(latest.payload_json,'$.dividends.projected_vs_received.alt.expected_events') j ORDER BY pay_date_est;"
+          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, json_extract(j.value,'$.ex_date_est') AS ex_date_est, json_extract(j.value,'$.pay_date_est') AS pay_date_est, CAST(json_extract(j.value,'$.amount_est') AS REAL) AS amount_est FROM latest, json_each(latest.payload_json,'$.dividends.projected_vs_received.alt.expected_events') j ORDER BY pay_date_est LIMIT 10;",
+          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, json_extract(j.value,'$.ex_date_est') AS ex_date_est, json_extract(j.value,'$.pay_date_est') AS pay_date_est, CAST(json_extract(j.value,'$.amount_est') AS REAL) AS amount_est FROM latest, json_each(latest.payload_json,'$.dividends.projected_vs_received.alt.expected_events') j ORDER BY pay_date_est LIMIT 10;"
         }
       ],
       "options": {
         "showHeader": true,
-        "cellHeight": "sm"
+        "cellHeight": "lg"
       },
       "fieldConfig": {
         "defaults": {
@@ -232,10 +232,10 @@
     {
       "id": 6,
       "type": "table",
-      "title": "Dividends (30d) \u2014 By Symbol",
+      "title": "Dividends (30d) - By Symbol",
       "gridPos": {
         "x": 0,
-        "y": 19,
+        "y": 15,
         "w": 24,
         "h": 10
       },
@@ -248,13 +248,13 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT j.key AS symbol, CAST(json_extract(j.value,'$.amount') AS REAL) AS amount_30d, json_extract(j.value,'$.status') AS status FROM latest, json_each(latest.payload_json,'$.dividends.windows.30d.by_symbol') j ORDER BY amount_30d DESC;",
-          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT j.key AS symbol, CAST(json_extract(j.value,'$.amount') AS REAL) AS amount_30d, json_extract(j.value,'$.status') AS status FROM latest, json_each(latest.payload_json,'$.dividends.windows.30d.by_symbol') j ORDER BY amount_30d DESC;"
+          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT j.key AS symbol, CAST(json_extract(j.value,'$.amount') AS REAL) AS amount_30d, json_extract(j.value,'$.status') AS status FROM latest, json_each(latest.payload_json,'$.dividends.windows.30d.by_symbol') j ORDER BY amount_30d DESC LIMIT 10;",
+          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT j.key AS symbol, CAST(json_extract(j.value,'$.amount') AS REAL) AS amount_30d, json_extract(j.value,'$.status') AS status FROM latest, json_each(latest.payload_json,'$.dividends.windows.30d.by_symbol') j ORDER BY amount_30d DESC LIMIT 10;"
         }
       ],
       "options": {
         "showHeader": true,
-        "cellHeight": "sm"
+        "cellHeight": "lg"
       },
       "fieldConfig": {
         "defaults": {
@@ -264,7 +264,7 @@
       }
     }
   ],
-  "refresh": "30s",
+  "refresh": "2m",
   "schemaVersion": 39,
   "style": "dark",
   "tags": [
@@ -277,7 +277,7 @@
   "timezone": "browser",
   "title": "LMI - Dividend Calendar",
   "uid": "lmi-dividend-calendar",
-  "version": 20,
+  "version": 21,
   "__annotations": {
     "grafana.app/sourcePath": "dashboards/lmi-dividend-calendar.json"
   }
