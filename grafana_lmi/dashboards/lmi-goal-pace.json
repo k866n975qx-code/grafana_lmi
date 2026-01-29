@@ -1,0 +1,160 @@
+{
+  "__inputs": [],
+  "__requires": [
+    { "type": "grafana", "id": "grafana", "name": "Grafana", "version": "10.0.0" }
+  ],
+  "annotations": { "list": [] },
+  "editable": true,
+  "graphTooltip": 0,
+  "id": null,
+  "panels": [
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "Portfolio Value",
+      "gridPos": { "x": 0, "y": 0, "w": 6, "h": 4 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [{
+        "refId": "A", "format": "table", "queryType": "table",
+        "queryText": "SELECT CAST(json_extract(payload_json, '$.goal_tiers.current_state.portfolio_value') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+        "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.goal_tiers.current_state.portfolio_value') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+      }],
+      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Required PV (Tier)",
+      "gridPos": { "x": 6, "y": 0, "w": 6, "h": 4 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [{
+        "refId": "A", "format": "table", "queryType": "table",
+        "queryText": "SELECT CAST(json_extract(payload_json, '$.goal_pace.baseline_projection.required_portfolio_value') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+        "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.goal_pace.baseline_projection.required_portfolio_value') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+      }],
+      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "Current Monthly Income",
+      "gridPos": { "x": 12, "y": 0, "w": 6, "h": 4 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [{
+        "refId": "A", "format": "table", "queryType": "table",
+        "queryText": "SELECT CAST(json_extract(payload_json, '$.goal_tiers.current_state.projected_monthly_income') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+        "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.goal_tiers.current_state.projected_monthly_income') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+      }],
+      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "Target Monthly",
+      "gridPos": { "x": 18, "y": 0, "w": 6, "h": 4 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [{
+        "refId": "A", "format": "table", "queryType": "table",
+        "queryText": "SELECT CAST(json_extract(payload_json, '$.goal_tiers.current_state.target_monthly') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+        "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.goal_tiers.current_state.target_monthly') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+      }],
+      "fieldConfig": {
+        "defaults": { "unit": "currencyUSD", "decimals": 0, "color": { "mode": "fixed", "fixedColor": "orange" } },
+        "overrides": []
+      }
+    },
+    {
+      "id": 5,
+      "type": "timeseries",
+      "title": "Portfolio Value vs Expected Pace (180d)",
+      "description": "Actual portfolio value overlaid with the expected trajectory from your likely tier projection.",
+      "gridPos": { "x": 0, "y": 4, "w": 12, "h": 8 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [{
+        "refId": "A", "format": "table", "queryType": "table",
+        "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json, '$.totals.market_value') AS REAL) AS \"Actual Portfolio Value\", CAST(json_extract(payload_json, '$.goal_pace.windows.since_inception.expected.portfolio_value') AS REAL) AS \"Expected (Tier Pace)\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now', '-180 day') ORDER BY as_of_date_local;",
+        "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json, '$.totals.market_value') AS REAL) AS \"Actual Portfolio Value\", CAST(json_extract(payload_json, '$.goal_pace.windows.since_inception.expected.portfolio_value') AS REAL) AS \"Expected (Tier Pace)\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now', '-180 day') ORDER BY as_of_date_local;"
+      }],
+      "transformations": [
+        { "id": "convertFieldType", "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] } }
+      ],
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "fieldConfig": {
+        "defaults": { "unit": "currencyUSD", "decimals": 0 },
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "Actual Portfolio Value" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "green" } }, { "id": "custom.fillOpacity", "value": 10 }, { "id": "custom.lineWidth", "value": 2 }] },
+          { "matcher": { "id": "byName", "options": "Expected (Tier Pace)" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "blue" } }, { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 5] } }, { "id": "custom.lineWidth", "value": 1 }] }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "type": "timeseries",
+      "title": "Monthly Income vs Target (180d)",
+      "description": "Actual projected monthly income trending toward the target goal.",
+      "gridPos": { "x": 12, "y": 4, "w": 12, "h": 8 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [{
+        "refId": "A", "format": "table", "queryType": "table",
+        "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json, '$.income.projected_monthly_income') AS REAL) AS \"Monthly Income\", CAST(json_extract(payload_json, '$.goal_tiers.current_state.target_monthly') AS REAL) AS \"Target ($4,000/mo)\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now', '-180 day') ORDER BY as_of_date_local;",
+        "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json, '$.income.projected_monthly_income') AS REAL) AS \"Monthly Income\", CAST(json_extract(payload_json, '$.goal_tiers.current_state.target_monthly') AS REAL) AS \"Target ($4,000/mo)\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now', '-180 day') ORDER BY as_of_date_local;"
+      }],
+      "transformations": [
+        { "id": "convertFieldType", "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] } }
+      ],
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "fieldConfig": {
+        "defaults": { "unit": "currencyUSD", "decimals": 0 },
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "Monthly Income" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "green" } }, { "id": "custom.fillOpacity", "value": 20 }, { "id": "custom.lineWidth", "value": 2 }] },
+          { "matcher": { "id": "byName", "options": "Target ($4,000/mo)" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "red" } }, { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 5] } }, { "id": "custom.lineWidth", "value": 2 }] }
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "type": "table",
+      "title": "Pace Tracking Windows",
+      "description": "Expected vs actual performance across multiple time windows based on your likely tier projection.",
+      "gridPos": { "x": 0, "y": 12, "w": 24, "h": 10 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [{
+        "refId": "A", "format": "table", "queryType": "table",
+        "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1), windows AS (SELECT w.key AS wk, w.value AS wd FROM latest, json_each(latest.payload_json, '$.goal_pace.windows') AS w) SELECT json_extract(wd, '$.window_name') AS window, CAST(json_extract(wd, '$.days_in_window') AS INTEGER) AS days, CAST(json_extract(wd, '$.expected.portfolio_value') AS REAL) AS expected_pv, CAST(json_extract(wd, '$.actual.portfolio_value') AS REAL) AS actual_pv, CAST(json_extract(wd, '$.delta.portfolio_value') AS REAL) AS pv_delta, CAST(json_extract(wd, '$.delta.portfolio_value_pct') AS REAL) AS pv_delta_pct, CAST(json_extract(wd, '$.pace.months_ahead_behind') AS REAL) AS months_ahead_behind, CAST(json_extract(wd, '$.pace.pct_of_tier_pace') AS REAL) AS pace_pct, CAST(json_extract(wd, '$.pace.amount_surplus') AS REAL) AS surplus FROM windows ORDER BY CAST(json_extract(wd, '$.days_in_window') AS INTEGER);",
+        "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1), windows AS (SELECT w.key AS wk, w.value AS wd FROM latest, json_each(latest.payload_json, '$.goal_pace.windows') AS w) SELECT json_extract(wd, '$.window_name') AS window, CAST(json_extract(wd, '$.days_in_window') AS INTEGER) AS days, CAST(json_extract(wd, '$.expected.portfolio_value') AS REAL) AS expected_pv, CAST(json_extract(wd, '$.actual.portfolio_value') AS REAL) AS actual_pv, CAST(json_extract(wd, '$.delta.portfolio_value') AS REAL) AS pv_delta, CAST(json_extract(wd, '$.delta.portfolio_value_pct') AS REAL) AS pv_delta_pct, CAST(json_extract(wd, '$.pace.months_ahead_behind') AS REAL) AS months_ahead_behind, CAST(json_extract(wd, '$.pace.pct_of_tier_pace') AS REAL) AS pace_pct, CAST(json_extract(wd, '$.pace.amount_surplus') AS REAL) AS surplus FROM windows ORDER BY CAST(json_extract(wd, '$.days_in_window') AS INTEGER);"
+      }],
+      "options": { "showHeader": true, "cellHeight": "md" },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "window" }, "properties": [{ "id": "displayName", "value": "Window" }] },
+          { "matcher": { "id": "byName", "options": "days" }, "properties": [{ "id": "displayName", "value": "Days" }] },
+          { "matcher": { "id": "byName", "options": "expected_pv" }, "properties": [{ "id": "unit", "value": "currencyUSD" }, { "id": "decimals", "value": 0 }, { "id": "displayName", "value": "Expected PV" }] },
+          { "matcher": { "id": "byName", "options": "actual_pv" }, "properties": [{ "id": "unit", "value": "currencyUSD" }, { "id": "decimals", "value": 0 }, { "id": "displayName", "value": "Actual PV" }] },
+          { "matcher": { "id": "byName", "options": "pv_delta" }, "properties": [{ "id": "unit", "value": "currencyUSD" }, { "id": "decimals", "value": 0 }, { "id": "displayName", "value": "PV Delta" }] },
+          { "matcher": { "id": "byName", "options": "pv_delta_pct" }, "properties": [{ "id": "unit", "value": "percent" }, { "id": "decimals", "value": 1 }, { "id": "displayName", "value": "PV Delta %" }] },
+          {
+            "matcher": { "id": "byName", "options": "months_ahead_behind" },
+            "properties": [
+              { "id": "displayName", "value": "Months +/-" },
+              { "id": "decimals", "value": 1 },
+              { "id": "thresholds", "value": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": -3, "color": "yellow" }, { "value": 0, "color": "green" }] } },
+              { "id": "custom.cellOptions", "value": { "type": "color-text" } }
+            ]
+          },
+          { "matcher": { "id": "byName", "options": "pace_pct" }, "properties": [{ "id": "unit", "value": "percent" }, { "id": "decimals", "value": 1 }, { "id": "displayName", "value": "Pace %" }] },
+          { "matcher": { "id": "byName", "options": "surplus" }, "properties": [{ "id": "unit", "value": "currencyUSD" }, { "id": "decimals", "value": 0 }, { "id": "displayName", "value": "Surplus" }] }
+        ]
+      }
+    }
+  ],
+  "refresh": "2m",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": ["lmi", "goals"],
+  "time": { "from": "now-180d", "to": "now" },
+  "timezone": "browser",
+  "title": "LMI - Goal Pace",
+  "uid": "lmi-goal-pace",
+  "version": 1
+}

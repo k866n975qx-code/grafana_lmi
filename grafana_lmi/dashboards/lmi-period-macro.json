@@ -1,0 +1,82 @@
+{
+  "__inputs": [],
+  "__requires": [
+    { "type": "grafana", "id": "grafana", "name": "Grafana", "version": "10.0.0" }
+  ],
+  "annotations": { "list": [] },
+  "editable": true,
+  "graphTooltip": 0,
+  "id": null,
+  "panels": [
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "Future APR %",
+      "gridPos": { "x": 0, "y": 0, "w": 8, "h": 5 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
+        "queryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.goal_progress_net.end.future_rate_sensitivity.apr_future_pct') AS REAL) AS value FROM snapshots WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+        "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.goal_progress_net.end.future_rate_sensitivity.apr_future_pct') AS REAL) AS value FROM snapshots WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
+      }],
+      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2, "color": { "mode": "fixed", "fixedColor": "yellow" } }, "overrides": [] }
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Future Net Progress %",
+      "description": "Net goal progress if margin rate changes to the projected future APR.",
+      "gridPos": { "x": 8, "y": 0, "w": 8, "h": 5 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
+        "queryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.goal_progress_net.end.future_rate_sensitivity.progress_pct_future') AS REAL) AS value FROM snapshots WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+        "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.goal_progress_net.end.future_rate_sensitivity.progress_pct_future') AS REAL) AS value FROM snapshots WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
+      }],
+      "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
+      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 50, "color": "yellow" }, { "value": 75, "color": "green" }] } }, "overrides": [] }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "Future Additional Needed",
+      "description": "Additional investment needed to reach income goal if margin rate changes to the projected future APR. This is a rate sensitivity scenario, not the current shortfall.",
+      "gridPos": { "x": 16, "y": 0, "w": 8, "h": 5 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
+        "queryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.goal_progress_net.end.future_rate_sensitivity.additional_investment_needed_future') AS REAL) AS value FROM snapshots WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+        "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.goal_progress_net.end.future_rate_sensitivity.additional_investment_needed_future') AS REAL) AS value FROM snapshots WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
+      }],
+      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
+    },
+    {
+      "id": 4,
+      "type": "table",
+      "title": "Macro Context (Latest Completed Month)",
+      "gridPos": { "x": 0, "y": 5, "w": 24, "h": 10 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
+        "queryText": "WITH latest AS (SELECT payload_json FROM snapshots WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1) SELECT '10Y Yield' AS metric, CAST(json_extract(payload_json, '$.period_summary.macro.start.ten_year_yield') AS REAL) AS start_val, CAST(json_extract(payload_json, '$.period_summary.macro.end.ten_year_yield') AS REAL) AS end_val, CAST(json_extract(payload_json, '$.period_summary.macro.avg.ten_year_yield') AS REAL) AS avg_val, CAST(json_extract(payload_json, '$.period_summary.macro.delta.ten_year_yield') AS REAL) AS delta FROM latest UNION ALL SELECT '2Y Yield', CAST(json_extract(payload_json, '$.period_summary.macro.start.two_year_yield') AS REAL), CAST(json_extract(payload_json, '$.period_summary.macro.end.two_year_yield') AS REAL), CAST(json_extract(payload_json, '$.period_summary.macro.avg.two_year_yield') AS REAL), CAST(json_extract(payload_json, '$.period_summary.macro.delta.two_year_yield') AS REAL) FROM latest UNION ALL SELECT 'VIX', CAST(json_extract(payload_json, '$.period_summary.macro.start.vix') AS REAL), CAST(json_extract(payload_json, '$.period_summary.macro.end.vix') AS REAL), CAST(json_extract(payload_json, '$.period_summary.macro.avg.vix') AS REAL), CAST(json_extract(payload_json, '$.period_summary.macro.delta.vix') AS REAL) FROM latest UNION ALL SELECT 'CPI YoY', CAST(json_extract(payload_json, '$.period_summary.macro.start.cpi_yoy') AS REAL), CAST(json_extract(payload_json, '$.period_summary.macro.end.cpi_yoy') AS REAL), CAST(json_extract(payload_json, '$.period_summary.macro.avg.cpi_yoy') AS REAL), CAST(json_extract(payload_json, '$.period_summary.macro.delta.cpi_yoy') AS REAL) FROM latest;",
+        "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshots WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1) SELECT '10Y Yield' AS metric, CAST(json_extract(payload_json, '$.period_summary.macro.start.ten_year_yield') AS REAL) AS start_val, CAST(json_extract(payload_json, '$.period_summary.macro.end.ten_year_yield') AS REAL) AS end_val, CAST(json_extract(payload_json, '$.period_summary.macro.avg.ten_year_yield') AS REAL) AS avg_val, CAST(json_extract(payload_json, '$.period_summary.macro.delta.ten_year_yield') AS REAL) AS delta FROM latest UNION ALL SELECT '2Y Yield', CAST(json_extract(payload_json, '$.period_summary.macro.start.two_year_yield') AS REAL), CAST(json_extract(payload_json, '$.period_summary.macro.end.two_year_yield') AS REAL), CAST(json_extract(payload_json, '$.period_summary.macro.avg.two_year_yield') AS REAL), CAST(json_extract(payload_json, '$.period_summary.macro.delta.two_year_yield') AS REAL) FROM latest UNION ALL SELECT 'VIX', CAST(json_extract(payload_json, '$.period_summary.macro.start.vix') AS REAL), CAST(json_extract(payload_json, '$.period_summary.macro.end.vix') AS REAL), CAST(json_extract(payload_json, '$.period_summary.macro.avg.vix') AS REAL), CAST(json_extract(payload_json, '$.period_summary.macro.delta.vix') AS REAL) FROM latest UNION ALL SELECT 'CPI YoY', CAST(json_extract(payload_json, '$.period_summary.macro.start.cpi_yoy') AS REAL), CAST(json_extract(payload_json, '$.period_summary.macro.end.cpi_yoy') AS REAL), CAST(json_extract(payload_json, '$.period_summary.macro.avg.cpi_yoy') AS REAL), CAST(json_extract(payload_json, '$.period_summary.macro.delta.cpi_yoy') AS REAL) FROM latest;"
+      }],
+      "options": { "showHeader": true, "cellHeight": "md" },
+      "fieldConfig": {
+        "defaults": { "decimals": 2 },
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "metric" }, "properties": [{ "id": "displayName", "value": "Metric" }] },
+          { "matcher": { "id": "byName", "options": "start_val" }, "properties": [{ "id": "displayName", "value": "Start" }] },
+          { "matcher": { "id": "byName", "options": "end_val" }, "properties": [{ "id": "displayName", "value": "End" }] },
+          { "matcher": { "id": "byName", "options": "avg_val" }, "properties": [{ "id": "displayName", "value": "Avg" }] },
+          { "matcher": { "id": "byName", "options": "delta" }, "properties": [{ "id": "displayName", "value": "Delta" }] }
+        ]
+      }
+    }
+  ],
+  "refresh": "2m",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": ["lmi", "periods"],
+  "time": { "from": "now-90d", "to": "now" },
+  "timezone": "browser",
+  "title": "LMI - Period Macro & Rates",
+  "uid": "lmi-period-macro",
+  "version": 1
+}
