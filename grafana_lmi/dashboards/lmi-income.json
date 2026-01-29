@@ -251,6 +251,34 @@
       }
     },
     {
+      "id": 9,
+      "type": "timeseries",
+      "title": "Yield Trends (90d)",
+      "gridPos": { "x": 12, "y": 10, "w": 12, "h": 8 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A", "format": "table", "queryType": "table",
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.income.portfolio_current_yield_pct') AS REAL) AS \"Current Yield %\", CAST(json_extract(payload_json,'$.income.portfolio_yield_on_cost_pct') AS REAL) AS \"Yield on Cost %\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-90 day') ORDER BY as_of_date_local;",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.income.portfolio_current_yield_pct') AS REAL) AS \"Current Yield %\", CAST(json_extract(payload_json,'$.income.portfolio_yield_on_cost_pct') AS REAL) AS \"Yield on Cost %\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-90 day') ORDER BY as_of_date_local;"
+        }
+      ],
+      "transformations": [
+        { "id": "convertFieldType", "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] } }
+      ],
+      "options": {
+        "tooltip": { "mode": "multi" },
+        "legend": { "displayMode": "list", "placement": "bottom", "showLegend": true }
+      },
+      "fieldConfig": {
+        "defaults": { "unit": "percent", "decimals": 2 },
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "Current Yield %" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "blue" } }, { "id": "custom.lineWidth", "value": 2 }] },
+          { "matcher": { "id": "byName", "options": "Yield on Cost %" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "orange" } }, { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 5] } }] }
+        ]
+      }
+    },
+    {
       "id": 6,
       "type": "timeseries",
       "title": "Projected Monthly Income (Last 90d)",
