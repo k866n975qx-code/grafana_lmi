@@ -23,7 +23,7 @@
         "x": 0,
         "y": 0,
         "w": 6,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -54,7 +54,7 @@
         "x": 6,
         "y": 0,
         "w": 6,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -85,7 +85,7 @@
         "x": 12,
         "y": 0,
         "w": 6,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -124,7 +124,7 @@
         "x": 18,
         "y": 0,
         "w": 6,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -153,9 +153,9 @@
       "title": "MV @ 30% LTV",
       "gridPos": {
         "x": 0,
-        "y": 5,
+        "y": 4,
         "w": 6,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -184,9 +184,9 @@
       "title": "Drop to 30% %",
       "gridPos": {
         "x": 6,
-        "y": 5,
+        "y": 4,
         "w": 6,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -215,9 +215,9 @@
       "title": "Max Loan @ 25%",
       "gridPos": {
         "x": 12,
-        "y": 5,
+        "y": 4,
         "w": 6,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -246,9 +246,9 @@
       "title": "Max Loan @ 30%",
       "gridPos": {
         "x": 18,
-        "y": 5,
+        "y": 4,
         "w": 6,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -277,9 +277,9 @@
       "title": "Monthly Interest",
       "gridPos": {
         "x": 0,
-        "y": 10,
+        "y": 8,
         "w": 6,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -308,9 +308,9 @@
       "title": "Income Coverage",
       "gridPos": {
         "x": 6,
-        "y": 10,
+        "y": 8,
         "w": 6,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -339,9 +339,9 @@
       "title": "ROI on Margin 1y",
       "gridPos": {
         "x": 12,
-        "y": 10,
+        "y": 8,
         "w": 6,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -370,9 +370,9 @@
       "title": "Net Benefit 1y",
       "gridPos": {
         "x": 18,
-        "y": 10,
+        "y": 8,
         "w": 6,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -401,9 +401,9 @@
       "title": "LTV % (Last 90d)",
       "gridPos": {
         "x": 0,
-        "y": 15,
+        "y": 12,
         "w": 24,
-        "h": 8
+        "h": 7
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -445,7 +445,7 @@
       "id": 14,
       "type": "timeseries",
       "title": "Margin Loan Balance (90d)",
-      "gridPos": { "x": 0, "y": 23, "w": 12, "h": 8 },
+      "gridPos": { "x": 0, "y": 19, "w": 12, "h": 7 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
@@ -470,7 +470,7 @@
       "type": "timeseries",
       "title": "Income Coverage Ratio (90d)",
       "description": "Monthly dividend income divided by monthly margin interest. Higher is better.",
-      "gridPos": { "x": 12, "y": 23, "w": 12, "h": 8 },
+      "gridPos": { "x": 12, "y": 19, "w": 12, "h": 7 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
