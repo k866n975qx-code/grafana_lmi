@@ -19,16 +19,8 @@
       "id": 1,
       "type": "stat",
       "title": "Risk Quality",
-      "gridPos": {
-        "x": 0,
-        "y": 0,
-        "w": 4,
-        "h": 5
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
+      "gridPos": { "x": 0, "y": 0, "w": 4, "h": 4 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
           "refId": "A",
@@ -43,9 +35,7 @@
         "graphMode": "none",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
+          "calcs": ["lastNotNull"],
           "fields": "value",
           "values": false
         },
@@ -74,16 +64,8 @@
       "id": 2,
       "type": "stat",
       "title": "Vol 30d %",
-      "gridPos": {
-        "x": 4,
-        "y": 0,
-        "w": 4,
-        "h": 5
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
+      "gridPos": { "x": 4, "y": 0, "w": 4, "h": 4 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
           "refId": "A",
@@ -94,10 +76,7 @@
         }
       ],
       "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "decimals": 1
-        },
+        "defaults": { "unit": "percent", "decimals": 1 },
         "overrides": []
       }
     },
@@ -105,16 +84,8 @@
       "id": 3,
       "type": "stat",
       "title": "Sharpe 1y",
-      "gridPos": {
-        "x": 8,
-        "y": 0,
-        "w": 4,
-        "h": 5
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
+      "gridPos": { "x": 8, "y": 0, "w": 4, "h": 4 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
           "refId": "A",
@@ -125,10 +96,7 @@
         }
       ],
       "fieldConfig": {
-        "defaults": {
-          "unit": "none",
-          "decimals": 2
-        },
+        "defaults": { "unit": "none", "decimals": 2 },
         "overrides": []
       }
     },
@@ -136,16 +104,8 @@
       "id": 4,
       "type": "stat",
       "title": "Sortino 1y",
-      "gridPos": {
-        "x": 12,
-        "y": 0,
-        "w": 4,
-        "h": 5
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
+      "gridPos": { "x": 12, "y": 0, "w": 4, "h": 4 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
           "refId": "A",
@@ -156,10 +116,7 @@
         }
       ],
       "fieldConfig": {
-        "defaults": {
-          "unit": "none",
-          "decimals": 2
-        },
+        "defaults": { "unit": "none", "decimals": 2 },
         "overrides": []
       }
     },
@@ -167,16 +124,8 @@
       "id": 5,
       "type": "stat",
       "title": "Beta",
-      "gridPos": {
-        "x": 16,
-        "y": 0,
-        "w": 4,
-        "h": 5
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
+      "gridPos": { "x": 16, "y": 0, "w": 4, "h": 4 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
           "refId": "A",
@@ -187,10 +136,7 @@
         }
       ],
       "fieldConfig": {
-        "defaults": {
-          "unit": "none",
-          "decimals": 2
-        },
+        "defaults": { "unit": "none", "decimals": 2 },
         "overrides": []
       }
     },
@@ -198,16 +144,8 @@
       "id": 6,
       "type": "stat",
       "title": "Corr 1y",
-      "gridPos": {
-        "x": 20,
-        "y": 0,
-        "w": 4,
-        "h": 5
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
+      "gridPos": { "x": 20, "y": 0, "w": 4, "h": 4 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
           "refId": "A",
@@ -218,10 +156,7 @@
         }
       ],
       "fieldConfig": {
-        "defaults": {
-          "unit": "none",
-          "decimals": 2
-        },
+        "defaults": { "unit": "none", "decimals": 2 },
         "overrides": []
       }
     },
@@ -229,16 +164,8 @@
       "id": 7,
       "type": "stat",
       "title": "VaR 95 (1d) %",
-      "gridPos": {
-        "x": 0,
-        "y": 5,
-        "w": 8,
-        "h": 4
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
+      "gridPos": { "x": 0, "y": 4, "w": 8, "h": 4 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
           "refId": "A",
@@ -249,10 +176,7 @@
         }
       ],
       "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "decimals": 2
-        },
+        "defaults": { "unit": "percent", "decimals": 2 },
         "overrides": []
       }
     },
@@ -260,16 +184,8 @@
       "id": 8,
       "type": "stat",
       "title": "VaR 95 (1w) %",
-      "gridPos": {
-        "x": 8,
-        "y": 5,
-        "w": 8,
-        "h": 4
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
+      "gridPos": { "x": 8, "y": 4, "w": 8, "h": 4 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
           "refId": "A",
@@ -280,10 +196,7 @@
         }
       ],
       "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "decimals": 2
-        },
+        "defaults": { "unit": "percent", "decimals": 2 },
         "overrides": []
       }
     },
@@ -291,16 +204,8 @@
       "id": 9,
       "type": "stat",
       "title": "VaR 95 (1m) %",
-      "gridPos": {
-        "x": 16,
-        "y": 5,
-        "w": 8,
-        "h": 4
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
+      "gridPos": { "x": 16, "y": 4, "w": 8, "h": 4 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
           "refId": "A",
@@ -311,10 +216,7 @@
         }
       ],
       "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "decimals": 2
-        },
+        "defaults": { "unit": "percent", "decimals": 2 },
         "overrides": []
       }
     },
@@ -322,16 +224,8 @@
       "id": 10,
       "type": "stat",
       "title": "CVaR 95 (1d) %",
-      "gridPos": {
-        "x": 0,
-        "y": 9,
-        "w": 8,
-        "h": 4
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
+      "gridPos": { "x": 0, "y": 8, "w": 8, "h": 4 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
           "refId": "A",
@@ -342,10 +236,7 @@
         }
       ],
       "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "decimals": 2
-        },
+        "defaults": { "unit": "percent", "decimals": 2 },
         "overrides": []
       }
     },
@@ -353,16 +244,8 @@
       "id": 11,
       "type": "stat",
       "title": "CVaR 95 (1w) %",
-      "gridPos": {
-        "x": 8,
-        "y": 9,
-        "w": 8,
-        "h": 4
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
+      "gridPos": { "x": 8, "y": 8, "w": 8, "h": 4 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
           "refId": "A",
@@ -373,10 +256,7 @@
         }
       ],
       "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "decimals": 2
-        },
+        "defaults": { "unit": "percent", "decimals": 2 },
         "overrides": []
       }
     },
@@ -384,16 +264,8 @@
       "id": 12,
       "type": "stat",
       "title": "CVaR 95 (1m) %",
-      "gridPos": {
-        "x": 16,
-        "y": 9,
-        "w": 8,
-        "h": 4
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
+      "gridPos": { "x": 16, "y": 8, "w": 8, "h": 4 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
           "refId": "A",
@@ -404,10 +276,7 @@
         }
       ],
       "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "decimals": 2
-        },
+        "defaults": { "unit": "percent", "decimals": 2 },
         "overrides": []
       }
     },
@@ -415,16 +284,8 @@
       "id": 13,
       "type": "stat",
       "title": "Ulcer Index 1y",
-      "gridPos": {
-        "x": 0,
-        "y": 13,
-        "w": 6,
-        "h": 4
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
+      "gridPos": { "x": 0, "y": 12, "w": 6, "h": 4 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
           "refId": "A",
@@ -435,10 +296,7 @@
         }
       ],
       "fieldConfig": {
-        "defaults": {
-          "unit": "none",
-          "decimals": 2
-        },
+        "defaults": { "unit": "none", "decimals": 2 },
         "overrides": []
       }
     },
@@ -446,16 +304,8 @@
       "id": 14,
       "type": "stat",
       "title": "Track Error 1y %",
-      "gridPos": {
-        "x": 6,
-        "y": 13,
-        "w": 6,
-        "h": 4
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
+      "gridPos": { "x": 6, "y": 12, "w": 6, "h": 4 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
           "refId": "A",
@@ -466,10 +316,7 @@
         }
       ],
       "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "decimals": 2
-        },
+        "defaults": { "unit": "percent", "decimals": 2 },
         "overrides": []
       }
     },
@@ -477,16 +324,8 @@
       "id": 15,
       "type": "stat",
       "title": "Max DD 1y %",
-      "gridPos": {
-        "x": 12,
-        "y": 13,
-        "w": 6,
-        "h": 4
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
+      "gridPos": { "x": 12, "y": 12, "w": 6, "h": 4 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
           "refId": "A",
@@ -497,10 +336,7 @@
         }
       ],
       "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "decimals": 1
-        },
+        "defaults": { "unit": "percent", "decimals": 1 },
         "overrides": []
       }
     },
@@ -508,16 +344,8 @@
       "id": 16,
       "type": "stat",
       "title": "Calmar 1y",
-      "gridPos": {
-        "x": 18,
-        "y": 13,
-        "w": 6,
-        "h": 4
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
+      "gridPos": { "x": 18, "y": 12, "w": 6, "h": 4 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
           "refId": "A",
@@ -528,158 +356,16 @@
         }
       ],
       "fieldConfig": {
-        "defaults": {
-          "unit": "none",
-          "decimals": 2
-        },
+        "defaults": { "unit": "none", "decimals": 2 },
         "overrides": []
-      }
-    },
-    {
-      "id": 17,
-      "type": "timeseries",
-      "title": "Max Drawdown 1y % (365d trend)",
-      "gridPos": {
-        "x": 0,
-        "y": 17,
-        "w": 24,
-        "h": 8
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.portfolio_rollups.risk.max_drawdown_1y_pct') AS REAL) AS value FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-365 day') ORDER BY as_of_date_local;",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.portfolio_rollups.risk.max_drawdown_1y_pct') AS REAL) AS value FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-365 day') ORDER BY as_of_date_local;"
-        }
-      ],
-      "transformations": [
-        {
-          "id": "convertFieldType",
-          "options": {
-            "conversions": [
-              {
-                "targetField": "time",
-                "destinationType": "time"
-              }
-            ]
-          }
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "decimals": 2
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true,
-          "calcs": []
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none",
-          "hideZeros": false
-        }
-      }
-    },
-    {
-      "id": 19,
-      "type": "timeseries",
-      "title": "Volatility 30d % (180d)",
-      "gridPos": { "x": 0, "y": 25, "w": 12, "h": 8 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [
-        {
-          "refId": "A", "format": "table", "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.portfolio_rollups.risk.vol_30d_pct') AS REAL) AS \"Vol 30d %\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.portfolio_rollups.risk.vol_30d_pct') AS REAL) AS \"Vol 30d %\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;"
-        }
-      ],
-      "transformations": [
-        { "id": "convertFieldType", "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] } }
-      ],
-      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom", "showLegend": true } },
-      "fieldConfig": {
-        "defaults": { "unit": "percent", "decimals": 1 },
-        "overrides": [
-          { "matcher": { "id": "byName", "options": "Vol 30d %" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "#f38ba8" } }, { "id": "custom.fillOpacity", "value": 15 }, { "id": "custom.lineWidth", "value": 2 }] }
-        ]
-      }
-    },
-    {
-      "id": 20,
-      "type": "timeseries",
-      "title": "Sharpe & Sortino (180d)",
-      "gridPos": { "x": 12, "y": 25, "w": 12, "h": 8 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [
-        {
-          "refId": "A", "format": "table", "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.portfolio_rollups.risk.sharpe_1y') AS REAL) AS \"Sharpe 1y\", CAST(json_extract(payload_json,'$.portfolio_rollups.risk.sortino_1y') AS REAL) AS \"Sortino 1y\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.portfolio_rollups.risk.sharpe_1y') AS REAL) AS \"Sharpe 1y\", CAST(json_extract(payload_json,'$.portfolio_rollups.risk.sortino_1y') AS REAL) AS \"Sortino 1y\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;"
-        }
-      ],
-      "transformations": [
-        { "id": "convertFieldType", "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] } }
-      ],
-      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom", "showLegend": true } },
-      "fieldConfig": {
-        "defaults": { "decimals": 2 },
-        "overrides": [
-          { "matcher": { "id": "byName", "options": "Sharpe 1y" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "green" } }, { "id": "custom.lineWidth", "value": 2 }] },
-          { "matcher": { "id": "byName", "options": "Sortino 1y" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "blue" } }, { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 5] } }] }
-        ]
-      }
-    },
-    {
-      "id": 21,
-      "type": "timeseries",
-      "title": "Drawdown Depth (180d)",
-      "description": "Underwater plot showing current drawdown depth from peak. Negative values indicate being below the high-water mark.",
-      "gridPos": { "x": 0, "y": 33, "w": 24, "h": 8 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [
-        {
-          "refId": "A", "format": "table", "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.portfolio_rollups.risk.drawdown_status.current_drawdown_depth_pct') AS REAL) AS \"Drawdown Depth %\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.portfolio_rollups.risk.drawdown_status.current_drawdown_depth_pct') AS REAL) AS \"Drawdown Depth %\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;"
-        }
-      ],
-      "transformations": [
-        { "id": "convertFieldType", "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] } }
-      ],
-      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom", "showLegend": true } },
-      "fieldConfig": {
-        "defaults": { "unit": "percent", "decimals": 1 },
-        "overrides": [
-          { "matcher": { "id": "byName", "options": "Drawdown Depth %" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "red" } }, { "id": "custom.fillOpacity", "value": 30 }, { "id": "custom.lineWidth", "value": 1 }] }
-        ]
       }
     },
     {
       "id": 18,
       "type": "table",
       "title": "Holdings - Risk Metrics",
-      "gridPos": {
-        "x": 0,
-        "y": 41,
-        "w": 24,
-        "h": 10
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
+      "gridPos": { "x": 0, "y": 16, "w": 24, "h": 8 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
           "refId": "A",
@@ -691,15 +377,15 @@
       ],
       "options": {
         "showHeader": true,
-        "cellHeight": "lg"
+        "cellHeight": "md"
       },
       "fieldConfig": {
         "defaults": {
           "mappings": []
         },
         "overrides": [
-          { "matcher": { "id": "byName", "options": "sortino_1y" }, "properties": [ { "id": "decimals", "value": 2 } ] },
-          { "matcher": { "id": "byName", "options": "sharpe_1y" }, "properties": [ { "id": "decimals", "value": 2 } ] }
+          { "matcher": { "id": "byName", "options": "sortino_1y" }, "properties": [{ "id": "decimals", "value": 2 }] },
+          { "matcher": { "id": "byName", "options": "sharpe_1y" }, "properties": [{ "id": "decimals", "value": 2 }] }
         ]
       }
     }
@@ -707,18 +393,13 @@
   "refresh": "2m",
   "schemaVersion": 39,
   "style": "dark",
-  "tags": [
-    "lmi"
-  ],
-  "time": {
-    "from": "now-90d",
-    "to": "now"
-  },
+  "tags": ["lmi"],
+  "time": { "from": "now-90d", "to": "now" },
   "timezone": "browser",
-  "title": "LMI - Risk",
-  "uid": "lmi-risk",
-  "version": 22,
+  "title": "LMI - Risk KPIs",
+  "uid": "lmi-risk-kpis",
+  "version": 1,
   "__annotations": {
-    "grafana.app/sourcePath": "dashboards/lmi-risk.json"
+    "grafana.app/sourcePath": "dashboards/lmi-risk-kpis.json"
   }
 }

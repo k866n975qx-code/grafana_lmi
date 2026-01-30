@@ -1,7 +1,16 @@
 {
   "__inputs": [],
-  "__requires": [{ "type": "grafana", "id": "grafana", "name": "Grafana", "version": "10.0.0" }],
-  "annotations": { "list": [] },
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    }
+  ],
+  "annotations": {
+    "list": []
+  },
   "editable": true,
   "graphTooltip": 0,
   "id": null,
@@ -10,10 +19,21 @@
       "id": 1,
       "type": "stat",
       "title": "As of (Local)",
-      "gridPos": { "x": 0, "y": 0, "w": 4, "h": 5 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
-        { "refId": "A", "format": "table", "queryType": "table",
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
           "queryText": "SELECT as_of_date_local AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
           "rawQueryText": "SELECT as_of_date_local AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
@@ -23,51 +43,103 @@
         "graphMode": "none",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "value",
           "values": false
         },
         "textMode": "value",
         "wideLayout": true
       },
-      "fieldConfig": { "defaults": { "unit": "string" }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "string"
+        },
+        "overrides": []
+      }
     },
     {
       "id": 2,
       "type": "stat",
       "title": "Market Value",
-      "gridPos": { "x": 4, "y": 0, "w": 4, "h": 5 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 4,
+        "y": 0,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
-        { "refId": "A", "format": "table", "queryType": "table",
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
           "queryText": "SELECT CAST(json_extract(payload_json,'$.totals.market_value') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
           "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.totals.market_value') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
     },
     {
       "id": 3,
       "type": "stat",
       "title": "Net Liquidation",
-      "gridPos": { "x": 8, "y": 0, "w": 4, "h": 5 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 8,
+        "y": 0,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
-        { "refId": "A", "format": "table", "queryType": "table",
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
           "queryText": "SELECT CAST(json_extract(payload_json,'$.totals.net_liquidation_value') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
           "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.totals.net_liquidation_value') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
     },
     {
       "id": 4,
       "type": "stat",
       "title": "LTV %",
-      "gridPos": { "x": 12, "y": 0, "w": 4, "h": 5 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
-        { "refId": "A", "format": "table", "queryType": "table",
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
           "queryText": "SELECT CAST(json_extract(payload_json,'$.totals.margin_to_portfolio_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
           "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.totals.margin_to_portfolio_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
@@ -79,9 +151,18 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 30 },
-              { "color": "red", "value": 35 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 30
+              },
+              {
+                "color": "red",
+                "value": 35
+              }
             ]
           }
         },
@@ -92,38 +173,83 @@
       "id": 5,
       "type": "stat",
       "title": "Unrealized P&L",
-      "gridPos": { "x": 16, "y": 0, "w": 4, "h": 5 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 16,
+        "y": 0,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
-        { "refId": "A", "format": "table", "queryType": "table",
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
           "queryText": "SELECT CAST(json_extract(payload_json,'$.totals.unrealized_pnl') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
           "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.totals.unrealized_pnl') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
     },
     {
       "id": 6,
       "type": "stat",
       "title": "Monthly Income",
-      "gridPos": { "x": 20, "y": 0, "w": 4, "h": 5 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 20,
+        "y": 0,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
-        { "refId": "A", "format": "table", "queryType": "table",
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
           "queryText": "SELECT CAST(json_extract(payload_json,'$.income.projected_monthly_income') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
           "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.income.projected_monthly_income') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
     },
     {
       "id": 7,
       "type": "stat",
       "title": "In Drawdown",
-      "gridPos": { "x": 0, "y": 5, "w": 6, "h": 4 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 4,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
-        { "refId": "A", "format": "table", "queryType": "table",
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
           "queryText": "SELECT CASE WHEN json_extract(payload_json,'$.portfolio_rollups.risk.drawdown_status.currently_in_drawdown') THEN 1 ELSE 0 END AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
           "rawQueryText": "SELECT CASE WHEN json_extract(payload_json,'$.portfolio_rollups.risk.drawdown_status.currently_in_drawdown') THEN 1 ELSE 0 END AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
@@ -133,7 +259,9 @@
         "graphMode": "none",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "value",
           "values": false
         },
@@ -148,8 +276,14 @@
             {
               "type": "value",
               "options": {
-                "0": { "text": "NO", "color": "green" },
-                "1": { "text": "YES", "color": "red" }
+                "0": {
+                  "text": "NO",
+                  "color": "green"
+                },
+                "1": {
+                  "text": "YES",
+                  "color": "red"
+                }
               }
             }
           ]
@@ -161,10 +295,21 @@
       "id": 8,
       "type": "stat",
       "title": "Drawdown Depth %",
-      "gridPos": { "x": 6, "y": 5, "w": 6, "h": 4 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 6,
+        "y": 4,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
-        { "refId": "A", "format": "table", "queryType": "table",
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
           "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.drawdown_status.current_drawdown_depth_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
           "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.drawdown_status.current_drawdown_depth_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
@@ -176,10 +321,22 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 5 },
-              { "color": "orange", "value": 10 },
-              { "color": "red", "value": 20 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 5
+              },
+              {
+                "color": "orange",
+                "value": 10
+              },
+              {
+                "color": "red",
+                "value": 20
+              }
             ]
           }
         },
@@ -190,72 +347,171 @@
       "id": 9,
       "type": "stat",
       "title": "Days Since Peak",
-      "gridPos": { "x": 12, "y": 5, "w": 6, "h": 4 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 12,
+        "y": 4,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
-        { "refId": "A", "format": "table", "queryType": "table",
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
           "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.drawdown_status.days_since_peak') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
           "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.drawdown_status.days_since_peak') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "none", "decimals": 0 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0
+        },
+        "overrides": []
+      }
     },
     {
       "id": 10,
       "type": "stat",
       "title": "Recovery %",
-      "gridPos": { "x": 18, "y": 5, "w": 6, "h": 4 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 18,
+        "y": 4,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
-        { "refId": "A", "format": "table", "queryType": "table",
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
           "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.drawdown_status.recovery_progress_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
           "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.risk.drawdown_status.recovery_progress_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 1 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 1
+        },
+        "overrides": []
+      }
     },
     {
       "id": 11,
       "type": "timeseries",
       "title": "Market Value (Last 90d)",
-      "gridPos": { "x": 0, "y": 9, "w": 12, "h": 8 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 7,
+        "w": 12,
+        "h": 7
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
-        { "refId": "A", "format": "table", "queryType": "table",
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
           "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.totals.market_value') AS REAL) AS value FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-90 day') ORDER BY as_of_date_local;",
           "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.totals.market_value') AS REAL) AS value FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-90 day') ORDER BY as_of_date_local;"
         }
       ],
       "transformations": [
-        { "id": "convertFieldType", "options": { "conversions": [ { "targetField": "time", "destinationType": "time" } ] } }
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
+        }
       ],
-      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
     },
     {
       "id": 12,
       "type": "timeseries",
       "title": "Monthly Income (Last 90d)",
-      "gridPos": { "x": 12, "y": 9, "w": 12, "h": 8 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 12,
+        "y": 7,
+        "w": 12,
+        "h": 7
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
-        { "refId": "A", "format": "table", "queryType": "table",
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
           "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.income.projected_monthly_income') AS REAL) AS value FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-90 day') ORDER BY as_of_date_local;",
           "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.income.projected_monthly_income') AS REAL) AS value FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-90 day') ORDER BY as_of_date_local;"
         }
       ],
       "transformations": [
-        { "id": "convertFieldType", "options": { "conversions": [ { "targetField": "time", "destinationType": "time" } ] } }
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
+        }
       ],
-      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
     },
     {
       "id": 13,
       "type": "table",
       "title": "Top Holdings",
-      "gridPos": { "x": 0, "y": 17, "w": 24, "h": 10 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 14,
+        "w": 24,
+        "h": 8
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
-        { "refId": "A", "format": "table", "queryType": "table",
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
           "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(h.value,'$.symbol') AS symbol, CAST(json_extract(h.value,'$.weight_pct') AS REAL) AS weight_pct, CAST(json_extract(h.value,'$.market_value') AS REAL) AS market_value, CAST(json_extract(h.value,'$.current_yield_pct') AS REAL) AS current_yield_pct FROM latest, json_each(latest.payload_json,'$.holdings') h ORDER BY weight_pct DESC LIMIT 10;",
           "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(h.value,'$.symbol') AS symbol, CAST(json_extract(h.value,'$.weight_pct') AS REAL) AS weight_pct, CAST(json_extract(h.value,'$.market_value') AS REAL) AS market_value, CAST(json_extract(h.value,'$.current_yield_pct') AS REAL) AS current_yield_pct FROM latest, json_each(latest.payload_json,'$.holdings') h ORDER BY weight_pct DESC LIMIT 10;"
         }
@@ -263,19 +519,72 @@
       "fieldConfig": {
         "defaults": {},
         "overrides": [
-          { "matcher": { "id": "byName", "options": "weight_pct" }, "properties": [ { "id": "unit", "value": "percent" }, { "id": "decimals", "value": 1 } ] },
-          { "matcher": { "id": "byName", "options": "market_value" }, "properties": [ { "id": "unit", "value": "currencyUSD" }, { "id": "decimals", "value": 0 } ] },
-          { "matcher": { "id": "byName", "options": "current_yield_pct" }, "properties": [ { "id": "unit", "value": "percent" }, { "id": "decimals", "value": 1 } ] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "weight_pct"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "market_value"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "currencyUSD"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "current_yield_pct"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              }
+            ]
+          }
         ]
       },
-      "options": { "showHeader": true, "cellHeight": "lg" }
+      "options": {
+        "showHeader": true,
+        "cellHeight": "md"
+      }
     }
   ],
   "refresh": "2m",
   "schemaVersion": 39,
   "style": "dark",
-  "tags": ["lmi"],
-  "time": { "from": "now-90d", "to": "now" },
+  "tags": [
+    "lmi"
+  ],
+  "time": {
+    "from": "now-90d",
+    "to": "now"
+  },
   "timezone": "browser",
   "title": "LMI Overview",
   "uid": "lmi-overview",

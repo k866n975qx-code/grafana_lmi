@@ -23,7 +23,7 @@
         "x": 0,
         "y": 0,
         "w": 8,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -70,7 +70,7 @@
         "x": 8,
         "y": 0,
         "w": 8,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -117,7 +117,7 @@
         "x": 16,
         "y": 0,
         "w": 8,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -162,9 +162,9 @@
       "title": "Current Yield",
       "gridPos": {
         "x": 0,
-        "y": 5,
+        "y": 4,
         "w": 12,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -209,9 +209,9 @@
       "title": "Yield on Cost",
       "gridPos": {
         "x": 12,
-        "y": 5,
+        "y": 4,
         "w": 12,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -254,27 +254,98 @@
       "id": 9,
       "type": "timeseries",
       "title": "Yield Trends (90d)",
-      "gridPos": { "x": 12, "y": 10, "w": 12, "h": 8 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 12,
+        "y": 8,
+        "w": 12,
+        "h": 7
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
-          "refId": "A", "format": "table", "queryType": "table",
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
           "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.income.portfolio_current_yield_pct') AS REAL) AS \"Current Yield %\", CAST(json_extract(payload_json,'$.income.portfolio_yield_on_cost_pct') AS REAL) AS \"Yield on Cost %\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-90 day') ORDER BY as_of_date_local;",
           "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.income.portfolio_current_yield_pct') AS REAL) AS \"Current Yield %\", CAST(json_extract(payload_json,'$.income.portfolio_yield_on_cost_pct') AS REAL) AS \"Yield on Cost %\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-90 day') ORDER BY as_of_date_local;"
         }
       ],
       "transformations": [
-        { "id": "convertFieldType", "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] } }
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
+        }
       ],
       "options": {
-        "tooltip": { "mode": "multi" },
-        "legend": { "displayMode": "list", "placement": "bottom", "showLegend": true }
+        "tooltip": {
+          "mode": "multi"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
       },
       "fieldConfig": {
-        "defaults": { "unit": "percent", "decimals": 2 },
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
         "overrides": [
-          { "matcher": { "id": "byName", "options": "Current Yield %" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "blue" } }, { "id": "custom.lineWidth", "value": 2 }] },
-          { "matcher": { "id": "byName", "options": "Yield on Cost %" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "orange" } }, { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 5] } }] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Current Yield %"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Yield on Cost %"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "orange"
+                }
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [
+                    10,
+                    5
+                  ]
+                }
+              }
+            ]
+          }
         ]
       }
     },
@@ -284,9 +355,9 @@
       "title": "Projected Monthly Income (Last 90d)",
       "gridPos": {
         "x": 0,
-        "y": 10,
+        "y": 8,
         "w": 12,
-        "h": 8
+        "h": 7
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -341,9 +412,9 @@
       "title": "Holdings - Income Leaderboard",
       "gridPos": {
         "x": 0,
-        "y": 18,
+        "y": 15,
         "w": 24,
-        "h": 10
+        "h": 8
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -360,41 +431,7 @@
       ],
       "options": {
         "showHeader": true,
-        "cellHeight": "lg"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "mappings": []
-        },
-        "overrides": []
-      }
-    },
-    {
-      "id": 8,
-      "type": "table",
-      "title": "Expected Dividend Events",
-      "gridPos": {
-        "x": 0,
-        "y": 28,
-        "w": 24,
-        "h": 8
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, json_extract(j.value,'$.ex_date_est') AS ex_date_est, json_extract(j.value,'$.pay_date_est') AS pay_date_est, CAST(json_extract(j.value,'$.amount_est') AS REAL) AS amount_est FROM latest, json_each(latest.payload_json,'$.dividends.projected_vs_received.alt.expected_events') j ORDER BY pay_date_est LIMIT 10;",
-          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, json_extract(j.value,'$.ex_date_est') AS ex_date_est, json_extract(j.value,'$.pay_date_est') AS pay_date_est, CAST(json_extract(j.value,'$.amount_est') AS REAL) AS amount_est FROM latest, json_each(latest.payload_json,'$.dividends.projected_vs_received.alt.expected_events') j ORDER BY pay_date_est LIMIT 10;"
-        }
-      ],
-      "options": {
-        "showHeader": true,
-        "cellHeight": "lg"
+        "cellHeight": "md"
       },
       "fieldConfig": {
         "defaults": {

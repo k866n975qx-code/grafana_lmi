@@ -1,0 +1,259 @@
+{
+  "__inputs": [],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    }
+  ],
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "graphTooltip": 0,
+  "id": null,
+  "panels": [
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "QUARTER Range",
+      "gridPos": { "x": 0, "y": 0, "w": 6, "h": 3 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT period_start_date || ' -> ' || period_end_date AS value FROM snapshots WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT period_start_date || ' -> ' || period_end_date AS value FROM snapshots WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": { "defaults": { "unit": "string" }, "overrides": [] }
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "QUARTER End MV",
+      "gridPos": { "x": 6, "y": 0, "w": 6, "h": 3 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s) SELECT CAST(COALESCE(json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)), json_extract(j, printf('$.intervals[%d].totals.market_value', i))) AS REAL) AS value FROM idx;",
+          "rawQueryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s) SELECT CAST(COALESCE(json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)), json_extract(j, printf('$.intervals[%d].totals.market_value', i))) AS REAL) AS value FROM idx;"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "QUARTER End Monthly Income",
+      "gridPos": { "x": 12, "y": 0, "w": 6, "h": 3 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', i)) AS REAL) AS value FROM idx;",
+          "rawQueryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', i)) AS REAL) AS value FROM idx;"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "QUARTER End LTV %",
+      "gridPos": { "x": 18, "y": 0, "w": 6, "h": 3 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].margin.ltv_pct', i)) AS REAL) AS value FROM idx;",
+          "rawQueryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].margin.ltv_pct', i)) AS REAL) AS value FROM idx;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 20 },
+              { "color": "red", "value": 30 }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 5,
+      "type": "table",
+      "title": "QUARTER Drivers",
+      "gridPos": { "x": 0, "y": 3, "w": 24, "h": 6 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT payload_json AS j FROM snapshots WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1), added AS (SELECT 'Added' AS type, json_extract(h.value,'$.symbol') AS symbol, CAST(json_extract(h.value,'$.weight_end_pct') AS REAL) AS weight_pct, NULL AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.holdings_added') h LIMIT 3), removed AS (SELECT 'Removed' AS type, json_extract(h.value,'$.symbol') AS symbol, CAST(json_extract(h.value,'$.weight_start_pct') AS REAL) AS weight_pct, NULL AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.holdings_removed') h LIMIT 3), gainers AS (SELECT 'Gainer' AS type, json_extract(h.value,'$.symbol') AS symbol, NULL AS weight_pct, CAST(json_extract(h.value,'$.pnl_dollar_period') AS REAL) AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.top_gainers') h LIMIT 3), losers AS (SELECT 'Loser' AS type, json_extract(h.value,'$.symbol') AS symbol, NULL AS weight_pct, CAST(json_extract(h.value,'$.pnl_dollar_period') AS REAL) AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.top_losers') h LIMIT 3) SELECT * FROM added UNION ALL SELECT * FROM removed UNION ALL SELECT * FROM gainers UNION ALL SELECT * FROM losers;",
+          "rawQueryText": "WITH latest AS (SELECT payload_json AS j FROM snapshots WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1), added AS (SELECT 'Added' AS type, json_extract(h.value,'$.symbol') AS symbol, CAST(json_extract(h.value,'$.weight_end_pct') AS REAL) AS weight_pct, NULL AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.holdings_added') h LIMIT 3), removed AS (SELECT 'Removed' AS type, json_extract(h.value,'$.symbol') AS symbol, CAST(json_extract(h.value,'$.weight_start_pct') AS REAL) AS weight_pct, NULL AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.holdings_removed') h LIMIT 3), gainers AS (SELECT 'Gainer' AS type, json_extract(h.value,'$.symbol') AS symbol, NULL AS weight_pct, CAST(json_extract(h.value,'$.pnl_dollar_period') AS REAL) AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.top_gainers') h LIMIT 3), losers AS (SELECT 'Loser' AS type, json_extract(h.value,'$.symbol') AS symbol, NULL AS weight_pct, CAST(json_extract(h.value,'$.pnl_dollar_period') AS REAL) AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.top_losers') h LIMIT 3) SELECT * FROM added UNION ALL SELECT * FROM removed UNION ALL SELECT * FROM gainers UNION ALL SELECT * FROM losers;"
+        }
+      ],
+      "options": { "showHeader": true, "cellHeight": "md" },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "weight_pct" }, "properties": [{ "id": "unit", "value": "percent" }, { "id": "decimals", "value": 1 }] },
+          { "matcher": { "id": "byName", "options": "pnl_dollar" }, "properties": [{ "id": "unit", "value": "currencyUSD" }, { "id": "decimals", "value": 0 }] }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "type": "stat",
+      "title": "YEAR Range",
+      "gridPos": { "x": 0, "y": 9, "w": 6, "h": 3 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT period_start_date || ' -> ' || period_end_date AS value FROM snapshots WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT period_start_date || ' -> ' || period_end_date AS value FROM snapshots WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": { "defaults": { "unit": "string" }, "overrides": [] }
+    },
+    {
+      "id": 7,
+      "type": "stat",
+      "title": "YEAR End MV",
+      "gridPos": { "x": 6, "y": 9, "w": 6, "h": 3 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s) SELECT CAST(COALESCE(json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)), json_extract(j, printf('$.intervals[%d].totals.market_value', i))) AS REAL) AS value FROM idx;",
+          "rawQueryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s) SELECT CAST(COALESCE(json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)), json_extract(j, printf('$.intervals[%d].totals.market_value', i))) AS REAL) AS value FROM idx;"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
+    },
+    {
+      "id": 8,
+      "type": "stat",
+      "title": "YEAR End Monthly Income",
+      "gridPos": { "x": 12, "y": 9, "w": 6, "h": 3 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', i)) AS REAL) AS value FROM idx;",
+          "rawQueryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', i)) AS REAL) AS value FROM idx;"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
+    },
+    {
+      "id": 9,
+      "type": "stat",
+      "title": "YEAR End LTV %",
+      "gridPos": { "x": 18, "y": 9, "w": 6, "h": 3 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].margin.ltv_pct', i)) AS REAL) AS value FROM idx;",
+          "rawQueryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].margin.ltv_pct', i)) AS REAL) AS value FROM idx;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 20 },
+              { "color": "red", "value": 30 }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 10,
+      "type": "table",
+      "title": "YEAR Drivers",
+      "gridPos": { "x": 0, "y": 12, "w": 24, "h": 6 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT payload_json AS j FROM snapshots WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1), added AS (SELECT 'Added' AS type, json_extract(h.value,'$.symbol') AS symbol, CAST(json_extract(h.value,'$.weight_end_pct') AS REAL) AS weight_pct, NULL AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.holdings_added') h LIMIT 3), removed AS (SELECT 'Removed' AS type, json_extract(h.value,'$.symbol') AS symbol, CAST(json_extract(h.value,'$.weight_start_pct') AS REAL) AS weight_pct, NULL AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.holdings_removed') h LIMIT 3), gainers AS (SELECT 'Gainer' AS type, json_extract(h.value,'$.symbol') AS symbol, NULL AS weight_pct, CAST(json_extract(h.value,'$.pnl_dollar_period') AS REAL) AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.top_gainers') h LIMIT 3), losers AS (SELECT 'Loser' AS type, json_extract(h.value,'$.symbol') AS symbol, NULL AS weight_pct, CAST(json_extract(h.value,'$.pnl_dollar_period') AS REAL) AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.top_losers') h LIMIT 3) SELECT * FROM added UNION ALL SELECT * FROM removed UNION ALL SELECT * FROM gainers UNION ALL SELECT * FROM losers;",
+          "rawQueryText": "WITH latest AS (SELECT payload_json AS j FROM snapshots WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1), added AS (SELECT 'Added' AS type, json_extract(h.value,'$.symbol') AS symbol, CAST(json_extract(h.value,'$.weight_end_pct') AS REAL) AS weight_pct, NULL AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.holdings_added') h LIMIT 3), removed AS (SELECT 'Removed' AS type, json_extract(h.value,'$.symbol') AS symbol, CAST(json_extract(h.value,'$.weight_start_pct') AS REAL) AS weight_pct, NULL AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.holdings_removed') h LIMIT 3), gainers AS (SELECT 'Gainer' AS type, json_extract(h.value,'$.symbol') AS symbol, NULL AS weight_pct, CAST(json_extract(h.value,'$.pnl_dollar_period') AS REAL) AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.top_gainers') h LIMIT 3), losers AS (SELECT 'Loser' AS type, json_extract(h.value,'$.symbol') AS symbol, NULL AS weight_pct, CAST(json_extract(h.value,'$.pnl_dollar_period') AS REAL) AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.top_losers') h LIMIT 3) SELECT * FROM added UNION ALL SELECT * FROM removed UNION ALL SELECT * FROM gainers UNION ALL SELECT * FROM losers;"
+        }
+      ],
+      "options": { "showHeader": true, "cellHeight": "md" },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "weight_pct" }, "properties": [{ "id": "unit", "value": "percent" }, { "id": "decimals", "value": 1 }] },
+          { "matcher": { "id": "byName", "options": "pnl_dollar" }, "properties": [{ "id": "unit", "value": "currencyUSD" }, { "id": "decimals", "value": 0 }] }
+        ]
+      }
+    }
+  ],
+  "refresh": "2m",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": ["lmi"],
+  "time": { "from": "now-90d", "to": "now" },
+  "timezone": "browser",
+  "title": "LMI - Period Drivers (Quarter/Year)",
+  "uid": "lmi-period-drivers-long",
+  "version": 1,
+  "__annotations": {
+    "grafana.app/sourcePath": "dashboards/lmi-period-drivers-long.json"
+  }
+}

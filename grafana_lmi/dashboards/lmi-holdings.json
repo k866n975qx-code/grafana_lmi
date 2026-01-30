@@ -23,7 +23,7 @@
         "x": 0,
         "y": 0,
         "w": 8,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -68,7 +68,7 @@
         "x": 8,
         "y": 0,
         "w": 8,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -113,7 +113,7 @@
         "x": 16,
         "y": 0,
         "w": 8,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -149,9 +149,18 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 30 },
-              { "color": "red", "value": 35 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 30
+              },
+              {
+                "color": "red",
+                "value": 35
+              }
             ]
           }
         },
@@ -164,9 +173,9 @@
       "title": "Portfolio Yield",
       "gridPos": {
         "x": 0,
-        "y": 5,
+        "y": 4,
         "w": 12,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -209,9 +218,9 @@
       "title": "Top 5 Concentration",
       "gridPos": {
         "x": 12,
-        "y": 5,
+        "y": 4,
         "w": 12,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -254,9 +263,9 @@
       "title": "Top Weights (Top 10)",
       "gridPos": {
         "x": 0,
-        "y": 10,
+        "y": 8,
         "w": 24,
-        "h": 9
+        "h": 7
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -295,9 +304,9 @@
       "title": "Holdings - Core",
       "gridPos": {
         "x": 0,
-        "y": 19,
+        "y": 15,
         "w": 24,
-        "h": 12
+        "h": 8
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -314,7 +323,7 @@
       ],
       "options": {
         "showHeader": true,
-        "cellHeight": "lg"
+        "cellHeight": "md"
       },
       "fieldConfig": {
         "defaults": {

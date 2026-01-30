@@ -23,7 +23,7 @@
         "x": 0,
         "y": 0,
         "w": 5,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -85,7 +85,7 @@
         "x": 5,
         "y": 0,
         "w": 5,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -116,7 +116,7 @@
         "x": 10,
         "y": 0,
         "w": 5,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -147,7 +147,7 @@
         "x": 15,
         "y": 0,
         "w": 5,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -209,7 +209,7 @@
         "x": 20,
         "y": 0,
         "w": 4,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -238,9 +238,9 @@
       "title": "Net Monthly (After Interest)",
       "gridPos": {
         "x": 0,
-        "y": 5,
+        "y": 4,
         "w": 8,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -269,9 +269,9 @@
       "title": "Net Progress %",
       "gridPos": {
         "x": 8,
-        "y": 5,
+        "y": 4,
         "w": 8,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -331,9 +331,9 @@
       "title": "Additional Needed",
       "gridPos": {
         "x": 16,
-        "y": 5,
+        "y": 4,
         "w": 8,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -362,9 +362,9 @@
       "title": "Progress Trend (90d)",
       "gridPos": {
         "x": 0,
-        "y": 10,
+        "y": 8,
         "w": 24,
-        "h": 8
+        "h": 7
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -401,27 +401,98 @@
       "type": "timeseries",
       "title": "Months to Goal Trend (90d)",
       "description": "How quickly the goal date is approaching. Lower is better. Compares basic projection vs pace-adjusted estimate.",
-      "gridPos": { "x": 0, "y": 18, "w": 24, "h": 8 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 15,
+        "w": 24,
+        "h": 7
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
-          "refId": "A", "format": "table", "queryType": "table",
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
           "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.goal_progress.months_to_goal') AS REAL) AS \"Months to Goal\", CAST(json_extract(payload_json,'$.goal_pace.current_pace.revised_months_to_goal') AS REAL) AS \"Revised (Pace-Adjusted)\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-90 days') ORDER BY as_of_date_local ASC;",
           "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.goal_progress.months_to_goal') AS REAL) AS \"Months to Goal\", CAST(json_extract(payload_json,'$.goal_pace.current_pace.revised_months_to_goal') AS REAL) AS \"Revised (Pace-Adjusted)\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-90 days') ORDER BY as_of_date_local ASC;"
         }
       ],
       "transformations": [
-        { "id": "convertFieldType", "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] } }
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
+        }
       ],
       "options": {
-        "tooltip": { "mode": "multi" },
-        "legend": { "displayMode": "list", "placement": "bottom", "showLegend": true }
+        "tooltip": {
+          "mode": "multi"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
       },
       "fieldConfig": {
-        "defaults": { "unit": "none", "decimals": 0 },
+        "defaults": {
+          "unit": "none",
+          "decimals": 0
+        },
         "overrides": [
-          { "matcher": { "id": "byName", "options": "Months to Goal" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "blue" } }, { "id": "custom.lineWidth", "value": 2 }] },
-          { "matcher": { "id": "byName", "options": "Revised (Pace-Adjusted)" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "green" } }, { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 5] } }] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Months to Goal"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Revised (Pace-Adjusted)"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "green"
+                }
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [
+                    10,
+                    5
+                  ]
+                }
+              }
+            ]
+          }
         ]
       }
     }
