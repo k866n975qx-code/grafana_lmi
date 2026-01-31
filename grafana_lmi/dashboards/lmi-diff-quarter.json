@@ -308,7 +308,7 @@
       ],
       "options": {
         "showHeader": true,
-        "cellHeight": "lg"
+        "cellHeight": "md"
       },
       "fieldConfig": {
         "defaults": {

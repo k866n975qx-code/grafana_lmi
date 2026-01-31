@@ -12,7 +12,7 @@
       "id": 1,
       "type": "stat",
       "title": "Portfolio Value",
-      "gridPos": { "x": 0, "y": 0, "w": 6, "h": 4 },
+      "gridPos": { "x": 0, "y": 0, "w": 6, "h": 3 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{
         "refId": "A", "format": "table", "queryType": "table",
@@ -25,7 +25,7 @@
       "id": 2,
       "type": "stat",
       "title": "Required PV (Tier)",
-      "gridPos": { "x": 6, "y": 0, "w": 6, "h": 4 },
+      "gridPos": { "x": 6, "y": 0, "w": 6, "h": 3 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{
         "refId": "A", "format": "table", "queryType": "table",
@@ -38,7 +38,7 @@
       "id": 3,
       "type": "stat",
       "title": "Current Monthly Income",
-      "gridPos": { "x": 12, "y": 0, "w": 6, "h": 4 },
+      "gridPos": { "x": 12, "y": 0, "w": 6, "h": 3 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{
         "refId": "A", "format": "table", "queryType": "table",
@@ -51,7 +51,7 @@
       "id": 4,
       "type": "stat",
       "title": "Target Monthly",
-      "gridPos": { "x": 18, "y": 0, "w": 6, "h": 4 },
+      "gridPos": { "x": 18, "y": 0, "w": 6, "h": 3 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{
         "refId": "A", "format": "table", "queryType": "table",
@@ -68,7 +68,7 @@
       "type": "timeseries",
       "title": "Portfolio Value vs Expected Pace (180d)",
       "description": "Actual portfolio value overlaid with the expected trajectory from your likely tier projection.",
-      "gridPos": { "x": 0, "y": 4, "w": 12, "h": 8 },
+      "gridPos": { "x": 0, "y": 3, "w": 12, "h": 8 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{
         "refId": "A", "format": "table", "queryType": "table",
@@ -92,7 +92,7 @@
       "type": "timeseries",
       "title": "Monthly Income vs Target (180d)",
       "description": "Actual projected monthly income trending toward the target goal.",
-      "gridPos": { "x": 12, "y": 4, "w": 12, "h": 8 },
+      "gridPos": { "x": 12, "y": 3, "w": 12, "h": 8 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{
         "refId": "A", "format": "table", "queryType": "table",
@@ -116,7 +116,7 @@
       "type": "table",
       "title": "Pace Tracking Windows",
       "description": "Expected vs actual performance across multiple time windows based on your likely tier projection.",
-      "gridPos": { "x": 0, "y": 12, "w": 24, "h": 10 },
+      "gridPos": { "x": 0, "y": 11, "w": 24, "h": 8 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{
         "refId": "A", "format": "table", "queryType": "table",

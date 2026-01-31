@@ -19,7 +19,7 @@
       "id": 1,
       "type": "stat",
       "title": "Risk Quality",
-      "gridPos": { "x": 0, "y": 0, "w": 4, "h": 4 },
+      "gridPos": { "x": 0, "y": 0, "w": 4, "h": 3 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
@@ -64,7 +64,7 @@
       "id": 2,
       "type": "stat",
       "title": "Vol 30d %",
-      "gridPos": { "x": 4, "y": 0, "w": 4, "h": 4 },
+      "gridPos": { "x": 4, "y": 0, "w": 4, "h": 3 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
@@ -84,7 +84,7 @@
       "id": 3,
       "type": "stat",
       "title": "Sharpe 1y",
-      "gridPos": { "x": 8, "y": 0, "w": 4, "h": 4 },
+      "gridPos": { "x": 8, "y": 0, "w": 4, "h": 3 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
@@ -104,7 +104,7 @@
       "id": 4,
       "type": "stat",
       "title": "Sortino 1y",
-      "gridPos": { "x": 12, "y": 0, "w": 4, "h": 4 },
+      "gridPos": { "x": 12, "y": 0, "w": 4, "h": 3 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
@@ -124,7 +124,7 @@
       "id": 5,
       "type": "stat",
       "title": "Beta",
-      "gridPos": { "x": 16, "y": 0, "w": 4, "h": 4 },
+      "gridPos": { "x": 16, "y": 0, "w": 4, "h": 3 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
@@ -144,7 +144,7 @@
       "id": 6,
       "type": "stat",
       "title": "Corr 1y",
-      "gridPos": { "x": 20, "y": 0, "w": 4, "h": 4 },
+      "gridPos": { "x": 20, "y": 0, "w": 4, "h": 3 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
@@ -164,7 +164,7 @@
       "id": 7,
       "type": "stat",
       "title": "VaR 95 (1d) %",
-      "gridPos": { "x": 0, "y": 4, "w": 8, "h": 4 },
+      "gridPos": { "x": 0, "y": 3, "w": 8, "h": 3 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
@@ -184,7 +184,7 @@
       "id": 8,
       "type": "stat",
       "title": "VaR 95 (1w) %",
-      "gridPos": { "x": 8, "y": 4, "w": 8, "h": 4 },
+      "gridPos": { "x": 8, "y": 3, "w": 8, "h": 3 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
@@ -204,7 +204,7 @@
       "id": 9,
       "type": "stat",
       "title": "VaR 95 (1m) %",
-      "gridPos": { "x": 16, "y": 4, "w": 8, "h": 4 },
+      "gridPos": { "x": 16, "y": 3, "w": 8, "h": 3 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
@@ -224,7 +224,7 @@
       "id": 10,
       "type": "stat",
       "title": "CVaR 95 (1d) %",
-      "gridPos": { "x": 0, "y": 8, "w": 8, "h": 4 },
+      "gridPos": { "x": 0, "y": 6, "w": 8, "h": 3 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
@@ -244,7 +244,7 @@
       "id": 11,
       "type": "stat",
       "title": "CVaR 95 (1w) %",
-      "gridPos": { "x": 8, "y": 8, "w": 8, "h": 4 },
+      "gridPos": { "x": 8, "y": 6, "w": 8, "h": 3 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
@@ -264,7 +264,7 @@
       "id": 12,
       "type": "stat",
       "title": "CVaR 95 (1m) %",
-      "gridPos": { "x": 16, "y": 8, "w": 8, "h": 4 },
+      "gridPos": { "x": 16, "y": 6, "w": 8, "h": 3 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
@@ -284,7 +284,7 @@
       "id": 13,
       "type": "stat",
       "title": "Ulcer Index 1y",
-      "gridPos": { "x": 0, "y": 12, "w": 6, "h": 4 },
+      "gridPos": { "x": 0, "y": 9, "w": 6, "h": 3 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
@@ -304,7 +304,7 @@
       "id": 14,
       "type": "stat",
       "title": "Track Error 1y %",
-      "gridPos": { "x": 6, "y": 12, "w": 6, "h": 4 },
+      "gridPos": { "x": 6, "y": 9, "w": 6, "h": 3 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
@@ -324,7 +324,7 @@
       "id": 15,
       "type": "stat",
       "title": "Max DD 1y %",
-      "gridPos": { "x": 12, "y": 12, "w": 6, "h": 4 },
+      "gridPos": { "x": 12, "y": 9, "w": 6, "h": 3 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
@@ -344,7 +344,7 @@
       "id": 16,
       "type": "stat",
       "title": "Calmar 1y",
-      "gridPos": { "x": 18, "y": 12, "w": 6, "h": 4 },
+      "gridPos": { "x": 18, "y": 9, "w": 6, "h": 3 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
@@ -364,7 +364,7 @@
       "id": 18,
       "type": "table",
       "title": "Holdings - Risk Metrics",
-      "gridPos": { "x": 0, "y": 16, "w": 24, "h": 8 },
+      "gridPos": { "x": 0, "y": 12, "w": 24, "h": 8 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {

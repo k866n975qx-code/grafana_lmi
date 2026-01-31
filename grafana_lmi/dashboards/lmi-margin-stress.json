@@ -23,7 +23,7 @@
         "x": 0,
         "y": 0,
         "w": 6,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -54,7 +54,7 @@
         "x": 6,
         "y": 0,
         "w": 6,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -85,7 +85,7 @@
         "x": 12,
         "y": 0,
         "w": 6,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -124,7 +124,7 @@
         "x": 18,
         "y": 0,
         "w": 6,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -153,9 +153,9 @@
       "title": "MV @ 30% LTV",
       "gridPos": {
         "x": 0,
-        "y": 4,
+        "y": 3,
         "w": 6,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -184,9 +184,9 @@
       "title": "Drop to 30% %",
       "gridPos": {
         "x": 6,
-        "y": 4,
+        "y": 3,
         "w": 6,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -215,9 +215,9 @@
       "title": "Max Loan @ 25%",
       "gridPos": {
         "x": 12,
-        "y": 4,
+        "y": 3,
         "w": 6,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -246,9 +246,9 @@
       "title": "Max Loan @ 30%",
       "gridPos": {
         "x": 18,
-        "y": 4,
+        "y": 3,
         "w": 6,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -277,9 +277,9 @@
       "title": "Monthly Interest",
       "gridPos": {
         "x": 0,
-        "y": 8,
+        "y": 6,
         "w": 6,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -308,9 +308,9 @@
       "title": "Income Coverage",
       "gridPos": {
         "x": 6,
-        "y": 8,
+        "y": 6,
         "w": 6,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -339,9 +339,9 @@
       "title": "ROI on Margin 1y",
       "gridPos": {
         "x": 12,
-        "y": 8,
+        "y": 6,
         "w": 6,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -370,9 +370,9 @@
       "title": "Net Benefit 1y",
       "gridPos": {
         "x": 18,
-        "y": 8,
+        "y": 6,
         "w": 6,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -401,7 +401,7 @@
       "title": "LTV % (Last 90d)",
       "gridPos": {
         "x": 0,
-        "y": 12,
+        "y": 9,
         "w": 24,
         "h": 7
       },
@@ -414,8 +414,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.totals.margin_to_portfolio_pct') AS REAL) AS \"LTV %\", 25.0 AS \"Warning (25%)\", 30.0 AS \"Critical (30%)\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-90 day') ORDER BY as_of_date_local;",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.totals.margin_to_portfolio_pct') AS REAL) AS \"LTV %\", 25.0 AS \"Warning (25%)\", 30.0 AS \"Critical (30%)\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-90 day') ORDER BY as_of_date_local;"
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.totals.margin_to_portfolio_pct') AS REAL) AS \"LTV %\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-90 day') ORDER BY as_of_date_local;",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.totals.margin_to_portfolio_pct') AS REAL) AS \"LTV %\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-90 day') ORDER BY as_of_date_local;"
         }
       ],
       "transformations": [
@@ -432,12 +432,26 @@
         }
       ],
       "fieldConfig": {
-        "defaults": { "unit": "percent", "decimals": 1 },
-        "overrides": [
-          { "matcher": { "id": "byName", "options": "LTV %" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "green" } }, { "id": "custom.lineWidth", "value": 2 }] },
-          { "matcher": { "id": "byName", "options": "Warning (25%)" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "yellow" } }, { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 5] } }, { "id": "custom.lineWidth", "value": 1 }] },
-          { "matcher": { "id": "byName", "options": "Critical (30%)" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "red" } }, { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 5] } }, { "id": "custom.lineWidth", "value": 1 }] }
-        ]
+        "defaults": {
+          "unit": "percent",
+          "decimals": 1,
+          "custom": {
+            "thresholdsStyle": {
+              "mode": "line"
+            },
+            "lineWidth": 2
+          },
+          "color": { "mode": "fixed", "fixedColor": "green" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 25 },
+              { "color": "red", "value": 30 }
+            ]
+          }
+        },
+        "overrides": []
       },
       "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom", "showLegend": true } }
     },
@@ -445,7 +459,7 @@
       "id": 14,
       "type": "timeseries",
       "title": "Margin Loan Balance (90d)",
-      "gridPos": { "x": 0, "y": 19, "w": 12, "h": 7 },
+      "gridPos": { "x": 0, "y": 16, "w": 12, "h": 6 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
@@ -470,7 +484,7 @@
       "type": "timeseries",
       "title": "Income Coverage Ratio (90d)",
       "description": "Monthly dividend income divided by monthly margin interest. Higher is better.",
-      "gridPos": { "x": 12, "y": 19, "w": 12, "h": 7 },
+      "gridPos": { "x": 12, "y": 16, "w": 12, "h": 6 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [
         {
