@@ -214,8 +214,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, json_extract(j.value,'$.ex_date_est') AS ex_date_est, json_extract(j.value,'$.pay_date_est') AS pay_date_est, CAST(json_extract(j.value,'$.amount_est') AS REAL) AS amount_est FROM latest, json_each(latest.payload_json,'$.dividends.projected_vs_received.alt.expected_events') j ORDER BY pay_date_est LIMIT 10;",
-          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, json_extract(j.value,'$.ex_date_est') AS ex_date_est, json_extract(j.value,'$.pay_date_est') AS pay_date_est, CAST(json_extract(j.value,'$.amount_est') AS REAL) AS amount_est FROM latest, json_each(latest.payload_json,'$.dividends.projected_vs_received.alt.expected_events') j ORDER BY pay_date_est LIMIT 10;"
+          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, json_extract(j.value,'$.ex_date_est') AS ex_date_est, json_extract(j.value,'$.pay_date_est') AS pay_date_est, CAST(json_extract(j.value,'$.amount_est') AS REAL) AS amount_est FROM latest, json_each(latest.payload_json,'$.dividends.projected_vs_received.expected_events') j ORDER BY pay_date_est LIMIT 10;",
+          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, json_extract(j.value,'$.ex_date_est') AS ex_date_est, json_extract(j.value,'$.pay_date_est') AS pay_date_est, CAST(json_extract(j.value,'$.amount_est') AS REAL) AS amount_est FROM latest, json_each(latest.payload_json,'$.dividends.projected_vs_received.expected_events') j ORDER BY pay_date_est LIMIT 10;"
         }
       ],
       "options": {
