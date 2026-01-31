@@ -79,8 +79,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.dividends.projected_vs_received.alt.projected') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.dividends.projected_vs_received.alt.projected') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.dividends.projected_vs_received.projected') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.dividends.projected_vs_received.projected') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -124,8 +124,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT ROUND(CAST(json_extract(payload_json,'$.dividends.projected_vs_received.alt.projected') AS REAL) - CAST(json_extract(payload_json,'$.dividends.projected_vs_received.received') AS REAL), 2) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT ROUND(CAST(json_extract(payload_json,'$.dividends.projected_vs_received.alt.projected') AS REAL) - CAST(json_extract(payload_json,'$.dividends.projected_vs_received.received') AS REAL), 2) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT ROUND(CAST(json_extract(payload_json,'$.dividends.projected_vs_received.projected') AS REAL) - CAST(json_extract(payload_json,'$.dividends.projected_vs_received.received') AS REAL), 2) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT ROUND(CAST(json_extract(payload_json,'$.dividends.projected_vs_received.projected') AS REAL) - CAST(json_extract(payload_json,'$.dividends.projected_vs_received.received') AS REAL), 2) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -169,8 +169,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT ROUND(CAST(json_extract(payload_json,'$.dividends.projected_vs_received.received') AS REAL) / CAST(json_extract(payload_json,'$.dividends.projected_vs_received.alt.projected') AS REAL) * 100, 2) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT ROUND(CAST(json_extract(payload_json,'$.dividends.projected_vs_received.received') AS REAL) / CAST(json_extract(payload_json,'$.dividends.projected_vs_received.alt.projected') AS REAL) * 100, 2) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT ROUND(CAST(json_extract(payload_json,'$.dividends.projected_vs_received.received') AS REAL) / CAST(json_extract(payload_json,'$.dividends.projected_vs_received.projected') AS REAL) * 100, 2) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT ROUND(CAST(json_extract(payload_json,'$.dividends.projected_vs_received.received') AS REAL) / CAST(json_extract(payload_json,'$.dividends.projected_vs_received.projected') AS REAL) * 100, 2) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
