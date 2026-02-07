@@ -16,8 +16,8 @@
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{
         "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT CAST(json_extract(payload_json, '$.goal_tiers.current_state.portfolio_value') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-        "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.goal_tiers.current_state.portfolio_value') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        "queryText": "SELECT CAST(json_extract(payload_json, '$.goals.current_state.portfolio_value') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+        "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.goals.current_state.portfolio_value') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
       }],
       "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
     },
@@ -29,8 +29,8 @@
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{
         "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT CAST(json_extract(payload_json, '$.goal_pace.baseline_projection.required_portfolio_value') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-        "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.goal_pace.baseline_projection.required_portfolio_value') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        "queryText": "SELECT CAST(json_extract(payload_json, '$.goals.pace.baseline_projection.required_portfolio_value') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+        "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.goals.pace.baseline_projection.required_portfolio_value') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
       }],
       "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
     },
@@ -42,8 +42,8 @@
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{
         "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT CAST(json_extract(payload_json, '$.goal_tiers.current_state.projected_monthly_income') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-        "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.goal_tiers.current_state.projected_monthly_income') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        "queryText": "SELECT CAST(json_extract(payload_json, '$.goals.current_state.projected_monthly_income') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+        "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.goals.current_state.projected_monthly_income') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
       }],
       "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
     },
@@ -55,8 +55,8 @@
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{
         "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT CAST(json_extract(payload_json, '$.goal_tiers.current_state.target_monthly') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-        "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.goal_tiers.current_state.target_monthly') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+        "queryText": "SELECT CAST(json_extract(payload_json, '$.goals.current_state.target_monthly') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+        "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.goals.current_state.target_monthly') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
       }],
       "fieldConfig": {
         "defaults": { "unit": "currencyUSD", "decimals": 0, "color": { "mode": "fixed", "fixedColor": "orange" } },
@@ -72,8 +72,8 @@
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{
         "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json, '$.totals.market_value') AS REAL) AS \"Actual Portfolio Value\", CAST(json_extract(payload_json, '$.goal_pace.windows.since_inception.expected.portfolio_value') AS REAL) AS \"Expected (Tier Pace)\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now', '-180 day') ORDER BY as_of_date_local;",
-        "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json, '$.totals.market_value') AS REAL) AS \"Actual Portfolio Value\", CAST(json_extract(payload_json, '$.goal_pace.windows.since_inception.expected.portfolio_value') AS REAL) AS \"Expected (Tier Pace)\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now', '-180 day') ORDER BY as_of_date_local;"
+        "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json, '$.portfolio.totals.market_value') AS REAL) AS \"Actual Portfolio Value\", CAST(json_extract(payload_json, '$.goals.pace.windows.since_inception.expected.portfolio_value') AS REAL) AS \"Expected (Tier Pace)\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now', '-180 day') ORDER BY as_of_date_local;",
+        "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json, '$.portfolio.totals.market_value') AS REAL) AS \"Actual Portfolio Value\", CAST(json_extract(payload_json, '$.goals.pace.windows.since_inception.expected.portfolio_value') AS REAL) AS \"Expected (Tier Pace)\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now', '-180 day') ORDER BY as_of_date_local;"
       }],
       "transformations": [
         { "id": "convertFieldType", "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] } }
@@ -96,8 +96,8 @@
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{
         "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json, '$.income.projected_monthly_income') AS REAL) AS \"Monthly Income\", CAST(json_extract(payload_json, '$.goal_tiers.current_state.target_monthly') AS REAL) AS \"Target ($4,000/mo)\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now', '-180 day') ORDER BY as_of_date_local;",
-        "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json, '$.income.projected_monthly_income') AS REAL) AS \"Monthly Income\", CAST(json_extract(payload_json, '$.goal_tiers.current_state.target_monthly') AS REAL) AS \"Target ($4,000/mo)\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now', '-180 day') ORDER BY as_of_date_local;"
+        "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json, '$.portfolio.income.projected_monthly_income') AS REAL) AS \"Monthly Income\", CAST(json_extract(payload_json, '$.goals.current_state.target_monthly') AS REAL) AS \"Target ($4,000/mo)\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now', '-180 day') ORDER BY as_of_date_local;",
+        "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json, '$.portfolio.income.projected_monthly_income') AS REAL) AS \"Monthly Income\", CAST(json_extract(payload_json, '$.goals.current_state.target_monthly') AS REAL) AS \"Target ($4,000/mo)\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now', '-180 day') ORDER BY as_of_date_local;"
       }],
       "transformations": [
         { "id": "convertFieldType", "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] } }
@@ -120,8 +120,8 @@
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{
         "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1), windows AS (SELECT w.key AS wk, w.value AS wd FROM latest, json_each(latest.payload_json, '$.goal_pace.windows') AS w) SELECT json_extract(wd, '$.window_name') AS window, CAST(json_extract(wd, '$.days_in_window') AS INTEGER) AS days, CAST(json_extract(wd, '$.expected.portfolio_value') AS REAL) AS expected_pv, CAST(json_extract(wd, '$.actual.portfolio_value') AS REAL) AS actual_pv, CAST(json_extract(wd, '$.delta.portfolio_value') AS REAL) AS pv_delta, CAST(json_extract(wd, '$.delta.portfolio_value_pct') AS REAL) AS pv_delta_pct, CAST(json_extract(wd, '$.pace.months_ahead_behind') AS REAL) AS months_ahead_behind, CAST(json_extract(wd, '$.pace.pct_of_tier_pace') AS REAL) AS pace_pct, CAST(json_extract(wd, '$.pace.amount_surplus') AS REAL) AS surplus FROM windows ORDER BY CAST(json_extract(wd, '$.days_in_window') AS INTEGER);",
-        "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1), windows AS (SELECT w.key AS wk, w.value AS wd FROM latest, json_each(latest.payload_json, '$.goal_pace.windows') AS w) SELECT json_extract(wd, '$.window_name') AS window, CAST(json_extract(wd, '$.days_in_window') AS INTEGER) AS days, CAST(json_extract(wd, '$.expected.portfolio_value') AS REAL) AS expected_pv, CAST(json_extract(wd, '$.actual.portfolio_value') AS REAL) AS actual_pv, CAST(json_extract(wd, '$.delta.portfolio_value') AS REAL) AS pv_delta, CAST(json_extract(wd, '$.delta.portfolio_value_pct') AS REAL) AS pv_delta_pct, CAST(json_extract(wd, '$.pace.months_ahead_behind') AS REAL) AS months_ahead_behind, CAST(json_extract(wd, '$.pace.pct_of_tier_pace') AS REAL) AS pace_pct, CAST(json_extract(wd, '$.pace.amount_surplus') AS REAL) AS surplus FROM windows ORDER BY CAST(json_extract(wd, '$.days_in_window') AS INTEGER);"
+        "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1), windows AS (SELECT w.key AS wk, w.value AS wd FROM latest, json_each(latest.payload_json, '$.goals.pace.windows') AS w) SELECT json_extract(wd, '$.window_name') AS window, CAST(json_extract(wd, '$.days_in_window') AS INTEGER) AS days, CAST(json_extract(wd, '$.expected.portfolio_value') AS REAL) AS expected_pv, CAST(json_extract(wd, '$.actual.portfolio_value') AS REAL) AS actual_pv, CAST(json_extract(wd, '$.delta.portfolio_value') AS REAL) AS pv_delta, CAST(json_extract(wd, '$.delta.portfolio_value_pct') AS REAL) AS pv_delta_pct, CAST(json_extract(wd, '$.pace.months_ahead_behind') AS REAL) AS months_ahead_behind, CAST(json_extract(wd, '$.pace.pct_of_tier_pace') AS REAL) AS pace_pct, CAST(json_extract(wd, '$.pace.amount_surplus') AS REAL) AS surplus FROM windows ORDER BY CAST(json_extract(wd, '$.days_in_window') AS INTEGER);",
+        "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1), windows AS (SELECT w.key AS wk, w.value AS wd FROM latest, json_each(latest.payload_json, '$.goals.pace.windows') AS w) SELECT json_extract(wd, '$.window_name') AS window, CAST(json_extract(wd, '$.days_in_window') AS INTEGER) AS days, CAST(json_extract(wd, '$.expected.portfolio_value') AS REAL) AS expected_pv, CAST(json_extract(wd, '$.actual.portfolio_value') AS REAL) AS actual_pv, CAST(json_extract(wd, '$.delta.portfolio_value') AS REAL) AS pv_delta, CAST(json_extract(wd, '$.delta.portfolio_value_pct') AS REAL) AS pv_delta_pct, CAST(json_extract(wd, '$.pace.months_ahead_behind') AS REAL) AS months_ahead_behind, CAST(json_extract(wd, '$.pace.pct_of_tier_pace') AS REAL) AS pace_pct, CAST(json_extract(wd, '$.pace.amount_surplus') AS REAL) AS surplus FROM windows ORDER BY CAST(json_extract(wd, '$.days_in_window') AS INTEGER);"
       }],
       "options": { "showHeader": true, "cellHeight": "md" },
       "fieldConfig": {

@@ -73,8 +73,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='WEEK'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;",
-          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='WEEK'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;"
+          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='WEEK'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;",
+          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='WEEK'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;"
         }
       ],
       "options": {
@@ -260,8 +260,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='MONTH'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;",
-          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='MONTH'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;"
+          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='MONTH'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;",
+          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='MONTH'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;"
         }
       ],
       "options": {
@@ -447,8 +447,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='QUARTER'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;",
-          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='QUARTER'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;"
+          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='QUARTER'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;",
+          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='QUARTER'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;"
         }
       ],
       "options": {
@@ -634,8 +634,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='YEAR'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;",
-          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='YEAR'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;"
+          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='YEAR'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;",
+          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='YEAR'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;"
         }
       ],
       "options": {

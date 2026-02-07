@@ -248,8 +248,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT j.key AS symbol, CAST(json_extract(j.value,'$.amount') AS REAL) AS amount_30d, json_extract(j.value,'$.status') AS status FROM latest, json_each(latest.payload_json,'$.dividends.windows.30d.by_symbol') j ORDER BY amount_30d DESC LIMIT 10;",
-          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT j.key AS symbol, CAST(json_extract(j.value,'$.amount') AS REAL) AS amount_30d, json_extract(j.value,'$.status') AS status FROM latest, json_each(latest.payload_json,'$.dividends.windows.30d.by_symbol') j ORDER BY amount_30d DESC LIMIT 10;"
+          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT j.key AS symbol, CAST(json_extract(j.value,'$.amount') AS REAL) AS amount_30d, json_extract(j.value,'$.status') AS status FROM latest, json_each(latest.payload_json,'$.dividends.realized.30d.by_symbol') j ORDER BY amount_30d DESC LIMIT 10;",
+          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT j.key AS symbol, CAST(json_extract(j.value,'$.amount') AS REAL) AS amount_30d, json_extract(j.value,'$.status') AS status FROM latest, json_each(latest.payload_json,'$.dividends.realized.30d.by_symbol') j ORDER BY amount_30d DESC LIMIT 10;"
         }
       ],
       "options": {

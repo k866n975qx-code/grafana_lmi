@@ -34,8 +34,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.income_stability.stability_score') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.income_stability.stability_score') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.income.income_stability.stability_score') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.income.income_stability.stability_score') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -96,8 +96,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.income_stability.consecutive_months_positive') AS INTEGER) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.income_stability.consecutive_months_positive') AS INTEGER) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.income.income_stability.consecutive_months_positive') AS INTEGER) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.income.income_stability.consecutive_months_positive') AS INTEGER) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -158,8 +158,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.income_stability.dividend_cut_count_12m') AS INTEGER) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.income_stability.dividend_cut_count_12m') AS INTEGER) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.income.income_stability.dividend_cut_count_12m') AS INTEGER) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.income.income_stability.dividend_cut_count_12m') AS INTEGER) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -220,8 +220,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.income_stability.missed_payment_count_12m') AS INTEGER) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.income_stability.missed_payment_count_12m') AS INTEGER) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.income.income_stability.missed_payment_count_12m') AS INTEGER) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.income.income_stability.missed_payment_count_12m') AS INTEGER) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -282,8 +282,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT json_extract(h.value,'$.symbol') AS symbol, CAST(json_extract(h.value,'$.dividend_reliability.consistency_score') AS REAL) AS score, json_extract(h.value,'$.dividend_reliability.payment_frequency_expected') AS freq, CAST(json_extract(h.value,'$.dividend_reliability.missed_payments_12m') AS INTEGER) AS missed FROM snapshot_daily_current, json_each(json_extract(payload_json,'$.holdings')) AS h ORDER BY as_of_date_local DESC, CAST(json_extract(h.value,'$.dividend_reliability.consistency_score') AS REAL) ASC LIMIT 10;",
-          "rawQueryText": "SELECT json_extract(h.value,'$.symbol') AS symbol, CAST(json_extract(h.value,'$.dividend_reliability.consistency_score') AS REAL) AS score, json_extract(h.value,'$.dividend_reliability.payment_frequency_expected') AS freq, CAST(json_extract(h.value,'$.dividend_reliability.missed_payments_12m') AS INTEGER) AS missed FROM snapshot_daily_current, json_each(json_extract(payload_json,'$.holdings')) AS h ORDER BY as_of_date_local DESC, CAST(json_extract(h.value,'$.dividend_reliability.consistency_score') AS REAL) ASC LIMIT 10;"
+          "queryText": "SELECT json_extract(h.value,'$.symbol') AS symbol, CAST(json_extract(h.value,'$.reliability.consistency_score') AS REAL) AS score, json_extract(h.value,'$.reliability.payment_frequency_expected') AS freq, CAST(json_extract(h.value,'$.reliability.missed_payments_12m') AS INTEGER) AS missed FROM snapshot_daily_current, json_each(json_extract(payload_json,'$.holdings')) AS h ORDER BY as_of_date_local DESC, CAST(json_extract(h.value,'$.reliability.consistency_score') AS REAL) ASC LIMIT 10;",
+          "rawQueryText": "SELECT json_extract(h.value,'$.symbol') AS symbol, CAST(json_extract(h.value,'$.reliability.consistency_score') AS REAL) AS score, json_extract(h.value,'$.reliability.payment_frequency_expected') AS freq, CAST(json_extract(h.value,'$.reliability.missed_payments_12m') AS INTEGER) AS missed FROM snapshot_daily_current, json_each(json_extract(payload_json,'$.holdings')) AS h ORDER BY as_of_date_local DESC, CAST(json_extract(h.value,'$.reliability.consistency_score') AS REAL) ASC LIMIT 10;"
         }
       ],
       "options": {

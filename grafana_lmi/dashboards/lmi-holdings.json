@@ -34,8 +34,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.totals.market_value') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.totals.market_value') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.totals.market_value') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.totals.market_value') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -79,8 +79,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.income.projected_monthly_income') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.income.projected_monthly_income') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.income.projected_monthly_income') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.income.projected_monthly_income') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -124,8 +124,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.totals.margin_to_portfolio_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.totals.margin_to_portfolio_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.totals.margin_to_portfolio_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.totals.margin_to_portfolio_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -186,8 +186,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.income.portfolio_current_yield_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.income.portfolio_current_yield_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.income.portfolio_current_yield_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.income.portfolio_current_yield_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -231,8 +231,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT payload_json AS j FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1), top5 AS (SELECT CAST(json_extract(h.value,'$.weight_pct') AS REAL) AS weight_pct FROM latest, json_each(latest.j,'$.holdings') h ORDER BY weight_pct DESC LIMIT 5) SELECT SUM(weight_pct) AS value FROM top5;",
-          "rawQueryText": "WITH latest AS (SELECT payload_json AS j FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1), top5 AS (SELECT CAST(json_extract(h.value,'$.weight_pct') AS REAL) AS weight_pct FROM latest, json_each(latest.j,'$.holdings') h ORDER BY weight_pct DESC LIMIT 5) SELECT SUM(weight_pct) AS value FROM top5;"
+          "queryText": "WITH latest AS (SELECT payload_json AS j FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1), top5 AS (SELECT CAST(json_extract(h.value,'$.valuation.portfolio_weight_pct') AS REAL) AS weight_pct FROM latest, json_each(latest.j,'$.holdings') h ORDER BY weight_pct DESC LIMIT 5) SELECT SUM(weight_pct) AS value FROM top5;",
+          "rawQueryText": "WITH latest AS (SELECT payload_json AS j FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1), top5 AS (SELECT CAST(json_extract(h.value,'$.valuation.portfolio_weight_pct') AS REAL) AS weight_pct FROM latest, json_each(latest.j,'$.holdings') h ORDER BY weight_pct DESC LIMIT 5) SELECT SUM(weight_pct) AS value FROM top5;"
         }
       ],
       "options": {
@@ -276,8 +276,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.weight_pct') AS REAL) AS weight_pct FROM latest, json_each(latest.payload_json,'$.holdings') j ORDER BY weight_pct DESC LIMIT 10;",
-          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.weight_pct') AS REAL) AS weight_pct FROM latest, json_each(latest.payload_json,'$.holdings') j ORDER BY weight_pct DESC LIMIT 10;"
+          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.valuation.portfolio_weight_pct') AS REAL) AS weight_pct FROM latest, json_each(latest.payload_json,'$.holdings') j ORDER BY weight_pct DESC LIMIT 10;",
+          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.valuation.portfolio_weight_pct') AS REAL) AS weight_pct FROM latest, json_each(latest.payload_json,'$.holdings') j ORDER BY weight_pct DESC LIMIT 10;"
         }
       ],
       "options": {
@@ -317,8 +317,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.market_value') AS REAL) AS market_value, CAST(json_extract(j.value,'$.weight_pct') AS REAL) AS weight_pct, CAST(json_extract(j.value,'$.current_yield_pct') AS REAL) AS current_yield_pct, CAST(json_extract(j.value,'$.projected_monthly_dividend') AS REAL) AS projected_monthly_dividend, CAST(json_extract(j.value,'$.unrealized_pct') AS REAL) AS unrealized_pct FROM latest, json_each(latest.payload_json,'$.holdings') j ORDER BY market_value DESC LIMIT 10;",
-          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.market_value') AS REAL) AS market_value, CAST(json_extract(j.value,'$.weight_pct') AS REAL) AS weight_pct, CAST(json_extract(j.value,'$.current_yield_pct') AS REAL) AS current_yield_pct, CAST(json_extract(j.value,'$.projected_monthly_dividend') AS REAL) AS projected_monthly_dividend, CAST(json_extract(j.value,'$.unrealized_pct') AS REAL) AS unrealized_pct FROM latest, json_each(latest.payload_json,'$.holdings') j ORDER BY market_value DESC LIMIT 10;"
+          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.valuation.market_value') AS REAL) AS market_value, CAST(json_extract(j.value,'$.valuation.portfolio_weight_pct') AS REAL) AS weight_pct, CAST(json_extract(j.value,'$.income.current_yield_pct') AS REAL) AS current_yield_pct, CAST(json_extract(j.value,'$.income.projected_monthly_dividend') AS REAL) AS projected_monthly_dividend, CAST(json_extract(j.value,'$.valuation.unrealized_pct') AS REAL) AS unrealized_pct FROM latest, json_each(latest.payload_json,'$.holdings') j ORDER BY market_value DESC LIMIT 10;",
+          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.valuation.market_value') AS REAL) AS market_value, CAST(json_extract(j.value,'$.valuation.portfolio_weight_pct') AS REAL) AS weight_pct, CAST(json_extract(j.value,'$.income.current_yield_pct') AS REAL) AS current_yield_pct, CAST(json_extract(j.value,'$.income.projected_monthly_dividend') AS REAL) AS projected_monthly_dividend, CAST(json_extract(j.value,'$.valuation.unrealized_pct') AS REAL) AS unrealized_pct FROM latest, json_each(latest.payload_json,'$.holdings') j ORDER BY market_value DESC LIMIT 10;"
         }
       ],
       "options": {

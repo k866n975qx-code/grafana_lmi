@@ -17,8 +17,8 @@
       "targets": [
         {
           "refId": "A", "format": "table", "queryType": "table",
-          "queryText": "SELECT json_extract(payload_json, '$.goal_pace.likely_tier.tier') || ' - ' || json_extract(payload_json, '$.goal_pace.likely_tier.name') AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT json_extract(payload_json, '$.goal_pace.likely_tier.tier') || ' - ' || json_extract(payload_json, '$.goal_pace.likely_tier.name') AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT json_extract(payload_json, '$.goals.pace.likely_tier.tier') || ' - ' || json_extract(payload_json, '$.goals.pace.likely_tier.name') AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT json_extract(payload_json, '$.goals.pace.likely_tier.tier') || ' - ' || json_extract(payload_json, '$.goals.pace.likely_tier.name') AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -43,8 +43,8 @@
       "targets": [
         {
           "refId": "A", "format": "table", "queryType": "table",
-          "queryText": "SELECT UPPER(json_extract(payload_json, '$.goal_pace.current_pace.pace_category')) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT UPPER(json_extract(payload_json, '$.goal_pace.current_pace.pace_category')) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT UPPER(json_extract(payload_json, '$.goals.pace.current_pace.pace_category')) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT UPPER(json_extract(payload_json, '$.goals.pace.current_pace.pace_category')) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -73,8 +73,8 @@
       "targets": [
         {
           "refId": "A", "format": "table", "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json, '$.goal_pace.current_pace.months_ahead_behind') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.goal_pace.current_pace.months_ahead_behind') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT CAST(json_extract(payload_json, '$.goals.pace.current_pace.months_ahead_behind') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.goals.pace.current_pace.months_ahead_behind') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -99,8 +99,8 @@
       "targets": [
         {
           "refId": "A", "format": "table", "queryType": "table",
-          "queryText": "SELECT json_extract(payload_json, '$.goal_pace.current_pace.revised_goal_date') AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT json_extract(payload_json, '$.goal_pace.current_pace.revised_goal_date') AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT json_extract(payload_json, '$.goals.pace.current_pace.revised_goal_date') AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT json_extract(payload_json, '$.goals.pace.current_pace.revised_goal_date') AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": { "colorMode": "none", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value", "wideLayout": true },
@@ -115,8 +115,8 @@
       "targets": [
         {
           "refId": "A", "format": "table", "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json, '$.goal_pace.current_pace.revised_months_to_goal') AS INTEGER) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.goal_pace.current_pace.revised_months_to_goal') AS INTEGER) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT CAST(json_extract(payload_json, '$.goals.pace.current_pace.revised_months_to_goal') AS INTEGER) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.goals.pace.current_pace.revised_months_to_goal') AS INTEGER) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "fieldConfig": { "defaults": { "unit": "none", "decimals": 0 }, "overrides": [] }
@@ -130,8 +130,8 @@
       "targets": [
         {
           "refId": "A", "format": "table", "queryType": "table",
-          "queryText": "SELECT UPPER(json_extract(payload_json, '$.goal_pace.likely_tier.confidence')) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT UPPER(json_extract(payload_json, '$.goal_pace.likely_tier.confidence')) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT UPPER(json_extract(payload_json, '$.goals.pace.likely_tier.confidence')) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT UPPER(json_extract(payload_json, '$.goals.pace.likely_tier.confidence')) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -158,8 +158,8 @@
       "targets": [
         {
           "refId": "A", "format": "table", "queryType": "table",
-          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT CAST(json_extract(t.value, '$.tier') AS INTEGER) AS tier, json_extract(t.value, '$.name') AS name, CAST(json_extract(t.value, '$.months_to_goal') AS INTEGER) AS months_to_goal, json_extract(t.value, '$.estimated_goal_date') AS goal_date, CAST(json_extract(t.value, '$.required_portfolio_value') AS REAL) AS required_pv, CAST(json_extract(t.value, '$.additional_investment_needed') AS REAL) AS additional_needed, CASE WHEN json_extract(t.value, '$.assumptions.drip_enabled') THEN 'Yes' ELSE 'No' END AS drip, CAST(json_extract(t.value, '$.assumptions.monthly_contribution') AS REAL) AS monthly_contrib, CAST(json_extract(t.value, '$.assumptions.annual_appreciation_pct') AS REAL) AS appreciation_pct, CASE WHEN json_extract(t.value, '$.assumptions.ltv_maintained') THEN 'Yes' ELSE 'No' END AS leverage, CASE WHEN CAST(json_extract(t.value, '$.tier') AS INTEGER) = CAST(json_extract(latest.payload_json, '$.goal_pace.likely_tier.tier') AS INTEGER) THEN 'CURRENT' ELSE '' END AS active FROM latest, json_each(latest.payload_json, '$.goal_tiers.tiers') AS t ORDER BY CAST(json_extract(t.value, '$.tier') AS INTEGER);",
-          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT CAST(json_extract(t.value, '$.tier') AS INTEGER) AS tier, json_extract(t.value, '$.name') AS name, CAST(json_extract(t.value, '$.months_to_goal') AS INTEGER) AS months_to_goal, json_extract(t.value, '$.estimated_goal_date') AS goal_date, CAST(json_extract(t.value, '$.required_portfolio_value') AS REAL) AS required_pv, CAST(json_extract(t.value, '$.additional_investment_needed') AS REAL) AS additional_needed, CASE WHEN json_extract(t.value, '$.assumptions.drip_enabled') THEN 'Yes' ELSE 'No' END AS drip, CAST(json_extract(t.value, '$.assumptions.monthly_contribution') AS REAL) AS monthly_contrib, CAST(json_extract(t.value, '$.assumptions.annual_appreciation_pct') AS REAL) AS appreciation_pct, CASE WHEN json_extract(t.value, '$.assumptions.ltv_maintained') THEN 'Yes' ELSE 'No' END AS leverage, CASE WHEN CAST(json_extract(t.value, '$.tier') AS INTEGER) = CAST(json_extract(latest.payload_json, '$.goal_pace.likely_tier.tier') AS INTEGER) THEN 'CURRENT' ELSE '' END AS active FROM latest, json_each(latest.payload_json, '$.goal_tiers.tiers') AS t ORDER BY CAST(json_extract(t.value, '$.tier') AS INTEGER);"
+          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT CAST(json_extract(t.value, '$.tier') AS INTEGER) AS tier, json_extract(t.value, '$.name') AS name, CAST(json_extract(t.value, '$.months_to_goal') AS INTEGER) AS months_to_goal, json_extract(t.value, '$.estimated_goal_date') AS goal_date, CAST(json_extract(t.value, '$.required_portfolio_value') AS REAL) AS required_pv, CAST(json_extract(t.value, '$.additional_investment_needed') AS REAL) AS additional_needed, CASE WHEN json_extract(t.value, '$.assumptions.drip_enabled') THEN 'Yes' ELSE 'No' END AS drip, CAST(json_extract(t.value, '$.assumptions.monthly_contribution') AS REAL) AS monthly_contrib, CAST(json_extract(t.value, '$.assumptions.annual_appreciation_pct') AS REAL) AS appreciation_pct, CASE WHEN json_extract(t.value, '$.assumptions.ltv_maintained') THEN 'Yes' ELSE 'No' END AS leverage, CASE WHEN CAST(json_extract(t.value, '$.tier') AS INTEGER) = CAST(json_extract(latest.payload_json, '$.goals.pace.likely_tier.tier') AS INTEGER) THEN 'CURRENT' ELSE '' END AS active FROM latest, json_each(latest.payload_json, '$.goals.tiers') AS t ORDER BY CAST(json_extract(t.value, '$.tier') AS INTEGER);",
+          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT CAST(json_extract(t.value, '$.tier') AS INTEGER) AS tier, json_extract(t.value, '$.name') AS name, CAST(json_extract(t.value, '$.months_to_goal') AS INTEGER) AS months_to_goal, json_extract(t.value, '$.estimated_goal_date') AS goal_date, CAST(json_extract(t.value, '$.required_portfolio_value') AS REAL) AS required_pv, CAST(json_extract(t.value, '$.additional_investment_needed') AS REAL) AS additional_needed, CASE WHEN json_extract(t.value, '$.assumptions.drip_enabled') THEN 'Yes' ELSE 'No' END AS drip, CAST(json_extract(t.value, '$.assumptions.monthly_contribution') AS REAL) AS monthly_contrib, CAST(json_extract(t.value, '$.assumptions.annual_appreciation_pct') AS REAL) AS appreciation_pct, CASE WHEN json_extract(t.value, '$.assumptions.ltv_maintained') THEN 'Yes' ELSE 'No' END AS leverage, CASE WHEN CAST(json_extract(t.value, '$.tier') AS INTEGER) = CAST(json_extract(latest.payload_json, '$.goals.pace.likely_tier.tier') AS INTEGER) THEN 'CURRENT' ELSE '' END AS active FROM latest, json_each(latest.payload_json, '$.goals.tiers') AS t ORDER BY CAST(json_extract(t.value, '$.tier') AS INTEGER);"
         }
       ],
       "options": { "showHeader": true, "cellHeight": "md" },

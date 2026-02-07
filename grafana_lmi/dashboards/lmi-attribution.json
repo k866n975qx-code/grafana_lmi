@@ -34,8 +34,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.return_attribution_1m.total_return_dollars') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.return_attribution_1m.total_return_dollars') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.attribution.1m.total_return_dollars') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.attribution.1m.total_return_dollars') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -79,8 +79,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.return_attribution_1m.income_contribution_dollars') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.return_attribution_1m.income_contribution_dollars') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.attribution.1m.income_contribution_dollars') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.attribution.1m.income_contribution_dollars') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -124,8 +124,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.return_attribution_1m.price_contribution_dollars') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.return_attribution_1m.price_contribution_dollars') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.attribution.1m.price_contribution_dollars') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.attribution.1m.price_contribution_dollars') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -169,8 +169,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.return_attribution_1m.total_return_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio_rollups.return_attribution_1m.total_return_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.attribution.1m.total_return_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.attribution.1m.total_return_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -214,8 +214,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio_rollups.return_attribution_1m.top_contributors') j ORDER BY contribution_dollars DESC LIMIT 5;",
-          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio_rollups.return_attribution_1m.top_contributors') j ORDER BY contribution_dollars DESC LIMIT 5;"
+          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio.attribution.1m.top_contributors') j ORDER BY contribution_dollars DESC LIMIT 5;",
+          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio.attribution.1m.top_contributors') j ORDER BY contribution_dollars DESC LIMIT 5;"
         }
       ],
       "options": {
@@ -248,8 +248,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio_rollups.return_attribution_1m.bottom_contributors') j ORDER BY contribution_dollars DESC LIMIT 5;",
-          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio_rollups.return_attribution_1m.bottom_contributors') j ORDER BY contribution_dollars DESC LIMIT 5;"
+          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio.attribution.1m.bottom_contributors') j ORDER BY contribution_dollars DESC LIMIT 5;",
+          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio.attribution.1m.bottom_contributors') j ORDER BY contribution_dollars DESC LIMIT 5;"
         }
       ],
       "options": {
@@ -282,8 +282,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio_rollups.return_attribution_12m.top_contributors') j ORDER BY contribution_dollars DESC LIMIT 5;",
-          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio_rollups.return_attribution_12m.top_contributors') j ORDER BY contribution_dollars DESC LIMIT 5;"
+          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio.attribution.12m.top_contributors') j ORDER BY contribution_dollars DESC LIMIT 5;",
+          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio.attribution.12m.top_contributors') j ORDER BY contribution_dollars DESC LIMIT 5;"
         }
       ],
       "options": {
@@ -316,8 +316,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio_rollups.return_attribution_12m.bottom_contributors') j ORDER BY contribution_dollars DESC LIMIT 5;",
-          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio_rollups.return_attribution_12m.bottom_contributors') j ORDER BY contribution_dollars DESC LIMIT 5;"
+          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio.attribution.12m.bottom_contributors') j ORDER BY contribution_dollars DESC LIMIT 5;",
+          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.contribution_dollars') AS REAL) AS contribution_dollars, CAST(json_extract(j.value,'$.contribution_pct') AS REAL) AS contribution_pct, CAST(json_extract(j.value,'$.contribution_breakdown.income') AS REAL) AS income_pct, CAST(json_extract(j.value,'$.contribution_breakdown.price') AS REAL) AS price_pct FROM latest, json_each(latest.payload_json,'$.portfolio.attribution.12m.bottom_contributors') j ORDER BY contribution_dollars DESC LIMIT 5;"
         }
       ],
       "options": {

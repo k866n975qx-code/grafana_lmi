@@ -78,8 +78,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT json_extract(payload_json,'$.prices_as_of') AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT json_extract(payload_json,'$.prices_as_of') AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT json_extract(payload_json,'$.timestamps.price_data_as_of_date') AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT json_extract(payload_json,'$.timestamps.price_data_as_of_date') AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -122,8 +122,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT COALESCE(json_array_length(json_extract(payload_json,'$.missing_prices')), 0) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT COALESCE(json_array_length(json_extract(payload_json,'$.missing_prices')), 0) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT COALESCE(json_array_length(json_extract(payload_json,'$.meta.data_quality.missing_paths')), 0) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT COALESCE(json_array_length(json_extract(payload_json,'$.meta.data_quality.missing_paths')), 0) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "fieldConfig": {
@@ -153,8 +153,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.coverage.derived_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.coverage.derived_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT CAST(json_extract(payload_json,'$.meta.data_quality.derived_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.meta.data_quality.derived_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "fieldConfig": {
@@ -184,8 +184,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT json_extract(m.value, '$') AS symbol FROM snapshot_daily_current, json_each(json_extract(payload_json,'$.missing_prices')) AS m ORDER BY as_of_date_local DESC LIMIT 12;",
-          "rawQueryText": "SELECT json_extract(m.value, '$') AS symbol FROM snapshot_daily_current, json_each(json_extract(payload_json,'$.missing_prices')) AS m ORDER BY as_of_date_local DESC LIMIT 12;"
+          "queryText": "SELECT json_extract(m.value, '$') AS symbol FROM snapshot_daily_current, json_each(json_extract(payload_json,'$.meta.data_quality.missing_paths')) AS m ORDER BY as_of_date_local DESC LIMIT 12;",
+          "rawQueryText": "SELECT json_extract(m.value, '$') AS symbol FROM snapshot_daily_current, json_each(json_extract(payload_json,'$.meta.data_quality.missing_paths')) AS m ORDER BY as_of_date_local DESC LIMIT 12;"
         }
       ],
       "options": {
