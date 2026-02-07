@@ -15,8 +15,8 @@
       "gridPos": { "x": 0, "y": 0, "w": 8, "h": 5 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.goal_progress_net.end.future_rate_sensitivity.apr_future_pct') AS REAL) AS value FROM snapshots WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.goal_progress_net.end.future_rate_sensitivity.apr_future_pct') AS REAL) AS value FROM snapshots WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
+        "queryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT j, (json_array_length(j,'$.intervals')-1) AS li FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].goal_progress_net.future_rate_sensitivity.apr_future_pct', li)) AS REAL) AS value FROM idx;",
+        "rawQueryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT j, (json_array_length(j,'$.intervals')-1) AS li FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].goal_progress_net.future_rate_sensitivity.apr_future_pct', li)) AS REAL) AS value FROM idx;"
       }],
       "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2, "color": { "mode": "fixed", "fixedColor": "yellow" } }, "overrides": [] }
     },
@@ -28,8 +28,8 @@
       "gridPos": { "x": 8, "y": 0, "w": 8, "h": 5 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.goal_progress_net.end.future_rate_sensitivity.progress_pct_future') AS REAL) AS value FROM snapshots WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.goal_progress_net.end.future_rate_sensitivity.progress_pct_future') AS REAL) AS value FROM snapshots WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
+        "queryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT j, (json_array_length(j,'$.intervals')-1) AS li FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].goal_progress_net.future_rate_sensitivity.progress_pct_future', li)) AS REAL) AS value FROM idx;",
+        "rawQueryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT j, (json_array_length(j,'$.intervals')-1) AS li FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].goal_progress_net.future_rate_sensitivity.progress_pct_future', li)) AS REAL) AS value FROM idx;"
       }],
       "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
       "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 50, "color": "yellow" }, { "value": 75, "color": "green" }] } }, "overrides": [] }
@@ -42,8 +42,8 @@
       "gridPos": { "x": 16, "y": 0, "w": 8, "h": 5 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.goal_progress_net.end.future_rate_sensitivity.additional_investment_needed_future') AS REAL) AS value FROM snapshots WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.goal_progress_net.end.future_rate_sensitivity.additional_investment_needed_future') AS REAL) AS value FROM snapshots WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
+        "queryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT j, (json_array_length(j,'$.intervals')-1) AS li FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].goal_progress_net.future_rate_sensitivity.additional_investment_needed_future', li)) AS REAL) AS value FROM idx;",
+        "rawQueryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT j, (json_array_length(j,'$.intervals')-1) AS li FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].goal_progress_net.future_rate_sensitivity.additional_investment_needed_future', li)) AS REAL) AS value FROM idx;"
       }],
       "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
     },

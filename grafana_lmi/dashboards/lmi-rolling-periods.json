@@ -36,8 +36,8 @@
       "gridPos": { "x": 12, "y": 1, "w": 6, "h": 4 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.income.delta.projected_monthly_income') AS REAL) AS value FROM snapshots WHERE period_type = 'WEEK_ROLLING' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.income.delta.projected_monthly_income') AS REAL) AS value FROM snapshots WHERE period_type = 'WEEK_ROLLING' ORDER BY period_end_date DESC LIMIT 1;"
+        "queryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='WEEK_ROLLING' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT j, 0 AS fi, (json_array_length(j,'$.intervals')-1) AS li FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', li)) AS REAL) - CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', fi)) AS REAL) AS value FROM idx;",
+        "rawQueryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='WEEK_ROLLING' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT j, 0 AS fi, (json_array_length(j,'$.intervals')-1) AS li FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', li)) AS REAL) - CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', fi)) AS REAL) AS value FROM idx;"
       }],
       "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
       "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
@@ -81,8 +81,8 @@
       "gridPos": { "x": 12, "y": 6, "w": 6, "h": 4 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.income.delta.projected_monthly_income') AS REAL) AS value FROM snapshots WHERE period_type = 'MONTH_ROLLING' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.income.delta.projected_monthly_income') AS REAL) AS value FROM snapshots WHERE period_type = 'MONTH_ROLLING' ORDER BY period_end_date DESC LIMIT 1;"
+        "queryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='MONTH_ROLLING' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT j, 0 AS fi, (json_array_length(j,'$.intervals')-1) AS li FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', li)) AS REAL) - CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', fi)) AS REAL) AS value FROM idx;",
+        "rawQueryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='MONTH_ROLLING' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT j, 0 AS fi, (json_array_length(j,'$.intervals')-1) AS li FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', li)) AS REAL) - CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', fi)) AS REAL) AS value FROM idx;"
       }],
       "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
       "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
@@ -126,8 +126,8 @@
       "gridPos": { "x": 12, "y": 11, "w": 6, "h": 4 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.income.delta.projected_monthly_income') AS REAL) AS value FROM snapshots WHERE period_type = 'QUARTER_ROLLING' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.income.delta.projected_monthly_income') AS REAL) AS value FROM snapshots WHERE period_type = 'QUARTER_ROLLING' ORDER BY period_end_date DESC LIMIT 1;"
+        "queryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='QUARTER_ROLLING' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT j, 0 AS fi, (json_array_length(j,'$.intervals')-1) AS li FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', li)) AS REAL) - CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', fi)) AS REAL) AS value FROM idx;",
+        "rawQueryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='QUARTER_ROLLING' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT j, 0 AS fi, (json_array_length(j,'$.intervals')-1) AS li FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', li)) AS REAL) - CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', fi)) AS REAL) AS value FROM idx;"
       }],
       "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
       "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
@@ -171,8 +171,8 @@
       "gridPos": { "x": 12, "y": 16, "w": 6, "h": 4 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.income.delta.projected_monthly_income') AS REAL) AS value FROM snapshots WHERE period_type = 'YEAR_ROLLING' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.income.delta.projected_monthly_income') AS REAL) AS value FROM snapshots WHERE period_type = 'YEAR_ROLLING' ORDER BY period_end_date DESC LIMIT 1;"
+        "queryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='YEAR_ROLLING' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT j, 0 AS fi, (json_array_length(j,'$.intervals')-1) AS li FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', li)) AS REAL) - CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', fi)) AS REAL) AS value FROM idx;",
+        "rawQueryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='YEAR_ROLLING' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT j, 0 AS fi, (json_array_length(j,'$.intervals')-1) AS li FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', li)) AS REAL) - CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', fi)) AS REAL) AS value FROM idx;"
       }],
       "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
       "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
