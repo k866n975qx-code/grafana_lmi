@@ -29,8 +29,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value\nFROM snapshots\nWHERE period_type='WEEK'\nORDER BY period_end_date DESC\nLIMIT 1;",
-          "rawQueryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value\nFROM snapshots\nWHERE period_type='WEEK'\nORDER BY period_end_date DESC\nLIMIT 1;"
+          "queryText": "SELECT period_start_date || ' → ' || period_end_date AS value FROM period_summary WHERE period_type='WEEK' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT period_start_date || ' → ' || period_end_date AS value FROM period_summary WHERE period_type='WEEK' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -73,8 +73,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='WEEK'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;",
-          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='WEEK'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;"
+          "queryText": "SELECT mv_end AS value FROM period_summary WHERE period_type='WEEK' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT mv_end AS value FROM period_summary WHERE period_type='WEEK' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -118,8 +118,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='WEEK'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', i)) AS REAL) AS value\nFROM idx;",
-          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='WEEK'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', i)) AS REAL) AS value\nFROM idx;"
+          "queryText": "SELECT monthly_income_end AS value FROM period_summary WHERE period_type='WEEK' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT monthly_income_end AS value FROM period_summary WHERE period_type='WEEK' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -163,8 +163,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='WEEK'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].margin.ltv_pct', i)) AS REAL) AS value\nFROM idx;",
-          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='WEEK'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].margin.ltv_pct', i)) AS REAL) AS value\nFROM idx;"
+          "queryText": "SELECT ltv_pct_end AS value FROM period_summary WHERE period_type='WEEK' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT ltv_pct_end AS value FROM period_summary WHERE period_type='WEEK' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -216,8 +216,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value\nFROM snapshots\nWHERE period_type='MONTH'\nORDER BY period_end_date DESC\nLIMIT 1;",
-          "rawQueryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value\nFROM snapshots\nWHERE period_type='MONTH'\nORDER BY period_end_date DESC\nLIMIT 1;"
+          "queryText": "SELECT period_start_date || ' → ' || period_end_date AS value FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT period_start_date || ' → ' || period_end_date AS value FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -260,8 +260,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='MONTH'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;",
-          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='MONTH'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;"
+          "queryText": "SELECT mv_end AS value FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT mv_end AS value FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -305,8 +305,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='MONTH'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', i)) AS REAL) AS value\nFROM idx;",
-          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='MONTH'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', i)) AS REAL) AS value\nFROM idx;"
+          "queryText": "SELECT monthly_income_end AS value FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT monthly_income_end AS value FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -350,8 +350,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='MONTH'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].margin.ltv_pct', i)) AS REAL) AS value\nFROM idx;",
-          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='MONTH'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].margin.ltv_pct', i)) AS REAL) AS value\nFROM idx;"
+          "queryText": "SELECT ltv_pct_end AS value FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT ltv_pct_end AS value FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -403,8 +403,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value\nFROM snapshots\nWHERE period_type='QUARTER'\nORDER BY period_end_date DESC\nLIMIT 1;",
-          "rawQueryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value\nFROM snapshots\nWHERE period_type='QUARTER'\nORDER BY period_end_date DESC\nLIMIT 1;"
+          "queryText": "SELECT period_start_date || ' → ' || period_end_date AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT period_start_date || ' → ' || period_end_date AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -447,8 +447,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='QUARTER'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;",
-          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='QUARTER'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;"
+          "queryText": "SELECT mv_end AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT mv_end AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -492,8 +492,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='QUARTER'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', i)) AS REAL) AS value\nFROM idx;",
-          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='QUARTER'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', i)) AS REAL) AS value\nFROM idx;"
+          "queryText": "SELECT monthly_income_end AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT monthly_income_end AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -537,8 +537,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='QUARTER'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].margin.ltv_pct', i)) AS REAL) AS value\nFROM idx;",
-          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='QUARTER'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].margin.ltv_pct', i)) AS REAL) AS value\nFROM idx;"
+          "queryText": "SELECT ltv_pct_end AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT ltv_pct_end AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -590,8 +590,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value\nFROM snapshots\nWHERE period_type='YEAR'\nORDER BY period_end_date DESC\nLIMIT 1;",
-          "rawQueryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value\nFROM snapshots\nWHERE period_type='YEAR'\nORDER BY period_end_date DESC\nLIMIT 1;"
+          "queryText": "SELECT period_start_date || ' → ' || period_end_date AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT period_start_date || ' → ' || period_end_date AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -634,8 +634,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='YEAR'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;",
-          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='YEAR'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(\n  COALESCE(\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)),\n    json_extract(j, printf('$.intervals[%d].totals.total_market_value', i))\n  ) AS REAL\n) AS value\nFROM idx;"
+          "queryText": "SELECT mv_end AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT mv_end AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -679,8 +679,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='YEAR'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', i)) AS REAL) AS value\nFROM idx;",
-          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='YEAR'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', i)) AS REAL) AS value\nFROM idx;"
+          "queryText": "SELECT monthly_income_end AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT monthly_income_end AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -724,8 +724,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='YEAR'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].margin.ltv_pct', i)) AS REAL) AS value\nFROM idx;",
-          "rawQueryText": "WITH s AS (\n  SELECT payload_json AS j\n  FROM snapshots\n  WHERE period_type='YEAR'\n  ORDER BY period_end_date DESC\n  LIMIT 1\n),\nidx AS (\n  SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s\n)\nSELECT CAST(json_extract(j, printf('$.intervals[%d].margin.ltv_pct', i)) AS REAL) AS value\nFROM idx;"
+          "queryText": "SELECT ltv_pct_end AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT ltv_pct_end AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "options": {

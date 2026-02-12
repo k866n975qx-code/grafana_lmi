@@ -34,8 +34,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.goals.baseline.progress_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.goals.baseline.progress_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT goal_progress_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT goal_progress_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -96,8 +96,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.goals.baseline.current_projected_monthly') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.goals.baseline.current_projected_monthly') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT goal_current_projected_monthly AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT goal_current_projected_monthly AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "fieldConfig": {
@@ -127,8 +127,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.goals.baseline.target_monthly') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.goals.baseline.target_monthly') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT goal_target_monthly_income AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT goal_target_monthly_income AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "fieldConfig": {
@@ -158,8 +158,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.goals.baseline.shortfall') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.goals.baseline.shortfall') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT goal_shortfall AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT goal_shortfall AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -220,8 +220,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.goals.baseline.months_to_goal') AS INTEGER) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.goals.baseline.months_to_goal') AS INTEGER) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT goal_months_to_goal AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT goal_months_to_goal AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "fieldConfig": {
@@ -251,8 +251,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.goals.net_of_interest.current_projected_monthly_net') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.goals.net_of_interest.current_projected_monthly_net') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT goal_net_monthly_income AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT goal_net_monthly_income AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "fieldConfig": {
@@ -282,8 +282,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.goals.net_of_interest.progress_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.goals.net_of_interest.progress_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT goal_net_progress_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT goal_net_progress_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -344,8 +344,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.goals.net_of_interest.additional_investment_needed_now') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.goals.net_of_interest.additional_investment_needed_now') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT goal_additional_needed AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT goal_additional_needed AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "fieldConfig": {
@@ -375,8 +375,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.goals.baseline.progress_pct') AS REAL) AS progress, CAST(json_extract(payload_json,'$.goals.net_of_interest.progress_pct') AS REAL) AS net_progress FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-90 days') ORDER BY as_of_date_local ASC;",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.goals.baseline.progress_pct') AS REAL) AS progress, CAST(json_extract(payload_json,'$.goals.net_of_interest.progress_pct') AS REAL) AS net_progress FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-90 days') ORDER BY as_of_date_local ASC;"
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, goal_progress_pct AS progress, goal_net_progress_pct AS net_progress FROM daily_portfolio WHERE as_of_date_local >= date('now','-90 days') ORDER BY as_of_date_local ASC;",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, goal_progress_pct AS progress, goal_net_progress_pct AS net_progress FROM daily_portfolio WHERE as_of_date_local >= date('now','-90 days') ORDER BY as_of_date_local ASC;"
         }
       ],
       "transformations": [
@@ -429,8 +429,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.goals.baseline.months_to_goal') AS REAL) AS \"Months to Goal\", CAST(json_extract(payload_json,'$.goals.pace.current_pace.revised_months_to_goal') AS REAL) AS \"Revised (Pace-Adjusted)\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-90 days') ORDER BY as_of_date_local ASC;",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.goals.baseline.months_to_goal') AS REAL) AS \"Months to Goal\", CAST(json_extract(payload_json,'$.goals.pace.current_pace.revised_months_to_goal') AS REAL) AS \"Revised (Pace-Adjusted)\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-90 days') ORDER BY as_of_date_local ASC;"
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, goal_months_to_goal AS \"Months to Goal\", goal_revised_months_to_goal AS \"Revised (Pace-Adjusted)\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-90 days') ORDER BY as_of_date_local ASC;",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, goal_months_to_goal AS \"Months to Goal\", goal_revised_months_to_goal AS \"Revised (Pace-Adjusted)\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-90 days') ORDER BY as_of_date_local ASC;"
         }
       ],
       "transformations": [

@@ -34,8 +34,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.macro.snapshot.ten_year_yield') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.macro.snapshot.ten_year_yield') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT macro_ten_year_yield AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT macro_ten_year_yield AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "fieldConfig": {
@@ -65,8 +65,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.macro.snapshot.two_year_yield') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.macro.snapshot.two_year_yield') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT macro_two_year_yield AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT macro_two_year_yield AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "fieldConfig": {
@@ -96,8 +96,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.macro.snapshot.yield_spread_10y_2y') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.macro.snapshot.yield_spread_10y_2y') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT macro_yield_spread_10y_2y AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT macro_yield_spread_10y_2y AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -158,8 +158,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.macro.snapshot.vix') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.macro.snapshot.vix') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT macro_vix AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT macro_vix AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -220,8 +220,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.macro.snapshot.cpi_yoy') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.macro.snapshot.cpi_yoy') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT macro_cpi_yoy AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT macro_cpi_yoy AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -282,8 +282,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.macro.snapshot.macro_stress_score') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.macro.snapshot.macro_stress_score') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT macro_stress_score AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT macro_stress_score AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {

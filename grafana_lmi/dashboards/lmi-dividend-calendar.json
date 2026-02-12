@@ -34,8 +34,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.dividends.projected_vs_received.received') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.dividends.projected_vs_received.received') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT dividends_realized_mtd AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT dividends_realized_mtd AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -79,8 +79,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.dividends.projected_vs_received.projected') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.dividends.projected_vs_received.projected') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT dividends_projected_mtd AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT dividends_projected_mtd AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -124,8 +124,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT ROUND(CAST(json_extract(payload_json,'$.dividends.projected_vs_received.projected') AS REAL) - CAST(json_extract(payload_json,'$.dividends.projected_vs_received.received') AS REAL), 2) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT ROUND(CAST(json_extract(payload_json,'$.dividends.projected_vs_received.projected') AS REAL) - CAST(json_extract(payload_json,'$.dividends.projected_vs_received.received') AS REAL), 2) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT (dividends_projected_mtd - dividends_realized_mtd) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT (dividends_projected_mtd - dividends_realized_mtd) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -169,8 +169,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT ROUND(CAST(json_extract(payload_json,'$.dividends.projected_vs_received.received') AS REAL) / CAST(json_extract(payload_json,'$.dividends.projected_vs_received.projected') AS REAL) * 100, 2) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT ROUND(CAST(json_extract(payload_json,'$.dividends.projected_vs_received.received') AS REAL) / CAST(json_extract(payload_json,'$.dividends.projected_vs_received.projected') AS REAL) * 100, 2) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT ROUND((dividends_realized_mtd / NULLIF(dividends_projected_mtd, 0)) * 100, 2) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT ROUND((dividends_realized_mtd / NULLIF(dividends_projected_mtd, 0)) * 100, 2) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -214,8 +214,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, json_extract(j.value,'$.ex_date_est') AS ex_date_est, json_extract(j.value,'$.pay_date_est') AS pay_date_est, CAST(json_extract(j.value,'$.amount_est') AS REAL) AS amount_est, json_extract(j.value,'$.status') AS status FROM latest, json_each(latest.payload_json,'$.dividends.projected_vs_received.expected_events') j ORDER BY pay_date_est;",
-          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, json_extract(j.value,'$.ex_date_est') AS ex_date_est, json_extract(j.value,'$.pay_date_est') AS pay_date_est, CAST(json_extract(j.value,'$.amount_est') AS REAL) AS amount_est, json_extract(j.value,'$.status') AS status FROM latest, json_each(latest.payload_json,'$.dividends.projected_vs_received.expected_events') j ORDER BY pay_date_est;"
+          "queryText": "SELECT symbol, ex_date_est, pay_date_est, amount_est, status FROM daily_dividends_upcoming WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_dividends_upcoming) ORDER BY pay_date_est;",
+          "rawQueryText": "SELECT symbol, ex_date_est, pay_date_est, amount_est, status FROM daily_dividends_upcoming WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_dividends_upcoming) ORDER BY pay_date_est;"
         }
       ],
       "options": {
@@ -248,8 +248,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT j.key AS symbol, CAST(json_extract(j.value,'$.amount') AS REAL) AS amount_30d, json_extract(j.value,'$.status') AS status FROM latest, json_each(latest.payload_json,'$.dividends.realized.30d.by_symbol') j ORDER BY amount_30d DESC LIMIT 10;",
-          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT j.key AS symbol, CAST(json_extract(j.value,'$.amount') AS REAL) AS amount_30d, json_extract(j.value,'$.status') AS status FROM latest, json_each(latest.payload_json,'$.dividends.realized.30d.by_symbol') j ORDER BY amount_30d DESC LIMIT 10;"
+          "queryText": "SELECT symbol, amount_30d, status FROM daily_dividends_by_symbol WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_dividends_by_symbol) ORDER BY amount_30d DESC LIMIT 10;",
+          "rawQueryText": "SELECT symbol, amount_30d, status FROM daily_dividends_by_symbol WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_dividends_by_symbol) ORDER BY amount_30d DESC LIMIT 10;"
         }
       ],
       "options": {

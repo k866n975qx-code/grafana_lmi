@@ -34,8 +34,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.income.forward_12m_total') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.income.forward_12m_total') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT forward_12m_income AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT forward_12m_income AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -81,8 +81,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.income.projected_monthly_income') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.income.projected_monthly_income') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT projected_monthly_income AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT projected_monthly_income AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -128,8 +128,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.dividends.projected_vs_received.received') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.dividends.projected_vs_received.received') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT dividends_realized_mtd AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT dividends_realized_mtd AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -175,8 +175,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.income.portfolio_current_yield_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.income.portfolio_current_yield_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT portfolio_yield_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT portfolio_yield_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -222,8 +222,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.income.portfolio_yield_on_cost_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT CAST(json_extract(payload_json,'$.portfolio.income.portfolio_yield_on_cost_pct') AS REAL) AS value FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT portfolio_yield_on_cost_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT portfolio_yield_on_cost_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -269,8 +269,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.portfolio.income.portfolio_current_yield_pct') AS REAL) AS \"Current Yield %\", CAST(json_extract(payload_json,'$.portfolio.income.portfolio_yield_on_cost_pct') AS REAL) AS \"Yield on Cost %\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-90 day') ORDER BY as_of_date_local;",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.portfolio.income.portfolio_current_yield_pct') AS REAL) AS \"Current Yield %\", CAST(json_extract(payload_json,'$.portfolio.income.portfolio_yield_on_cost_pct') AS REAL) AS \"Yield on Cost %\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-90 day') ORDER BY as_of_date_local;"
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, portfolio_yield_pct AS \"Current Yield %\", portfolio_yield_on_cost_pct AS \"Yield on Cost %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-90 day') ORDER BY as_of_date_local;",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, portfolio_yield_pct AS \"Current Yield %\", portfolio_yield_on_cost_pct AS \"Yield on Cost %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-90 day') ORDER BY as_of_date_local;"
         }
       ],
       "transformations": [
@@ -368,8 +368,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.portfolio.income.projected_monthly_income') AS REAL) AS value FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-90 day') ORDER BY as_of_date_local;",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.portfolio.income.projected_monthly_income') AS REAL) AS value FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-90 day') ORDER BY as_of_date_local;"
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, projected_monthly_income AS value FROM daily_portfolio WHERE as_of_date_local >= date('now','-90 day') ORDER BY as_of_date_local;",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, projected_monthly_income AS value FROM daily_portfolio WHERE as_of_date_local >= date('now','-90 day') ORDER BY as_of_date_local;"
         }
       ],
       "transformations": [
@@ -425,8 +425,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.income.projected_monthly_dividend') AS REAL) AS projected_monthly_dividend, CAST(json_extract(j.value,'$.income.current_yield_pct') AS REAL) AS current_yield_pct, CAST(json_extract(j.value,'$.valuation.portfolio_weight_pct') AS REAL) AS weight_pct, CAST(json_extract(j.value,'$.valuation.market_value') AS REAL) AS market_value FROM latest, json_each(latest.payload_json,'$.holdings') j ORDER BY projected_monthly_dividend DESC LIMIT 10;",
-          "rawQueryText": "WITH latest AS (SELECT payload_json FROM snapshot_daily_current ORDER BY as_of_date_local DESC LIMIT 1) SELECT json_extract(j.value,'$.symbol') AS symbol, CAST(json_extract(j.value,'$.income.projected_monthly_dividend') AS REAL) AS projected_monthly_dividend, CAST(json_extract(j.value,'$.income.current_yield_pct') AS REAL) AS current_yield_pct, CAST(json_extract(j.value,'$.valuation.portfolio_weight_pct') AS REAL) AS weight_pct, CAST(json_extract(j.value,'$.valuation.market_value') AS REAL) AS market_value FROM latest, json_each(latest.payload_json,'$.holdings') j ORDER BY projected_monthly_dividend DESC LIMIT 10;"
+          "queryText": "SELECT symbol, projected_monthly_dividend, current_yield_pct, weight_pct, market_value FROM daily_holdings WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_holdings) ORDER BY projected_monthly_dividend DESC LIMIT 10;",
+          "rawQueryText": "SELECT symbol, projected_monthly_dividend, current_yield_pct, weight_pct, market_value FROM daily_holdings WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_holdings) ORDER BY projected_monthly_dividend DESC LIMIT 10;"
         }
       ],
       "options": {

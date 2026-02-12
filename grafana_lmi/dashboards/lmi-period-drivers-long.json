@@ -26,8 +26,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT period_start_date || ' -> ' || period_end_date AS value FROM snapshots WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;",
-          "rawQueryText": "SELECT period_start_date || ' -> ' || period_end_date AS value FROM snapshots WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;"
+          "queryText": "SELECT period_start_date || ' -> ' || period_end_date AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT period_start_date || ' -> ' || period_end_date AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -51,8 +51,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s) SELECT CAST(COALESCE(json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)), json_extract(j, printf('$.intervals[%d].totals.total_market_value', i))) AS REAL) AS value FROM idx;",
-          "rawQueryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s) SELECT CAST(COALESCE(json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)), json_extract(j, printf('$.intervals[%d].totals.total_market_value', i))) AS REAL) AS value FROM idx;"
+          "queryText": "SELECT mv_end AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT mv_end AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
@@ -68,8 +68,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', i)) AS REAL) AS value FROM idx;",
-          "rawQueryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', i)) AS REAL) AS value FROM idx;"
+          "queryText": "SELECT monthly_income_end AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT monthly_income_end AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
@@ -85,8 +85,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].margin.ltv_pct', i)) AS REAL) AS value FROM idx;",
-          "rawQueryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].margin.ltv_pct', i)) AS REAL) AS value FROM idx;"
+          "queryText": "SELECT ltv_pct_end AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT ltv_pct_end AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "fieldConfig": {
@@ -116,8 +116,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT payload_json AS j FROM snapshots WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1), added AS (SELECT 'Added' AS type, json_extract(h.value,'$.symbol') AS symbol, CAST(json_extract(h.value,'$.weight_end_pct') AS REAL) AS weight_pct, NULL AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.holdings_added') h LIMIT 3), removed AS (SELECT 'Removed' AS type, json_extract(h.value,'$.symbol') AS symbol, CAST(json_extract(h.value,'$.weight_start_pct') AS REAL) AS weight_pct, NULL AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.holdings_removed') h LIMIT 3), gainers AS (SELECT 'Gainer' AS type, json_extract(h.value,'$.symbol') AS symbol, NULL AS weight_pct, CAST(json_extract(h.value,'$.pnl_dollar_period') AS REAL) AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.top_gainers') h LIMIT 3), losers AS (SELECT 'Loser' AS type, json_extract(h.value,'$.symbol') AS symbol, NULL AS weight_pct, CAST(json_extract(h.value,'$.pnl_dollar_period') AS REAL) AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.top_losers') h LIMIT 3) SELECT * FROM added UNION ALL SELECT * FROM removed UNION ALL SELECT * FROM gainers UNION ALL SELECT * FROM losers;",
-          "rawQueryText": "WITH latest AS (SELECT payload_json AS j FROM snapshots WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1), added AS (SELECT 'Added' AS type, json_extract(h.value,'$.symbol') AS symbol, CAST(json_extract(h.value,'$.weight_end_pct') AS REAL) AS weight_pct, NULL AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.holdings_added') h LIMIT 3), removed AS (SELECT 'Removed' AS type, json_extract(h.value,'$.symbol') AS symbol, CAST(json_extract(h.value,'$.weight_start_pct') AS REAL) AS weight_pct, NULL AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.holdings_removed') h LIMIT 3), gainers AS (SELECT 'Gainer' AS type, json_extract(h.value,'$.symbol') AS symbol, NULL AS weight_pct, CAST(json_extract(h.value,'$.pnl_dollar_period') AS REAL) AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.top_gainers') h LIMIT 3), losers AS (SELECT 'Loser' AS type, json_extract(h.value,'$.symbol') AS symbol, NULL AS weight_pct, CAST(json_extract(h.value,'$.pnl_dollar_period') AS REAL) AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.top_losers') h LIMIT 3) SELECT * FROM added UNION ALL SELECT * FROM removed UNION ALL SELECT * FROM gainers UNION ALL SELECT * FROM losers;"
+          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1) SELECT h.change_type AS type, h.symbol, h.weight_end_pct AS weight_pct, h.mv_delta AS pnl_dollar FROM period_holding_changes h JOIN latest l ON h.period_start_date = l.period_start_date AND h.period_end_date = l.period_end_date WHERE h.period_type = 'QUARTER' AND h.change_type IN ('added', 'removed', 'gainer', 'loser') ORDER BY CASE h.change_type WHEN 'added' THEN 1 WHEN 'removed' THEN 2 WHEN 'gainer' THEN 3 WHEN 'loser' THEN 4 END, abs(h.mv_delta) DESC LIMIT 12;",
+          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1) SELECT h.change_type AS type, h.symbol, h.weight_end_pct AS weight_pct, h.mv_delta AS pnl_dollar FROM period_holding_changes h JOIN latest l ON h.period_start_date = l.period_start_date AND h.period_end_date = l.period_end_date WHERE h.period_type = 'QUARTER' AND h.change_type IN ('added', 'removed', 'gainer', 'loser') ORDER BY CASE h.change_type WHEN 'added' THEN 1 WHEN 'removed' THEN 2 WHEN 'gainer' THEN 3 WHEN 'loser' THEN 4 END, abs(h.mv_delta) DESC LIMIT 12;"
         }
       ],
       "options": { "showHeader": true, "cellHeight": "md" },
@@ -140,8 +140,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT period_start_date || ' -> ' || period_end_date AS value FROM snapshots WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;",
-          "rawQueryText": "SELECT period_start_date || ' -> ' || period_end_date AS value FROM snapshots WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;"
+          "queryText": "SELECT period_start_date || ' -> ' || period_end_date AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT period_start_date || ' -> ' || period_end_date AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -165,8 +165,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s) SELECT CAST(COALESCE(json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)), json_extract(j, printf('$.intervals[%d].totals.total_market_value', i))) AS REAL) AS value FROM idx;",
-          "rawQueryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s) SELECT CAST(COALESCE(json_extract(j, printf('$.intervals[%d].totals.total_market_value', i)), json_extract(j, printf('$.intervals[%d].totals.total_market_value', i))) AS REAL) AS value FROM idx;"
+          "queryText": "SELECT mv_end AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT mv_end AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
@@ -182,8 +182,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', i)) AS REAL) AS value FROM idx;",
-          "rawQueryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', i)) AS REAL) AS value FROM idx;"
+          "queryText": "SELECT monthly_income_end AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT monthly_income_end AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
@@ -199,8 +199,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].margin.ltv_pct', i)) AS REAL) AS value FROM idx;",
-          "rawQueryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT (json_array_length(j,'$.intervals')-1) AS i, j FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].margin.ltv_pct', i)) AS REAL) AS value FROM idx;"
+          "queryText": "SELECT ltv_pct_end AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT ltv_pct_end AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "fieldConfig": {
@@ -230,8 +230,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT payload_json AS j FROM snapshots WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1), added AS (SELECT 'Added' AS type, json_extract(h.value,'$.symbol') AS symbol, CAST(json_extract(h.value,'$.weight_end_pct') AS REAL) AS weight_pct, NULL AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.holdings_added') h LIMIT 3), removed AS (SELECT 'Removed' AS type, json_extract(h.value,'$.symbol') AS symbol, CAST(json_extract(h.value,'$.weight_start_pct') AS REAL) AS weight_pct, NULL AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.holdings_removed') h LIMIT 3), gainers AS (SELECT 'Gainer' AS type, json_extract(h.value,'$.symbol') AS symbol, NULL AS weight_pct, CAST(json_extract(h.value,'$.pnl_dollar_period') AS REAL) AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.top_gainers') h LIMIT 3), losers AS (SELECT 'Loser' AS type, json_extract(h.value,'$.symbol') AS symbol, NULL AS weight_pct, CAST(json_extract(h.value,'$.pnl_dollar_period') AS REAL) AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.top_losers') h LIMIT 3) SELECT * FROM added UNION ALL SELECT * FROM removed UNION ALL SELECT * FROM gainers UNION ALL SELECT * FROM losers;",
-          "rawQueryText": "WITH latest AS (SELECT payload_json AS j FROM snapshots WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1), added AS (SELECT 'Added' AS type, json_extract(h.value,'$.symbol') AS symbol, CAST(json_extract(h.value,'$.weight_end_pct') AS REAL) AS weight_pct, NULL AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.holdings_added') h LIMIT 3), removed AS (SELECT 'Removed' AS type, json_extract(h.value,'$.symbol') AS symbol, CAST(json_extract(h.value,'$.weight_start_pct') AS REAL) AS weight_pct, NULL AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.holdings_removed') h LIMIT 3), gainers AS (SELECT 'Gainer' AS type, json_extract(h.value,'$.symbol') AS symbol, NULL AS weight_pct, CAST(json_extract(h.value,'$.pnl_dollar_period') AS REAL) AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.top_gainers') h LIMIT 3), losers AS (SELECT 'Loser' AS type, json_extract(h.value,'$.symbol') AS symbol, NULL AS weight_pct, CAST(json_extract(h.value,'$.pnl_dollar_period') AS REAL) AS pnl_dollar FROM latest, json_each(latest.j,'$.portfolio_changes.top_losers') h LIMIT 3) SELECT * FROM added UNION ALL SELECT * FROM removed UNION ALL SELECT * FROM gainers UNION ALL SELECT * FROM losers;"
+          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1) SELECT h.change_type AS type, h.symbol, h.weight_end_pct AS weight_pct, h.mv_delta AS pnl_dollar FROM period_holding_changes h JOIN latest l ON h.period_start_date = l.period_start_date AND h.period_end_date = l.period_end_date WHERE h.period_type = 'YEAR' AND h.change_type IN ('added', 'removed', 'gainer', 'loser') ORDER BY CASE h.change_type WHEN 'added' THEN 1 WHEN 'removed' THEN 2 WHEN 'gainer' THEN 3 WHEN 'loser' THEN 4 END, abs(h.mv_delta) DESC LIMIT 12;",
+          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1) SELECT h.change_type AS type, h.symbol, h.weight_end_pct AS weight_pct, h.mv_delta AS pnl_dollar FROM period_holding_changes h JOIN latest l ON h.period_start_date = l.period_start_date AND h.period_end_date = l.period_end_date WHERE h.period_type = 'YEAR' AND h.change_type IN ('added', 'removed', 'gainer', 'loser') ORDER BY CASE h.change_type WHEN 'added' THEN 1 WHEN 'removed' THEN 2 WHEN 'gainer' THEN 3 WHEN 'loser' THEN 4 END, abs(h.mv_delta) DESC LIMIT 12;"
         }
       ],
       "options": { "showHeader": true, "cellHeight": "md" },

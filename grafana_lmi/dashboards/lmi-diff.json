@@ -18,7 +18,7 @@
     {
       "id": 1,
       "type": "stat",
-      "title": "Market Value \u0394",
+      "title": "Market Value Δ",
       "gridPos": {
         "x": 0,
         "y": 0,
@@ -34,8 +34,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest_date AS (   SELECT MAX(as_of_date_local) AS d FROM snapshot_daily_current ), prev_date AS (   SELECT MAX(as_of_date_local) AS d FROM snapshot_daily_current   WHERE as_of_date_local < (SELECT d FROM latest_date) ), cur AS (   SELECT payload_json AS j FROM snapshot_daily_current   WHERE as_of_date_local = (SELECT d FROM latest_date) ), prev AS (   SELECT payload_json AS j FROM snapshot_daily_current   WHERE as_of_date_local = (SELECT d FROM prev_date) ) SELECT (CAST(json_extract(cur.j,'$.portfolio.totals.market_value') AS REAL) - CAST(json_extract(prev.j,'$.portfolio.totals.market_value') AS REAL)) AS value FROM cur, prev;",
-          "rawQueryText": "WITH latest_date AS (   SELECT MAX(as_of_date_local) AS d FROM snapshot_daily_current ), prev_date AS (   SELECT MAX(as_of_date_local) AS d FROM snapshot_daily_current   WHERE as_of_date_local < (SELECT d FROM latest_date) ), cur AS (   SELECT payload_json AS j FROM snapshot_daily_current   WHERE as_of_date_local = (SELECT d FROM latest_date) ), prev AS (   SELECT payload_json AS j FROM snapshot_daily_current   WHERE as_of_date_local = (SELECT d FROM prev_date) ) SELECT (CAST(json_extract(cur.j,'$.portfolio.totals.market_value') AS REAL) - CAST(json_extract(prev.j,'$.portfolio.totals.market_value') AS REAL)) AS value FROM cur, prev;"
+          "queryText": "WITH dates AS (SELECT as_of_date_local, market_value, LAG(market_value) OVER (ORDER BY as_of_date_local DESC) AS prev_mv FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1) SELECT market_value - prev_mv AS value FROM dates;",
+          "rawQueryText": "WITH dates AS (SELECT as_of_date_local, market_value, LAG(market_value) OVER (ORDER BY as_of_date_local DESC) AS prev_mv FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1) SELECT market_value - prev_mv AS value FROM dates;"
         }
       ],
       "options": {
@@ -63,7 +63,7 @@
     {
       "id": 2,
       "type": "stat",
-      "title": "Monthly Income \u0394",
+      "title": "Monthly Income Δ",
       "gridPos": {
         "x": 6,
         "y": 0,
@@ -79,8 +79,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest_date AS (   SELECT MAX(as_of_date_local) AS d FROM snapshot_daily_current ), prev_date AS (   SELECT MAX(as_of_date_local) AS d FROM snapshot_daily_current   WHERE as_of_date_local < (SELECT d FROM latest_date) ), cur AS (   SELECT payload_json AS j FROM snapshot_daily_current   WHERE as_of_date_local = (SELECT d FROM latest_date) ), prev AS (   SELECT payload_json AS j FROM snapshot_daily_current   WHERE as_of_date_local = (SELECT d FROM prev_date) ) SELECT (CAST(json_extract(cur.j,'$.portfolio.income.projected_monthly_income') AS REAL) - CAST(json_extract(prev.j,'$.portfolio.income.projected_monthly_income') AS REAL)) AS value FROM cur, prev;",
-          "rawQueryText": "WITH latest_date AS (   SELECT MAX(as_of_date_local) AS d FROM snapshot_daily_current ), prev_date AS (   SELECT MAX(as_of_date_local) AS d FROM snapshot_daily_current   WHERE as_of_date_local < (SELECT d FROM latest_date) ), cur AS (   SELECT payload_json AS j FROM snapshot_daily_current   WHERE as_of_date_local = (SELECT d FROM latest_date) ), prev AS (   SELECT payload_json AS j FROM snapshot_daily_current   WHERE as_of_date_local = (SELECT d FROM prev_date) ) SELECT (CAST(json_extract(cur.j,'$.portfolio.income.projected_monthly_income') AS REAL) - CAST(json_extract(prev.j,'$.portfolio.income.projected_monthly_income') AS REAL)) AS value FROM cur, prev;"
+          "queryText": "WITH dates AS (SELECT as_of_date_local, projected_monthly_income, LAG(projected_monthly_income) OVER (ORDER BY as_of_date_local DESC) AS prev_income FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1) SELECT projected_monthly_income - prev_income AS value FROM dates;",
+          "rawQueryText": "WITH dates AS (SELECT as_of_date_local, projected_monthly_income, LAG(projected_monthly_income) OVER (ORDER BY as_of_date_local DESC) AS prev_income FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1) SELECT projected_monthly_income - prev_income AS value FROM dates;"
         }
       ],
       "options": {
@@ -108,7 +108,7 @@
     {
       "id": 3,
       "type": "stat",
-      "title": "Forward 12m Income \u0394",
+      "title": "Forward 12m Income Δ",
       "gridPos": {
         "x": 12,
         "y": 0,
@@ -124,8 +124,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest_date AS (   SELECT MAX(as_of_date_local) AS d FROM snapshot_daily_current ), prev_date AS (   SELECT MAX(as_of_date_local) AS d FROM snapshot_daily_current   WHERE as_of_date_local < (SELECT d FROM latest_date) ), cur AS (   SELECT payload_json AS j FROM snapshot_daily_current   WHERE as_of_date_local = (SELECT d FROM latest_date) ), prev AS (   SELECT payload_json AS j FROM snapshot_daily_current   WHERE as_of_date_local = (SELECT d FROM prev_date) ) SELECT (CAST(json_extract(cur.j,'$.portfolio.income.forward_12m_total') AS REAL) - CAST(json_extract(prev.j,'$.portfolio.income.forward_12m_total') AS REAL)) AS value FROM cur, prev;",
-          "rawQueryText": "WITH latest_date AS (   SELECT MAX(as_of_date_local) AS d FROM snapshot_daily_current ), prev_date AS (   SELECT MAX(as_of_date_local) AS d FROM snapshot_daily_current   WHERE as_of_date_local < (SELECT d FROM latest_date) ), cur AS (   SELECT payload_json AS j FROM snapshot_daily_current   WHERE as_of_date_local = (SELECT d FROM latest_date) ), prev AS (   SELECT payload_json AS j FROM snapshot_daily_current   WHERE as_of_date_local = (SELECT d FROM prev_date) ) SELECT (CAST(json_extract(cur.j,'$.portfolio.income.forward_12m_total') AS REAL) - CAST(json_extract(prev.j,'$.portfolio.income.forward_12m_total') AS REAL)) AS value FROM cur, prev;"
+          "queryText": "WITH dates AS (SELECT as_of_date_local, forward_12m_income, LAG(forward_12m_income) OVER (ORDER BY as_of_date_local DESC) AS prev_income FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1) SELECT forward_12m_income - prev_income AS value FROM dates;",
+          "rawQueryText": "WITH dates AS (SELECT as_of_date_local, forward_12m_income, LAG(forward_12m_income) OVER (ORDER BY as_of_date_local DESC) AS prev_income FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1) SELECT forward_12m_income - prev_income AS value FROM dates;"
         }
       ],
       "options": {
@@ -153,7 +153,7 @@
     {
       "id": 4,
       "type": "stat",
-      "title": "LTV \u0394",
+      "title": "LTV Δ",
       "gridPos": {
         "x": 18,
         "y": 0,
@@ -169,8 +169,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest_date AS (   SELECT MAX(as_of_date_local) AS d FROM snapshot_daily_current ), prev_date AS (   SELECT MAX(as_of_date_local) AS d FROM snapshot_daily_current   WHERE as_of_date_local < (SELECT d FROM latest_date) ), cur AS (   SELECT payload_json AS j FROM snapshot_daily_current   WHERE as_of_date_local = (SELECT d FROM latest_date) ), prev AS (   SELECT payload_json AS j FROM snapshot_daily_current   WHERE as_of_date_local = (SELECT d FROM prev_date) ) SELECT (CAST(json_extract(cur.j,'$.portfolio.totals.margin_to_portfolio_pct') AS REAL) - CAST(json_extract(prev.j,'$.portfolio.totals.margin_to_portfolio_pct') AS REAL)) AS value FROM cur, prev;",
-          "rawQueryText": "WITH latest_date AS (   SELECT MAX(as_of_date_local) AS d FROM snapshot_daily_current ), prev_date AS (   SELECT MAX(as_of_date_local) AS d FROM snapshot_daily_current   WHERE as_of_date_local < (SELECT d FROM latest_date) ), cur AS (   SELECT payload_json AS j FROM snapshot_daily_current   WHERE as_of_date_local = (SELECT d FROM latest_date) ), prev AS (   SELECT payload_json AS j FROM snapshot_daily_current   WHERE as_of_date_local = (SELECT d FROM prev_date) ) SELECT (CAST(json_extract(cur.j,'$.portfolio.totals.margin_to_portfolio_pct') AS REAL) - CAST(json_extract(prev.j,'$.portfolio.totals.margin_to_portfolio_pct') AS REAL)) AS value FROM cur, prev;"
+          "queryText": "WITH dates AS (SELECT as_of_date_local, ltv_pct, LAG(ltv_pct) OVER (ORDER BY as_of_date_local DESC) AS prev_ltv FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1) SELECT ltv_pct - prev_ltv AS value FROM dates;",
+          "rawQueryText": "WITH dates AS (SELECT as_of_date_local, ltv_pct, LAG(ltv_pct) OVER (ORDER BY as_of_date_local DESC) AS prev_ltv FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1) SELECT ltv_pct - prev_ltv AS value FROM dates;"
         }
       ],
       "options": {
@@ -214,8 +214,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest_date AS (SELECT MAX(as_of_date_local) AS d FROM snapshot_daily_current),\nprev_date AS (SELECT MAX(as_of_date_local) AS d FROM snapshot_daily_current WHERE as_of_date_local < (SELECT d FROM latest_date)),\ncur AS (SELECT payload_json AS j FROM snapshot_daily_current WHERE as_of_date_local=(SELECT d FROM latest_date)),\nprev AS (SELECT payload_json AS j FROM snapshot_daily_current WHERE as_of_date_local=(SELECT d FROM prev_date)),\ncur_h AS (SELECT json_each.value AS v FROM cur, json_each(cur.j,'$.holdings')),\nprev_h AS (SELECT json_each.value AS v FROM prev, json_each(prev.j,'$.holdings'))\nSELECT\n  json_extract(c.v,'$.symbol') AS symbol,\n  (CAST(json_extract(c.v,'$.valuation.market_value') AS REAL) - CAST(json_extract(p.v,'$.valuation.market_value') AS REAL)) AS mv_delta,\n  (CAST(json_extract(c.v,'$.valuation.portfolio_weight_pct') AS REAL) - CAST(json_extract(p.v,'$.valuation.portfolio_weight_pct') AS REAL)) AS weight_delta,\n  (CAST(json_extract(c.v,'$.income.projected_monthly_dividend') AS REAL) - CAST(json_extract(p.v,'$.income.projected_monthly_dividend') AS REAL)) AS income_delta\nFROM cur_h c\nJOIN prev_h p ON json_extract(c.v,'$.symbol') = json_extract(p.v,'$.symbol')\nORDER BY abs(mv_delta) DESC\nLIMIT 10;",
-          "rawQueryText": "WITH latest_date AS (SELECT MAX(as_of_date_local) AS d FROM snapshot_daily_current),\nprev_date AS (SELECT MAX(as_of_date_local) AS d FROM snapshot_daily_current WHERE as_of_date_local < (SELECT d FROM latest_date)),\ncur AS (SELECT payload_json AS j FROM snapshot_daily_current WHERE as_of_date_local=(SELECT d FROM latest_date)),\nprev AS (SELECT payload_json AS j FROM snapshot_daily_current WHERE as_of_date_local=(SELECT d FROM prev_date)),\ncur_h AS (SELECT json_each.value AS v FROM cur, json_each(cur.j,'$.holdings')),\nprev_h AS (SELECT json_each.value AS v FROM prev, json_each(prev.j,'$.holdings'))\nSELECT\n  json_extract(c.v,'$.symbol') AS symbol,\n  (CAST(json_extract(c.v,'$.valuation.market_value') AS REAL) - CAST(json_extract(p.v,'$.valuation.market_value') AS REAL)) AS mv_delta,\n  (CAST(json_extract(c.v,'$.valuation.portfolio_weight_pct') AS REAL) - CAST(json_extract(p.v,'$.valuation.portfolio_weight_pct') AS REAL)) AS weight_delta,\n  (CAST(json_extract(c.v,'$.income.projected_monthly_dividend') AS REAL) - CAST(json_extract(p.v,'$.income.projected_monthly_dividend') AS REAL)) AS income_delta\nFROM cur_h c\nJOIN prev_h p ON json_extract(c.v,'$.symbol') = json_extract(p.v,'$.symbol')\nORDER BY abs(mv_delta) DESC\nLIMIT 10;"
+          "queryText": "WITH latest_date AS (SELECT MAX(as_of_date_local) AS d FROM daily_holdings), prev_date AS (SELECT MAX(as_of_date_local) AS d FROM daily_holdings WHERE as_of_date_local < (SELECT d FROM latest_date)), cur AS (SELECT symbol, market_value, weight_pct, projected_monthly_dividend FROM daily_holdings WHERE as_of_date_local = (SELECT d FROM latest_date)), prev AS (SELECT symbol, market_value, weight_pct, projected_monthly_dividend FROM daily_holdings WHERE as_of_date_local = (SELECT d FROM prev_date)) SELECT c.symbol, c.market_value - p.market_value AS mv_delta, c.weight_pct - p.weight_pct AS weight_delta, c.projected_monthly_dividend - p.projected_monthly_dividend AS income_delta FROM cur c JOIN prev p ON c.symbol = p.symbol ORDER BY abs(mv_delta) DESC LIMIT 10;",
+          "rawQueryText": "WITH latest_date AS (SELECT MAX(as_of_date_local) AS d FROM daily_holdings), prev_date AS (SELECT MAX(as_of_date_local) AS d FROM daily_holdings WHERE as_of_date_local < (SELECT d FROM latest_date)), cur AS (SELECT symbol, market_value, weight_pct, projected_monthly_dividend FROM daily_holdings WHERE as_of_date_local = (SELECT d FROM latest_date)), prev AS (SELECT symbol, market_value, weight_pct, projected_monthly_dividend FROM daily_holdings WHERE as_of_date_local = (SELECT d FROM prev_date)) SELECT c.symbol, c.market_value - p.market_value AS mv_delta, c.weight_pct - p.weight_pct AS weight_delta, c.projected_monthly_dividend - p.projected_monthly_dividend AS income_delta FROM cur c JOIN prev p ON c.symbol = p.symbol ORDER BY abs(mv_delta) DESC LIMIT 10;"
         }
       ],
       "options": {

@@ -22,8 +22,8 @@
       "gridPos": { "x": 0, "y": 1, "w": 4, "h": 5 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT period_start_date || ' -> ' || period_end_date AS value FROM snapshots WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT period_start_date || ' -> ' || period_end_date AS value FROM snapshots WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
+        "queryText": "SELECT period_start_date || ' -> ' || period_end_date AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+        "rawQueryText": "SELECT period_start_date || ' -> ' || period_end_date AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
       }],
       "options": { "colorMode": "none", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value", "wideLayout": true },
       "fieldConfig": { "defaults": {}, "overrides": [] }
@@ -35,8 +35,8 @@
       "gridPos": { "x": 4, "y": 1, "w": 4, "h": 5 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.totals.delta.total_market_value') AS REAL) AS value FROM snapshots WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.totals.delta.total_market_value') AS REAL) AS value FROM snapshots WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
+        "queryText": "SELECT mv_delta AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+        "rawQueryText": "SELECT mv_delta AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
       }],
       "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
       "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
@@ -48,8 +48,8 @@
       "gridPos": { "x": 8, "y": 1, "w": 4, "h": 5 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.performance.period.twr_period_pct') AS REAL) AS value FROM snapshots WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.performance.period.twr_period_pct') AS REAL) AS value FROM snapshots WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
+        "queryText": "SELECT twr_period_pct AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+        "rawQueryText": "SELECT twr_period_pct AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
       }],
       "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
       "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
@@ -61,8 +61,8 @@
       "gridPos": { "x": 12, "y": 1, "w": 4, "h": 5 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT j, 0 AS fi, (json_array_length(j,'$.intervals')-1) AS li FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', li)) AS REAL) - CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', fi)) AS REAL) AS value FROM idx;",
-        "rawQueryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT j, 0 AS fi, (json_array_length(j,'$.intervals')-1) AS li FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', li)) AS REAL) - CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', fi)) AS REAL) AS value FROM idx;"
+        "queryText": "SELECT monthly_income_delta AS value FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+        "rawQueryText": "SELECT monthly_income_delta AS value FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;"
       }],
       "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
       "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
@@ -74,8 +74,8 @@
       "gridPos": { "x": 16, "y": 1, "w": 4, "h": 5 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT j, 0 AS fi, (json_array_length(j,'$.intervals')-1) AS li FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].goal_progress.progress_pct', li)) AS REAL) - CAST(json_extract(j, printf('$.intervals[%d].goal_progress.progress_pct', fi)) AS REAL) AS value FROM idx;",
-        "rawQueryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT j, 0 AS fi, (json_array_length(j,'$.intervals')-1) AS li FROM s) SELECT CAST(json_extract(j, printf('$.intervals[%d].goal_progress.progress_pct', li)) AS REAL) - CAST(json_extract(j, printf('$.intervals[%d].goal_progress.progress_pct', fi)) AS REAL) AS value FROM idx;"
+        "queryText": "SELECT goal_progress_delta AS value FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+        "rawQueryText": "SELECT goal_progress_delta AS value FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;"
       }],
       "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
       "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
@@ -87,8 +87,8 @@
       "gridPos": { "x": 20, "y": 1, "w": 4, "h": 5 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.composition.delta.holding_count') AS INTEGER) AS value FROM snapshots WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.composition.delta.holding_count') AS INTEGER) AS value FROM snapshots WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
+        "queryText": "SELECT holding_count_delta AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+        "rawQueryText": "SELECT holding_count_delta AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
       }],
       "fieldConfig": { "defaults": { "unit": "none", "decimals": 0 }, "overrides": [] }
     },
@@ -106,8 +106,8 @@
       "gridPos": { "x": 0, "y": 7, "w": 6, "h": 5 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.performance.twr_windows.twr_1m_pct_end') AS REAL) AS value FROM snapshots WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.performance.twr_windows.twr_1m_pct_end') AS REAL) AS value FROM snapshots WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
+        "queryText": "SELECT twr_1m_end AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+        "rawQueryText": "SELECT twr_1m_end AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
       }],
       "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
       "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
@@ -119,8 +119,8 @@
       "gridPos": { "x": 6, "y": 7, "w": 6, "h": 5 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.performance.twr_windows.twr_3m_pct_end') AS REAL) AS value FROM snapshots WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.performance.twr_windows.twr_3m_pct_end') AS REAL) AS value FROM snapshots WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
+        "queryText": "SELECT twr_3m_end AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+        "rawQueryText": "SELECT twr_3m_end AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
       }],
       "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
       "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
@@ -132,8 +132,8 @@
       "gridPos": { "x": 12, "y": 7, "w": 6, "h": 5 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.performance.twr_windows.twr_6m_pct_end') AS REAL) AS value FROM snapshots WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.performance.twr_windows.twr_6m_pct_end') AS REAL) AS value FROM snapshots WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
+        "queryText": "SELECT twr_6m_end AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+        "rawQueryText": "SELECT twr_6m_end AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
       }],
       "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
       "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
@@ -145,8 +145,8 @@
       "gridPos": { "x": 18, "y": 7, "w": 6, "h": 5 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.performance.twr_windows.twr_12m_pct_end') AS REAL) AS value FROM snapshots WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT CAST(json_extract(payload_json, '$.period_summary.performance.twr_windows.twr_12m_pct_end') AS REAL) AS value FROM snapshots WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
+        "queryText": "SELECT twr_12m_end AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+        "rawQueryText": "SELECT twr_12m_end AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
       }],
       "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
       "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
@@ -165,8 +165,8 @@
       "gridPos": { "x": 0, "y": 13, "w": 24, "h": 8 },
       "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
       "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT j, 0 AS fi, (json_array_length(j,'$.intervals')-1) AS li FROM s) SELECT 'Monthly Income' AS metric, CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', fi)) AS REAL) AS start_val, CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', li)) AS REAL) AS end_val, CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', li)) AS REAL) - CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', fi)) AS REAL) AS delta FROM idx UNION ALL SELECT 'Forward 12m Income', CAST(json_extract(j, printf('$.intervals[%d].income.forward_12m_total', fi)) AS REAL), CAST(json_extract(j, printf('$.intervals[%d].income.forward_12m_total', li)) AS REAL), CAST(json_extract(j, printf('$.intervals[%d].income.forward_12m_total', li)) AS REAL) - CAST(json_extract(j, printf('$.intervals[%d].income.forward_12m_total', fi)) AS REAL) FROM idx UNION ALL SELECT 'Current Yield %', CAST(json_extract(j, printf('$.intervals[%d].income.portfolio_current_yield_pct', fi)) AS REAL), CAST(json_extract(j, printf('$.intervals[%d].income.portfolio_current_yield_pct', li)) AS REAL), CAST(json_extract(j, printf('$.intervals[%d].income.portfolio_current_yield_pct', li)) AS REAL) - CAST(json_extract(j, printf('$.intervals[%d].income.portfolio_current_yield_pct', fi)) AS REAL) FROM idx UNION ALL SELECT 'Yield on Cost %', CAST(json_extract(j, printf('$.intervals[%d].income.portfolio_yield_on_cost_pct', fi)) AS REAL), CAST(json_extract(j, printf('$.intervals[%d].income.portfolio_yield_on_cost_pct', li)) AS REAL), CAST(json_extract(j, printf('$.intervals[%d].income.portfolio_yield_on_cost_pct', li)) AS REAL) - CAST(json_extract(j, printf('$.intervals[%d].income.portfolio_yield_on_cost_pct', fi)) AS REAL) FROM idx;",
-        "rawQueryText": "WITH s AS (SELECT payload_json AS j FROM snapshots WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1), idx AS (SELECT j, 0 AS fi, (json_array_length(j,'$.intervals')-1) AS li FROM s) SELECT 'Monthly Income' AS metric, CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', fi)) AS REAL) AS start_val, CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', li)) AS REAL) AS end_val, CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', li)) AS REAL) - CAST(json_extract(j, printf('$.intervals[%d].income.projected_monthly_income', fi)) AS REAL) AS delta FROM idx UNION ALL SELECT 'Forward 12m Income', CAST(json_extract(j, printf('$.intervals[%d].income.forward_12m_total', fi)) AS REAL), CAST(json_extract(j, printf('$.intervals[%d].income.forward_12m_total', li)) AS REAL), CAST(json_extract(j, printf('$.intervals[%d].income.forward_12m_total', li)) AS REAL) - CAST(json_extract(j, printf('$.intervals[%d].income.forward_12m_total', fi)) AS REAL) FROM idx UNION ALL SELECT 'Current Yield %', CAST(json_extract(j, printf('$.intervals[%d].income.portfolio_current_yield_pct', fi)) AS REAL), CAST(json_extract(j, printf('$.intervals[%d].income.portfolio_current_yield_pct', li)) AS REAL), CAST(json_extract(j, printf('$.intervals[%d].income.portfolio_current_yield_pct', li)) AS REAL) - CAST(json_extract(j, printf('$.intervals[%d].income.portfolio_current_yield_pct', fi)) AS REAL) FROM idx UNION ALL SELECT 'Yield on Cost %', CAST(json_extract(j, printf('$.intervals[%d].income.portfolio_yield_on_cost_pct', fi)) AS REAL), CAST(json_extract(j, printf('$.intervals[%d].income.portfolio_yield_on_cost_pct', li)) AS REAL), CAST(json_extract(j, printf('$.intervals[%d].income.portfolio_yield_on_cost_pct', li)) AS REAL) - CAST(json_extract(j, printf('$.intervals[%d].income.portfolio_yield_on_cost_pct', fi)) AS REAL) FROM idx;"
+        "queryText": "SELECT 'Monthly Income' AS metric, monthly_income_start AS start_val, monthly_income_end AS end_val, monthly_income_delta AS delta FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1 UNION ALL SELECT 'Forward 12m Income', forward_12m_income_start, forward_12m_income_end, forward_12m_income_delta FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1 UNION ALL SELECT 'Current Yield %', portfolio_yield_start, portfolio_yield_end, portfolio_yield_delta FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1 UNION ALL SELECT 'Yield on Cost %', yield_on_cost_start, yield_on_cost_end, yield_on_cost_delta FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+        "rawQueryText": "SELECT 'Monthly Income' AS metric, monthly_income_start AS start_val, monthly_income_end AS end_val, monthly_income_delta AS delta FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1 UNION ALL SELECT 'Forward 12m Income', forward_12m_income_start, forward_12m_income_end, forward_12m_income_delta FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1 UNION ALL SELECT 'Current Yield %', portfolio_yield_start, portfolio_yield_end, portfolio_yield_delta FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1 UNION ALL SELECT 'Yield on Cost %', yield_on_cost_start, yield_on_cost_end, yield_on_cost_delta FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;"
       }],
       "options": { "showHeader": true, "cellHeight": "md" },
       "fieldConfig": {

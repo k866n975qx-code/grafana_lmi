@@ -34,8 +34,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value\nFROM snapshots\nWHERE period_type='YEAR'\nORDER BY period_end_date DESC\nLIMIT 1;",
-          "rawQueryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value\nFROM snapshots\nWHERE period_type='YEAR'\nORDER BY period_end_date DESC\nLIMIT 1;"
+          "queryText": "SELECT period_start_date || ' → ' || period_end_date AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT period_start_date || ' → ' || period_end_date AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -78,8 +78,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value\nFROM snapshots\nWHERE period_type='YEAR'\nORDER BY period_end_date DESC\nLIMIT 1 OFFSET 1;",
-          "rawQueryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value\nFROM snapshots\nWHERE period_type='YEAR'\nORDER BY period_end_date DESC\nLIMIT 1 OFFSET 1;"
+          "queryText": "SELECT period_start_date || ' → ' || period_end_date AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1 OFFSET 1;",
+          "rawQueryText": "SELECT period_start_date || ' → ' || period_end_date AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1 OFFSET 1;"
         }
       ],
       "options": {
@@ -106,7 +106,7 @@
     {
       "id": 1,
       "type": "stat",
-      "title": "Market Value \u0394",
+      "title": "Market Value Δ",
       "gridPos": {
         "x": 0,
         "y": 4,
@@ -122,8 +122,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH recent AS (\n  SELECT period_end_date, payload_json AS j\n  FROM snapshots\n  WHERE period_type='YEAR'\n  ORDER BY period_end_date DESC\n  LIMIT 2\n),\ncur AS (SELECT j FROM recent ORDER BY period_end_date DESC LIMIT 1),\nprev AS (SELECT j FROM recent ORDER BY period_end_date ASC  LIMIT 1),\ncur_idx AS (SELECT (json_array_length(cur.j,'$.intervals')-1) AS i, cur.j AS j FROM cur),\nprev_idx AS (SELECT (json_array_length(prev.j,'$.intervals')-1) AS i, prev.j AS j FROM prev)SELECT\n(\n  CAST(\n    COALESCE(\n      json_extract(cur_idx.j, printf('$.intervals[%d].totals.total_market_value', cur_idx.i)),\n      json_extract(cur_idx.j, printf('$.intervals[%d].totals.total_market_value', cur_idx.i))\n    ) AS REAL\n  )\n  -\n  CAST(\n    COALESCE(\n      json_extract(prev_idx.j, printf('$.intervals[%d].totals.total_market_value', prev_idx.i)),\n      json_extract(prev_idx.j, printf('$.intervals[%d].totals.total_market_value', prev_idx.i))\n    ) AS REAL\n  )\n) AS value\nFROM cur_idx, prev_idx;",
-          "rawQueryText": "WITH recent AS (\n  SELECT period_end_date, payload_json AS j\n  FROM snapshots\n  WHERE period_type='YEAR'\n  ORDER BY period_end_date DESC\n  LIMIT 2\n),\ncur AS (SELECT j FROM recent ORDER BY period_end_date DESC LIMIT 1),\nprev AS (SELECT j FROM recent ORDER BY period_end_date ASC  LIMIT 1),\ncur_idx AS (SELECT (json_array_length(cur.j,'$.intervals')-1) AS i, cur.j AS j FROM cur),\nprev_idx AS (SELECT (json_array_length(prev.j,'$.intervals')-1) AS i, prev.j AS j FROM prev)SELECT\n(\n  CAST(\n    COALESCE(\n      json_extract(cur_idx.j, printf('$.intervals[%d].totals.total_market_value', cur_idx.i)),\n      json_extract(cur_idx.j, printf('$.intervals[%d].totals.total_market_value', cur_idx.i))\n    ) AS REAL\n  )\n  -\n  CAST(\n    COALESCE(\n      json_extract(prev_idx.j, printf('$.intervals[%d].totals.total_market_value', prev_idx.i)),\n      json_extract(prev_idx.j, printf('$.intervals[%d].totals.total_market_value', prev_idx.i))\n    ) AS REAL\n  )\n) AS value\nFROM cur_idx, prev_idx;"
+          "queryText": "SELECT mv_delta AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT mv_delta AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -151,7 +151,7 @@
     {
       "id": 2,
       "type": "stat",
-      "title": "Monthly Income \u0394",
+      "title": "Monthly Income Δ",
       "gridPos": {
         "x": 6,
         "y": 4,
@@ -167,8 +167,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH recent AS (\n  SELECT period_start_date, period_end_date, payload_json AS j\n  FROM snapshots\n  WHERE period_type='YEAR'\n  ORDER BY period_end_date DESC\n  LIMIT 2\n),\ncur AS (SELECT j, period_start_date, period_end_date FROM recent ORDER BY period_end_date DESC LIMIT 1),\nprev AS (SELECT j, period_start_date, period_end_date FROM recent ORDER BY period_end_date ASC  LIMIT 1),\ncur_idx AS (SELECT (json_array_length(cur.j,'$.intervals')-1) AS i, cur.j AS j FROM cur),\nprev_idx AS (SELECT (json_array_length(prev.j,'$.intervals')-1) AS i, prev.j AS j FROM prev)SELECT\n (CAST(json_extract(cur_idx.j, printf('$.intervals[%d].income.projected_monthly_income', cur_idx.i)) AS REAL)\n- CAST(json_extract(prev_idx.j, printf('$.intervals[%d].income.projected_monthly_income', prev_idx.i)) AS REAL)) AS value\nFROM cur_idx, prev_idx;",
-          "rawQueryText": "WITH recent AS (\n  SELECT period_start_date, period_end_date, payload_json AS j\n  FROM snapshots\n  WHERE period_type='YEAR'\n  ORDER BY period_end_date DESC\n  LIMIT 2\n),\ncur AS (SELECT j, period_start_date, period_end_date FROM recent ORDER BY period_end_date DESC LIMIT 1),\nprev AS (SELECT j, period_start_date, period_end_date FROM recent ORDER BY period_end_date ASC  LIMIT 1),\ncur_idx AS (SELECT (json_array_length(cur.j,'$.intervals')-1) AS i, cur.j AS j FROM cur),\nprev_idx AS (SELECT (json_array_length(prev.j,'$.intervals')-1) AS i, prev.j AS j FROM prev)SELECT\n (CAST(json_extract(cur_idx.j, printf('$.intervals[%d].income.projected_monthly_income', cur_idx.i)) AS REAL)\n- CAST(json_extract(prev_idx.j, printf('$.intervals[%d].income.projected_monthly_income', prev_idx.i)) AS REAL)) AS value\nFROM cur_idx, prev_idx;"
+          "queryText": "SELECT monthly_income_delta AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT monthly_income_delta AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -196,7 +196,7 @@
     {
       "id": 3,
       "type": "stat",
-      "title": "Forward 12m Income \u0394",
+      "title": "Forward 12m Income Δ",
       "gridPos": {
         "x": 12,
         "y": 4,
@@ -212,8 +212,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH recent AS (\n  SELECT period_start_date, period_end_date, payload_json AS j\n  FROM snapshots\n  WHERE period_type='YEAR'\n  ORDER BY period_end_date DESC\n  LIMIT 2\n),\ncur AS (SELECT j, period_start_date, period_end_date FROM recent ORDER BY period_end_date DESC LIMIT 1),\nprev AS (SELECT j, period_start_date, period_end_date FROM recent ORDER BY period_end_date ASC  LIMIT 1),\ncur_idx AS (SELECT (json_array_length(cur.j,'$.intervals')-1) AS i, cur.j AS j FROM cur),\nprev_idx AS (SELECT (json_array_length(prev.j,'$.intervals')-1) AS i, prev.j AS j FROM prev)SELECT\n (CAST(json_extract(cur_idx.j, printf('$.intervals[%d].income.forward_12m_total', cur_idx.i)) AS REAL)\n- CAST(json_extract(prev_idx.j, printf('$.intervals[%d].income.forward_12m_total', prev_idx.i)) AS REAL)) AS value\nFROM cur_idx, prev_idx;",
-          "rawQueryText": "WITH recent AS (\n  SELECT period_start_date, period_end_date, payload_json AS j\n  FROM snapshots\n  WHERE period_type='YEAR'\n  ORDER BY period_end_date DESC\n  LIMIT 2\n),\ncur AS (SELECT j, period_start_date, period_end_date FROM recent ORDER BY period_end_date DESC LIMIT 1),\nprev AS (SELECT j, period_start_date, period_end_date FROM recent ORDER BY period_end_date ASC  LIMIT 1),\ncur_idx AS (SELECT (json_array_length(cur.j,'$.intervals')-1) AS i, cur.j AS j FROM cur),\nprev_idx AS (SELECT (json_array_length(prev.j,'$.intervals')-1) AS i, prev.j AS j FROM prev)SELECT\n (CAST(json_extract(cur_idx.j, printf('$.intervals[%d].income.forward_12m_total', cur_idx.i)) AS REAL)\n- CAST(json_extract(prev_idx.j, printf('$.intervals[%d].income.forward_12m_total', prev_idx.i)) AS REAL)) AS value\nFROM cur_idx, prev_idx;"
+          "queryText": "SELECT forward_12m_income_delta AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT forward_12m_income_delta AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -241,7 +241,7 @@
     {
       "id": 4,
       "type": "stat",
-      "title": "LTV \u0394",
+      "title": "LTV Δ",
       "gridPos": {
         "x": 18,
         "y": 4,
@@ -257,8 +257,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH recent AS (\n  SELECT period_start_date, period_end_date, payload_json AS j\n  FROM snapshots\n  WHERE period_type='YEAR'\n  ORDER BY period_end_date DESC\n  LIMIT 2\n),\ncur AS (SELECT j, period_start_date, period_end_date FROM recent ORDER BY period_end_date DESC LIMIT 1),\nprev AS (SELECT j, period_start_date, period_end_date FROM recent ORDER BY period_end_date ASC  LIMIT 1),\ncur_idx AS (SELECT (json_array_length(cur.j,'$.intervals')-1) AS i, cur.j AS j FROM cur),\nprev_idx AS (SELECT (json_array_length(prev.j,'$.intervals')-1) AS i, prev.j AS j FROM prev)SELECT\n (CAST(json_extract(cur_idx.j, printf('$.intervals[%d].margin.ltv_pct', cur_idx.i)) AS REAL)\n- CAST(json_extract(prev_idx.j, printf('$.intervals[%d].margin.ltv_pct', prev_idx.i)) AS REAL)) AS value\nFROM cur_idx, prev_idx;",
-          "rawQueryText": "WITH recent AS (\n  SELECT period_start_date, period_end_date, payload_json AS j\n  FROM snapshots\n  WHERE period_type='YEAR'\n  ORDER BY period_end_date DESC\n  LIMIT 2\n),\ncur AS (SELECT j, period_start_date, period_end_date FROM recent ORDER BY period_end_date DESC LIMIT 1),\nprev AS (SELECT j, period_start_date, period_end_date FROM recent ORDER BY period_end_date ASC  LIMIT 1),\ncur_idx AS (SELECT (json_array_length(cur.j,'$.intervals')-1) AS i, cur.j AS j FROM cur),\nprev_idx AS (SELECT (json_array_length(prev.j,'$.intervals')-1) AS i, prev.j AS j FROM prev)SELECT\n (CAST(json_extract(cur_idx.j, printf('$.intervals[%d].margin.ltv_pct', cur_idx.i)) AS REAL)\n- CAST(json_extract(prev_idx.j, printf('$.intervals[%d].margin.ltv_pct', prev_idx.i)) AS REAL)) AS value\nFROM cur_idx, prev_idx;"
+          "queryText": "SELECT ltv_pct_delta AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT ltv_pct_delta AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -302,8 +302,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH recent AS (\n  SELECT period_start_date, period_end_date, payload_json AS j\n  FROM snapshots\n  WHERE period_type='YEAR'\n  ORDER BY period_end_date DESC\n  LIMIT 2\n),\ncur AS (SELECT j, period_start_date, period_end_date FROM recent ORDER BY period_end_date DESC LIMIT 1),\nprev AS (SELECT j, period_start_date, period_end_date FROM recent ORDER BY period_end_date ASC  LIMIT 1),\ncur_idx AS (SELECT (json_array_length(cur.j,'$.intervals')-1) AS i, cur.j AS j FROM cur),\nprev_idx AS (SELECT (json_array_length(prev.j,'$.intervals')-1) AS i, prev.j AS j FROM prev), cur_h AS (\n  SELECT json_each.value AS v\n  FROM cur_idx, json_each(cur_idx.j, printf('$.intervals[%d].daily_snapshot.holdings', cur_idx.i))\n),\nprev_h AS (\n  SELECT json_each.value AS v\n  FROM prev_idx, json_each(prev_idx.j, printf('$.intervals[%d].daily_snapshot.holdings', prev_idx.i))\n),\nrows AS (\n  SELECT\n    json_extract(c.v,'$.symbol') AS symbol,\n    (CAST(json_extract(c.v,'$.valuation.market_value') AS REAL) - CAST(json_extract(p.v,'$.valuation.market_value') AS REAL)) AS mv_delta,\n    (CAST(json_extract(c.v,'$.valuation.portfolio_weight_pct') AS REAL) - CAST(json_extract(p.v,'$.valuation.portfolio_weight_pct') AS REAL)) AS weight_delta,\n    (CAST(json_extract(c.v,'$.income.projected_monthly_dividend') AS REAL) - CAST(json_extract(p.v,'$.income.projected_monthly_dividend') AS REAL)) AS income_delta\n  FROM cur_h c\n  JOIN prev_h p ON json_extract(c.v,'$.symbol') = json_extract(p.v,'$.symbol')\n)\nSELECT * FROM rows\nORDER BY abs(mv_delta) DESC\nLIMIT 10;",
-          "rawQueryText": "WITH recent AS (\n  SELECT period_start_date, period_end_date, payload_json AS j\n  FROM snapshots\n  WHERE period_type='YEAR'\n  ORDER BY period_end_date DESC\n  LIMIT 2\n),\ncur AS (SELECT j, period_start_date, period_end_date FROM recent ORDER BY period_end_date DESC LIMIT 1),\nprev AS (SELECT j, period_start_date, period_end_date FROM recent ORDER BY period_end_date ASC  LIMIT 1),\ncur_idx AS (SELECT (json_array_length(cur.j,'$.intervals')-1) AS i, cur.j AS j FROM cur),\nprev_idx AS (SELECT (json_array_length(prev.j,'$.intervals')-1) AS i, prev.j AS j FROM prev), cur_h AS (\n  SELECT json_each.value AS v\n  FROM cur_idx, json_each(cur_idx.j, printf('$.intervals[%d].daily_snapshot.holdings', cur_idx.i))\n),\nprev_h AS (\n  SELECT json_each.value AS v\n  FROM prev_idx, json_each(prev_idx.j, printf('$.intervals[%d].daily_snapshot.holdings', prev_idx.i))\n),\nrows AS (\n  SELECT\n    json_extract(c.v,'$.symbol') AS symbol,\n    (CAST(json_extract(c.v,'$.valuation.market_value') AS REAL) - CAST(json_extract(p.v,'$.valuation.market_value') AS REAL)) AS mv_delta,\n    (CAST(json_extract(c.v,'$.valuation.portfolio_weight_pct') AS REAL) - CAST(json_extract(p.v,'$.valuation.portfolio_weight_pct') AS REAL)) AS weight_delta,\n    (CAST(json_extract(c.v,'$.income.projected_monthly_dividend') AS REAL) - CAST(json_extract(p.v,'$.income.projected_monthly_dividend') AS REAL)) AS income_delta\n  FROM cur_h c\n  JOIN prev_h p ON json_extract(c.v,'$.symbol') = json_extract(p.v,'$.symbol')\n)\nSELECT * FROM rows\nORDER BY abs(mv_delta) DESC\nLIMIT 10;"
+          "queryText": "WITH periods AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1) SELECT h.symbol, h.mv_delta, h.weight_delta, h.income_delta FROM period_holding_changes h JOIN periods p ON h.period_start_date = p.period_start_date AND h.period_end_date = p.period_end_date WHERE h.period_type = 'YEAR' ORDER BY abs(h.mv_delta) DESC LIMIT 10;",
+          "rawQueryText": "WITH periods AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1) SELECT h.symbol, h.mv_delta, h.weight_delta, h.income_delta FROM period_holding_changes h JOIN periods p ON h.period_start_date = p.period_start_date AND h.period_end_date = p.period_end_date WHERE h.period_type = 'YEAR' ORDER BY abs(h.mv_delta) DESC LIMIT 10;"
         }
       ],
       "options": {

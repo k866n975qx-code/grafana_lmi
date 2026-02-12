@@ -26,8 +26,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.portfolio.risk.drawdown.max_drawdown_1y_pct') AS REAL) AS value FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-365 day') ORDER BY as_of_date_local;",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.portfolio.risk.drawdown.max_drawdown_1y_pct') AS REAL) AS value FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-365 day') ORDER BY as_of_date_local;"
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, max_drawdown_1y_pct AS value FROM daily_portfolio WHERE as_of_date_local >= date('now','-365 day') ORDER BY as_of_date_local;",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, max_drawdown_1y_pct AS value FROM daily_portfolio WHERE as_of_date_local >= date('now','-365 day') ORDER BY as_of_date_local;"
         }
       ],
       "transformations": [
@@ -53,8 +53,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.portfolio.risk.volatility.vol_30d_pct') AS REAL) AS \"Vol 30d %\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.portfolio.risk.volatility.vol_30d_pct') AS REAL) AS \"Vol 30d %\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;"
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, vol_30d_pct AS \"Vol 30d %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, vol_30d_pct AS \"Vol 30d %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;"
         }
       ],
       "transformations": [
@@ -79,8 +79,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.portfolio.risk.ratios.sharpe_1y') AS REAL) AS \"Sharpe 1y\", CAST(json_extract(payload_json,'$.portfolio.risk.ratios.sortino_1y') AS REAL) AS \"Sortino 1y\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.portfolio.risk.ratios.sharpe_1y') AS REAL) AS \"Sharpe 1y\", CAST(json_extract(payload_json,'$.portfolio.risk.ratios.sortino_1y') AS REAL) AS \"Sortino 1y\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;"
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, sharpe_1y AS \"Sharpe 1y\", sortino_1y AS \"Sortino 1y\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, sharpe_1y AS \"Sharpe 1y\", sortino_1y AS \"Sortino 1y\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;"
         }
       ],
       "transformations": [
@@ -107,8 +107,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.portfolio.risk.drawdown.current_drawdown_depth_pct') AS REAL) AS \"Drawdown Depth %\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CAST(json_extract(payload_json,'$.portfolio.risk.drawdown.current_drawdown_depth_pct') AS REAL) AS \"Drawdown Depth %\" FROM snapshot_daily_current WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;"
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, current_drawdown_depth_pct AS \"Drawdown Depth %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, current_drawdown_depth_pct AS \"Drawdown Depth %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;"
         }
       ],
       "transformations": [
