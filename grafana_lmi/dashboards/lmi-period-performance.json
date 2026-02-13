@@ -1,9 +1,16 @@
 {
   "__inputs": [],
   "__requires": [
-    { "type": "grafana", "id": "grafana", "name": "Grafana", "version": "10.0.0" }
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    }
   ],
-  "annotations": { "list": [] },
+  "annotations": {
+    "list": []
+  },
   "editable": true,
   "graphTooltip": 0,
   "id": null,
@@ -12,170 +19,638 @@
       "id": 100,
       "type": "row",
       "title": "Latest Completed Month",
-      "gridPos": { "x": 0, "y": 0, "w": 24, "h": 1 },
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 1
+      },
       "collapsed": false
     },
     {
       "id": 1,
       "type": "stat",
       "title": "Period",
-      "gridPos": { "x": 0, "y": 1, "w": 4, "h": 5 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT period_start_date || ' -> ' || period_end_date AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT period_start_date || ' -> ' || period_end_date AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "options": { "colorMode": "none", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value", "wideLayout": true },
-      "fieldConfig": { "defaults": {}, "overrides": [] }
+      "gridPos": {
+        "x": 0,
+        "y": 1,
+        "w": 4,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT period_start_date || ' -> ' || period_end_date AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT period_start_date || ' -> ' || period_end_date AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      }
     },
     {
       "id": 2,
       "type": "stat",
       "title": "MV Change",
-      "gridPos": { "x": 4, "y": 1, "w": 4, "h": 5 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT mv_delta AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT mv_delta AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
-      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
+      "gridPos": {
+        "x": 4,
+        "y": 1,
+        "w": 4,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT mv_delta AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT mv_delta AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value_and_name"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 0,
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
     },
     {
       "id": 3,
       "type": "stat",
       "title": "TWR %",
-      "gridPos": { "x": 8, "y": 1, "w": 4, "h": 5 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT twr_period_pct AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT twr_period_pct AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
-      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
+      "gridPos": {
+        "x": 8,
+        "y": 1,
+        "w": 4,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT twr_period_pct AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT twr_period_pct AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value_and_name"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 0,
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
     },
     {
       "id": 4,
       "type": "stat",
       "title": "Income Change",
-      "gridPos": { "x": 12, "y": 1, "w": 4, "h": 5 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT monthly_income_delta AS value FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT monthly_income_delta AS value FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
-      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
+      "gridPos": {
+        "x": 12,
+        "y": 1,
+        "w": 4,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT monthly_income_delta AS value FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT monthly_income_delta AS value FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value_and_name"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 0,
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
     },
     {
       "id": 5,
       "type": "stat",
       "title": "Goal Progress Delta",
-      "gridPos": { "x": 16, "y": 1, "w": 4, "h": 5 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT goal_progress_delta AS value FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT goal_progress_delta AS value FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
-      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
+      "gridPos": {
+        "x": 16,
+        "y": 1,
+        "w": 4,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT goal_progress_pct_delta AS value FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT goal_progress_pct_delta AS value FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value_and_name"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 0,
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
     },
     {
       "id": 6,
       "type": "stat",
       "title": "Holding Count Change",
-      "gridPos": { "x": 20, "y": 1, "w": 4, "h": 5 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT holding_count_delta AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT holding_count_delta AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "fieldConfig": { "defaults": { "unit": "none", "decimals": 0 }, "overrides": [] }
+      "gridPos": {
+        "x": 20,
+        "y": 1,
+        "w": 4,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT holding_count_delta AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT holding_count_delta AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0
+        },
+        "overrides": []
+      }
     },
     {
       "id": 101,
       "type": "row",
       "title": "TWR Windows",
-      "gridPos": { "x": 0, "y": 6, "w": 24, "h": 1 },
+      "gridPos": {
+        "x": 0,
+        "y": 4,
+        "w": 24,
+        "h": 1
+      },
       "collapsed": false
     },
     {
       "id": 7,
       "type": "stat",
       "title": "TWR 1m (End)",
-      "gridPos": { "x": 0, "y": 7, "w": 6, "h": 5 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT twr_1m_end AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT twr_1m_end AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
-      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
+      "gridPos": {
+        "x": 0,
+        "y": 5,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT twr_1m_end AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT twr_1m_end AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value_and_name"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 0,
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
     },
     {
       "id": 8,
       "type": "stat",
       "title": "TWR 3m (End)",
-      "gridPos": { "x": 6, "y": 7, "w": 6, "h": 5 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT twr_3m_end AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT twr_3m_end AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
-      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
+      "gridPos": {
+        "x": 6,
+        "y": 5,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT twr_3m_end AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT twr_3m_end AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value_and_name"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 0,
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
     },
     {
       "id": 9,
       "type": "stat",
       "title": "TWR 6m (End)",
-      "gridPos": { "x": 12, "y": 7, "w": 6, "h": 5 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT twr_6m_end AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT twr_6m_end AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
-      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
+      "gridPos": {
+        "x": 12,
+        "y": 5,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT twr_6m_end AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT twr_6m_end AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value_and_name"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 0,
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
     },
     {
       "id": 10,
       "type": "stat",
       "title": "TWR 12m (End)",
-      "gridPos": { "x": 18, "y": 7, "w": 6, "h": 5 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT twr_12m_end AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT twr_12m_end AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
-      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
+      "gridPos": {
+        "x": 18,
+        "y": 5,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT twr_12m_end AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT twr_12m_end AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value_and_name"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 0,
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
     },
     {
       "id": 102,
       "type": "row",
       "title": "Income & Yield (Start / End / Delta)",
-      "gridPos": { "x": 0, "y": 12, "w": 24, "h": 1 },
+      "gridPos": {
+        "x": 0,
+        "y": 8,
+        "w": 24,
+        "h": 1
+      },
       "collapsed": false
     },
     {
       "id": 11,
       "type": "table",
       "title": "Income Metrics (Latest Completed Month)",
-      "gridPos": { "x": 0, "y": 13, "w": 24, "h": 8 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT 'Monthly Income' AS metric, monthly_income_start AS start_val, monthly_income_end AS end_val, monthly_income_delta AS delta FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1 UNION ALL SELECT 'Forward 12m Income', forward_12m_income_start, forward_12m_income_end, forward_12m_income_delta FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1 UNION ALL SELECT 'Current Yield %', portfolio_yield_start, portfolio_yield_end, portfolio_yield_delta FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1 UNION ALL SELECT 'Yield on Cost %', yield_on_cost_start, yield_on_cost_end, yield_on_cost_delta FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT 'Monthly Income' AS metric, monthly_income_start AS start_val, monthly_income_end AS end_val, monthly_income_delta AS delta FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1 UNION ALL SELECT 'Forward 12m Income', forward_12m_income_start, forward_12m_income_end, forward_12m_income_delta FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1 UNION ALL SELECT 'Current Yield %', portfolio_yield_start, portfolio_yield_end, portfolio_yield_delta FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1 UNION ALL SELECT 'Yield on Cost %', yield_on_cost_start, yield_on_cost_end, yield_on_cost_delta FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "options": { "showHeader": true, "cellHeight": "md" },
+      "gridPos": {
+        "x": 0,
+        "y": 9,
+        "w": 24,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT * FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1) SELECT 'Monthly Income' AS metric, monthly_income_start AS start_val, monthly_income_end AS end_val, monthly_income_delta AS delta FROM latest UNION ALL SELECT 'Forward 12m Income', forward_12m_start, forward_12m_end, forward_12m_delta FROM latest UNION ALL SELECT 'Current Yield %', yield_start, yield_end, yield_delta FROM latest UNION ALL SELECT 'Yield on Cost %', yield_on_cost_start, yield_on_cost_end, yield_on_cost_delta FROM latest;",
+          "rawQueryText": "WITH latest AS (SELECT * FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1) SELECT 'Monthly Income' AS metric, monthly_income_start AS start_val, monthly_income_end AS end_val, monthly_income_delta AS delta FROM latest UNION ALL SELECT 'Forward 12m Income', forward_12m_start, forward_12m_end, forward_12m_delta FROM latest UNION ALL SELECT 'Current Yield %', yield_start, yield_end, yield_delta FROM latest UNION ALL SELECT 'Yield on Cost %', yield_on_cost_start, yield_on_cost_end, yield_on_cost_delta FROM latest;"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "md"
+      },
       "fieldConfig": {
-        "defaults": { "decimals": 2 },
+        "defaults": {
+          "decimals": 2
+        },
         "overrides": [
-          { "matcher": { "id": "byName", "options": "metric" }, "properties": [{ "id": "displayName", "value": "Metric" }] },
-          { "matcher": { "id": "byName", "options": "start_val" }, "properties": [{ "id": "displayName", "value": "Start" }] },
-          { "matcher": { "id": "byName", "options": "end_val" }, "properties": [{ "id": "displayName", "value": "End" }] },
-          { "matcher": { "id": "byName", "options": "delta" }, "properties": [{ "id": "displayName", "value": "Delta" }] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "metric"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Metric"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "start_val"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Start"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "end_val"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "End"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "delta"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Delta"
+              }
+            ]
+          }
         ]
       }
     }
@@ -183,8 +658,14 @@
   "refresh": "2m",
   "schemaVersion": 39,
   "style": "dark",
-  "tags": ["lmi", "periods"],
-  "time": { "from": "now-90d", "to": "now" },
+  "tags": [
+    "lmi",
+    "periods"
+  ],
+  "time": {
+    "from": "now-90d",
+    "to": "now"
+  },
   "timezone": "browser",
   "title": "LMI - Period Performance",
   "uid": "lmi-period-performance",

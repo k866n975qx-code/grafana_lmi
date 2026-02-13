@@ -1,9 +1,16 @@
 {
   "__inputs": [],
   "__requires": [
-    { "type": "grafana", "id": "grafana", "name": "Grafana", "version": "10.0.0" }
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    }
   ],
-  "annotations": { "list": [] },
+  "annotations": {
+    "list": []
+  },
   "editable": true,
   "graphTooltip": 0,
   "id": null,
@@ -12,54 +19,127 @@
       "id": 1,
       "type": "stat",
       "title": "Portfolio Value",
-      "gridPos": { "x": 0, "y": 0, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{
-        "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT market_value AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
-        "rawQueryText": "SELECT market_value AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
-      }],
-      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 6,
+        "h": 2
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT market_value AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT market_value AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
     },
     {
       "id": 2,
       "type": "stat",
       "title": "Required PV (Tier)",
-      "gridPos": { "x": 6, "y": 0, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{
-        "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT goal_required_portfolio_value AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
-        "rawQueryText": "SELECT goal_required_portfolio_value AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
-      }],
-      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
+      "gridPos": {
+        "x": 6,
+        "y": 0,
+        "w": 6,
+        "h": 2
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT goal_required_portfolio_value AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT goal_required_portfolio_value AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
     },
     {
       "id": 3,
       "type": "stat",
       "title": "Current Monthly Income",
-      "gridPos": { "x": 12, "y": 0, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{
-        "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT projected_monthly_income AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
-        "rawQueryText": "SELECT projected_monthly_income AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
-      }],
-      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 6,
+        "h": 2
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT projected_monthly_income AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT projected_monthly_income AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
     },
     {
       "id": 4,
       "type": "stat",
       "title": "Target Monthly",
-      "gridPos": { "x": 18, "y": 0, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{
-        "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT goal_target_monthly_income AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
-        "rawQueryText": "SELECT goal_target_monthly_income AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
-      }],
+      "gridPos": {
+        "x": 18,
+        "y": 0,
+        "w": 6,
+        "h": 2
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT goal_target_monthly_income AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT goal_target_monthly_income AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
       "fieldConfig": {
-        "defaults": { "unit": "currencyUSD", "decimals": 0, "color": { "mode": "fixed", "fixedColor": "orange" } },
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "orange"
+          }
+        },
         "overrides": []
       }
     },
@@ -68,22 +148,105 @@
       "type": "timeseries",
       "title": "Portfolio Value vs Expected Pace (180d)",
       "description": "Actual portfolio value overlaid with the expected trajectory from your likely tier projection.",
-      "gridPos": { "x": 0, "y": 3, "w": 12, "h": 8 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{
-        "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, market_value AS \"Actual Portfolio Value\", goal_expected_portfolio_value AS \"Expected (Tier Pace)\" FROM daily_portfolio WHERE as_of_date_local >= date('now', '-180 day') ORDER BY as_of_date_local;",
-        "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, market_value AS \"Actual Portfolio Value\", goal_expected_portfolio_value AS \"Expected (Tier Pace)\" FROM daily_portfolio WHERE as_of_date_local >= date('now', '-180 day') ORDER BY as_of_date_local;"
-      }],
-      "transformations": [
-        { "id": "convertFieldType", "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] } }
+      "gridPos": {
+        "x": 0,
+        "y": 2,
+        "w": 12,
+        "h": 6
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, market_value AS \"Actual Portfolio Value\", CAST(json_extract(goal_pace_windows_json, '$.since_inception.expected.portfolio_value') AS REAL) AS \"Expected (Tier Pace)\" FROM daily_portfolio WHERE as_of_date_local >= date('now', '-180 day') ORDER BY as_of_date_local;",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, market_value AS \"Actual Portfolio Value\", CAST(json_extract(goal_pace_windows_json, '$.since_inception.expected.portfolio_value') AS REAL) AS \"Expected (Tier Pace)\" FROM daily_portfolio WHERE as_of_date_local >= date('now', '-180 day') ORDER BY as_of_date_local;"
+        }
       ],
-      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
+        }
+      ],
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      },
       "fieldConfig": {
-        "defaults": { "unit": "currencyUSD", "decimals": 0 },
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
         "overrides": [
-          { "matcher": { "id": "byName", "options": "Actual Portfolio Value" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "green" } }, { "id": "custom.fillOpacity", "value": 10 }, { "id": "custom.lineWidth", "value": 2 }] },
-          { "matcher": { "id": "byName", "options": "Expected (Tier Pace)" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "blue" } }, { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 5] } }, { "id": "custom.lineWidth", "value": 1 }] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Actual Portfolio Value"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "green"
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 10
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Expected (Tier Pace)"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [
+                    10,
+                    5
+                  ]
+                }
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 1
+              }
+            ]
+          }
         ]
       }
     },
@@ -92,22 +255,105 @@
       "type": "timeseries",
       "title": "Monthly Income vs Target (180d)",
       "description": "Actual projected monthly income trending toward the target goal.",
-      "gridPos": { "x": 12, "y": 3, "w": 12, "h": 8 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{
-        "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, projected_monthly_income AS \"Monthly Income\", goal_target_monthly_income AS \"Target ($4,000/mo)\" FROM daily_portfolio WHERE as_of_date_local >= date('now', '-180 day') ORDER BY as_of_date_local;",
-        "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, projected_monthly_income AS \"Monthly Income\", goal_target_monthly_income AS \"Target ($4,000/mo)\" FROM daily_portfolio WHERE as_of_date_local >= date('now', '-180 day') ORDER BY as_of_date_local;"
-      }],
-      "transformations": [
-        { "id": "convertFieldType", "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] } }
+      "gridPos": {
+        "x": 12,
+        "y": 2,
+        "w": 12,
+        "h": 6
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, projected_monthly_income AS \"Monthly Income\", goal_target_monthly_income AS \"Target ($4,000/mo)\" FROM daily_portfolio WHERE as_of_date_local >= date('now', '-180 day') ORDER BY as_of_date_local;",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, projected_monthly_income AS \"Monthly Income\", goal_target_monthly_income AS \"Target ($4,000/mo)\" FROM daily_portfolio WHERE as_of_date_local >= date('now', '-180 day') ORDER BY as_of_date_local;"
+        }
       ],
-      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
+        }
+      ],
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      },
       "fieldConfig": {
-        "defaults": { "unit": "currencyUSD", "decimals": 0 },
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
         "overrides": [
-          { "matcher": { "id": "byName", "options": "Monthly Income" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "green" } }, { "id": "custom.fillOpacity", "value": 20 }, { "id": "custom.lineWidth", "value": 2 }] },
-          { "matcher": { "id": "byName", "options": "Target ($4,000/mo)" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "red" } }, { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 5] } }, { "id": "custom.lineWidth", "value": 2 }] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Monthly Income"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "green"
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 20
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Target ($4,000/mo)"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "red"
+                }
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [
+                    10,
+                    5
+                  ]
+                }
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 2
+              }
+            ]
+          }
         ]
       }
     },
@@ -116,34 +362,218 @@
       "type": "table",
       "title": "Pace Tracking Windows",
       "description": "Expected vs actual performance across multiple time windows based on your likely tier projection.",
-      "gridPos": { "x": 0, "y": 11, "w": 24, "h": 8 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{
-        "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT window_name AS window, days_in_window AS days, expected_portfolio_value AS expected_pv, actual_portfolio_value AS actual_pv, delta_portfolio_value AS pv_delta, delta_portfolio_value_pct AS pv_delta_pct, months_ahead_behind, pace_pct, amount_surplus AS surplus FROM daily_goal_pace_windows WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_goal_pace_windows) ORDER BY days_in_window;",
-        "rawQueryText": "SELECT window_name AS window, days_in_window AS days, expected_portfolio_value AS expected_pv, actual_portfolio_value AS actual_pv, delta_portfolio_value AS pv_delta, delta_portfolio_value_pct AS pv_delta_pct, months_ahead_behind, pace_pct, amount_surplus AS surplus FROM daily_goal_pace_windows WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_goal_pace_windows) ORDER BY days_in_window;"
-      }],
-      "options": { "showHeader": true, "cellHeight": "md" },
+      "gridPos": {
+        "x": 0,
+        "y": 8,
+        "w": 24,
+        "h": 6
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT goal_pace_windows_json FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1), windows AS (SELECT value AS w FROM latest, json_each(latest.goal_pace_windows_json)) SELECT json_extract(w, '$.window_name') AS window, CAST(json_extract(w, '$.days_in_window') AS INTEGER) AS days, CAST(json_extract(w, '$.expected.portfolio_value') AS REAL) AS expected_pv, CAST(json_extract(w, '$.actual.portfolio_value') AS REAL) AS actual_pv, CAST(json_extract(w, '$.delta.portfolio_value') AS REAL) AS pv_delta, CAST(json_extract(w, '$.delta.portfolio_value_pct') AS REAL) AS pv_delta_pct, CAST(json_extract(w, '$.pace.months_ahead_behind') AS REAL) AS months_ahead_behind, CAST(json_extract(w, '$.pace.pct_of_tier_pace') AS REAL) AS pace_pct, CAST(json_extract(w, '$.pace.amount_surplus') AS REAL) AS surplus FROM windows ORDER BY days;",
+          "rawQueryText": "WITH latest AS (SELECT goal_pace_windows_json FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1), windows AS (SELECT value AS w FROM latest, json_each(latest.goal_pace_windows_json)) SELECT json_extract(w, '$.window_name') AS window, CAST(json_extract(w, '$.days_in_window') AS INTEGER) AS days, CAST(json_extract(w, '$.expected.portfolio_value') AS REAL) AS expected_pv, CAST(json_extract(w, '$.actual.portfolio_value') AS REAL) AS actual_pv, CAST(json_extract(w, '$.delta.portfolio_value') AS REAL) AS pv_delta, CAST(json_extract(w, '$.delta.portfolio_value_pct') AS REAL) AS pv_delta_pct, CAST(json_extract(w, '$.pace.months_ahead_behind') AS REAL) AS months_ahead_behind, CAST(json_extract(w, '$.pace.pct_of_tier_pace') AS REAL) AS pace_pct, CAST(json_extract(w, '$.pace.amount_surplus') AS REAL) AS surplus FROM windows ORDER BY days;"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "md"
+      },
       "fieldConfig": {
         "defaults": {},
         "overrides": [
-          { "matcher": { "id": "byName", "options": "window" }, "properties": [{ "id": "displayName", "value": "Window" }] },
-          { "matcher": { "id": "byName", "options": "days" }, "properties": [{ "id": "displayName", "value": "Days" }] },
-          { "matcher": { "id": "byName", "options": "expected_pv" }, "properties": [{ "id": "unit", "value": "currencyUSD" }, { "id": "decimals", "value": 0 }, { "id": "displayName", "value": "Expected PV" }] },
-          { "matcher": { "id": "byName", "options": "actual_pv" }, "properties": [{ "id": "unit", "value": "currencyUSD" }, { "id": "decimals", "value": 0 }, { "id": "displayName", "value": "Actual PV" }] },
-          { "matcher": { "id": "byName", "options": "pv_delta" }, "properties": [{ "id": "unit", "value": "currencyUSD" }, { "id": "decimals", "value": 0 }, { "id": "displayName", "value": "PV Delta" }] },
-          { "matcher": { "id": "byName", "options": "pv_delta_pct" }, "properties": [{ "id": "unit", "value": "percent" }, { "id": "decimals", "value": 1 }, { "id": "displayName", "value": "PV Delta %" }] },
           {
-            "matcher": { "id": "byName", "options": "months_ahead_behind" },
+            "matcher": {
+              "id": "byName",
+              "options": "window"
+            },
             "properties": [
-              { "id": "displayName", "value": "Months +/-" },
-              { "id": "decimals", "value": 1 },
-              { "id": "thresholds", "value": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": -3, "color": "yellow" }, { "value": 0, "color": "green" }] } },
-              { "id": "custom.cellOptions", "value": { "type": "color-text" } }
+              {
+                "id": "displayName",
+                "value": "Window"
+              }
             ]
           },
-          { "matcher": { "id": "byName", "options": "pace_pct" }, "properties": [{ "id": "unit", "value": "percent" }, { "id": "decimals", "value": 1 }, { "id": "displayName", "value": "Pace %" }] },
-          { "matcher": { "id": "byName", "options": "surplus" }, "properties": [{ "id": "unit", "value": "currencyUSD" }, { "id": "decimals", "value": 0 }, { "id": "displayName", "value": "Surplus" }] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "days"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Days"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "expected_pv"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "currencyUSD"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "displayName",
+                "value": "Expected PV"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "actual_pv"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "currencyUSD"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "displayName",
+                "value": "Actual PV"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "pv_delta"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "currencyUSD"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "displayName",
+                "value": "PV Delta"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "pv_delta_pct"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              },
+              {
+                "id": "displayName",
+                "value": "PV Delta %"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "months_ahead_behind"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Months +/-"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "value": null,
+                      "color": "red"
+                    },
+                    {
+                      "value": -3,
+                      "color": "yellow"
+                    },
+                    {
+                      "value": 0,
+                      "color": "green"
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "pace_pct"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              },
+              {
+                "id": "displayName",
+                "value": "Pace %"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "surplus"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "currencyUSD"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "displayName",
+                "value": "Surplus"
+              }
+            ]
+          }
         ]
       }
     }
@@ -151,8 +581,14 @@
   "refresh": "2m",
   "schemaVersion": 39,
   "style": "dark",
-  "tags": ["lmi", "goals"],
-  "time": { "from": "now-180d", "to": "now" },
+  "tags": [
+    "lmi",
+    "goals"
+  ],
+  "time": {
+    "from": "now-180d",
+    "to": "now"
+  },
   "timezone": "browser",
   "title": "LMI - Goal Pace",
   "uid": "lmi-goal-pace",

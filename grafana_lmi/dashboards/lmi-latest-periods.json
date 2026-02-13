@@ -18,7 +18,7 @@
         "x": 0,
         "y": 0,
         "w": 8,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -29,8 +29,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT period_start_date || ' → ' || period_end_date AS value FROM period_summary WHERE period_type='WEEK' ORDER BY period_end_date DESC LIMIT 1;",
-          "rawQueryText": "SELECT period_start_date || ' → ' || period_end_date AS value FROM period_summary WHERE period_type='WEEK' ORDER BY period_end_date DESC LIMIT 1;"
+          "queryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value FROM period_summary WHERE period_type='WEEK' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value FROM period_summary WHERE period_type='WEEK' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -62,7 +62,7 @@
         "x": 8,
         "y": 0,
         "w": 6,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -107,7 +107,7 @@
         "x": 14,
         "y": 0,
         "w": 5,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -152,7 +152,7 @@
         "x": 19,
         "y": 0,
         "w": 5,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -188,9 +188,18 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 20 },
-              { "color": "red", "value": 30 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 20
+              },
+              {
+                "color": "red",
+                "value": 30
+              }
             ]
           }
         },
@@ -203,9 +212,9 @@
       "title": "MONTH Range",
       "gridPos": {
         "x": 0,
-        "y": 4,
+        "y": 3,
         "w": 8,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -216,8 +225,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT period_start_date || ' → ' || period_end_date AS value FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;",
-          "rawQueryText": "SELECT period_start_date || ' → ' || period_end_date AS value FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;"
+          "queryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -247,9 +256,9 @@
       "title": "MONTH Market Value (End)",
       "gridPos": {
         "x": 8,
-        "y": 4,
+        "y": 3,
         "w": 6,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -292,9 +301,9 @@
       "title": "MONTH Monthly Income (End)",
       "gridPos": {
         "x": 14,
-        "y": 4,
+        "y": 3,
         "w": 5,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -337,9 +346,9 @@
       "title": "MONTH LTV % (End)",
       "gridPos": {
         "x": 19,
-        "y": 4,
+        "y": 3,
         "w": 5,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -375,9 +384,18 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 20 },
-              { "color": "red", "value": 30 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 20
+              },
+              {
+                "color": "red",
+                "value": 30
+              }
             ]
           }
         },
@@ -390,9 +408,9 @@
       "title": "QUARTER Range",
       "gridPos": {
         "x": 0,
-        "y": 8,
+        "y": 6,
         "w": 8,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -403,8 +421,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT period_start_date || ' → ' || period_end_date AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;",
-          "rawQueryText": "SELECT period_start_date || ' → ' || period_end_date AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;"
+          "queryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -434,9 +452,9 @@
       "title": "QUARTER Market Value (End)",
       "gridPos": {
         "x": 8,
-        "y": 8,
+        "y": 6,
         "w": 6,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -479,9 +497,9 @@
       "title": "QUARTER Monthly Income (End)",
       "gridPos": {
         "x": 14,
-        "y": 8,
+        "y": 6,
         "w": 5,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -524,9 +542,9 @@
       "title": "QUARTER LTV % (End)",
       "gridPos": {
         "x": 19,
-        "y": 8,
+        "y": 6,
         "w": 5,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -562,9 +580,18 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 20 },
-              { "color": "red", "value": 30 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 20
+              },
+              {
+                "color": "red",
+                "value": 30
+              }
             ]
           }
         },
@@ -577,9 +604,9 @@
       "title": "YEAR Range",
       "gridPos": {
         "x": 0,
-        "y": 12,
+        "y": 9,
         "w": 8,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -590,8 +617,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT period_start_date || ' → ' || period_end_date AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;",
-          "rawQueryText": "SELECT period_start_date || ' → ' || period_end_date AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;"
+          "queryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value FROM period_summary WHERE period_type='YEAR' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -621,9 +648,9 @@
       "title": "YEAR Market Value (End)",
       "gridPos": {
         "x": 8,
-        "y": 12,
+        "y": 9,
         "w": 6,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -666,9 +693,9 @@
       "title": "YEAR Monthly Income (End)",
       "gridPos": {
         "x": 14,
-        "y": 12,
+        "y": 9,
         "w": 5,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -711,9 +738,9 @@
       "title": "YEAR LTV % (End)",
       "gridPos": {
         "x": 19,
-        "y": 12,
+        "y": 9,
         "w": 5,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -749,9 +776,18 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 20 },
-              { "color": "red", "value": 30 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 20
+              },
+              {
+                "color": "red",
+                "value": 30
+              }
             ]
           }
         },

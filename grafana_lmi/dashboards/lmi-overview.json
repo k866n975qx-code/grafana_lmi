@@ -23,7 +23,7 @@
         "x": 0,
         "y": 0,
         "w": 4,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -67,7 +67,7 @@
         "x": 4,
         "y": 0,
         "w": 4,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -98,7 +98,7 @@
         "x": 8,
         "y": 0,
         "w": 4,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -129,7 +129,7 @@
         "x": 12,
         "y": 0,
         "w": 4,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -177,7 +177,7 @@
         "x": 16,
         "y": 0,
         "w": 4,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -208,7 +208,7 @@
         "x": 20,
         "y": 0,
         "w": 4,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -237,9 +237,9 @@
       "title": "In Drawdown",
       "gridPos": {
         "x": 0,
-        "y": 4,
+        "y": 3,
         "w": 6,
-        "h": 3
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -297,9 +297,9 @@
       "title": "Drawdown Depth %",
       "gridPos": {
         "x": 6,
-        "y": 4,
+        "y": 3,
         "w": 6,
-        "h": 3
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -310,8 +310,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT current_drawdown_depth_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT current_drawdown_depth_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT drawdown_depth_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT drawdown_depth_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "fieldConfig": {
@@ -349,9 +349,9 @@
       "title": "Days Since Peak",
       "gridPos": {
         "x": 12,
-        "y": 4,
+        "y": 3,
         "w": 6,
-        "h": 3
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -362,8 +362,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT days_since_peak AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT days_since_peak AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT CASE WHEN drawdown_peak_date IS NULL THEN NULL ELSE CAST(julianday(as_of_date_local) - julianday(drawdown_peak_date) AS INTEGER) END AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CASE WHEN drawdown_peak_date IS NULL THEN NULL ELSE CAST(julianday(as_of_date_local) - julianday(drawdown_peak_date) AS INTEGER) END AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "fieldConfig": {
@@ -380,9 +380,9 @@
       "title": "Recovery %",
       "gridPos": {
         "x": 18,
-        "y": 4,
+        "y": 3,
         "w": 6,
-        "h": 3
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -393,8 +393,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT recovery_progress_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT recovery_progress_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT (100 + COALESCE(drawdown_depth_pct, 0)) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT (100 + COALESCE(drawdown_depth_pct, 0)) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "fieldConfig": {
@@ -411,9 +411,9 @@
       "title": "Market Value (Last 90d)",
       "gridPos": {
         "x": 0,
-        "y": 7,
+        "y": 5,
         "w": 12,
-        "h": 7
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -455,9 +455,9 @@
       "title": "Monthly Income (Last 90d)",
       "gridPos": {
         "x": 12,
-        "y": 7,
+        "y": 5,
         "w": 12,
-        "h": 7
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -499,9 +499,9 @@
       "title": "Top Holdings",
       "gridPos": {
         "x": 0,
-        "y": 14,
+        "y": 9,
         "w": 24,
-        "h": 8
+        "h": 5
       },
       "datasource": {
         "type": "frser-sqlite-datasource",

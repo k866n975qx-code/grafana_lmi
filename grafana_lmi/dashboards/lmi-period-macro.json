@@ -1,9 +1,16 @@
 {
   "__inputs": [],
   "__requires": [
-    { "type": "grafana", "id": "grafana", "name": "Grafana", "version": "10.0.0" }
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    }
   ],
-  "annotations": { "list": [] },
+  "annotations": {
+    "list": []
+  },
   "editable": true,
   "graphTooltip": 0,
   "id": null,
@@ -12,60 +19,222 @@
       "id": 1,
       "type": "stat",
       "title": "Future APR %",
-      "gridPos": { "x": 0, "y": 0, "w": 8, "h": 5 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT future_rate_apr_pct AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT future_rate_apr_pct AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2, "color": { "mode": "fixed", "fixedColor": "yellow" } }, "overrides": [] }
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 8,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT margin_apr_end AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT margin_apr_end AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "yellow"
+          }
+        },
+        "overrides": []
+      }
     },
     {
       "id": 2,
       "type": "stat",
       "title": "Future Net Progress %",
       "description": "Net goal progress if margin rate changes to the projected future APR.",
-      "gridPos": { "x": 8, "y": 0, "w": 8, "h": 5 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT goal_progress_future_rate_pct AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT goal_progress_future_rate_pct AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
-      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 50, "color": "yellow" }, { "value": 75, "color": "green" }] } }, "overrides": [] }
+      "gridPos": {
+        "x": 8,
+        "y": 0,
+        "w": 8,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT goal_net_progress_pct_end AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT goal_net_progress_pct_end AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value_and_name"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 50,
+                "color": "yellow"
+              },
+              {
+                "value": 75,
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
     },
     {
       "id": 3,
       "type": "stat",
       "title": "Future Additional Needed",
       "description": "Additional investment needed to reach income goal if margin rate changes to the projected future APR. This is a rate sensitivity scenario, not the current shortfall.",
-      "gridPos": { "x": 16, "y": 0, "w": 8, "h": 5 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT additional_investment_future_rate AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT additional_investment_future_rate AS value FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
+      "gridPos": {
+        "x": 16,
+        "y": 0,
+        "w": 8,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT MAX(goal_required_portfolio_value - market_value, 0) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT MAX(goal_required_portfolio_value - market_value, 0) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
     },
     {
       "id": 4,
       "type": "table",
       "title": "Macro Context (Latest Completed Month)",
-      "gridPos": { "x": 0, "y": 5, "w": 24, "h": 10 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT '10Y Yield' AS metric, macro_10y_start AS start_val, macro_10y_end AS end_val, macro_10y_avg AS avg_val, macro_10y_delta AS delta FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1 UNION ALL SELECT '2Y Yield', macro_2y_start, macro_2y_end, macro_2y_avg, macro_2y_delta FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1 UNION ALL SELECT 'VIX', macro_vix_start, macro_vix_end, macro_vix_avg, macro_vix_delta FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1 UNION ALL SELECT 'CPI YoY', macro_cpi_start, macro_cpi_end, macro_cpi_avg, macro_cpi_delta FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT '10Y Yield' AS metric, macro_10y_start AS start_val, macro_10y_end AS end_val, macro_10y_avg AS avg_val, macro_10y_delta AS delta FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1 UNION ALL SELECT '2Y Yield', macro_2y_start, macro_2y_end, macro_2y_avg, macro_2y_delta FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1 UNION ALL SELECT 'VIX', macro_vix_start, macro_vix_end, macro_vix_avg, macro_vix_delta FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1 UNION ALL SELECT 'CPI YoY', macro_cpi_start, macro_cpi_end, macro_cpi_avg, macro_cpi_delta FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "options": { "showHeader": true, "cellHeight": "md" },
+      "gridPos": {
+        "x": 0,
+        "y": 5,
+        "w": 24,
+        "h": 9
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT * FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1) SELECT '10Y Yield' AS metric, macro_10y_start AS start_val, macro_10y_end AS end_val, macro_10y_avg AS avg_val, macro_10y_delta AS delta FROM latest UNION ALL SELECT '2Y Yield', macro_2y_start, macro_2y_end, macro_2y_avg, macro_2y_delta FROM latest UNION ALL SELECT 'VIX', macro_vix_start, macro_vix_end, macro_vix_avg, macro_vix_delta FROM latest UNION ALL SELECT 'CPI YoY', macro_cpi_start, macro_cpi_end, macro_cpi_avg, macro_cpi_delta FROM latest;",
+          "rawQueryText": "WITH latest AS (SELECT * FROM period_summary WHERE period_type = 'MONTH' ORDER BY period_end_date DESC LIMIT 1) SELECT '10Y Yield' AS metric, macro_10y_start AS start_val, macro_10y_end AS end_val, macro_10y_avg AS avg_val, macro_10y_delta AS delta FROM latest UNION ALL SELECT '2Y Yield', macro_2y_start, macro_2y_end, macro_2y_avg, macro_2y_delta FROM latest UNION ALL SELECT 'VIX', macro_vix_start, macro_vix_end, macro_vix_avg, macro_vix_delta FROM latest UNION ALL SELECT 'CPI YoY', macro_cpi_start, macro_cpi_end, macro_cpi_avg, macro_cpi_delta FROM latest;"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "md"
+      },
       "fieldConfig": {
-        "defaults": { "decimals": 2 },
+        "defaults": {
+          "decimals": 2
+        },
         "overrides": [
-          { "matcher": { "id": "byName", "options": "metric" }, "properties": [{ "id": "displayName", "value": "Metric" }] },
-          { "matcher": { "id": "byName", "options": "start_val" }, "properties": [{ "id": "displayName", "value": "Start" }] },
-          { "matcher": { "id": "byName", "options": "end_val" }, "properties": [{ "id": "displayName", "value": "End" }] },
-          { "matcher": { "id": "byName", "options": "avg_val" }, "properties": [{ "id": "displayName", "value": "Avg" }] },
-          { "matcher": { "id": "byName", "options": "delta" }, "properties": [{ "id": "displayName", "value": "Delta" }] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "metric"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Metric"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "start_val"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Start"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "end_val"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "End"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "avg_val"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Avg"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "delta"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Delta"
+              }
+            ]
+          }
         ]
       }
     }
@@ -73,8 +242,14 @@
   "refresh": "2m",
   "schemaVersion": 39,
   "style": "dark",
-  "tags": ["lmi", "periods"],
-  "time": { "from": "now-90d", "to": "now" },
+  "tags": [
+    "lmi",
+    "periods"
+  ],
+  "time": {
+    "from": "now-90d",
+    "to": "now"
+  },
   "timezone": "browser",
   "title": "LMI - Period Macro & Rates",
   "uid": "lmi-period-macro",

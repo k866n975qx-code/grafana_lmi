@@ -23,7 +23,7 @@
         "x": 0,
         "y": 0,
         "w": 8,
-        "h": 4
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -34,8 +34,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT forward_12m_income AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT forward_12m_income AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT forward_12m_total AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT forward_12m_total AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -70,7 +70,7 @@
         "x": 8,
         "y": 0,
         "w": 8,
-        "h": 4
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -117,7 +117,7 @@
         "x": 16,
         "y": 0,
         "w": 8,
-        "h": 4
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -162,9 +162,9 @@
       "title": "Current Yield",
       "gridPos": {
         "x": 0,
-        "y": 4,
+        "y": 2,
         "w": 12,
-        "h": 4
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -209,9 +209,9 @@
       "title": "Yield on Cost",
       "gridPos": {
         "x": 12,
-        "y": 4,
+        "y": 2,
         "w": 12,
-        "h": 4
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -256,9 +256,9 @@
       "title": "Yield Trends (90d)",
       "gridPos": {
         "x": 12,
-        "y": 8,
+        "y": 5,
         "w": 12,
-        "h": 7
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -355,9 +355,9 @@
       "title": "Projected Monthly Income (Last 90d)",
       "gridPos": {
         "x": 0,
-        "y": 8,
+        "y": 5,
         "w": 12,
-        "h": 7
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -412,9 +412,9 @@
       "title": "Holdings - Income Leaderboard",
       "gridPos": {
         "x": 0,
-        "y": 15,
+        "y": 9,
         "w": 24,
-        "h": 8
+        "h": 5
       },
       "datasource": {
         "type": "frser-sqlite-datasource",

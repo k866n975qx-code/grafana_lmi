@@ -1,9 +1,16 @@
 {
   "__inputs": [],
   "__requires": [
-    { "type": "grafana", "id": "grafana", "name": "Grafana", "version": "10.0.0" }
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    }
   ],
-  "annotations": { "list": [] },
+  "annotations": {
+    "list": []
+  },
   "editable": true,
   "graphTooltip": 0,
   "id": null,
@@ -12,11 +19,21 @@
       "id": 1,
       "type": "stat",
       "title": "Likely Tier",
-      "gridPos": { "x": 0, "y": 0, "w": 4, "h": 5 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
-          "refId": "A", "format": "table", "queryType": "table",
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
           "queryText": "SELECT (CAST(goal_likely_tier AS TEXT) || ' - ' || goal_likely_tier_name) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
           "rawQueryText": "SELECT (CAST(goal_likely_tier AS TEXT) || ' - ' || goal_likely_tier_name) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
@@ -25,12 +42,23 @@
         "colorMode": "background",
         "graphMode": "none",
         "orientation": "auto",
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
         "textMode": "value",
         "wideLayout": true
       },
       "fieldConfig": {
-        "defaults": { "color": { "mode": "fixed", "fixedColor": "blue" } },
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          }
+        },
         "overrides": []
       }
     },
@@ -38,11 +66,21 @@
       "id": 2,
       "type": "stat",
       "title": "Pace Category",
-      "gridPos": { "x": 4, "y": 0, "w": 4, "h": 5 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 4,
+        "y": 0,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
-          "refId": "A", "format": "table", "queryType": "table",
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
           "queryText": "SELECT UPPER(goal_pace_category) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
           "rawQueryText": "SELECT UPPER(goal_pace_category) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
@@ -51,14 +89,40 @@
         "colorMode": "background",
         "graphMode": "none",
         "orientation": "auto",
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
         "textMode": "value",
         "wideLayout": true
       },
       "fieldConfig": {
         "defaults": {
           "mappings": [
-            { "type": "value", "options": { "AHEAD": { "text": "AHEAD", "color": "green" }, "ON_TRACK": { "text": "ON TRACK", "color": "green" }, "BEHIND": { "text": "BEHIND", "color": "yellow" }, "OFF_TRACK": { "text": "OFF TRACK", "color": "red" } } }
+            {
+              "type": "value",
+              "options": {
+                "AHEAD": {
+                  "text": "AHEAD",
+                  "color": "green"
+                },
+                "ON_TRACK": {
+                  "text": "ON TRACK",
+                  "color": "green"
+                },
+                "BEHIND": {
+                  "text": "BEHIND",
+                  "color": "yellow"
+                },
+                "OFF_TRACK": {
+                  "text": "OFF TRACK",
+                  "color": "red"
+                }
+              }
+            }
           ]
         },
         "overrides": []
@@ -68,24 +132,60 @@
       "id": 3,
       "type": "stat",
       "title": "Months Ahead / Behind",
-      "gridPos": { "x": 8, "y": 0, "w": 4, "h": 5 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 8,
+        "y": 0,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
-          "refId": "A", "format": "table", "queryType": "table",
-          "queryText": "SELECT goal_months_ahead_behind AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT goal_months_ahead_behind AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT goal_pace_months_ahead_behind AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT goal_pace_months_ahead_behind AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
-        "colorMode": "value", "graphMode": "none", "orientation": "auto",
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false },
-        "textMode": "value_and_name", "wideLayout": true
+        "colorMode": "value",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value_and_name",
+        "wideLayout": true
       },
       "fieldConfig": {
         "defaults": {
-          "unit": "none", "decimals": 1,
-          "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": -3, "color": "yellow" }, { "value": 0, "color": "green" }] }
+          "unit": "none",
+          "decimals": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": -3,
+                "color": "yellow"
+              },
+              {
+                "value": 0,
+                "color": "green"
+              }
+            ]
+          }
         },
         "overrides": []
       }
@@ -94,55 +194,131 @@
       "id": 4,
       "type": "stat",
       "title": "Revised Goal Date",
-      "gridPos": { "x": 12, "y": 0, "w": 4, "h": 5 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
-          "refId": "A", "format": "table", "queryType": "table",
-          "queryText": "SELECT goal_revised_goal_date AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT goal_revised_goal_date AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT goal_pace_revised_goal_date AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT goal_pace_revised_goal_date AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
-      "options": { "colorMode": "none", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value", "wideLayout": true },
-      "fieldConfig": { "defaults": {}, "overrides": [] }
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      }
     },
     {
       "id": 5,
       "type": "stat",
       "title": "Revised Months to Goal",
-      "gridPos": { "x": 16, "y": 0, "w": 4, "h": 5 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 16,
+        "y": 0,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
-          "refId": "A", "format": "table", "queryType": "table",
-          "queryText": "SELECT goal_revised_months_to_goal AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT goal_revised_months_to_goal AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (goal_months_to_goal - goal_pace_months_ahead_behind) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT (goal_months_to_goal - goal_pace_months_ahead_behind) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "none", "decimals": 0 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0
+        },
+        "overrides": []
+      }
     },
     {
       "id": 6,
       "type": "stat",
       "title": "Confidence",
-      "gridPos": { "x": 20, "y": 0, "w": 4, "h": 5 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 20,
+        "y": 0,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
-          "refId": "A", "format": "table", "queryType": "table",
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
           "queryText": "SELECT UPPER(goal_likely_tier_confidence) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
           "rawQueryText": "SELECT UPPER(goal_likely_tier_confidence) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
-        "colorMode": "background", "graphMode": "none", "orientation": "auto",
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false },
-        "textMode": "value", "wideLayout": true
+        "colorMode": "background",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
       },
       "fieldConfig": {
         "defaults": {
           "mappings": [
-            { "type": "value", "options": { "HIGH": { "text": "HIGH", "color": "green" }, "MEDIUM": { "text": "MEDIUM", "color": "yellow" }, "LOW": { "text": "LOW", "color": "red" } } }
+            {
+              "type": "value",
+              "options": {
+                "HIGH": {
+                  "text": "HIGH",
+                  "color": "green"
+                },
+                "MEDIUM": {
+                  "text": "MEDIUM",
+                  "color": "yellow"
+                },
+                "LOW": {
+                  "text": "LOW",
+                  "color": "red"
+                }
+              }
+            }
           ]
         },
         "overrides": []
@@ -153,35 +329,214 @@
       "type": "table",
       "title": "Goal Tier Roadmap",
       "description": "All 6 tiers with projections. The likely tier (auto-detected from your behavior) is highlighted.",
-      "gridPos": { "x": 0, "y": 5, "w": 24, "h": 12 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 4,
+        "w": 24,
+        "h": 10
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
-          "refId": "A", "format": "table", "queryType": "table",
-          "queryText": "SELECT tier, name, months_to_goal, estimated_goal_date AS goal_date, required_portfolio_value AS required_pv, additional_investment_needed AS additional_needed, CASE WHEN drip_enabled THEN 'Yes' ELSE 'No' END AS drip, monthly_contribution AS monthly_contrib, annual_appreciation_pct AS appreciation_pct, CASE WHEN ltv_maintained THEN 'Yes' ELSE 'No' END AS leverage, CASE WHEN tier = (SELECT goal_likely_tier FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1) THEN 'CURRENT' ELSE '' END AS active FROM daily_goal_tiers WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_goal_tiers) ORDER BY tier;",
-          "rawQueryText": "SELECT tier, name, months_to_goal, estimated_goal_date AS goal_date, required_portfolio_value AS required_pv, additional_investment_needed AS additional_needed, CASE WHEN drip_enabled THEN 'Yes' ELSE 'No' END AS drip, monthly_contribution AS monthly_contrib, annual_appreciation_pct AS appreciation_pct, CASE WHEN ltv_maintained THEN 'Yes' ELSE 'No' END AS leverage, CASE WHEN tier = (SELECT goal_likely_tier FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1) THEN 'CURRENT' ELSE '' END AS active FROM daily_goal_tiers WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_goal_tiers) ORDER BY tier;"
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT tier, name, months_to_goal, estimated_goal_date AS goal_date, required_portfolio_value AS required_pv, MAX(required_portfolio_value - final_portfolio_value, 0) AS additional_needed, CASE WHEN assumption_drip_enabled THEN 'Yes' ELSE 'No' END AS drip, assumption_monthly_contribution AS monthly_contrib, assumption_annual_appreciation_pct AS appreciation_pct, CASE WHEN assumption_ltv_maintained THEN 'Yes' ELSE 'No' END AS leverage, CASE WHEN tier = (SELECT goal_likely_tier FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1) THEN 'CURRENT' ELSE '' END AS active FROM daily_goal_tiers WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_goal_tiers) ORDER BY tier;",
+          "rawQueryText": "SELECT tier, name, months_to_goal, estimated_goal_date AS goal_date, required_portfolio_value AS required_pv, MAX(required_portfolio_value - final_portfolio_value, 0) AS additional_needed, CASE WHEN assumption_drip_enabled THEN 'Yes' ELSE 'No' END AS drip, assumption_monthly_contribution AS monthly_contrib, assumption_annual_appreciation_pct AS appreciation_pct, CASE WHEN assumption_ltv_maintained THEN 'Yes' ELSE 'No' END AS leverage, CASE WHEN tier = (SELECT goal_likely_tier FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1) THEN 'CURRENT' ELSE '' END AS active FROM daily_goal_tiers WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_goal_tiers) ORDER BY tier;"
         }
       ],
-      "options": { "showHeader": true, "cellHeight": "md" },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "md"
+      },
       "fieldConfig": {
         "defaults": {},
         "overrides": [
-          { "matcher": { "id": "byName", "options": "required_pv" }, "properties": [{ "id": "unit", "value": "currencyUSD" }, { "id": "decimals", "value": 0 }, { "id": "displayName", "value": "Required PV" }] },
-          { "matcher": { "id": "byName", "options": "additional_needed" }, "properties": [{ "id": "unit", "value": "currencyUSD" }, { "id": "decimals", "value": 0 }, { "id": "displayName", "value": "Additional Needed" }] },
-          { "matcher": { "id": "byName", "options": "monthly_contrib" }, "properties": [{ "id": "unit", "value": "currencyUSD" }, { "id": "decimals", "value": 0 }, { "id": "displayName", "value": "Monthly Contrib" }] },
-          { "matcher": { "id": "byName", "options": "appreciation_pct" }, "properties": [{ "id": "unit", "value": "percent" }, { "id": "decimals", "value": 1 }, { "id": "displayName", "value": "Apprec %" }] },
-          { "matcher": { "id": "byName", "options": "months_to_goal" }, "properties": [{ "id": "displayName", "value": "Months" }] },
-          { "matcher": { "id": "byName", "options": "goal_date" }, "properties": [{ "id": "displayName", "value": "Goal Date" }] },
-          { "matcher": { "id": "byName", "options": "tier" }, "properties": [{ "id": "displayName", "value": "Tier" }] },
-          { "matcher": { "id": "byName", "options": "name" }, "properties": [{ "id": "displayName", "value": "Name" }] },
-          { "matcher": { "id": "byName", "options": "drip" }, "properties": [{ "id": "displayName", "value": "DRIP" }] },
-          { "matcher": { "id": "byName", "options": "leverage" }, "properties": [{ "id": "displayName", "value": "Leverage" }] },
           {
-            "matcher": { "id": "byName", "options": "active" },
+            "matcher": {
+              "id": "byName",
+              "options": "required_pv"
+            },
             "properties": [
-              { "id": "displayName", "value": "Active" },
-              { "id": "mappings", "value": [{ "type": "value", "options": { "CURRENT": { "text": "CURRENT", "color": "green" } } }] },
-              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+              {
+                "id": "unit",
+                "value": "currencyUSD"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "displayName",
+                "value": "Required PV"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "additional_needed"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "currencyUSD"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "displayName",
+                "value": "Additional Needed"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "monthly_contrib"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "currencyUSD"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "displayName",
+                "value": "Monthly Contrib"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "appreciation_pct"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              },
+              {
+                "id": "displayName",
+                "value": "Apprec %"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "months_to_goal"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Months"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "goal_date"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Goal Date"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "tier"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Tier"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "name"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Name"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "drip"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "DRIP"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "leverage"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Leverage"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "active"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Active"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "CURRENT": {
+                        "text": "CURRENT",
+                        "color": "green"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
             ]
           }
         ]
@@ -191,8 +546,14 @@
   "refresh": "2m",
   "schemaVersion": 39,
   "style": "dark",
-  "tags": ["lmi", "goals"],
-  "time": { "from": "now-180d", "to": "now" },
+  "tags": [
+    "lmi",
+    "goals"
+  ],
+  "time": {
+    "from": "now-180d",
+    "to": "now"
+  },
   "timezone": "browser",
   "title": "LMI - Goal Tiers",
   "uid": "lmi-goal-tiers",

@@ -23,7 +23,7 @@
         "x": 0,
         "y": 0,
         "w": 5,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -85,7 +85,7 @@
         "x": 5,
         "y": 0,
         "w": 5,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -116,7 +116,7 @@
         "x": 10,
         "y": 0,
         "w": 5,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -147,7 +147,7 @@
         "x": 15,
         "y": 0,
         "w": 5,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -158,8 +158,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT goal_shortfall AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT goal_shortfall AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT (goal_target_monthly_income - goal_current_projected_monthly) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT (goal_target_monthly_income - goal_current_projected_monthly) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -209,7 +209,7 @@
         "x": 20,
         "y": 0,
         "w": 4,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -238,9 +238,9 @@
       "title": "Net Monthly (After Interest)",
       "gridPos": {
         "x": 0,
-        "y": 4,
+        "y": 3,
         "w": 8,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -251,8 +251,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT goal_net_monthly_income AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT goal_net_monthly_income AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT goal_net_current_projected_monthly AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT goal_net_current_projected_monthly AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "fieldConfig": {
@@ -269,9 +269,9 @@
       "title": "Net Progress %",
       "gridPos": {
         "x": 8,
-        "y": 4,
+        "y": 3,
         "w": 8,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -331,9 +331,9 @@
       "title": "Additional Needed",
       "gridPos": {
         "x": 16,
-        "y": 4,
+        "y": 3,
         "w": 8,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -344,8 +344,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT goal_additional_needed AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT goal_additional_needed AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT MAX(goal_required_portfolio_value - market_value, 0) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT MAX(goal_required_portfolio_value - market_value, 0) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "fieldConfig": {
@@ -362,9 +362,9 @@
       "title": "Progress Trend (90d)",
       "gridPos": {
         "x": 0,
-        "y": 8,
+        "y": 6,
         "w": 24,
-        "h": 7
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -416,9 +416,9 @@
       "description": "How quickly the goal date is approaching. Lower is better. Compares basic projection vs pace-adjusted estimate.",
       "gridPos": {
         "x": 0,
-        "y": 15,
+        "y": 10,
         "w": 24,
-        "h": 7
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -429,8 +429,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, goal_months_to_goal AS \"Months to Goal\", goal_revised_months_to_goal AS \"Revised (Pace-Adjusted)\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-90 days') ORDER BY as_of_date_local ASC;",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, goal_months_to_goal AS \"Months to Goal\", goal_revised_months_to_goal AS \"Revised (Pace-Adjusted)\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-90 days') ORDER BY as_of_date_local ASC;"
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, goal_months_to_goal AS \"Months to Goal\", goal_net_months_to_goal AS \"Net (After Interest)\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-90 days') ORDER BY as_of_date_local ASC;",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, goal_months_to_goal AS \"Months to Goal\", goal_net_months_to_goal AS \"Net (After Interest)\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-90 days') ORDER BY as_of_date_local ASC;"
         }
       ],
       "transformations": [
@@ -484,7 +484,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Revised (Pace-Adjusted)"
+              "options": "Net (After Interest)"
             },
             "properties": [
               {

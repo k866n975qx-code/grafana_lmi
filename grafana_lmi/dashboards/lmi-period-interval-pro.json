@@ -1,0 +1,399 @@
+{
+  "__inputs": [],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    }
+  ],
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "graphTooltip": 0,
+  "id": null,
+  "panels": [
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "Rolling Month Range",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 4,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT period_start_date || ' -> ' || period_end_date AS value FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT period_start_date || ' -> ' || period_end_date AS value FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      }
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "MV Delta",
+      "gridPos": {
+        "x": 4,
+        "y": 0,
+        "w": 4,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT mv_delta AS value FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT mv_delta AS value FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "Income Delta",
+      "gridPos": {
+        "x": 8,
+        "y": 0,
+        "w": 4,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT monthly_income_delta AS value FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT monthly_income_delta AS value FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "TWR",
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 4,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT twr_period_pct AS value FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT twr_period_pct AS value FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 5,
+      "type": "stat",
+      "title": "VaR Breach Days",
+      "gridPos": {
+        "x": 16,
+        "y": 0,
+        "w": 4,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT days_exceeding_var_95 AS value FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT days_exceeding_var_95 AS value FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 6,
+      "type": "stat",
+      "title": "Margin Call Events",
+      "gridPos": {
+        "x": 20,
+        "y": 0,
+        "w": 4,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT margin_call_events AS value FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT margin_call_events AS value FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 7,
+      "type": "table",
+      "title": "Interval Track (Rolling Month)",
+      "gridPos": {
+        "x": 0,
+        "y": 3,
+        "w": 12,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH p AS (SELECT period_type, period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1) SELECT i.interval_label, i.interval_start, i.interval_end, i.mv, i.monthly_income, i.vol_30d_pct, i.var_95_1d_pct, i.cvar_90_1d_pct, i.goal_progress_pct FROM period_intervals i JOIN p ON i.period_type=p.period_type AND i.period_start_date=p.period_start_date AND i.period_end_date=p.period_end_date ORDER BY i.interval_label DESC;",
+          "rawQueryText": "WITH p AS (SELECT period_type, period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1) SELECT i.interval_label, i.interval_start, i.interval_end, i.mv, i.monthly_income, i.vol_30d_pct, i.var_95_1d_pct, i.cvar_90_1d_pct, i.goal_progress_pct FROM period_intervals i JOIN p ON i.period_type=p.period_type AND i.period_start_date=p.period_start_date AND i.period_end_date=p.period_end_date ORDER BY i.interval_label DESC;"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      }
+    },
+    {
+      "id": 8,
+      "type": "table",
+      "title": "Latest Interval Holdings",
+      "gridPos": {
+        "x": 12,
+        "y": 3,
+        "w": 12,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH p AS (SELECT period_type, period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1), il AS (SELECT i.interval_label FROM period_intervals i JOIN p ON i.period_type=p.period_type AND i.period_start_date=p.period_start_date AND i.period_end_date=p.period_end_date ORDER BY i.interval_label DESC LIMIT 1) SELECT h.symbol, h.weight_pct, h.market_value, h.pnl_dollar, h.current_yield_pct, h.risk_quality_category FROM period_interval_holdings h JOIN p ON h.period_type=p.period_type AND h.period_start_date=p.period_start_date AND h.period_end_date=p.period_end_date JOIN il ON h.interval_label=il.interval_label ORDER BY h.weight_pct DESC;",
+          "rawQueryText": "WITH p AS (SELECT period_type, period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1), il AS (SELECT i.interval_label FROM period_intervals i JOIN p ON i.period_type=p.period_type AND i.period_start_date=p.period_start_date AND i.period_end_date=p.period_end_date ORDER BY i.interval_label DESC LIMIT 1) SELECT h.symbol, h.weight_pct, h.market_value, h.pnl_dollar, h.current_yield_pct, h.risk_quality_category FROM period_interval_holdings h JOIN p ON h.period_type=p.period_type AND h.period_start_date=p.period_start_date AND h.period_end_date=p.period_end_date JOIN il ON h.interval_label=il.interval_label ORDER BY h.weight_pct DESC;"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      }
+    },
+    {
+      "id": 9,
+      "type": "table",
+      "title": "Latest Interval Attribution",
+      "gridPos": {
+        "x": 0,
+        "y": 8,
+        "w": 8,
+        "h": 6
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH p AS (SELECT period_type, period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1), il AS (SELECT i.interval_label FROM period_intervals i JOIN p ON i.period_type=p.period_type AND i.period_start_date=p.period_start_date AND i.period_end_date=p.period_end_date ORDER BY i.interval_label DESC LIMIT 1) SELECT a.window, a.total_return_pct, a.income_contribution_pct, a.price_contribution_pct FROM period_interval_attribution a JOIN p ON a.period_type=p.period_type AND a.period_start_date=p.period_start_date AND a.period_end_date=p.period_end_date JOIN il ON a.interval_label=il.interval_label ORDER BY CASE a.window WHEN '1m' THEN 1 WHEN '3m' THEN 2 WHEN '6m' THEN 3 WHEN '12m' THEN 4 ELSE 9 END;",
+          "rawQueryText": "WITH p AS (SELECT period_type, period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1), il AS (SELECT i.interval_label FROM period_intervals i JOIN p ON i.period_type=p.period_type AND i.period_start_date=p.period_start_date AND i.period_end_date=p.period_end_date ORDER BY i.interval_label DESC LIMIT 1) SELECT a.window, a.total_return_pct, a.income_contribution_pct, a.price_contribution_pct FROM period_interval_attribution a JOIN p ON a.period_type=p.period_type AND a.period_start_date=p.period_start_date AND a.period_end_date=p.period_end_date JOIN il ON a.interval_label=il.interval_label ORDER BY CASE a.window WHEN '1m' THEN 1 WHEN '3m' THEN 2 WHEN '6m' THEN 3 WHEN '12m' THEN 4 ELSE 9 END;"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      }
+    },
+    {
+      "id": 10,
+      "type": "timeseries",
+      "title": "Weekly Safety Trend (Last 12 Weeks)",
+      "gridPos": {
+        "x": 8,
+        "y": 8,
+        "w": 16,
+        "h": 6
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, period_max_drawdown_pct AS \"Max DD %\", margin_call_events AS \"Margin Call Events\", days_exceeding_var_95 AS \"VaR95 Breach Days\" FROM period_summary WHERE period_type='WEEK' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 12;",
+          "rawQueryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, period_max_drawdown_pct AS \"Max DD %\", margin_call_events AS \"Margin Call Events\", days_exceeding_var_95 AS \"VaR95 Breach Days\" FROM period_summary WHERE period_type='WEEK' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 12;"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "field": "time",
+                "desc": false
+              }
+            ]
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 2
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Max DD %"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "refresh": "2m",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": [
+    "lmi",
+    "period",
+    "interval"
+  ],
+  "time": {
+    "from": "now-180d",
+    "to": "now"
+  },
+  "timezone": "browser",
+  "title": "LMI - Period Interval Pro",
+  "uid": "lmi-period-interval-pro",
+  "version": 1,
+  "__annotations": {
+    "grafana.app/sourcePath": "dashboards/lmi-period-interval-pro.json"
+  }
+}

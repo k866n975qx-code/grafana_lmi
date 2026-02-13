@@ -18,7 +18,7 @@
     {
       "id": 1,
       "type": "stat",
-      "title": "Market Value Δ",
+      "title": "Market Value \u0394",
       "gridPos": {
         "x": 0,
         "y": 0,
@@ -63,7 +63,7 @@
     {
       "id": 2,
       "type": "stat",
-      "title": "Monthly Income Δ",
+      "title": "Monthly Income \u0394",
       "gridPos": {
         "x": 6,
         "y": 0,
@@ -108,7 +108,7 @@
     {
       "id": 3,
       "type": "stat",
-      "title": "Forward 12m Income Δ",
+      "title": "Forward 12m Income \u0394",
       "gridPos": {
         "x": 12,
         "y": 0,
@@ -124,8 +124,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH dates AS (SELECT as_of_date_local, forward_12m_income, LAG(forward_12m_income) OVER (ORDER BY as_of_date_local DESC) AS prev_income FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1) SELECT forward_12m_income - prev_income AS value FROM dates;",
-          "rawQueryText": "WITH dates AS (SELECT as_of_date_local, forward_12m_income, LAG(forward_12m_income) OVER (ORDER BY as_of_date_local DESC) AS prev_income FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1) SELECT forward_12m_income - prev_income AS value FROM dates;"
+          "queryText": "WITH dates AS (SELECT as_of_date_local, forward_12m_total, LAG(forward_12m_total) OVER (ORDER BY as_of_date_local DESC) AS prev_income FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1) SELECT forward_12m_total - prev_income AS value FROM dates;",
+          "rawQueryText": "WITH dates AS (SELECT as_of_date_local, forward_12m_total, LAG(forward_12m_total) OVER (ORDER BY as_of_date_local DESC) AS prev_income FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1) SELECT forward_12m_total - prev_income AS value FROM dates;"
         }
       ],
       "options": {
@@ -153,7 +153,7 @@
     {
       "id": 4,
       "type": "stat",
-      "title": "LTV Δ",
+      "title": "LTV \u0394",
       "gridPos": {
         "x": 18,
         "y": 0,
@@ -203,7 +203,7 @@
         "x": 0,
         "y": 5,
         "w": 24,
-        "h": 10
+        "h": 9
       },
       "datasource": {
         "type": "frser-sqlite-datasource",

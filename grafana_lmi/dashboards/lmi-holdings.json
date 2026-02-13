@@ -23,7 +23,7 @@
         "x": 0,
         "y": 0,
         "w": 8,
-        "h": 4
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -68,7 +68,7 @@
         "x": 8,
         "y": 0,
         "w": 8,
-        "h": 4
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -113,7 +113,7 @@
         "x": 16,
         "y": 0,
         "w": 8,
-        "h": 4
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -173,9 +173,9 @@
       "title": "Portfolio Yield",
       "gridPos": {
         "x": 0,
-        "y": 4,
+        "y": 2,
         "w": 12,
-        "h": 4
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -218,9 +218,9 @@
       "title": "Top 5 Concentration",
       "gridPos": {
         "x": 12,
-        "y": 4,
+        "y": 2,
         "w": 12,
-        "h": 4
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -263,9 +263,9 @@
       "title": "Top Weights (Top 10)",
       "gridPos": {
         "x": 0,
-        "y": 8,
+        "y": 5,
         "w": 24,
-        "h": 7
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -304,9 +304,9 @@
       "title": "Holdings - Core",
       "gridPos": {
         "x": 0,
-        "y": 15,
+        "y": 9,
         "w": 24,
-        "h": 8
+        "h": 5
       },
       "datasource": {
         "type": "frser-sqlite-datasource",

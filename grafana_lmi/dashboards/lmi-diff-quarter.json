@@ -23,7 +23,7 @@
         "x": 0,
         "y": 0,
         "w": 6,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -34,8 +34,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT period_start_date || ' → ' || period_end_date AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;",
-          "rawQueryText": "SELECT period_start_date || ' → ' || period_end_date AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;"
+          "queryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -67,7 +67,7 @@
         "x": 6,
         "y": 0,
         "w": 6,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -78,8 +78,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT period_start_date || ' → ' || period_end_date AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1 OFFSET 1;",
-          "rawQueryText": "SELECT period_start_date || ' → ' || period_end_date AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1 OFFSET 1;"
+          "queryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1 OFFSET 1;",
+          "rawQueryText": "SELECT period_start_date || ' \u2192 ' || period_end_date AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1 OFFSET 1;"
         }
       ],
       "options": {
@@ -106,12 +106,12 @@
     {
       "id": 1,
       "type": "stat",
-      "title": "Market Value Δ",
+      "title": "Market Value \u0394",
       "gridPos": {
         "x": 0,
-        "y": 4,
+        "y": 3,
         "w": 6,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -151,12 +151,12 @@
     {
       "id": 2,
       "type": "stat",
-      "title": "Monthly Income Δ",
+      "title": "Monthly Income \u0394",
       "gridPos": {
         "x": 6,
-        "y": 4,
+        "y": 3,
         "w": 6,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -196,12 +196,12 @@
     {
       "id": 3,
       "type": "stat",
-      "title": "Forward 12m Income Δ",
+      "title": "Forward 12m Income \u0394",
       "gridPos": {
         "x": 12,
-        "y": 4,
+        "y": 3,
         "w": 6,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -212,8 +212,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT forward_12m_income_delta AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;",
-          "rawQueryText": "SELECT forward_12m_income_delta AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;"
+          "queryText": "SELECT forward_12m_delta AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT forward_12m_delta AS value FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -241,12 +241,12 @@
     {
       "id": 4,
       "type": "stat",
-      "title": "LTV Δ",
+      "title": "LTV \u0394",
       "gridPos": {
         "x": 18,
-        "y": 4,
+        "y": 3,
         "w": 6,
-        "h": 5
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -289,9 +289,9 @@
       "title": "Holdings Changes (Latest vs Previous)",
       "gridPos": {
         "x": 0,
-        "y": 9,
+        "y": 7,
         "w": 24,
-        "h": 10
+        "h": 7
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -302,8 +302,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH periods AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1) SELECT h.symbol, h.mv_delta, h.weight_delta, h.income_delta FROM period_holding_changes h JOIN periods p ON h.period_start_date = p.period_start_date AND h.period_end_date = p.period_end_date WHERE h.period_type = 'QUARTER' ORDER BY abs(h.mv_delta) DESC LIMIT 10;",
-          "rawQueryText": "WITH periods AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1) SELECT h.symbol, h.mv_delta, h.weight_delta, h.income_delta FROM period_holding_changes h JOIN periods p ON h.period_start_date = p.period_start_date AND h.period_end_date = p.period_end_date WHERE h.period_type = 'QUARTER' ORDER BY abs(h.mv_delta) DESC LIMIT 10;"
+          "queryText": "WITH periods AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1) SELECT h.symbol, h.market_value_delta, h.weight_delta_pct, (h.end_projected_monthly - h.start_projected_monthly) FROM period_holding_changes h JOIN periods p ON h.period_start_date = p.period_start_date AND h.period_end_date = p.period_end_date WHERE h.period_type = 'QUARTER' ORDER BY abs(COALESCE(h.market_value_delta,0)) DESC LIMIT 10;",
+          "rawQueryText": "WITH periods AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='QUARTER' ORDER BY period_end_date DESC LIMIT 1) SELECT h.symbol, h.market_value_delta, h.weight_delta_pct, (h.end_projected_monthly - h.start_projected_monthly) FROM period_holding_changes h JOIN periods p ON h.period_start_date = p.period_start_date AND h.period_end_date = p.period_end_date WHERE h.period_type = 'QUARTER' ORDER BY abs(COALESCE(h.market_value_delta,0)) DESC LIMIT 10;"
         }
       ],
       "options": {

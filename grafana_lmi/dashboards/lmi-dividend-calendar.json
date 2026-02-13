@@ -23,7 +23,7 @@
         "x": 0,
         "y": 0,
         "w": 6,
-        "h": 3
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -68,7 +68,7 @@
         "x": 6,
         "y": 0,
         "w": 6,
-        "h": 3
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -79,8 +79,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT dividends_projected_mtd AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT dividends_projected_mtd AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT dividends_projected_monthly AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT dividends_projected_monthly AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -113,7 +113,7 @@
         "x": 12,
         "y": 0,
         "w": 6,
-        "h": 3
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -124,8 +124,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (dividends_projected_mtd - dividends_realized_mtd) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT (dividends_projected_mtd - dividends_realized_mtd) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT (dividends_projected_monthly - dividends_realized_mtd) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT (dividends_projected_monthly - dividends_realized_mtd) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -158,7 +158,7 @@
         "x": 18,
         "y": 0,
         "w": 6,
-        "h": 3
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -169,8 +169,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT ROUND((dividends_realized_mtd / NULLIF(dividends_projected_mtd, 0)) * 100, 2) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT ROUND((dividends_realized_mtd / NULLIF(dividends_projected_mtd, 0)) * 100, 2) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT ROUND((dividends_realized_mtd / NULLIF(dividends_projected_monthly, 0)) * 100, 2) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT ROUND((dividends_realized_mtd / NULLIF(dividends_projected_monthly, 0)) * 100, 2) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -201,9 +201,9 @@
       "title": "Expected Dividend Events (MTD)",
       "gridPos": {
         "x": 0,
-        "y": 3,
+        "y": 2,
         "w": 24,
-        "h": 8
+        "h": 6
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -214,8 +214,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT symbol, ex_date_est, pay_date_est, amount_est, status FROM daily_dividends_upcoming WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_dividends_upcoming) ORDER BY pay_date_est;",
-          "rawQueryText": "SELECT symbol, ex_date_est, pay_date_est, amount_est, status FROM daily_dividends_upcoming WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_dividends_upcoming) ORDER BY pay_date_est;"
+          "queryText": "SELECT symbol, ex_date_est, pay_date_est, amount_est, CASE WHEN pay_date_est < date('now') THEN 'overdue' ELSE 'pending' END AS status FROM daily_dividends_upcoming WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_dividends_upcoming) ORDER BY pay_date_est;",
+          "rawQueryText": "SELECT symbol, ex_date_est, pay_date_est, amount_est, CASE WHEN pay_date_est < date('now') THEN 'overdue' ELSE 'pending' END AS status FROM daily_dividends_upcoming WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_dividends_upcoming) ORDER BY pay_date_est;"
         }
       ],
       "options": {
@@ -235,9 +235,9 @@
       "title": "Dividends (30d) - By Symbol",
       "gridPos": {
         "x": 0,
-        "y": 11,
+        "y": 8,
         "w": 24,
-        "h": 8
+        "h": 6
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -248,8 +248,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT symbol, amount_30d, status FROM daily_dividends_by_symbol WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_dividends_by_symbol) ORDER BY amount_30d DESC LIMIT 10;",
-          "rawQueryText": "SELECT symbol, amount_30d, status FROM daily_dividends_by_symbol WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_dividends_by_symbol) ORDER BY amount_30d DESC LIMIT 10;"
+          "queryText": "SELECT symbol, dividends_30d AS amount_30d, COALESCE(reliability_trend_6m, 'n/a') AS status FROM daily_holdings WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_holdings) ORDER BY dividends_30d DESC LIMIT 10;",
+          "rawQueryText": "SELECT symbol, dividends_30d AS amount_30d, COALESCE(reliability_trend_6m, 'n/a') AS status FROM daily_holdings WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_holdings) ORDER BY dividends_30d DESC LIMIT 10;"
         }
       ],
       "options": {

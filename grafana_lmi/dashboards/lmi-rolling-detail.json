@@ -1,9 +1,16 @@
 {
   "__inputs": [],
   "__requires": [
-    { "type": "grafana", "id": "grafana", "name": "Grafana", "version": "10.0.0" }
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    }
   ],
-  "annotations": { "list": [] },
+  "annotations": {
+    "list": []
+  },
   "editable": true,
   "graphTooltip": 0,
   "id": null,
@@ -12,26 +19,208 @@
       "id": 1,
       "type": "table",
       "title": "Rolling Period Summary",
-      "gridPos": { "x": 0, "y": 0, "w": 24, "h": 10 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT REPLACE(REPLACE(REPLACE(REPLACE(s.period_type, 'WEEK_ROLLING', 'WTD'), 'MONTH_ROLLING', 'MTD'), 'QUARTER_ROLLING', 'QTD'), 'YEAR_ROLLING', 'YTD') AS period, s.period_start_date || ' -> ' || s.period_end_date AS range, s.mv_end AS end_mv, s.mv_delta, s.monthly_income_end AS end_income, s.monthly_income_delta AS income_delta, s.twr_period_pct AS twr_pct, s.pnl_period AS pnl, s.goal_progress_end - s.goal_progress_start AS goal_delta_pct, s.holding_count_end AS holdings FROM period_summary s WHERE s.period_type IN ('WEEK_ROLLING', 'MONTH_ROLLING', 'QUARTER_ROLLING', 'YEAR_ROLLING') AND s.period_end_date = (SELECT MAX(s2.period_end_date) FROM period_summary s2 WHERE s2.period_type = s.period_type) ORDER BY CASE s.period_type WHEN 'WEEK_ROLLING' THEN 1 WHEN 'MONTH_ROLLING' THEN 2 WHEN 'QUARTER_ROLLING' THEN 3 WHEN 'YEAR_ROLLING' THEN 4 END;",
-        "rawQueryText": "SELECT REPLACE(REPLACE(REPLACE(REPLACE(s.period_type, 'WEEK_ROLLING', 'WTD'), 'MONTH_ROLLING', 'MTD'), 'QUARTER_ROLLING', 'QTD'), 'YEAR_ROLLING', 'YTD') AS period, s.period_start_date || ' -> ' || s.period_end_date AS range, s.mv_end AS end_mv, s.mv_delta, s.monthly_income_end AS end_income, s.monthly_income_delta AS income_delta, s.twr_period_pct AS twr_pct, s.pnl_period AS pnl, s.goal_progress_end - s.goal_progress_start AS goal_delta_pct, s.holding_count_end AS holdings FROM period_summary s WHERE s.period_type IN ('WEEK_ROLLING', 'MONTH_ROLLING', 'QUARTER_ROLLING', 'YEAR_ROLLING') AND s.period_end_date = (SELECT MAX(s2.period_end_date) FROM period_summary s2 WHERE s2.period_type = s.period_type) ORDER BY CASE s.period_type WHEN 'WEEK_ROLLING' THEN 1 WHEN 'MONTH_ROLLING' THEN 2 WHEN 'QUARTER_ROLLING' THEN 3 WHEN 'YEAR_ROLLING' THEN 4 END;"
-      }],
-      "options": { "showHeader": true, "cellHeight": "md" },
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 8
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT CASE s.period_type WHEN 'WEEK' THEN 'WTD' WHEN 'MONTH' THEN 'MTD' WHEN 'QUARTER' THEN 'QTD' WHEN 'YEAR' THEN 'YTD' END AS period, s.period_start_date || ' -> ' || s.period_end_date AS range, s.mv_end AS end_mv, s.mv_delta, s.monthly_income_end AS end_income, s.monthly_income_delta AS income_delta, s.twr_period_pct AS twr_pct, s.pnl_dollar_period AS pnl, s.goal_progress_pct_end - s.goal_progress_pct_start AS goal_delta_pct, s.holding_count_end AS holdings FROM period_summary s WHERE s.period_type IN ('WEEK', 'MONTH', 'QUARTER', 'YEAR') AND s.is_rolling=1 ORDER BY CASE s.period_type WHEN 'WEEK' THEN 1 WHEN 'MONTH' THEN 2 WHEN 'QUARTER' THEN 3 WHEN 'YEAR' THEN 4 END;",
+          "rawQueryText": "SELECT CASE s.period_type WHEN 'WEEK' THEN 'WTD' WHEN 'MONTH' THEN 'MTD' WHEN 'QUARTER' THEN 'QTD' WHEN 'YEAR' THEN 'YTD' END AS period, s.period_start_date || ' -> ' || s.period_end_date AS range, s.mv_end AS end_mv, s.mv_delta, s.monthly_income_end AS end_income, s.monthly_income_delta AS income_delta, s.twr_period_pct AS twr_pct, s.pnl_dollar_period AS pnl, s.goal_progress_pct_end - s.goal_progress_pct_start AS goal_delta_pct, s.holding_count_end AS holdings FROM period_summary s WHERE s.period_type IN ('WEEK', 'MONTH', 'QUARTER', 'YEAR') AND s.is_rolling=1 ORDER BY CASE s.period_type WHEN 'WEEK' THEN 1 WHEN 'MONTH' THEN 2 WHEN 'QUARTER' THEN 3 WHEN 'YEAR' THEN 4 END;"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "md"
+      },
       "fieldConfig": {
         "defaults": {},
         "overrides": [
-          { "matcher": { "id": "byName", "options": "period" }, "properties": [{ "id": "displayName", "value": "Period" }] },
-          { "matcher": { "id": "byName", "options": "range" }, "properties": [{ "id": "displayName", "value": "Range" }] },
-          { "matcher": { "id": "byName", "options": "end_mv" }, "properties": [{ "id": "unit", "value": "currencyUSD" }, { "id": "decimals", "value": 0 }, { "id": "displayName", "value": "End MV" }] },
-          { "matcher": { "id": "byName", "options": "mv_delta" }, "properties": [{ "id": "unit", "value": "currencyUSD" }, { "id": "decimals", "value": 0 }, { "id": "displayName", "value": "MV Delta" }] },
-          { "matcher": { "id": "byName", "options": "end_income" }, "properties": [{ "id": "unit", "value": "currencyUSD" }, { "id": "decimals", "value": 0 }, { "id": "displayName", "value": "End Income" }] },
-          { "matcher": { "id": "byName", "options": "income_delta" }, "properties": [{ "id": "unit", "value": "currencyUSD" }, { "id": "decimals", "value": 0 }, { "id": "displayName", "value": "Income Delta" }] },
-          { "matcher": { "id": "byName", "options": "twr_pct" }, "properties": [{ "id": "unit", "value": "percent" }, { "id": "decimals", "value": 2 }, { "id": "displayName", "value": "TWR %" }] },
-          { "matcher": { "id": "byName", "options": "pnl" }, "properties": [{ "id": "unit", "value": "currencyUSD" }, { "id": "decimals", "value": 0 }, { "id": "displayName", "value": "P&L $" }] },
-          { "matcher": { "id": "byName", "options": "goal_delta_pct" }, "properties": [{ "id": "unit", "value": "percent" }, { "id": "decimals", "value": 2 }, { "id": "displayName", "value": "Goal Progress Delta" }] },
-          { "matcher": { "id": "byName", "options": "holdings" }, "properties": [{ "id": "displayName", "value": "Holdings" }] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "period"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Period"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "range"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Range"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "end_mv"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "currencyUSD"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "displayName",
+                "value": "End MV"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "mv_delta"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "currencyUSD"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "displayName",
+                "value": "MV Delta"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "end_income"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "currencyUSD"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "displayName",
+                "value": "End Income"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "income_delta"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "currencyUSD"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "displayName",
+                "value": "Income Delta"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "twr_pct"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              },
+              {
+                "id": "displayName",
+                "value": "TWR %"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "pnl"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "currencyUSD"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "displayName",
+                "value": "P&L $"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "goal_delta_pct"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              },
+              {
+                "id": "displayName",
+                "value": "Goal Progress Delta"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "holdings"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Holdings"
+              }
+            ]
+          }
         ]
       }
     },
@@ -39,26 +228,170 @@
       "id": 2,
       "type": "table",
       "title": "Rolling Risk Comparison",
-      "gridPos": { "x": 0, "y": 10, "w": 24, "h": 8 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT REPLACE(REPLACE(REPLACE(REPLACE(s.period_type, 'WEEK_ROLLING', 'WTD'), 'MONTH_ROLLING', 'MTD'), 'QUARTER_ROLLING', 'QTD'), 'YEAR_ROLLING', 'YTD') AS period, s.vol_30d_end AS vol_30d, s.vol_30d_delta AS vol_delta, s.sortino_1y_end AS sortino, s.sortino_1y_delta AS sortino_delta, s.sharpe_1y_end AS sharpe, s.sharpe_1y_delta AS sharpe_delta, s.max_drawdown_1y_pct_end AS max_dd, s.max_drawdown_1y_pct_delta AS max_dd_delta, s.portfolio_risk_quality_end AS risk_quality FROM period_summary s WHERE s.period_type IN ('WEEK_ROLLING', 'MONTH_ROLLING', 'QUARTER_ROLLING', 'YEAR_ROLLING') AND s.period_end_date = (SELECT MAX(s2.period_end_date) FROM period_summary s2 WHERE s2.period_type = s.period_type) ORDER BY CASE s.period_type WHEN 'WEEK_ROLLING' THEN 1 WHEN 'MONTH_ROLLING' THEN 2 WHEN 'QUARTER_ROLLING' THEN 3 WHEN 'YEAR_ROLLING' THEN 4 END;",
-        "rawQueryText": "SELECT REPLACE(REPLACE(REPLACE(REPLACE(s.period_type, 'WEEK_ROLLING', 'WTD'), 'MONTH_ROLLING', 'MTD'), 'QUARTER_ROLLING', 'QTD'), 'YEAR_ROLLING', 'YTD') AS period, s.vol_30d_end AS vol_30d, s.vol_30d_delta AS vol_delta, s.sortino_1y_end AS sortino, s.sortino_1y_delta AS sortino_delta, s.sharpe_1y_end AS sharpe, s.sharpe_1y_delta AS sharpe_delta, s.max_drawdown_1y_pct_end AS max_dd, s.max_drawdown_1y_pct_delta AS max_dd_delta, s.portfolio_risk_quality_end AS risk_quality FROM period_summary s WHERE s.period_type IN ('WEEK_ROLLING', 'MONTH_ROLLING', 'QUARTER_ROLLING', 'YEAR_ROLLING') AND s.period_end_date = (SELECT MAX(s2.period_end_date) FROM period_summary s2 WHERE s2.period_type = s.period_type) ORDER BY CASE s.period_type WHEN 'WEEK_ROLLING' THEN 1 WHEN 'MONTH_ROLLING' THEN 2 WHEN 'QUARTER_ROLLING' THEN 3 WHEN 'YEAR_ROLLING' THEN 4 END;"
-      }],
-      "options": { "showHeader": true, "cellHeight": "md" },
+      "gridPos": {
+        "x": 0,
+        "y": 8,
+        "w": 24,
+        "h": 6
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT CASE s.period_type WHEN 'WEEK' THEN 'WTD' WHEN 'MONTH' THEN 'MTD' WHEN 'QUARTER' THEN 'QTD' WHEN 'YEAR' THEN 'YTD' END AS period, s.vol_30d_end AS vol_30d, s.vol_30d_delta AS vol_delta, s.sortino_1y_end AS sortino, s.sortino_1y_delta AS sortino_delta, s.sharpe_1y_end AS sharpe, s.sharpe_1y_delta AS sharpe_delta, s.max_dd_1y_end AS max_dd, s.max_dd_1y_delta AS max_dd_delta, s.portfolio_risk_quality_end AS risk_quality FROM period_summary s WHERE s.period_type IN ('WEEK', 'MONTH', 'QUARTER', 'YEAR') AND s.is_rolling=1 ORDER BY CASE s.period_type WHEN 'WEEK' THEN 1 WHEN 'MONTH' THEN 2 WHEN 'QUARTER' THEN 3 WHEN 'YEAR' THEN 4 END;",
+          "rawQueryText": "SELECT CASE s.period_type WHEN 'WEEK' THEN 'WTD' WHEN 'MONTH' THEN 'MTD' WHEN 'QUARTER' THEN 'QTD' WHEN 'YEAR' THEN 'YTD' END AS period, s.vol_30d_end AS vol_30d, s.vol_30d_delta AS vol_delta, s.sortino_1y_end AS sortino, s.sortino_1y_delta AS sortino_delta, s.sharpe_1y_end AS sharpe, s.sharpe_1y_delta AS sharpe_delta, s.max_dd_1y_end AS max_dd, s.max_dd_1y_delta AS max_dd_delta, s.portfolio_risk_quality_end AS risk_quality FROM period_summary s WHERE s.period_type IN ('WEEK', 'MONTH', 'QUARTER', 'YEAR') AND s.is_rolling=1 ORDER BY CASE s.period_type WHEN 'WEEK' THEN 1 WHEN 'MONTH' THEN 2 WHEN 'QUARTER' THEN 3 WHEN 'YEAR' THEN 4 END;"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "md"
+      },
       "fieldConfig": {
-        "defaults": { "decimals": 2 },
+        "defaults": {
+          "decimals": 2
+        },
         "overrides": [
-          { "matcher": { "id": "byName", "options": "period" }, "properties": [{ "id": "displayName", "value": "Period" }] },
-          { "matcher": { "id": "byName", "options": "vol_30d" }, "properties": [{ "id": "unit", "value": "percent" }, { "id": "displayName", "value": "Vol 30d %" }] },
-          { "matcher": { "id": "byName", "options": "vol_delta" }, "properties": [{ "id": "unit", "value": "percent" }, { "id": "displayName", "value": "Vol Delta" }] },
-          { "matcher": { "id": "byName", "options": "sortino" }, "properties": [{ "id": "displayName", "value": "Sortino 1y" }] },
-          { "matcher": { "id": "byName", "options": "sortino_delta" }, "properties": [{ "id": "displayName", "value": "Sortino Delta" }] },
-          { "matcher": { "id": "byName", "options": "sharpe" }, "properties": [{ "id": "displayName", "value": "Sharpe 1y" }] },
-          { "matcher": { "id": "byName", "options": "sharpe_delta" }, "properties": [{ "id": "displayName", "value": "Sharpe Delta" }] },
-          { "matcher": { "id": "byName", "options": "max_dd" }, "properties": [{ "id": "unit", "value": "percent" }, { "id": "displayName", "value": "Max DD %" }] },
-          { "matcher": { "id": "byName", "options": "max_dd_delta" }, "properties": [{ "id": "unit", "value": "percent" }, { "id": "displayName", "value": "DD Delta" }] },
-          { "matcher": { "id": "byName", "options": "risk_quality" }, "properties": [{ "id": "displayName", "value": "Risk Quality" }] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "period"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Period"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "vol_30d"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "displayName",
+                "value": "Vol 30d %"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "vol_delta"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "displayName",
+                "value": "Vol Delta"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "sortino"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Sortino 1y"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "sortino_delta"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Sortino Delta"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "sharpe"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Sharpe 1y"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "sharpe_delta"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Sharpe Delta"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "max_dd"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "displayName",
+                "value": "Max DD %"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "max_dd_delta"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "displayName",
+                "value": "DD Delta"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "risk_quality"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Risk Quality"
+              }
+            ]
+          }
         ]
       }
     }
@@ -66,8 +399,14 @@
   "refresh": "2m",
   "schemaVersion": 39,
   "style": "dark",
-  "tags": ["lmi", "periods"],
-  "time": { "from": "now-90d", "to": "now" },
+  "tags": [
+    "lmi",
+    "periods"
+  ],
+  "time": {
+    "from": "now-90d",
+    "to": "now"
+  },
   "timezone": "browser",
   "title": "LMI - Rolling Detail",
   "uid": "lmi-rolling-detail",

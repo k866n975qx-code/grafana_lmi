@@ -1,199 +1,868 @@
 {
   "__inputs": [],
   "__requires": [
-    { "type": "grafana", "id": "grafana", "name": "Grafana", "version": "10.0.0" }
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    }
   ],
-  "annotations": { "list": [] },
+  "annotations": {
+    "list": []
+  },
   "editable": true,
   "graphTooltip": 0,
   "id": null,
   "panels": [
-    { "id": 100, "type": "row", "title": "Week-to-Date", "gridPos": { "x": 0, "y": 0, "w": 24, "h": 1 }, "collapsed": false },
     {
-      "id": 1, "type": "stat", "title": "WTD Range",
-      "gridPos": { "x": 0, "y": 1, "w": 6, "h": 4 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT period_start_date || '  ->  ' || period_end_date AS value FROM period_summary WHERE period_type = 'WEEK_ROLLING' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT period_start_date || '  ->  ' || period_end_date AS value FROM period_summary WHERE period_type = 'WEEK_ROLLING' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "options": { "colorMode": "none", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value", "wideLayout": true },
-      "fieldConfig": { "defaults": {}, "overrides": [] }
+      "id": 1,
+      "type": "stat",
+      "title": "WTD Range",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT period_start_date || '  ->  ' || period_end_date AS value FROM period_summary WHERE period_type = 'WEEK' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT period_start_date || '  ->  ' || period_end_date AS value FROM period_summary WHERE period_type = 'WEEK' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      }
     },
     {
-      "id": 2, "type": "stat", "title": "WTD MV Delta",
-      "gridPos": { "x": 6, "y": 1, "w": 6, "h": 4 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT mv_delta AS value FROM period_summary WHERE period_type = 'WEEK_ROLLING' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT mv_delta AS value FROM period_summary WHERE period_type = 'WEEK_ROLLING' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
-      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
+      "id": 2,
+      "type": "stat",
+      "title": "WTD MV Delta",
+      "gridPos": {
+        "x": 6,
+        "y": 0,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT mv_delta AS value FROM period_summary WHERE period_type = 'WEEK' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT mv_delta AS value FROM period_summary WHERE period_type = 'WEEK' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value_and_name"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 0,
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
     },
     {
-      "id": 3, "type": "stat", "title": "WTD Income Delta",
-      "gridPos": { "x": 12, "y": 1, "w": 6, "h": 4 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT monthly_income_delta AS value FROM period_summary WHERE period_type = 'WEEK_ROLLING' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT monthly_income_delta AS value FROM period_summary WHERE period_type = 'WEEK_ROLLING' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
-      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
+      "id": 3,
+      "type": "stat",
+      "title": "WTD Income Delta",
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT monthly_income_delta AS value FROM period_summary WHERE period_type = 'WEEK' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT monthly_income_delta AS value FROM period_summary WHERE period_type = 'WEEK' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value_and_name"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 0,
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
     },
     {
-      "id": 4, "type": "stat", "title": "WTD TWR %",
-      "gridPos": { "x": 18, "y": 1, "w": 6, "h": 4 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT twr_period_pct AS value FROM period_summary WHERE period_type = 'WEEK_ROLLING' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT twr_period_pct AS value FROM period_summary WHERE period_type = 'WEEK_ROLLING' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
-      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
-    },
-    { "id": 101, "type": "row", "title": "Month-to-Date", "gridPos": { "x": 0, "y": 5, "w": 24, "h": 1 }, "collapsed": false },
-    {
-      "id": 5, "type": "stat", "title": "MTD Range",
-      "gridPos": { "x": 0, "y": 6, "w": 6, "h": 4 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT period_start_date || '  ->  ' || period_end_date AS value FROM period_summary WHERE period_type = 'MONTH_ROLLING' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT period_start_date || '  ->  ' || period_end_date AS value FROM period_summary WHERE period_type = 'MONTH_ROLLING' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "options": { "colorMode": "none", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value", "wideLayout": true },
-      "fieldConfig": { "defaults": {}, "overrides": [] }
-    },
-    {
-      "id": 6, "type": "stat", "title": "MTD MV Delta",
-      "gridPos": { "x": 6, "y": 6, "w": 6, "h": 4 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT mv_delta AS value FROM period_summary WHERE period_type = 'MONTH_ROLLING' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT mv_delta AS value FROM period_summary WHERE period_type = 'MONTH_ROLLING' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
-      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
-    },
-    {
-      "id": 7, "type": "stat", "title": "MTD Income Delta",
-      "gridPos": { "x": 12, "y": 6, "w": 6, "h": 4 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT monthly_income_delta AS value FROM period_summary WHERE period_type = 'MONTH_ROLLING' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT monthly_income_delta AS value FROM period_summary WHERE period_type = 'MONTH_ROLLING' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
-      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
-    },
-    {
-      "id": 8, "type": "stat", "title": "MTD TWR %",
-      "gridPos": { "x": 18, "y": 6, "w": 6, "h": 4 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT twr_period_pct AS value FROM period_summary WHERE period_type = 'MONTH_ROLLING' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT twr_period_pct AS value FROM period_summary WHERE period_type = 'MONTH_ROLLING' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
-      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
-    },
-    { "id": 102, "type": "row", "title": "Quarter-to-Date", "gridPos": { "x": 0, "y": 10, "w": 24, "h": 1 }, "collapsed": false },
-    {
-      "id": 9, "type": "stat", "title": "QTD Range",
-      "gridPos": { "x": 0, "y": 11, "w": 6, "h": 4 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT period_start_date || '  ->  ' || period_end_date AS value FROM period_summary WHERE period_type = 'QUARTER_ROLLING' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT period_start_date || '  ->  ' || period_end_date AS value FROM period_summary WHERE period_type = 'QUARTER_ROLLING' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "options": { "colorMode": "none", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value", "wideLayout": true },
-      "fieldConfig": { "defaults": {}, "overrides": [] }
+      "id": 4,
+      "type": "stat",
+      "title": "WTD TWR %",
+      "gridPos": {
+        "x": 18,
+        "y": 0,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT twr_period_pct AS value FROM period_summary WHERE period_type = 'WEEK' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT twr_period_pct AS value FROM period_summary WHERE period_type = 'WEEK' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value_and_name"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 0,
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
     },
     {
-      "id": 10, "type": "stat", "title": "QTD MV Delta",
-      "gridPos": { "x": 6, "y": 11, "w": 6, "h": 4 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT mv_delta AS value FROM period_summary WHERE period_type = 'QUARTER_ROLLING' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT mv_delta AS value FROM period_summary WHERE period_type = 'QUARTER_ROLLING' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
-      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
+      "id": 5,
+      "type": "stat",
+      "title": "MTD Range",
+      "gridPos": {
+        "x": 0,
+        "y": 3,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT period_start_date || '  ->  ' || period_end_date AS value FROM period_summary WHERE period_type = 'MONTH' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT period_start_date || '  ->  ' || period_end_date AS value FROM period_summary WHERE period_type = 'MONTH' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      }
     },
     {
-      "id": 11, "type": "stat", "title": "QTD Income Delta",
-      "gridPos": { "x": 12, "y": 11, "w": 6, "h": 4 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT monthly_income_delta AS value FROM period_summary WHERE period_type = 'QUARTER_ROLLING' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT monthly_income_delta AS value FROM period_summary WHERE period_type = 'QUARTER_ROLLING' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
-      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
+      "id": 6,
+      "type": "stat",
+      "title": "MTD MV Delta",
+      "gridPos": {
+        "x": 6,
+        "y": 3,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT mv_delta AS value FROM period_summary WHERE period_type = 'MONTH' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT mv_delta AS value FROM period_summary WHERE period_type = 'MONTH' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value_and_name"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 0,
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
     },
     {
-      "id": 12, "type": "stat", "title": "QTD TWR %",
-      "gridPos": { "x": 18, "y": 11, "w": 6, "h": 4 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT twr_period_pct AS value FROM period_summary WHERE period_type = 'QUARTER_ROLLING' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT twr_period_pct AS value FROM period_summary WHERE period_type = 'QUARTER_ROLLING' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
-      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
+      "id": 7,
+      "type": "stat",
+      "title": "MTD Income Delta",
+      "gridPos": {
+        "x": 12,
+        "y": 3,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT monthly_income_delta AS value FROM period_summary WHERE period_type = 'MONTH' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT monthly_income_delta AS value FROM period_summary WHERE period_type = 'MONTH' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value_and_name"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 0,
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
     },
-    { "id": 103, "type": "row", "title": "Year-to-Date", "gridPos": { "x": 0, "y": 15, "w": 24, "h": 1 }, "collapsed": false },
     {
-      "id": 13, "type": "stat", "title": "YTD Range",
-      "gridPos": { "x": 0, "y": 16, "w": 6, "h": 4 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT period_start_date || '  ->  ' || period_end_date AS value FROM period_summary WHERE period_type = 'YEAR_ROLLING' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT period_start_date || '  ->  ' || period_end_date AS value FROM period_summary WHERE period_type = 'YEAR_ROLLING' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "options": { "colorMode": "none", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value", "wideLayout": true },
-      "fieldConfig": { "defaults": {}, "overrides": [] }
+      "id": 8,
+      "type": "stat",
+      "title": "MTD TWR %",
+      "gridPos": {
+        "x": 18,
+        "y": 3,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT twr_period_pct AS value FROM period_summary WHERE period_type = 'MONTH' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT twr_period_pct AS value FROM period_summary WHERE period_type = 'MONTH' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value_and_name"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 0,
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
     },
     {
-      "id": 14, "type": "stat", "title": "YTD MV Delta",
-      "gridPos": { "x": 6, "y": 16, "w": 6, "h": 4 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT mv_delta AS value FROM period_summary WHERE period_type = 'YEAR_ROLLING' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT mv_delta AS value FROM period_summary WHERE period_type = 'YEAR_ROLLING' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
-      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
+      "id": 9,
+      "type": "stat",
+      "title": "QTD Range",
+      "gridPos": {
+        "x": 0,
+        "y": 6,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT period_start_date || '  ->  ' || period_end_date AS value FROM period_summary WHERE period_type = 'QUARTER' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT period_start_date || '  ->  ' || period_end_date AS value FROM period_summary WHERE period_type = 'QUARTER' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      }
     },
     {
-      "id": 15, "type": "stat", "title": "YTD Income Delta",
-      "gridPos": { "x": 12, "y": 16, "w": 6, "h": 4 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT monthly_income_delta AS value FROM period_summary WHERE period_type = 'YEAR_ROLLING' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT monthly_income_delta AS value FROM period_summary WHERE period_type = 'YEAR_ROLLING' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
-      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
+      "id": 10,
+      "type": "stat",
+      "title": "QTD MV Delta",
+      "gridPos": {
+        "x": 6,
+        "y": 6,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT mv_delta AS value FROM period_summary WHERE period_type = 'QUARTER' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT mv_delta AS value FROM period_summary WHERE period_type = 'QUARTER' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value_and_name"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 0,
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
     },
     {
-      "id": 16, "type": "stat", "title": "YTD TWR %",
-      "gridPos": { "x": 18, "y": 16, "w": 6, "h": 4 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
-      "targets": [{ "refId": "A", "format": "table", "queryType": "table",
-        "queryText": "SELECT twr_period_pct AS value FROM period_summary WHERE period_type = 'YEAR_ROLLING' ORDER BY period_end_date DESC LIMIT 1;",
-        "rawQueryText": "SELECT twr_period_pct AS value FROM period_summary WHERE period_type = 'YEAR_ROLLING' ORDER BY period_end_date DESC LIMIT 1;"
-      }],
-      "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false }, "textMode": "value_and_name" },
-      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2, "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] } }, "overrides": [] }
+      "id": 11,
+      "type": "stat",
+      "title": "QTD Income Delta",
+      "gridPos": {
+        "x": 12,
+        "y": 6,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT monthly_income_delta AS value FROM period_summary WHERE period_type = 'QUARTER' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT monthly_income_delta AS value FROM period_summary WHERE period_type = 'QUARTER' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value_and_name"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 0,
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 12,
+      "type": "stat",
+      "title": "QTD TWR %",
+      "gridPos": {
+        "x": 18,
+        "y": 6,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT twr_period_pct AS value FROM period_summary WHERE period_type = 'QUARTER' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT twr_period_pct AS value FROM period_summary WHERE period_type = 'QUARTER' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value_and_name"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 0,
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 13,
+      "type": "stat",
+      "title": "YTD Range",
+      "gridPos": {
+        "x": 0,
+        "y": 9,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT period_start_date || '  ->  ' || period_end_date AS value FROM period_summary WHERE period_type = 'YEAR' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT period_start_date || '  ->  ' || period_end_date AS value FROM period_summary WHERE period_type = 'YEAR' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      }
+    },
+    {
+      "id": 14,
+      "type": "stat",
+      "title": "YTD MV Delta",
+      "gridPos": {
+        "x": 6,
+        "y": 9,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT mv_delta AS value FROM period_summary WHERE period_type = 'YEAR' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT mv_delta AS value FROM period_summary WHERE period_type = 'YEAR' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value_and_name"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 0,
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 15,
+      "type": "stat",
+      "title": "YTD Income Delta",
+      "gridPos": {
+        "x": 12,
+        "y": 9,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT monthly_income_delta AS value FROM period_summary WHERE period_type = 'YEAR' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT monthly_income_delta AS value FROM period_summary WHERE period_type = 'YEAR' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value_and_name"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 0,
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 16,
+      "type": "stat",
+      "title": "YTD TWR %",
+      "gridPos": {
+        "x": 18,
+        "y": 9,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT twr_period_pct AS value FROM period_summary WHERE period_type = 'YEAR' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;",
+          "rawQueryText": "SELECT twr_period_pct AS value FROM period_summary WHERE period_type = 'YEAR' AND is_rolling = 1 ORDER BY period_end_date DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value_and_name"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 0,
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
     }
   ],
   "refresh": "2m",
   "schemaVersion": 39,
   "style": "dark",
-  "tags": ["lmi", "periods"],
-  "time": { "from": "now-90d", "to": "now" },
+  "tags": [
+    "lmi",
+    "periods"
+  ],
+  "time": {
+    "from": "now-90d",
+    "to": "now"
+  },
   "timezone": "browser",
   "title": "LMI - Rolling Periods (WTD/MTD/QTD/YTD)",
   "uid": "lmi-rolling-periods",

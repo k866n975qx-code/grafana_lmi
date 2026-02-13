@@ -78,8 +78,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT price_data_as_of_date AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT price_data_as_of_date AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT substr(prices_as_of_utc,1,10) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT substr(prices_as_of_utc,1,10) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
@@ -122,8 +122,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT data_quality_missing_count AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT data_quality_missing_count AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT COALESCE(json_array_length(coverage_missing_paths_json), 0) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT COALESCE(json_array_length(coverage_missing_paths_json), 0) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "fieldConfig": {
@@ -153,8 +153,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT data_quality_coverage_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT data_quality_coverage_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT coverage_derived_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT coverage_derived_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "fieldConfig": {
@@ -184,8 +184,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT symbol FROM daily_missing_prices WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_missing_prices) ORDER BY symbol LIMIT 20;",
-          "rawQueryText": "SELECT symbol FROM daily_missing_prices WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_missing_prices) ORDER BY symbol LIMIT 20;"
+          "queryText": "WITH missing AS (SELECT symbol FROM daily_holdings WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_holdings) AND (last_price IS NULL OR last_price <= 0)) SELECT symbol FROM missing UNION ALL SELECT 'none' AS symbol WHERE NOT EXISTS (SELECT 1 FROM missing) LIMIT 20;",
+          "rawQueryText": "WITH missing AS (SELECT symbol FROM daily_holdings WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_holdings) AND (last_price IS NULL OR last_price <= 0)) SELECT symbol FROM missing UNION ALL SELECT 'none' AS symbol WHERE NOT EXISTS (SELECT 1 FROM missing) LIMIT 20;"
         }
       ],
       "options": {

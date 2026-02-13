@@ -19,8 +19,16 @@
       "id": 1,
       "type": "timeseries",
       "title": "Max Drawdown 1y % (365d trend)",
-      "gridPos": { "x": 0, "y": 0, "w": 24, "h": 7 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -31,23 +39,53 @@
         }
       ],
       "transformations": [
-        { "id": "convertFieldType", "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] } }
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
+        }
       ],
       "fieldConfig": {
-        "defaults": { "unit": "percent", "decimals": 2 },
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
         "overrides": []
       },
       "options": {
-        "legend": { "displayMode": "list", "placement": "bottom", "showLegend": true, "calcs": [] },
-        "tooltip": { "mode": "single", "sort": "none", "hideZeros": false }
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true,
+          "calcs": []
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none",
+          "hideZeros": false
+        }
       }
     },
     {
       "id": 2,
       "type": "timeseries",
       "title": "Volatility 30d % (180d)",
-      "gridPos": { "x": 0, "y": 7, "w": 12, "h": 7 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 4,
+        "w": 12,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -58,13 +96,57 @@
         }
       ],
       "transformations": [
-        { "id": "convertFieldType", "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] } }
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
+        }
       ],
-      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom", "showLegend": true } },
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
       "fieldConfig": {
-        "defaults": { "unit": "percent", "decimals": 1 },
+        "defaults": {
+          "unit": "percent",
+          "decimals": 1
+        },
         "overrides": [
-          { "matcher": { "id": "byName", "options": "Vol 30d %" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "#f38ba8" } }, { "id": "custom.fillOpacity", "value": 15 }, { "id": "custom.lineWidth", "value": 2 }] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Vol 30d %"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#f38ba8"
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 15
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 2
+              }
+            ]
+          }
         ]
       }
     },
@@ -72,8 +154,16 @@
       "id": 3,
       "type": "timeseries",
       "title": "Sharpe & Sortino (180d)",
-      "gridPos": { "x": 12, "y": 7, "w": 12, "h": 7 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 12,
+        "y": 4,
+        "w": 12,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -84,14 +174,77 @@
         }
       ],
       "transformations": [
-        { "id": "convertFieldType", "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] } }
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
+        }
       ],
-      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom", "showLegend": true } },
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
       "fieldConfig": {
-        "defaults": { "decimals": 2 },
+        "defaults": {
+          "decimals": 2
+        },
         "overrides": [
-          { "matcher": { "id": "byName", "options": "Sharpe 1y" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "green" } }, { "id": "custom.lineWidth", "value": 2 }] },
-          { "matcher": { "id": "byName", "options": "Sortino 1y" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "blue" } }, { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 5] } }] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Sharpe 1y"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "green"
+                }
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Sortino 1y"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [
+                    10,
+                    5
+                  ]
+                }
+              }
+            ]
+          }
         ]
       }
     },
@@ -100,25 +253,77 @@
       "type": "timeseries",
       "title": "Drawdown Depth (180d)",
       "description": "Underwater plot showing current drawdown depth from peak. Negative values indicate being below the high-water mark.",
-      "gridPos": { "x": 0, "y": 14, "w": 24, "h": 7 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 8,
+        "w": 24,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, current_drawdown_depth_pct AS \"Drawdown Depth %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, current_drawdown_depth_pct AS \"Drawdown Depth %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;"
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, drawdown_depth_pct AS \"Drawdown Depth %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, drawdown_depth_pct AS \"Drawdown Depth %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;"
         }
       ],
       "transformations": [
-        { "id": "convertFieldType", "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] } }
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
+        }
       ],
-      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom", "showLegend": true } },
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
       "fieldConfig": {
-        "defaults": { "unit": "percent", "decimals": 1 },
+        "defaults": {
+          "unit": "percent",
+          "decimals": 1
+        },
         "overrides": [
-          { "matcher": { "id": "byName", "options": "Drawdown Depth %" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "red" } }, { "id": "custom.fillOpacity", "value": 30 }, { "id": "custom.lineWidth", "value": 1 }] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Drawdown Depth %"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "red"
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 30
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 1
+              }
+            ]
+          }
         ]
       }
     }
@@ -126,8 +331,13 @@
   "refresh": "2m",
   "schemaVersion": 39,
   "style": "dark",
-  "tags": ["lmi"],
-  "time": { "from": "now-90d", "to": "now" },
+  "tags": [
+    "lmi"
+  ],
+  "time": {
+    "from": "now-90d",
+    "to": "now"
+  },
   "timezone": "browser",
   "title": "LMI - Risk Trends",
   "uid": "lmi-risk-trends",

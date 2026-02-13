@@ -19,8 +19,16 @@
       "id": 1,
       "type": "stat",
       "title": "WEEK Range",
-      "gridPos": { "x": 0, "y": 0, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 6,
+        "h": 2
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -34,18 +42,37 @@
         "colorMode": "none",
         "graphMode": "none",
         "orientation": "auto",
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
         "textMode": "value",
         "wideLayout": true
       },
-      "fieldConfig": { "defaults": { "unit": "string" }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "string"
+        },
+        "overrides": []
+      }
     },
     {
       "id": 2,
       "type": "stat",
       "title": "WEEK End MV",
-      "gridPos": { "x": 6, "y": 0, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 6,
+        "y": 0,
+        "w": 6,
+        "h": 2
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -55,14 +82,28 @@
           "rawQueryText": "SELECT mv_end AS value FROM period_summary WHERE period_type='WEEK' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
     },
     {
       "id": 3,
       "type": "stat",
       "title": "WEEK End Monthly Income",
-      "gridPos": { "x": 12, "y": 0, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 6,
+        "h": 2
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -72,14 +113,28 @@
           "rawQueryText": "SELECT monthly_income_end AS value FROM period_summary WHERE period_type='WEEK' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
     },
     {
       "id": 4,
       "type": "stat",
       "title": "WEEK End LTV %",
-      "gridPos": { "x": 18, "y": 0, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 18,
+        "y": 0,
+        "w": 6,
+        "h": 2
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -96,9 +151,18 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 20 },
-              { "color": "red", "value": 30 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 20
+              },
+              {
+                "color": "red",
+                "value": 30
+              }
             ]
           }
         },
@@ -109,23 +173,64 @@
       "id": 5,
       "type": "table",
       "title": "WEEK Drivers",
-      "gridPos": { "x": 0, "y": 3, "w": 24, "h": 6 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 2,
+        "w": 24,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='WEEK' ORDER BY period_end_date DESC LIMIT 1) SELECT h.change_type AS type, h.symbol, h.weight_end_pct AS weight_pct, h.mv_delta AS pnl_dollar FROM period_holding_changes h JOIN latest l ON h.period_start_date = l.period_start_date AND h.period_end_date = l.period_end_date WHERE h.period_type = 'WEEK' AND h.change_type IN ('added', 'removed', 'gainer', 'loser') ORDER BY CASE h.change_type WHEN 'added' THEN 1 WHEN 'removed' THEN 2 WHEN 'gainer' THEN 3 WHEN 'loser' THEN 4 END, abs(h.mv_delta) DESC LIMIT 12;",
-          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='WEEK' ORDER BY period_end_date DESC LIMIT 1) SELECT h.change_type AS type, h.symbol, h.weight_end_pct AS weight_pct, h.mv_delta AS pnl_dollar FROM period_holding_changes h JOIN latest l ON h.period_start_date = l.period_start_date AND h.period_end_date = l.period_end_date WHERE h.period_type = 'WEEK' AND h.change_type IN ('added', 'removed', 'gainer', 'loser') ORDER BY CASE h.change_type WHEN 'added' THEN 1 WHEN 'removed' THEN 2 WHEN 'gainer' THEN 3 WHEN 'loser' THEN 4 END, abs(h.mv_delta) DESC LIMIT 12;"
+          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='WEEK' ORDER BY period_end_date DESC LIMIT 1) SELECT h.change_type AS type, h.symbol, h.weight_end_pct AS weight_pct, h.market_value_delta AS pnl_dollar FROM period_holding_changes h JOIN latest l ON h.period_start_date = l.period_start_date AND h.period_end_date = l.period_end_date WHERE h.period_type = 'WEEK' AND h.change_type IN ('added', 'removed', 'gainer', 'loser') ORDER BY CASE h.change_type WHEN 'added' THEN 1 WHEN 'removed' THEN 2 WHEN 'gainer' THEN 3 WHEN 'loser' THEN 4 END, abs(COALESCE(h.market_value_delta,0)) DESC LIMIT 12;",
+          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='WEEK' ORDER BY period_end_date DESC LIMIT 1) SELECT h.change_type AS type, h.symbol, h.weight_end_pct AS weight_pct, h.market_value_delta AS pnl_dollar FROM period_holding_changes h JOIN latest l ON h.period_start_date = l.period_start_date AND h.period_end_date = l.period_end_date WHERE h.period_type = 'WEEK' AND h.change_type IN ('added', 'removed', 'gainer', 'loser') ORDER BY CASE h.change_type WHEN 'added' THEN 1 WHEN 'removed' THEN 2 WHEN 'gainer' THEN 3 WHEN 'loser' THEN 4 END, abs(COALESCE(h.market_value_delta,0)) DESC LIMIT 12;"
         }
       ],
-      "options": { "showHeader": true, "cellHeight": "md" },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "md"
+      },
       "fieldConfig": {
         "defaults": {},
         "overrides": [
-          { "matcher": { "id": "byName", "options": "weight_pct" }, "properties": [{ "id": "unit", "value": "percent" }, { "id": "decimals", "value": 1 }] },
-          { "matcher": { "id": "byName", "options": "pnl_dollar" }, "properties": [{ "id": "unit", "value": "currencyUSD" }, { "id": "decimals", "value": 0 }] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "weight_pct"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "pnl_dollar"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "currencyUSD"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              }
+            ]
+          }
         ]
       }
     },
@@ -133,8 +238,16 @@
       "id": 6,
       "type": "stat",
       "title": "MONTH Range",
-      "gridPos": { "x": 0, "y": 9, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 7,
+        "w": 6,
+        "h": 2
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -148,18 +261,37 @@
         "colorMode": "none",
         "graphMode": "none",
         "orientation": "auto",
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "value", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
         "textMode": "value",
         "wideLayout": true
       },
-      "fieldConfig": { "defaults": { "unit": "string" }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "string"
+        },
+        "overrides": []
+      }
     },
     {
       "id": 7,
       "type": "stat",
       "title": "MONTH End MV",
-      "gridPos": { "x": 6, "y": 9, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 6,
+        "y": 7,
+        "w": 6,
+        "h": 2
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -169,14 +301,28 @@
           "rawQueryText": "SELECT mv_end AS value FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
     },
     {
       "id": 8,
       "type": "stat",
       "title": "MONTH End Monthly Income",
-      "gridPos": { "x": 12, "y": 9, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 12,
+        "y": 7,
+        "w": 6,
+        "h": 2
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -186,14 +332,28 @@
           "rawQueryText": "SELECT monthly_income_end AS value FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
     },
     {
       "id": 9,
       "type": "stat",
       "title": "MONTH End LTV %",
-      "gridPos": { "x": 18, "y": 9, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 18,
+        "y": 7,
+        "w": 6,
+        "h": 2
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -210,9 +370,18 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 20 },
-              { "color": "red", "value": 30 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 20
+              },
+              {
+                "color": "red",
+                "value": 30
+              }
             ]
           }
         },
@@ -223,23 +392,64 @@
       "id": 10,
       "type": "table",
       "title": "MONTH Drivers",
-      "gridPos": { "x": 0, "y": 12, "w": 24, "h": 6 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 9,
+        "w": 24,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1) SELECT h.change_type AS type, h.symbol, h.weight_end_pct AS weight_pct, h.mv_delta AS pnl_dollar FROM period_holding_changes h JOIN latest l ON h.period_start_date = l.period_start_date AND h.period_end_date = l.period_end_date WHERE h.period_type = 'MONTH' AND h.change_type IN ('added', 'removed', 'gainer', 'loser') ORDER BY CASE h.change_type WHEN 'added' THEN 1 WHEN 'removed' THEN 2 WHEN 'gainer' THEN 3 WHEN 'loser' THEN 4 END, abs(h.mv_delta) DESC LIMIT 12;",
-          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1) SELECT h.change_type AS type, h.symbol, h.weight_end_pct AS weight_pct, h.mv_delta AS pnl_dollar FROM period_holding_changes h JOIN latest l ON h.period_start_date = l.period_start_date AND h.period_end_date = l.period_end_date WHERE h.period_type = 'MONTH' AND h.change_type IN ('added', 'removed', 'gainer', 'loser') ORDER BY CASE h.change_type WHEN 'added' THEN 1 WHEN 'removed' THEN 2 WHEN 'gainer' THEN 3 WHEN 'loser' THEN 4 END, abs(h.mv_delta) DESC LIMIT 12;"
+          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1) SELECT h.change_type AS type, h.symbol, h.weight_end_pct AS weight_pct, h.market_value_delta AS pnl_dollar FROM period_holding_changes h JOIN latest l ON h.period_start_date = l.period_start_date AND h.period_end_date = l.period_end_date WHERE h.period_type = 'MONTH' AND h.change_type IN ('added', 'removed', 'gainer', 'loser') ORDER BY CASE h.change_type WHEN 'added' THEN 1 WHEN 'removed' THEN 2 WHEN 'gainer' THEN 3 WHEN 'loser' THEN 4 END, abs(COALESCE(h.market_value_delta,0)) DESC LIMIT 12;",
+          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' ORDER BY period_end_date DESC LIMIT 1) SELECT h.change_type AS type, h.symbol, h.weight_end_pct AS weight_pct, h.market_value_delta AS pnl_dollar FROM period_holding_changes h JOIN latest l ON h.period_start_date = l.period_start_date AND h.period_end_date = l.period_end_date WHERE h.period_type = 'MONTH' AND h.change_type IN ('added', 'removed', 'gainer', 'loser') ORDER BY CASE h.change_type WHEN 'added' THEN 1 WHEN 'removed' THEN 2 WHEN 'gainer' THEN 3 WHEN 'loser' THEN 4 END, abs(COALESCE(h.market_value_delta,0)) DESC LIMIT 12;"
         }
       ],
-      "options": { "showHeader": true, "cellHeight": "md" },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "md"
+      },
       "fieldConfig": {
         "defaults": {},
         "overrides": [
-          { "matcher": { "id": "byName", "options": "weight_pct" }, "properties": [{ "id": "unit", "value": "percent" }, { "id": "decimals", "value": 1 }] },
-          { "matcher": { "id": "byName", "options": "pnl_dollar" }, "properties": [{ "id": "unit", "value": "currencyUSD" }, { "id": "decimals", "value": 0 }] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "weight_pct"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "pnl_dollar"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "currencyUSD"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              }
+            ]
+          }
         ]
       }
     }
@@ -247,8 +457,13 @@
   "refresh": "2m",
   "schemaVersion": 39,
   "style": "dark",
-  "tags": ["lmi"],
-  "time": { "from": "now-90d", "to": "now" },
+  "tags": [
+    "lmi"
+  ],
+  "time": {
+    "from": "now-90d",
+    "to": "now"
+  },
   "timezone": "browser",
   "title": "LMI - Period Drivers (Week/Month)",
   "uid": "lmi-period-drivers-short",
