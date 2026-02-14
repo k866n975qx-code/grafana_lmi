@@ -330,8 +330,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT margin_income_coverage AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT margin_income_coverage AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT COALESCE(margin_income_coverage, projected_monthly_income / NULLIF(monthly_interest_current, 0)) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT COALESCE(margin_income_coverage, projected_monthly_income / NULLIF(monthly_interest_current, 0)) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "fieldConfig": {
@@ -579,8 +579,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, margin_income_coverage AS \"Income Coverage\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-90 day') ORDER BY as_of_date_local;",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, margin_income_coverage AS \"Income Coverage\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-90 day') ORDER BY as_of_date_local;"
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, COALESCE(margin_income_coverage, projected_monthly_income / NULLIF(monthly_interest_current, 0)) AS \"Income Coverage\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-90 day') ORDER BY as_of_date_local;",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, COALESCE(margin_income_coverage, projected_monthly_income / NULLIF(monthly_interest_current, 0)) AS \"Income Coverage\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-90 day') ORDER BY as_of_date_local;"
         }
       ],
       "transformations": [

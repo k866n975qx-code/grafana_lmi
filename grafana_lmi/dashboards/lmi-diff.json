@@ -34,8 +34,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH dates AS (SELECT as_of_date_local, market_value, LAG(market_value) OVER (ORDER BY as_of_date_local DESC) AS prev_mv FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1) SELECT market_value - prev_mv AS value FROM dates;",
-          "rawQueryText": "WITH dates AS (SELECT as_of_date_local, market_value, LAG(market_value) OVER (ORDER BY as_of_date_local DESC) AS prev_mv FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1) SELECT market_value - prev_mv AS value FROM dates;"
+          "queryText": "WITH cur AS (SELECT market_value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1), prev AS (SELECT market_value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1 OFFSET 1) SELECT cur.market_value - prev.market_value AS value FROM cur, prev;",
+          "rawQueryText": "WITH cur AS (SELECT market_value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1), prev AS (SELECT market_value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1 OFFSET 1) SELECT cur.market_value - prev.market_value AS value FROM cur, prev;"
         }
       ],
       "options": {
@@ -79,8 +79,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH dates AS (SELECT as_of_date_local, projected_monthly_income, LAG(projected_monthly_income) OVER (ORDER BY as_of_date_local DESC) AS prev_income FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1) SELECT projected_monthly_income - prev_income AS value FROM dates;",
-          "rawQueryText": "WITH dates AS (SELECT as_of_date_local, projected_monthly_income, LAG(projected_monthly_income) OVER (ORDER BY as_of_date_local DESC) AS prev_income FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1) SELECT projected_monthly_income - prev_income AS value FROM dates;"
+          "queryText": "WITH cur AS (SELECT projected_monthly_income FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1), prev AS (SELECT projected_monthly_income FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1 OFFSET 1) SELECT cur.projected_monthly_income - prev.projected_monthly_income AS value FROM cur, prev;",
+          "rawQueryText": "WITH cur AS (SELECT projected_monthly_income FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1), prev AS (SELECT projected_monthly_income FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1 OFFSET 1) SELECT cur.projected_monthly_income - prev.projected_monthly_income AS value FROM cur, prev;"
         }
       ],
       "options": {
@@ -124,8 +124,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH dates AS (SELECT as_of_date_local, forward_12m_total, LAG(forward_12m_total) OVER (ORDER BY as_of_date_local DESC) AS prev_income FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1) SELECT forward_12m_total - prev_income AS value FROM dates;",
-          "rawQueryText": "WITH dates AS (SELECT as_of_date_local, forward_12m_total, LAG(forward_12m_total) OVER (ORDER BY as_of_date_local DESC) AS prev_income FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1) SELECT forward_12m_total - prev_income AS value FROM dates;"
+          "queryText": "WITH cur AS (SELECT forward_12m_total FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1), prev AS (SELECT forward_12m_total FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1 OFFSET 1) SELECT cur.forward_12m_total - prev.forward_12m_total AS value FROM cur, prev;",
+          "rawQueryText": "WITH cur AS (SELECT forward_12m_total FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1), prev AS (SELECT forward_12m_total FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1 OFFSET 1) SELECT cur.forward_12m_total - prev.forward_12m_total AS value FROM cur, prev;"
         }
       ],
       "options": {
@@ -169,8 +169,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH dates AS (SELECT as_of_date_local, ltv_pct, LAG(ltv_pct) OVER (ORDER BY as_of_date_local DESC) AS prev_ltv FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1) SELECT ltv_pct - prev_ltv AS value FROM dates;",
-          "rawQueryText": "WITH dates AS (SELECT as_of_date_local, ltv_pct, LAG(ltv_pct) OVER (ORDER BY as_of_date_local DESC) AS prev_ltv FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1) SELECT ltv_pct - prev_ltv AS value FROM dates;"
+          "queryText": "WITH cur AS (SELECT ltv_pct FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1), prev AS (SELECT ltv_pct FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1 OFFSET 1) SELECT cur.ltv_pct - prev.ltv_pct AS value FROM cur, prev;",
+          "rawQueryText": "WITH cur AS (SELECT ltv_pct FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1), prev AS (SELECT ltv_pct FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1 OFFSET 1) SELECT cur.ltv_pct - prev.ltv_pct AS value FROM cur, prev;"
         }
       ],
       "options": {

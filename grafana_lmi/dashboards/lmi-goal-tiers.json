@@ -250,8 +250,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (goal_months_to_goal - goal_pace_months_ahead_behind) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT (goal_months_to_goal - goal_pace_months_ahead_behind) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "WITH p AS (SELECT as_of_date_local, goal_likely_tier, goal_months_to_goal, goal_pace_months_ahead_behind FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1), t AS (SELECT months_to_goal FROM daily_goal_tiers WHERE as_of_date_local = (SELECT as_of_date_local FROM p) AND tier = (SELECT goal_likely_tier FROM p) LIMIT 1) SELECT (COALESCE((SELECT months_to_goal FROM t), (SELECT goal_months_to_goal FROM p)) - (SELECT goal_pace_months_ahead_behind FROM p)) AS value;",
+          "rawQueryText": "WITH p AS (SELECT as_of_date_local, goal_likely_tier, goal_months_to_goal, goal_pace_months_ahead_behind FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1), t AS (SELECT months_to_goal FROM daily_goal_tiers WHERE as_of_date_local = (SELECT as_of_date_local FROM p) AND tier = (SELECT goal_likely_tier FROM p) LIMIT 1) SELECT (COALESCE((SELECT months_to_goal FROM t), (SELECT goal_months_to_goal FROM p)) - (SELECT goal_pace_months_ahead_behind FROM p)) AS value;"
         }
       ],
       "fieldConfig": {
