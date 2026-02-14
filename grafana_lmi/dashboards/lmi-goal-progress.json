@@ -429,8 +429,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, goal_months_to_goal AS \"Months to Goal\", goal_net_months_to_goal AS \"Net (After Interest)\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-90 days') ORDER BY as_of_date_local ASC;",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, goal_months_to_goal AS \"Months to Goal\", goal_net_months_to_goal AS \"Net (After Interest)\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-90 days') ORDER BY as_of_date_local ASC;"
+          "queryText": "SELECT (p.as_of_date_local || 'T00:00:00Z') AS time, p.goal_months_to_goal AS \"Months to Goal\", (COALESCE((SELECT t.months_to_goal FROM daily_goal_tiers t WHERE t.as_of_date_local = p.as_of_date_local AND t.tier = p.goal_likely_tier LIMIT 1), p.goal_months_to_goal) - COALESCE(p.goal_pace_months_ahead_behind, 0)) AS \"Revised Months to Goal\" FROM daily_portfolio p WHERE p.as_of_date_local >= date('now','-90 days') ORDER BY p.as_of_date_local ASC;",
+          "rawQueryText": "SELECT (p.as_of_date_local || 'T00:00:00Z') AS time, p.goal_months_to_goal AS \"Months to Goal\", (COALESCE((SELECT t.months_to_goal FROM daily_goal_tiers t WHERE t.as_of_date_local = p.as_of_date_local AND t.tier = p.goal_likely_tier LIMIT 1), p.goal_months_to_goal) - COALESCE(p.goal_pace_months_ahead_behind, 0)) AS \"Revised Months to Goal\" FROM daily_portfolio p WHERE p.as_of_date_local >= date('now','-90 days') ORDER BY p.as_of_date_local ASC;"
         }
       ],
       "transformations": [
@@ -484,7 +484,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Net (After Interest)"
+                "options": "Revised Months to Goal"
             },
             "properties": [
               {
