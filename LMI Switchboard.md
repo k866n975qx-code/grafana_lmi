@@ -5,8 +5,6 @@
 - **Dashboards path**: `/home/jose/grafana_lmi/grafana_lmi/dashboards`
 
 ## Playlist
-- **Create/Update mixed playlist**:
-  - `GRAFANA_PASSWORD='<password>' ./scripts/create_v2_playlist.sh`
 - **Kiosk URL format**:
   - `https://grafana.joseai.dev/playlists/play/<playlist_uid>?kiosk=true&autofitpanels=true`
 

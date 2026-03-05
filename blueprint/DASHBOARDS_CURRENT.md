@@ -36,14 +36,6 @@ Updated: 2026-03-04
 ## Mixed kiosk order
 `D01, G01, D02, G02, D03, G03, D04, G04, D05, G05, D06, D07, G06, D08, G07, D09`
 
-## Scripts
-- `scripts/generate_v2_dashboards.py`
-- `scripts/validate_v2_dashboards.sh`
-- `scripts/backup_hosted_grafana.sh`
-- `scripts/deploy_hosted_grafana.sh`
-- `scripts/create_v2_playlist.sh`
-
 ## Notes
 - This reset is hard-replace: legacy dashboard JSON files are removed from `grafana_lmi/dashboards`.
 - A local point-in-time copy is kept under `grafana_lmi/dashboards.backup.<timestamp>/`.
-- Playlist API currently uses a single interval per playlist.
