@@ -405,8 +405,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, macro_vix AS VIX, macro_ten_year_yield AS TenYear, macro_two_year_yield AS TwoYear FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, macro_vix AS VIX, macro_ten_year_yield AS TenYear, macro_two_year_yield AS TwoYear FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "queryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, macro_vix AS VIX, macro_ten_year_yield AS TenYear, macro_two_year_yield AS TwoYear FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, macro_vix AS VIX, macro_ten_year_yield AS TenYear, macro_two_year_yield AS TwoYear FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
         }
       ],
       "options": {
@@ -452,8 +452,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, vs_benchmark_excess_1y_pct AS Excess1Y, tracking_error_1y_pct AS TrackingError, information_ratio_1y AS InformationRatio, beta_portfolio AS Beta FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, vs_benchmark_excess_1y_pct AS Excess1Y, tracking_error_1y_pct AS TrackingError, information_ratio_1y AS InformationRatio, beta_portfolio AS Beta FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "queryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, vs_benchmark_excess_1y_pct AS Excess1Y, tracking_error_1y_pct AS TrackingError, information_ratio_1y AS InformationRatio, beta_portfolio AS Beta FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, vs_benchmark_excess_1y_pct AS Excess1Y, tracking_error_1y_pct AS TrackingError, information_ratio_1y AS InformationRatio, beta_portfolio AS Beta FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
         }
       ],
       "options": {
@@ -487,7 +487,7 @@
       "gridPos": {
         "x": 0,
         "y": 7,
-        "w": 24,
+        "w": 12,
         "h": 4
       },
       "datasource": {
@@ -499,8 +499,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT period_type, period_start_date, period_end_date FROM period_summary WHERE is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), macro AS (SELECT 'macro' AS Scope, substr(metric,1,16) AS Metric, round(avg_val,3) AS Avg, round(min_val,3) AS Min, round(max_val,3) AS Max, (SELECT period_type FROM latest) AS PType FROM period_macro_stats WHERE (period_type,period_start_date,period_end_date) IN (SELECT period_type,period_start_date,period_end_date FROM latest) ORDER BY metric LIMIT 3), risk AS (SELECT 'risk' AS Scope, substr(metric,1,16) AS Metric, round(avg_val,3) AS Avg, round(min_val,3) AS Min, round(max_val,3) AS Max, (SELECT period_type FROM latest) AS PType FROM period_risk_stats WHERE (period_type,period_start_date,period_end_date) IN (SELECT period_type,period_start_date,period_end_date FROM latest) ORDER BY metric LIMIT 2) SELECT * FROM macro UNION ALL SELECT * FROM risk LIMIT 5",
-          "rawQueryText": "WITH latest AS (SELECT period_type, period_start_date, period_end_date FROM period_summary WHERE is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), macro AS (SELECT 'macro' AS Scope, substr(metric,1,16) AS Metric, round(avg_val,3) AS Avg, round(min_val,3) AS Min, round(max_val,3) AS Max, (SELECT period_type FROM latest) AS PType FROM period_macro_stats WHERE (period_type,period_start_date,period_end_date) IN (SELECT period_type,period_start_date,period_end_date FROM latest) ORDER BY metric LIMIT 3), risk AS (SELECT 'risk' AS Scope, substr(metric,1,16) AS Metric, round(avg_val,3) AS Avg, round(min_val,3) AS Min, round(max_val,3) AS Max, (SELECT period_type FROM latest) AS PType FROM period_risk_stats WHERE (period_type,period_start_date,period_end_date) IN (SELECT period_type,period_start_date,period_end_date FROM latest) ORDER BY metric LIMIT 2) SELECT * FROM macro UNION ALL SELECT * FROM risk LIMIT 5"
+          "queryText": "WITH latest AS (SELECT period_type, period_start_date, period_end_date FROM period_summary WHERE is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), macro AS (SELECT 'macro' AS Scope, substr(metric,1,16) AS Metric, round(avg_val,3) AS Avg, (SELECT period_type FROM latest) AS PType FROM period_macro_stats WHERE (period_type,period_start_date,period_end_date) IN (SELECT period_type,period_start_date,period_end_date FROM latest) ORDER BY metric LIMIT 3), risk AS (SELECT 'risk' AS Scope, substr(metric,1,16) AS Metric, round(avg_val,3) AS Avg, (SELECT period_type FROM latest) AS PType FROM period_risk_stats WHERE (period_type,period_start_date,period_end_date) IN (SELECT period_type,period_start_date,period_end_date FROM latest) ORDER BY metric LIMIT 2) SELECT * FROM macro UNION ALL SELECT * FROM risk LIMIT 5",
+          "rawQueryText": "WITH latest AS (SELECT period_type, period_start_date, period_end_date FROM period_summary WHERE is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), macro AS (SELECT 'macro' AS Scope, substr(metric,1,16) AS Metric, round(avg_val,3) AS Avg, (SELECT period_type FROM latest) AS PType FROM period_macro_stats WHERE (period_type,period_start_date,period_end_date) IN (SELECT period_type,period_start_date,period_end_date FROM latest) ORDER BY metric LIMIT 3), risk AS (SELECT 'risk' AS Scope, substr(metric,1,16) AS Metric, round(avg_val,3) AS Avg, (SELECT period_type FROM latest) AS PType FROM period_risk_stats WHERE (period_type,period_start_date,period_end_date) IN (SELECT period_type,period_start_date,period_end_date FROM latest) ORDER BY metric LIMIT 2) SELECT * FROM macro UNION ALL SELECT * FROM risk LIMIT 5"
         }
       ],
       "options": {
@@ -552,27 +552,51 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Min"
+              "options": "PType"
             },
             "properties": [
               {
                 "id": "custom.width",
-                "value": 78
+                "value": 70
               }
             ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Max"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 78
-              }
-            ]
-          },
+          }
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "type": "table",
+      "title": "Period vs Benchmark",
+      "gridPos": {
+        "x": 12,
+        "y": 7,
+        "w": 12,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT period_type, MAX(period_end_date) AS period_end_date FROM period_summary WHERE is_rolling=0 GROUP BY period_type) SELECT ps.period_type AS PType, round(ps.twr_period_pct,2) AS PortRet, round(ps.benchmark_period_return_pct,2) AS BenchRet, round(ps.twr_period_pct - ps.benchmark_period_return_pct,2) AS Excess FROM period_summary ps JOIN latest l ON l.period_type=ps.period_type AND l.period_end_date=ps.period_end_date ORDER BY CASE ps.period_type WHEN 'WEEK' THEN 1 WHEN 'MONTH' THEN 2 WHEN 'QUARTER' THEN 3 WHEN 'YEAR' THEN 4 ELSE 5 END LIMIT 5",
+          "rawQueryText": "WITH latest AS (SELECT period_type, MAX(period_end_date) AS period_end_date FROM period_summary WHERE is_rolling=0 GROUP BY period_type) SELECT ps.period_type AS PType, round(ps.twr_period_pct,2) AS PortRet, round(ps.benchmark_period_return_pct,2) AS BenchRet, round(ps.twr_period_pct - ps.benchmark_period_return_pct,2) AS Excess FROM period_summary ps JOIN latest l ON l.period_type=ps.period_type AND l.period_end_date=ps.period_end_date ORDER BY CASE ps.period_type WHEN 'WEEK' THEN 1 WHEN 'MONTH' THEN 2 WHEN 'QUARTER' THEN 3 WHEN 'YEAR' THEN 4 ELSE 5 END LIMIT 5"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
           {
             "matcher": {
               "id": "byName",
@@ -581,7 +605,43 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 70
+                "value": 72
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "PortRet"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 82
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "BenchRet"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 86
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Excess"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 82
               }
             ]
           }
@@ -608,6 +668,7 @@
   "timepicker": {},
   "timezone": "America/Los_Angeles",
   "title": "B07 LMI v3 - Macro and Benchmark",
+  "description": "Macro regime and benchmark context board: rates, stress, tracking quality, and period-relative return gap.",
   "uid": "lmi-v3-b07-macro-benchmark",
   "version": 1,
   "weekStart": ""

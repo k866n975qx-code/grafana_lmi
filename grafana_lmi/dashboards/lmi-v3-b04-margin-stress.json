@@ -450,8 +450,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CASE WHEN typeof(margin_income_coverage) IN ('real','integer') THEN margin_income_coverage ELSE NULL END AS Coverage, CASE WHEN typeof(buffer_to_margin_call_pct) IN ('real','integer') THEN buffer_to_margin_call_pct ELSE NULL END AS BufferPct FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CASE WHEN typeof(margin_income_coverage) IN ('real','integer') THEN margin_income_coverage ELSE NULL END AS Coverage, CASE WHEN typeof(buffer_to_margin_call_pct) IN ('real','integer') THEN buffer_to_margin_call_pct ELSE NULL END AS BufferPct FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "queryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, CASE WHEN typeof(margin_income_coverage) IN ('real','integer') THEN margin_income_coverage ELSE NULL END AS Coverage, CASE WHEN typeof(buffer_to_margin_call_pct) IN ('real','integer') THEN buffer_to_margin_call_pct ELSE NULL END AS BufferPct FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, CASE WHEN typeof(margin_income_coverage) IN ('real','integer') THEN margin_income_coverage ELSE NULL END AS Coverage, CASE WHEN typeof(buffer_to_margin_call_pct) IN ('real','integer') THEN buffer_to_margin_call_pct ELSE NULL END AS BufferPct FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
         }
       ],
       "options": {
@@ -485,7 +485,7 @@
       "gridPos": {
         "x": 0,
         "y": 7,
-        "w": 24,
+        "w": 12,
         "h": 4
       },
       "datasource": {
@@ -497,8 +497,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH d AS (SELECT MAX(as_of_date_local) AS d FROM daily_margin_rate_scenarios) SELECT substr(scenario,1,16) AS Scenario, round(new_rate_pct,2) AS NewRatePct, round(new_monthly_cost,2) AS MoCost, round(income_coverage,2) AS Coverage, round(margin_impact_pct,2) AS ImpactPct FROM daily_margin_rate_scenarios WHERE as_of_date_local=(SELECT d FROM d) ORDER BY new_rate_pct LIMIT 5",
-          "rawQueryText": "WITH d AS (SELECT MAX(as_of_date_local) AS d FROM daily_margin_rate_scenarios) SELECT substr(scenario,1,16) AS Scenario, round(new_rate_pct,2) AS NewRatePct, round(new_monthly_cost,2) AS MoCost, round(income_coverage,2) AS Coverage, round(margin_impact_pct,2) AS ImpactPct FROM daily_margin_rate_scenarios WHERE as_of_date_local=(SELECT d FROM d) ORDER BY new_rate_pct LIMIT 5"
+          "queryText": "WITH d AS (SELECT MAX(as_of_date_local) AS d FROM daily_margin_rate_scenarios) SELECT substr(scenario,1,16) AS Scenario, round(new_rate_pct,2) AS NewRatePct, round(new_monthly_cost,2) AS MoCost, round(income_coverage,2) AS Coverage FROM daily_margin_rate_scenarios WHERE as_of_date_local=(SELECT d FROM d) ORDER BY new_rate_pct LIMIT 5",
+          "rawQueryText": "WITH d AS (SELECT MAX(as_of_date_local) AS d FROM daily_margin_rate_scenarios) SELECT substr(scenario,1,16) AS Scenario, round(new_rate_pct,2) AS NewRatePct, round(new_monthly_cost,2) AS MoCost, round(income_coverage,2) AS Coverage FROM daily_margin_rate_scenarios WHERE as_of_date_local=(SELECT d FROM d) ORDER BY new_rate_pct LIMIT 5"
         }
       ],
       "options": {
@@ -558,16 +558,88 @@
                 "value": 84
               }
             ]
-          },
+          }
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "type": "table",
+      "title": "Loan History Snapshot",
+      "gridPos": {
+        "x": 12,
+        "y": 7,
+        "w": 12,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH hist AS (SELECT as_of_date_local AS Dt, balance AS Loan FROM margin_balance_history ORDER BY as_of_date_local DESC LIMIT 5), fallback AS (SELECT as_of_date_local AS Dt, margin_loan_balance AS Loan FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 5), src AS (SELECT * FROM hist UNION ALL SELECT * FROM fallback WHERE NOT EXISTS (SELECT 1 FROM hist)) SELECT src.Dt AS Dt, round(src.Loan,2) AS Loan, round(COALESCE(dp.ltv_pct,0),2) AS LTVPct, round(COALESCE(dp.margin_income_coverage,0),2) AS Coverage FROM src LEFT JOIN daily_portfolio dp ON dp.as_of_date_local=src.Dt ORDER BY src.Dt DESC LIMIT 5",
+          "rawQueryText": "WITH hist AS (SELECT as_of_date_local AS Dt, balance AS Loan FROM margin_balance_history ORDER BY as_of_date_local DESC LIMIT 5), fallback AS (SELECT as_of_date_local AS Dt, margin_loan_balance AS Loan FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 5), src AS (SELECT * FROM hist UNION ALL SELECT * FROM fallback WHERE NOT EXISTS (SELECT 1 FROM hist)) SELECT src.Dt AS Dt, round(src.Loan,2) AS Loan, round(COALESCE(dp.ltv_pct,0),2) AS LTVPct, round(COALESCE(dp.margin_income_coverage,0),2) AS Coverage FROM src LEFT JOIN daily_portfolio dp ON dp.as_of_date_local=src.Dt ORDER BY src.Dt DESC LIMIT 5"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
           {
             "matcher": {
               "id": "byName",
-              "options": "ImpactPct"
+              "options": "Dt"
             },
             "properties": [
               {
                 "id": "custom.width",
-                "value": 90
+                "value": 88
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Loan"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 86
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "LTVPct"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 82
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Coverage"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 84
               }
             ]
           }
@@ -594,6 +666,7 @@
   "timepicker": {},
   "timezone": "America/Los_Angeles",
   "title": "B04 LMI v3 - Margin and Stress",
+  "description": "Margin control board: loan exposure, LTV stress path, and scenario-rate impact with history fallback.",
   "uid": "lmi-v3-b04-margin-stress",
   "version": 1,
   "weekStart": ""

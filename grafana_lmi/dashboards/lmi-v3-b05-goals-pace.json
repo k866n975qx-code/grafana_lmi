@@ -403,8 +403,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, goal_progress_pct AS GoalProgress, goal_net_progress_pct AS NetProgress FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, goal_progress_pct AS GoalProgress, goal_net_progress_pct AS NetProgress FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "queryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, goal_progress_pct AS GoalProgress, goal_net_progress_pct AS NetProgress FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, goal_progress_pct AS GoalProgress, goal_net_progress_pct AS NetProgress FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
         }
       ],
       "options": {
@@ -450,8 +450,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, goal_months_to_goal AS MonthsToGoal, goal_net_months_to_goal AS NetMonthsToGoal FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, goal_months_to_goal AS MonthsToGoal, goal_net_months_to_goal AS NetMonthsToGoal FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "queryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, goal_months_to_goal AS MonthsToGoal, goal_net_months_to_goal AS NetMonthsToGoal FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, goal_months_to_goal AS MonthsToGoal, goal_net_months_to_goal AS NetMonthsToGoal FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
         }
       ],
       "options": {
@@ -485,7 +485,7 @@
       "gridPos": {
         "x": 0,
         "y": 7,
-        "w": 24,
+        "w": 12,
         "h": 4
       },
       "datasource": {
@@ -497,8 +497,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH d AS (SELECT MAX(as_of_date_local) AS d FROM daily_goal_tiers) SELECT tier AS Tier, substr(COALESCE(name,''),1,16) AS Name, round(target_monthly,0) AS TargetMo, round(required_portfolio_value,0) AS ReqPV, round(progress_pct,1) AS ProgPct, round(months_to_goal,1) AS Months FROM daily_goal_tiers WHERE as_of_date_local=(SELECT d FROM d) ORDER BY tier LIMIT 5",
-          "rawQueryText": "WITH d AS (SELECT MAX(as_of_date_local) AS d FROM daily_goal_tiers) SELECT tier AS Tier, substr(COALESCE(name,''),1,16) AS Name, round(target_monthly,0) AS TargetMo, round(required_portfolio_value,0) AS ReqPV, round(progress_pct,1) AS ProgPct, round(months_to_goal,1) AS Months FROM daily_goal_tiers WHERE as_of_date_local=(SELECT d FROM d) ORDER BY tier LIMIT 5"
+          "queryText": "WITH d AS (SELECT MAX(as_of_date_local) AS d FROM daily_goal_tiers) SELECT tier AS Tier, substr(COALESCE(name,''),1,16) AS Name, round(target_monthly,0) AS TargetMo, round(months_to_goal,1) AS Months FROM daily_goal_tiers WHERE as_of_date_local=(SELECT d FROM d) ORDER BY tier LIMIT 5",
+          "rawQueryText": "WITH d AS (SELECT MAX(as_of_date_local) AS d FROM daily_goal_tiers) SELECT tier AS Tier, substr(COALESCE(name,''),1,16) AS Name, round(target_monthly,0) AS TargetMo, round(months_to_goal,1) AS Months FROM daily_goal_tiers WHERE as_of_date_local=(SELECT d FROM d) ORDER BY tier LIMIT 5"
         }
       ],
       "options": {
@@ -550,36 +550,96 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "ReqPV"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 94
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "ProgPct"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 80
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
               "options": "Months"
             },
             "properties": [
               {
                 "id": "custom.width",
                 "value": 82
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "type": "table",
+      "title": "Period Goal Deltas",
+      "gridPos": {
+        "x": 12,
+        "y": 7,
+        "w": 12,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT period_type, MAX(period_end_date) AS period_end_date FROM period_summary WHERE is_rolling=0 GROUP BY period_type) SELECT ps.period_type AS PType, ps.period_end_date AS EndDate, round(ps.goal_progress_pct_delta,2) AS GoalDelta, round(ps.goal_months_to_goal_delta,2) AS MonthsDelta FROM period_summary ps JOIN latest l ON l.period_type=ps.period_type AND l.period_end_date=ps.period_end_date ORDER BY CASE ps.period_type WHEN 'WEEK' THEN 1 WHEN 'MONTH' THEN 2 WHEN 'QUARTER' THEN 3 WHEN 'YEAR' THEN 4 ELSE 5 END LIMIT 5",
+          "rawQueryText": "WITH latest AS (SELECT period_type, MAX(period_end_date) AS period_end_date FROM period_summary WHERE is_rolling=0 GROUP BY period_type) SELECT ps.period_type AS PType, ps.period_end_date AS EndDate, round(ps.goal_progress_pct_delta,2) AS GoalDelta, round(ps.goal_months_to_goal_delta,2) AS MonthsDelta FROM period_summary ps JOIN latest l ON l.period_type=ps.period_type AND l.period_end_date=ps.period_end_date ORDER BY CASE ps.period_type WHEN 'WEEK' THEN 1 WHEN 'MONTH' THEN 2 WHEN 'QUARTER' THEN 3 WHEN 'YEAR' THEN 4 ELSE 5 END LIMIT 5"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "PType"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 72
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "EndDate"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 96
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "GoalDelta"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 88
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "MonthsDelta"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 98
               }
             ]
           }
@@ -606,6 +666,7 @@
   "timepicker": {},
   "timezone": "America/Los_Angeles",
   "title": "B05 LMI v3 - Goals and Pace",
+  "description": "Goal pacing board for progress, months-to-target pressure, and tier roadmap vs recent period deltas.",
   "uid": "lmi-v3-b05-goals-pace",
   "version": 1,
   "weekStart": ""

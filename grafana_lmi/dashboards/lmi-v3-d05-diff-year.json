@@ -405,8 +405,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, mv_delta AS MVDelta, monthly_income_delta AS IncomeDelta FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date",
-          "rawQueryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, mv_delta AS MVDelta, monthly_income_delta AS IncomeDelta FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date"
+          "queryText": "SELECT (strftime('%s', period_end_date || ' 00:00:00') * 1000) AS time, mv_delta AS MVDelta, monthly_income_delta AS IncomeDelta FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date",
+          "rawQueryText": "SELECT (strftime('%s', period_end_date || ' 00:00:00') * 1000) AS time, mv_delta AS MVDelta, monthly_income_delta AS IncomeDelta FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date"
         }
       ],
       "options": {
@@ -452,8 +452,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, twr_period_pct AS TWR, ltv_pct_delta AS LTVDelta, forward_12m_delta AS F12Delta FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date",
-          "rawQueryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, twr_period_pct AS TWR, ltv_pct_delta AS LTVDelta, forward_12m_delta AS F12Delta FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date"
+          "queryText": "SELECT (strftime('%s', period_end_date || ' 00:00:00') * 1000) AS time, twr_period_pct AS TWR, ltv_pct_delta AS LTVDelta, forward_12m_delta AS F12Delta FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date",
+          "rawQueryText": "SELECT (strftime('%s', period_end_date || ' 00:00:00') * 1000) AS time, twr_period_pct AS TWR, ltv_pct_delta AS LTVDelta, forward_12m_delta AS F12Delta FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date"
         }
       ],
       "options": {
@@ -487,7 +487,7 @@
       "gridPos": {
         "x": 0,
         "y": 7,
-        "w": 24,
+        "w": 12,
         "h": 4
       },
       "datasource": {
@@ -499,8 +499,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT substr(symbol,1,8) AS Sym, substr(change_type,1,10) AS ChgType, round(market_value_delta,2) AS MVDelta, round(weight_delta_pct,3) AS WtDelta, round(dividends_received,2) AS Div, round(contribution_to_portfolio_pct,3) AS Contr FROM period_holding_changes WHERE period_type='YEAR' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY abs(market_value_delta) DESC LIMIT 5",
-          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT substr(symbol,1,8) AS Sym, substr(change_type,1,10) AS ChgType, round(market_value_delta,2) AS MVDelta, round(weight_delta_pct,3) AS WtDelta, round(dividends_received,2) AS Div, round(contribution_to_portfolio_pct,3) AS Contr FROM period_holding_changes WHERE period_type='YEAR' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY abs(market_value_delta) DESC LIMIT 5"
+          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT substr(symbol,1,8) AS Sym, round(market_value_delta,2) AS MVDelta, round(weight_delta_pct,3) AS WtDelta, substr(change_type,1,10) AS ChgType FROM period_holding_changes WHERE period_type='YEAR' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY abs(market_value_delta) DESC LIMIT 5",
+          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT substr(symbol,1,8) AS Sym, round(market_value_delta,2) AS MVDelta, round(weight_delta_pct,3) AS WtDelta, substr(change_type,1,10) AS ChgType FROM period_holding_changes WHERE period_type='YEAR' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY abs(market_value_delta) DESC LIMIT 5"
         }
       ],
       "options": {
@@ -528,18 +528,6 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "ChgType"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 90
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
               "options": "MVDelta"
             },
             "properties": [
@@ -552,7 +540,55 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "WtDelta"
+              "options": "ChgType"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "type": "table",
+      "title": "YEAR Current vs Previous",
+      "gridPos": {
+        "x": 12,
+        "y": 7,
+        "w": 12,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), prev AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1) SELECT 'current' AS Which, (SELECT period_start_date || '..' || period_end_date FROM latest) AS Range, round((SELECT mv_delta FROM latest),2) AS MVDelta, round((SELECT twr_period_pct FROM latest),2) AS TWR UNION ALL SELECT 'previous' AS Which, (SELECT period_start_date || '..' || period_end_date FROM prev) AS Range, round((SELECT mv_delta FROM prev),2) AS MVDelta, round((SELECT twr_period_pct FROM prev),2) AS TWR LIMIT 5",
+          "rawQueryText": "WITH latest AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), prev AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1) SELECT 'current' AS Which, (SELECT period_start_date || '..' || period_end_date FROM latest) AS Range, round((SELECT mv_delta FROM latest),2) AS MVDelta, round((SELECT twr_period_pct FROM latest),2) AS TWR UNION ALL SELECT 'previous' AS Which, (SELECT period_start_date || '..' || period_end_date FROM prev) AS Range, round((SELECT mv_delta FROM prev),2) AS MVDelta, round((SELECT twr_period_pct FROM prev),2) AS TWR LIMIT 5"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Which"
             },
             "properties": [
               {
@@ -564,24 +600,36 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Div"
+              "options": "Range"
             },
             "properties": [
               {
                 "id": "custom.width",
-                "value": 72
+                "value": 130
               }
             ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "Contr"
+              "options": "MVDelta"
             },
             "properties": [
               {
                 "id": "custom.width",
-                "value": 82
+                "value": 88
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "TWR"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 74
               }
             ]
           }
@@ -609,6 +657,7 @@
   "timepicker": {},
   "timezone": "America/Los_Angeles",
   "title": "D05 LMI v3 - Diff Year",
+  "description": "Completed year-over-year comparison board focused on structural drift, risk shift, and holding drivers.",
   "uid": "lmi-v3-d05-diff-year",
   "version": 1,
   "weekStart": ""

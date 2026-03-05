@@ -25,8 +25,8 @@
       "gridPos": {
         "x": 0,
         "y": 0,
-        "w": 6,
-        "h": 2
+        "w": 3,
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -69,10 +69,10 @@
       "type": "stat",
       "title": "Withdraw",
       "gridPos": {
-        "x": 6,
+        "x": 3,
         "y": 0,
-        "w": 6,
-        "h": 2
+        "w": 3,
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -115,10 +115,10 @@
       "type": "stat",
       "title": "Dividends",
       "gridPos": {
-        "x": 12,
+        "x": 6,
         "y": 0,
-        "w": 6,
-        "h": 2
+        "w": 3,
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -161,10 +161,10 @@
       "type": "stat",
       "title": "Trades",
       "gridPos": {
-        "x": 18,
+        "x": 9,
         "y": 0,
-        "w": 6,
-        "h": 2
+        "w": 3,
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -207,10 +207,10 @@
       "type": "stat",
       "title": "MarginNet",
       "gridPos": {
-        "x": 0,
-        "y": 2,
-        "w": 6,
-        "h": 2
+        "x": 12,
+        "y": 0,
+        "w": 3,
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -253,10 +253,10 @@
       "type": "stat",
       "title": "Pos Added",
       "gridPos": {
-        "x": 6,
-        "y": 2,
-        "w": 6,
-        "h": 2
+        "x": 15,
+        "y": 0,
+        "w": 3,
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -299,10 +299,10 @@
       "type": "stat",
       "title": "Pos Removed",
       "gridPos": {
-        "x": 12,
-        "y": 2,
-        "w": 6,
-        "h": 2
+        "x": 18,
+        "y": 0,
+        "w": 3,
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -345,10 +345,10 @@
       "type": "stat",
       "title": "Period",
       "gridPos": {
-        "x": 18,
-        "y": 2,
-        "w": 6,
-        "h": 2
+        "x": 21,
+        "y": 0,
+        "w": 3,
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -391,9 +391,9 @@
       "title": "Completed MONTH Activity Totals",
       "gridPos": {
         "x": 0,
-        "y": 4,
+        "y": 3,
         "w": 12,
-        "h": 3
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -404,8 +404,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, contributions_total AS Contributions, withdrawals_total AS Withdrawals, dividends_total_received AS Dividends FROM period_activity WHERE period_type='MONTH' ORDER BY period_end_date",
-          "rawQueryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, contributions_total AS Contributions, withdrawals_total AS Withdrawals, dividends_total_received AS Dividends FROM period_activity WHERE period_type='MONTH' ORDER BY period_end_date"
+          "queryText": "SELECT (strftime('%s', period_end_date || ' 00:00:00') * 1000) AS time, contributions_total AS Contributions, withdrawals_total AS Withdrawals, dividends_total_received AS Dividends FROM period_activity WHERE period_type='MONTH' ORDER BY period_end_date",
+          "rawQueryText": "SELECT (strftime('%s', period_end_date || ' 00:00:00') * 1000) AS time, contributions_total AS Contributions, withdrawals_total AS Withdrawals, dividends_total_received AS Dividends FROM period_activity WHERE period_type='MONTH' ORDER BY period_end_date"
         }
       ],
       "options": {
@@ -438,9 +438,9 @@
       "title": "Trade Count and Margin Net",
       "gridPos": {
         "x": 12,
-        "y": 4,
+        "y": 3,
         "w": 12,
-        "h": 3
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -451,8 +451,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, trades_total_count AS Trades, margin_net_change AS MarginNet FROM period_activity WHERE period_type='MONTH' ORDER BY period_end_date",
-          "rawQueryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, trades_total_count AS Trades, margin_net_change AS MarginNet FROM period_activity WHERE period_type='MONTH' ORDER BY period_end_date"
+          "queryText": "SELECT (strftime('%s', period_end_date || ' 00:00:00') * 1000) AS time, trades_total_count AS Trades, margin_net_change AS MarginNet FROM period_activity WHERE period_type='MONTH' ORDER BY period_end_date",
+          "rawQueryText": "SELECT (strftime('%s', period_end_date || ' 00:00:00') * 1000) AS time, trades_total_count AS Trades, margin_net_change AS MarginNet FROM period_activity WHERE period_type='MONTH' ORDER BY period_end_date"
         }
       ],
       "options": {
@@ -486,7 +486,7 @@
       "gridPos": {
         "x": 0,
         "y": 7,
-        "w": 24,
+        "w": 12,
         "h": 4
       },
       "datasource": {
@@ -498,8 +498,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), c AS (SELECT contribution_date AS Dt, 'contrib' AS Item, round(amount,2) AS AmtSigned, '' AS Note, 'contribution' AS Src FROM period_contributions WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY contribution_date DESC LIMIT 2), w AS (SELECT withdrawal_date AS Dt, 'withdraw' AS Item, round(amount,2) AS AmtSigned, '' AS Note, 'withdrawal' AS Src FROM period_withdrawals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY withdrawal_date DESC LIMIT 2), t AS (SELECT (SELECT period_end_date FROM latest) AS Dt, substr(symbol,1,8) AS Item, (buy_count + sell_count) AS AmtSigned, ('b' || buy_count || '/s' || sell_count) AS Note, 'trade' AS Src FROM period_trades WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY (buy_count + sell_count) DESC LIMIT 1), p AS (SELECT (SELECT period_end_date FROM latest) AS Dt, substr(list_type,1,10) AS Item, COUNT(*) AS AmtSigned, substr(group_concat(substr(symbol,1,4),','),1,18) AS Note, 'positions' AS Src FROM period_position_lists WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) GROUP BY list_type LIMIT 1) SELECT Dt, Item, AmtSigned, Note, Src, 'MONTH' AS PType FROM (SELECT * FROM c UNION ALL SELECT * FROM w UNION ALL SELECT * FROM t UNION ALL SELECT * FROM p) ORDER BY Dt DESC LIMIT 5",
-          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), c AS (SELECT contribution_date AS Dt, 'contrib' AS Item, round(amount,2) AS AmtSigned, '' AS Note, 'contribution' AS Src FROM period_contributions WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY contribution_date DESC LIMIT 2), w AS (SELECT withdrawal_date AS Dt, 'withdraw' AS Item, round(amount,2) AS AmtSigned, '' AS Note, 'withdrawal' AS Src FROM period_withdrawals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY withdrawal_date DESC LIMIT 2), t AS (SELECT (SELECT period_end_date FROM latest) AS Dt, substr(symbol,1,8) AS Item, (buy_count + sell_count) AS AmtSigned, ('b' || buy_count || '/s' || sell_count) AS Note, 'trade' AS Src FROM period_trades WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY (buy_count + sell_count) DESC LIMIT 1), p AS (SELECT (SELECT period_end_date FROM latest) AS Dt, substr(list_type,1,10) AS Item, COUNT(*) AS AmtSigned, substr(group_concat(substr(symbol,1,4),','),1,18) AS Note, 'positions' AS Src FROM period_position_lists WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) GROUP BY list_type LIMIT 1) SELECT Dt, Item, AmtSigned, Note, Src, 'MONTH' AS PType FROM (SELECT * FROM c UNION ALL SELECT * FROM w UNION ALL SELECT * FROM t UNION ALL SELECT * FROM p) ORDER BY Dt DESC LIMIT 5"
+          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), c AS (SELECT contribution_date AS Dt, 'contrib' AS Item, round(amount,2) AS AmtSigned, 'contribution' AS Src FROM period_contributions WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY contribution_date DESC LIMIT 2), w AS (SELECT withdrawal_date AS Dt, 'withdraw' AS Item, round(amount,2) AS AmtSigned, 'withdrawal' AS Src FROM period_withdrawals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY withdrawal_date DESC LIMIT 2), t AS (SELECT (SELECT period_end_date FROM latest) AS Dt, substr(symbol,1,8) AS Item, (buy_count + sell_count) AS AmtSigned, 'trade' AS Src FROM period_trades WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY (buy_count + sell_count) DESC LIMIT 1) SELECT Dt, Item, AmtSigned, Src FROM (SELECT * FROM c UNION ALL SELECT * FROM w UNION ALL SELECT * FROM t) ORDER BY Dt DESC LIMIT 5",
+          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), c AS (SELECT contribution_date AS Dt, 'contrib' AS Item, round(amount,2) AS AmtSigned, 'contribution' AS Src FROM period_contributions WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY contribution_date DESC LIMIT 2), w AS (SELECT withdrawal_date AS Dt, 'withdraw' AS Item, round(amount,2) AS AmtSigned, 'withdrawal' AS Src FROM period_withdrawals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY withdrawal_date DESC LIMIT 2), t AS (SELECT (SELECT period_end_date FROM latest) AS Dt, substr(symbol,1,8) AS Item, (buy_count + sell_count) AS AmtSigned, 'trade' AS Src FROM period_trades WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY (buy_count + sell_count) DESC LIMIT 1) SELECT Dt, Item, AmtSigned, Src FROM (SELECT * FROM c UNION ALL SELECT * FROM w UNION ALL SELECT * FROM t) ORDER BY Dt DESC LIMIT 5"
         }
       ],
       "options": {
@@ -551,7 +551,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Note"
+              "options": "Src"
             },
             "properties": [
               {
@@ -559,16 +559,76 @@
                 "value": 116
               }
             ]
-          },
+          }
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "type": "table",
+      "title": "Position List Mix",
+      "gridPos": {
+        "x": 12,
+        "y": 7,
+        "w": 12,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT substr(list_type,1,12) AS ListType, COUNT(*) AS Cnt, substr(group_concat(substr(symbol,1,4),','),1,18) AS Symbols, 'MONTH' AS PType FROM period_position_lists WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) GROUP BY list_type ORDER BY Cnt DESC LIMIT 5",
+          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT substr(list_type,1,12) AS ListType, COUNT(*) AS Cnt, substr(group_concat(substr(symbol,1,4),','),1,18) AS Symbols, 'MONTH' AS PType FROM period_position_lists WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) GROUP BY list_type ORDER BY Cnt DESC LIMIT 5"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
           {
             "matcher": {
               "id": "byName",
-              "options": "Src"
+              "options": "ListType"
             },
             "properties": [
               {
                 "id": "custom.width",
-                "value": 82
+                "value": 96
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Cnt"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 68
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Symbols"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 126
               }
             ]
           },
@@ -580,7 +640,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 64
+                "value": 72
               }
             ]
           }
@@ -608,6 +668,7 @@
   "timepicker": {},
   "timezone": "America/Los_Angeles",
   "title": "B08 LMI v3 - Period Activity",
+  "description": "Completed-period flow board for contributions, withdrawals, trades, and position-list churn in one view.",
   "uid": "lmi-v3-b08-period-activity",
   "version": 1,
   "weekStart": ""

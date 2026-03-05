@@ -390,7 +390,7 @@
       "title": "Attribution Windows Trend",
       "gridPos": {
         "x": 0,
-        "y": 7,
+        "y": 3,
         "w": 12,
         "h": 4
       },
@@ -437,7 +437,7 @@
       "title": "TWR Windows Trend",
       "gridPos": {
         "x": 12,
-        "y": 7,
+        "y": 3,
         "w": 12,
         "h": 4
       },
@@ -450,8 +450,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (interval_end || 'T00:00:00Z') AS time, twr_1m_pct AS TWR1m, twr_3m_pct AS TWR3m, twr_6m_pct AS TWR6m, twr_12m_pct AS TWR12m FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end",
-          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (interval_end || 'T00:00:00Z') AS time, twr_1m_pct AS TWR1m, twr_3m_pct AS TWR3m, twr_6m_pct AS TWR6m, twr_12m_pct AS TWR12m FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end"
+          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (strftime('%s', interval_end || ' 00:00:00') * 1000) AS time, twr_1m_pct AS TWR1m, twr_3m_pct AS TWR3m, twr_6m_pct AS TWR6m, twr_12m_pct AS TWR12m FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end",
+          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (strftime('%s', interval_end || ' 00:00:00') * 1000) AS time, twr_1m_pct AS TWR1m, twr_3m_pct AS TWR3m, twr_6m_pct AS TWR6m, twr_12m_pct AS TWR12m FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end"
         }
       ],
       "options": {
@@ -484,8 +484,8 @@
       "title": "Interval Attribution Rows",
       "gridPos": {
         "x": 0,
-        "y": 3,
-        "w": 24,
+        "y": 7,
+        "w": 12,
         "h": 4
       },
       "datasource": {
@@ -497,8 +497,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), li AS (SELECT interval_label FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end DESC LIMIT 1) SELECT window AS Win, round(total_return_pct,3) AS TRPct, round(income_contribution_pct,3) AS IncomePct, round(price_contribution_pct,3) AS PricePct, substr(COALESCE(top_json,''),1,28) AS Top, substr(COALESCE(bottom_json,''),1,28) AS Bottom FROM period_interval_attribution WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) AND interval_label=(SELECT interval_label FROM li) ORDER BY CASE window WHEN '1m' THEN 1 WHEN '3m' THEN 2 WHEN '6m' THEN 3 WHEN '12m' THEN 4 ELSE 5 END LIMIT 5",
-          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), li AS (SELECT interval_label FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end DESC LIMIT 1) SELECT window AS Win, round(total_return_pct,3) AS TRPct, round(income_contribution_pct,3) AS IncomePct, round(price_contribution_pct,3) AS PricePct, substr(COALESCE(top_json,''),1,28) AS Top, substr(COALESCE(bottom_json,''),1,28) AS Bottom FROM period_interval_attribution WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) AND interval_label=(SELECT interval_label FROM li) ORDER BY CASE window WHEN '1m' THEN 1 WHEN '3m' THEN 2 WHEN '6m' THEN 3 WHEN '12m' THEN 4 ELSE 5 END LIMIT 5"
+          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), li AS (SELECT interval_label FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end DESC LIMIT 1) SELECT window AS Win, round(total_return_pct,3) AS TRPct, round(income_contribution_pct,3) AS IncomePct, substr(COALESCE(top_json,''),1,30) AS Top FROM period_interval_attribution WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) AND interval_label=(SELECT interval_label FROM li) ORDER BY CASE window WHEN '1m' THEN 1 WHEN '3m' THEN 2 WHEN '6m' THEN 3 WHEN '12m' THEN 4 ELSE 5 END LIMIT 5",
+          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), li AS (SELECT interval_label FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end DESC LIMIT 1) SELECT window AS Win, round(total_return_pct,3) AS TRPct, round(income_contribution_pct,3) AS IncomePct, substr(COALESCE(top_json,''),1,30) AS Top FROM period_interval_attribution WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) AND interval_label=(SELECT interval_label FROM li) ORDER BY CASE window WHEN '1m' THEN 1 WHEN '3m' THEN 2 WHEN '6m' THEN 3 WHEN '12m' THEN 4 ELSE 5 END LIMIT 5"
         }
       ],
       "options": {
@@ -550,7 +550,67 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "PricePct"
+              "options": "Top"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 190
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "type": "table",
+      "title": "Holding Change Drivers",
+      "gridPos": {
+        "x": 12,
+        "y": 7,
+        "w": 12,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT substr(symbol,1,8) AS Sym, round(market_value_delta,2) AS MVDelta, round(weight_delta_pct,2) AS WtDelta, substr(change_type,1,10) AS ChgType FROM period_holding_changes WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY abs(market_value_delta) DESC LIMIT 5",
+          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT substr(symbol,1,8) AS Sym, round(market_value_delta,2) AS MVDelta, round(weight_delta_pct,2) AS WtDelta, substr(change_type,1,10) AS ChgType FROM period_holding_changes WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY abs(market_value_delta) DESC LIMIT 5"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Sym"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 72
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "MVDelta"
             },
             "properties": [
               {
@@ -562,24 +622,24 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Top"
+              "options": "WtDelta"
             },
             "properties": [
               {
                 "id": "custom.width",
-                "value": 160
+                "value": 82
               }
             ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "Bottom"
+              "options": "ChgType"
             },
             "properties": [
               {
                 "id": "custom.width",
-                "value": 160
+                "value": 104
               }
             ]
           }
@@ -607,6 +667,7 @@
   "timepicker": {},
   "timezone": "America/Los_Angeles",
   "title": "B10 LMI v3 - Period Attribution",
+  "description": "Attribution workstation for return windows, income/price split, and holding-level contribution shifts.",
   "uid": "lmi-v3-b10-period-attribution",
   "version": 1,
   "weekStart": ""
