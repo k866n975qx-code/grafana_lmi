@@ -129,8 +129,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (dividends_projected_monthly - dividends_realized_mtd) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1",
-          "rawQueryText": "SELECT (dividends_projected_monthly - dividends_realized_mtd) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1"
+          "queryText": "SELECT (dividends_projected_monthly-dividends_realized_mtd) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1",
+          "rawQueryText": "SELECT (dividends_projected_monthly-dividends_realized_mtd) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1"
         }
       ],
       "options": {
@@ -175,8 +175,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (dividends_received_pct/100.0) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1",
-          "rawQueryText": "SELECT (dividends_received_pct/100.0) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1"
+          "queryText": "SELECT dividends_received_pct/100.0 AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1",
+          "rawQueryText": "SELECT dividends_received_pct/100.0 AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1"
         }
       ],
       "options": {
@@ -297,12 +297,12 @@
     {
       "id": 7,
       "type": "table",
-      "title": "Income Leaderboard",
+      "title": "Income Leaders (3)",
       "gridPos": {
         "x": 0,
         "y": 3,
         "w": 12,
-        "h": 8
+        "h": 5
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -313,8 +313,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT symbol, projected_monthly_dividend, forward_12m_dividend, current_yield_pct, dividends_30d, dividends_qtd, dividends_ytd FROM daily_holdings WHERE as_of_date_local=(SELECT MAX(as_of_date_local) FROM daily_holdings) ORDER BY projected_monthly_dividend DESC LIMIT 20",
-          "rawQueryText": "SELECT symbol, projected_monthly_dividend, forward_12m_dividend, current_yield_pct, dividends_30d, dividends_qtd, dividends_ytd FROM daily_holdings WHERE as_of_date_local=(SELECT MAX(as_of_date_local) FROM daily_holdings) ORDER BY projected_monthly_dividend DESC LIMIT 20"
+          "queryText": "SELECT symbol, projected_monthly_dividend, forward_12m_dividend, current_yield_pct, dividends_30d FROM daily_holdings WHERE as_of_date_local=(SELECT MAX(as_of_date_local) FROM daily_holdings) ORDER BY projected_monthly_dividend DESC LIMIT 3",
+          "rawQueryText": "SELECT symbol, projected_monthly_dividend, forward_12m_dividend, current_yield_pct, dividends_30d FROM daily_holdings WHERE as_of_date_local=(SELECT MAX(as_of_date_local) FROM daily_holdings) ORDER BY projected_monthly_dividend DESC LIMIT 3"
         }
       ],
       "options": {
@@ -332,12 +332,12 @@
     {
       "id": 8,
       "type": "table",
-      "title": "Upcoming Ex/Pay Ledger",
+      "title": "Upcoming Ex/Pay (3)",
       "gridPos": {
         "x": 12,
         "y": 3,
         "w": 12,
-        "h": 8
+        "h": 5
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -348,8 +348,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT symbol, ex_date_est, pay_date_est, amount_est, CASE WHEN pay_date_est < date('now') THEN 'OVERDUE' ELSE 'PENDING' END AS status FROM daily_dividends_upcoming WHERE as_of_date_local=(SELECT MAX(as_of_date_local) FROM daily_dividends_upcoming) ORDER BY pay_date_est, ex_date_est LIMIT 24",
-          "rawQueryText": "SELECT symbol, ex_date_est, pay_date_est, amount_est, CASE WHEN pay_date_est < date('now') THEN 'OVERDUE' ELSE 'PENDING' END AS status FROM daily_dividends_upcoming WHERE as_of_date_local=(SELECT MAX(as_of_date_local) FROM daily_dividends_upcoming) ORDER BY pay_date_est, ex_date_est LIMIT 24"
+          "queryText": "SELECT symbol, ex_date_est, pay_date_est, amount_est, CASE WHEN pay_date_est < date('now') THEN 'OVERDUE' ELSE 'PENDING' END AS status FROM daily_dividends_upcoming WHERE as_of_date_local=(SELECT MAX(as_of_date_local) FROM daily_dividends_upcoming) ORDER BY pay_date_est, ex_date_est LIMIT 3",
+          "rawQueryText": "SELECT symbol, ex_date_est, pay_date_est, amount_est, CASE WHEN pay_date_est < date('now') THEN 'OVERDUE' ELSE 'PENDING' END AS status FROM daily_dividends_upcoming WHERE as_of_date_local=(SELECT MAX(as_of_date_local) FROM daily_dividends_upcoming) ORDER BY pay_date_est, ex_date_est LIMIT 3"
         }
       ],
       "options": {
@@ -367,12 +367,12 @@
     {
       "id": 9,
       "type": "table",
-      "title": "Period Dividend Events",
+      "title": "Period Dividend Events (4)",
       "gridPos": {
         "x": 0,
-        "y": 11,
+        "y": 8,
         "w": 12,
-        "h": 8
+        "h": 6
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -383,8 +383,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT period_type, period_start_date, period_end_date, symbol, ex_date, pay_date, amount FROM period_dividend_events ORDER BY period_end_date DESC, ex_date DESC LIMIT 40",
-          "rawQueryText": "SELECT period_type, period_start_date, period_end_date, symbol, ex_date, pay_date, amount FROM period_dividend_events ORDER BY period_end_date DESC, ex_date DESC LIMIT 40"
+          "queryText": "SELECT period_type, period_end_date, symbol, ex_date, amount FROM period_dividend_events ORDER BY period_end_date DESC, ex_date DESC LIMIT 4",
+          "rawQueryText": "SELECT period_type, period_end_date, symbol, ex_date, amount FROM period_dividend_events ORDER BY period_end_date DESC, ex_date DESC LIMIT 4"
         }
       ],
       "options": {
@@ -402,12 +402,12 @@
     {
       "id": 10,
       "type": "table",
-      "title": "Reliability Watchlist",
+      "title": "Reliability Flags (4)",
       "gridPos": {
         "x": 12,
-        "y": 11,
+        "y": 8,
         "w": 12,
-        "h": 8
+        "h": 6
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -418,8 +418,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT symbol, reliability_consistency_score, reliability_missed_payments_12m, reliability_trend_6m, distribution_frequency, next_ex_date_est FROM daily_holdings WHERE as_of_date_local=(SELECT MAX(as_of_date_local) FROM daily_holdings) ORDER BY reliability_missed_payments_12m DESC, reliability_consistency_score ASC LIMIT 24",
-          "rawQueryText": "SELECT symbol, reliability_consistency_score, reliability_missed_payments_12m, reliability_trend_6m, distribution_frequency, next_ex_date_est FROM daily_holdings WHERE as_of_date_local=(SELECT MAX(as_of_date_local) FROM daily_holdings) ORDER BY reliability_missed_payments_12m DESC, reliability_consistency_score ASC LIMIT 24"
+          "queryText": "SELECT symbol, reliability_missed_payments_12m, reliability_consistency_score, distribution_frequency, next_ex_date_est FROM daily_holdings WHERE as_of_date_local=(SELECT MAX(as_of_date_local) FROM daily_holdings) ORDER BY reliability_missed_payments_12m DESC, reliability_consistency_score ASC LIMIT 4",
+          "rawQueryText": "SELECT symbol, reliability_missed_payments_12m, reliability_consistency_score, distribution_frequency, next_ex_date_est FROM daily_holdings WHERE as_of_date_local=(SELECT MAX(as_of_date_local) FROM daily_holdings) ORDER BY reliability_missed_payments_12m DESC, reliability_consistency_score ASC LIMIT 4"
         }
       ],
       "options": {
@@ -442,7 +442,7 @@
     "lmi",
     "v2",
     "data-heavy",
-    "income"
+    "compact"
   ],
   "templating": {
     "list": []

@@ -21,12 +21,12 @@
     {
       "id": 1,
       "type": "timeseries",
-      "title": "Market Value (120d)",
+      "title": "Market Value vs Net Liquidation",
       "gridPos": {
         "x": 0,
         "y": 0,
-        "w": 12,
-        "h": 8
+        "w": 24,
+        "h": 7
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -35,10 +35,10 @@
       "targets": [
         {
           "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, market_value AS value FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, market_value AS value FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "format": "time_series",
+          "queryType": "timeSeriesQuery",
+          "queryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, market_value AS \"Market Value\", net_liquidation_value AS \"Net Liquidation\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, market_value AS \"Market Value\", net_liquidation_value AS \"Net Liquidation\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
         }
       ],
       "options": {
@@ -68,12 +68,12 @@
     {
       "id": 2,
       "type": "timeseries",
-      "title": "Net Liquidation (120d)",
+      "title": "Projected Monthly Income",
       "gridPos": {
-        "x": 12,
-        "y": 0,
-        "w": 12,
-        "h": 8
+        "x": 0,
+        "y": 7,
+        "w": 24,
+        "h": 7
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -82,10 +82,10 @@
       "targets": [
         {
           "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, net_liquidation_value AS value FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, net_liquidation_value AS value FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "format": "time_series",
+          "queryType": "timeSeriesQuery",
+          "queryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, projected_monthly_income AS value FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, projected_monthly_income AS value FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
         }
       ],
       "options": {
@@ -108,194 +108,6 @@
           "showPoints": "never",
           "spanNulls": true,
           "decimals": 0
-        },
-        "overrides": []
-      }
-    },
-    {
-      "id": 3,
-      "type": "timeseries",
-      "title": "Projected Monthly Income (120d)",
-      "gridPos": {
-        "x": 0,
-        "y": 8,
-        "w": 12,
-        "h": 8
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, projected_monthly_income AS value FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, projected_monthly_income AS value FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
-        }
-      ],
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "currencyUSD",
-          "drawStyle": "line",
-          "lineWidth": 2,
-          "fillOpacity": 10,
-          "showPoints": "never",
-          "spanNulls": true,
-          "decimals": 0
-        },
-        "overrides": []
-      }
-    },
-    {
-      "id": 4,
-      "type": "timeseries",
-      "title": "Drawdown Depth and Recovery",
-      "gridPos": {
-        "x": 12,
-        "y": 8,
-        "w": 12,
-        "h": 8
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, drawdown_depth_pct AS \"Drawdown Depth %\", (100.0 + COALESCE(drawdown_depth_pct,0.0)) AS \"Recovery %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, drawdown_depth_pct AS \"Drawdown Depth %\", (100.0 + COALESCE(drawdown_depth_pct,0.0)) AS \"Recovery %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
-        }
-      ],
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "drawStyle": "line",
-          "lineWidth": 2,
-          "fillOpacity": 10,
-          "showPoints": "never",
-          "spanNulls": true,
-          "decimals": 2
-        },
-        "overrides": []
-      }
-    },
-    {
-      "id": 5,
-      "type": "timeseries",
-      "title": "Concentration Trend",
-      "gridPos": {
-        "x": 0,
-        "y": 16,
-        "w": 12,
-        "h": 8
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, top3_weight_pct AS \"Top3 %\", top5_weight_pct AS \"Top5 %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, top3_weight_pct AS \"Top3 %\", top5_weight_pct AS \"Top5 %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
-        }
-      ],
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "drawStyle": "line",
-          "lineWidth": 2,
-          "fillOpacity": 10,
-          "showPoints": "never",
-          "spanNulls": true,
-          "decimals": 2
-        },
-        "overrides": []
-      }
-    },
-    {
-      "id": 6,
-      "type": "timeseries",
-      "title": "TWR Windows Trend",
-      "gridPos": {
-        "x": 12,
-        "y": 16,
-        "w": 12,
-        "h": 8
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, twr_1m_pct AS \"TWR 1m %\", twr_3m_pct AS \"TWR 3m %\", twr_6m_pct AS \"TWR 6m %\", twr_12m_pct AS \"TWR 12m %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, twr_1m_pct AS \"TWR 1m %\", twr_3m_pct AS \"TWR 3m %\", twr_6m_pct AS \"TWR 6m %\", twr_12m_pct AS \"TWR 12m %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
-        }
-      ],
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "drawStyle": "line",
-          "lineWidth": 2,
-          "fillOpacity": 10,
-          "showPoints": "never",
-          "spanNulls": true,
-          "decimals": 2
         },
         "overrides": []
       }
@@ -308,7 +120,7 @@
     "lmi",
     "v2",
     "graph",
-    "kiosk"
+    "compact"
   ],
   "templating": {
     "list": []

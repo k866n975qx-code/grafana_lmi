@@ -21,7 +21,7 @@
     {
       "id": 1,
       "type": "timeseries",
-      "title": "LTV % and Margin Balance",
+      "title": "Macro: VIX, 10Y, Stress",
       "gridPos": {
         "x": 0,
         "y": 0,
@@ -37,8 +37,8 @@
           "refId": "A",
           "format": "time_series",
           "queryType": "timeSeriesQuery",
-          "queryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, ltv_pct AS \"LTV %\", margin_loan_balance AS \"Margin Balance\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, ltv_pct AS \"LTV %\", margin_loan_balance AS \"Margin Balance\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "queryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, macro_vix AS \"VIX\", macro_ten_year_yield AS \"10Y Yield\", macro_stress_score AS \"Stress\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, macro_vix AS \"VIX\", macro_ten_year_yield AS \"10Y Yield\", macro_stress_score AS \"Stress\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
         }
       ],
       "options": {
@@ -54,7 +54,7 @@
       },
       "fieldConfig": {
         "defaults": {
-          "unit": "short",
+          "unit": "none",
           "drawStyle": "line",
           "lineWidth": 2,
           "fillOpacity": 10,
@@ -68,7 +68,7 @@
     {
       "id": 2,
       "type": "timeseries",
-      "title": "Coverage and Buffer %",
+      "title": "Period Risk Averages (MONTH)",
       "gridPos": {
         "x": 0,
         "y": 7,
@@ -84,8 +84,8 @@
           "refId": "A",
           "format": "time_series",
           "queryType": "timeSeriesQuery",
-          "queryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, COALESCE(margin_income_coverage, projected_monthly_income / NULLIF(monthly_interest_current,0)) AS \"Coverage\", buffer_to_margin_call_pct AS \"Buffer %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, COALESCE(margin_income_coverage, projected_monthly_income / NULLIF(monthly_interest_current,0)) AS \"Coverage\", buffer_to_margin_call_pct AS \"Buffer %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "queryText": "SELECT CAST(strftime('%s', period_end_date) AS INTEGER) AS time, MAX(CASE WHEN metric='vol_30d_pct' THEN avg_val END) AS \"Vol30 Avg\", MAX(CASE WHEN metric='sharpe_1y' THEN avg_val END) AS \"Sharpe Avg\", MAX(CASE WHEN metric='sortino_1y' THEN avg_val END) AS \"Sortino Avg\" FROM period_risk_stats WHERE period_type='MONTH' AND period_end_date >= date('now','-365 day') GROUP BY period_end_date ORDER BY period_end_date",
+          "rawQueryText": "SELECT CAST(strftime('%s', period_end_date) AS INTEGER) AS time, MAX(CASE WHEN metric='vol_30d_pct' THEN avg_val END) AS \"Vol30 Avg\", MAX(CASE WHEN metric='sharpe_1y' THEN avg_val END) AS \"Sharpe Avg\", MAX(CASE WHEN metric='sortino_1y' THEN avg_val END) AS \"Sortino Avg\" FROM period_risk_stats WHERE period_type='MONTH' AND period_end_date >= date('now','-365 day') GROUP BY period_end_date ORDER BY period_end_date"
         }
       ],
       "options": {
@@ -101,13 +101,13 @@
       },
       "fieldConfig": {
         "defaults": {
-          "unit": "short",
+          "unit": "none",
           "drawStyle": "line",
           "lineWidth": 2,
           "fillOpacity": 10,
           "showPoints": "never",
           "spanNulls": true,
-          "decimals": 2
+          "decimals": 3
         },
         "overrides": []
       }
@@ -131,8 +131,8 @@
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "G04 LMI v2 - Margin Stress Trends",
-  "uid": "lmi-v2-g04-margin-trends",
+  "title": "G09 LMI v2 - Macro & Period Risk Trends",
+  "uid": "lmi-v2-g09-macro-risk-period",
   "version": 1,
   "weekStart": ""
 }

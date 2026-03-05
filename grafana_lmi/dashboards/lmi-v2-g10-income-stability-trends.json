@@ -21,7 +21,7 @@
     {
       "id": 1,
       "type": "timeseries",
-      "title": "LTV % and Margin Balance",
+      "title": "Income Stability and Volatility",
       "gridPos": {
         "x": 0,
         "y": 0,
@@ -37,8 +37,8 @@
           "refId": "A",
           "format": "time_series",
           "queryType": "timeSeriesQuery",
-          "queryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, ltv_pct AS \"LTV %\", margin_loan_balance AS \"Margin Balance\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, ltv_pct AS \"LTV %\", margin_loan_balance AS \"Margin Balance\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "queryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, income_stability_score AS \"Stability\", income_volatility_30d_pct AS \"Income Vol 30d %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, income_stability_score AS \"Stability\", income_volatility_30d_pct AS \"Income Vol 30d %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
         }
       ],
       "options": {
@@ -54,13 +54,13 @@
       },
       "fieldConfig": {
         "defaults": {
-          "unit": "short",
+          "unit": "none",
           "drawStyle": "line",
           "lineWidth": 2,
           "fillOpacity": 10,
           "showPoints": "never",
           "spanNulls": true,
-          "decimals": 2
+          "decimals": 3
         },
         "overrides": []
       }
@@ -68,7 +68,7 @@
     {
       "id": 2,
       "type": "timeseries",
-      "title": "Coverage and Buffer %",
+      "title": "Dividend Cuts and Upcoming Count",
       "gridPos": {
         "x": 0,
         "y": 7,
@@ -84,8 +84,8 @@
           "refId": "A",
           "format": "time_series",
           "queryType": "timeSeriesQuery",
-          "queryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, COALESCE(margin_income_coverage, projected_monthly_income / NULLIF(monthly_interest_current,0)) AS \"Coverage\", buffer_to_margin_call_pct AS \"Buffer %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, COALESCE(margin_income_coverage, projected_monthly_income / NULLIF(monthly_interest_current,0)) AS \"Coverage\", buffer_to_margin_call_pct AS \"Buffer %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "queryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, dividend_cut_count_12m AS \"Cuts 12m\", dividends_upcoming_count AS \"Upcoming Count\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, dividend_cut_count_12m AS \"Cuts 12m\", dividends_upcoming_count AS \"Upcoming Count\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
         }
       ],
       "options": {
@@ -101,13 +101,13 @@
       },
       "fieldConfig": {
         "defaults": {
-          "unit": "short",
+          "unit": "none",
           "drawStyle": "line",
           "lineWidth": 2,
           "fillOpacity": 10,
           "showPoints": "never",
           "spanNulls": true,
-          "decimals": 2
+          "decimals": 0
         },
         "overrides": []
       }
@@ -131,8 +131,8 @@
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "G04 LMI v2 - Margin Stress Trends",
-  "uid": "lmi-v2-g04-margin-trends",
+  "title": "G10 LMI v2 - Income Stability Trends",
+  "uid": "lmi-v2-g10-income-stability",
   "version": 1,
   "weekStart": ""
 }

@@ -1,4 +1,4 @@
-# Current Grafana Dashboards (LMI v2 Reset)
+# Current Grafana Dashboards (LMI v2 Compact)
 
 Updated: 2026-03-04
 
@@ -11,31 +11,41 @@ Updated: 2026-03-04
 - SQLite DB path (container mount): `/var/lib/lmi/app.db`
 - Datasource: `LMI SQLite` (uid `lmi_sqlite`)
 
-## Dashboard inventory (16)
+## Design guarantees
+- Timeseries panels use explicit `time_series` target format with epoch `time` field.
+- Compact kiosk layout target: max dashboard height `14` grid units.
+- Table panels are trimmed to compact column sets and low row limits to avoid panel scroll.
 
-### Data-heavy
-- `grafana_lmi/dashboards/lmi-v2-d01-daily-command-board.json` (`lmi-v2-d01-daily-command`)
-- `grafana_lmi/dashboards/lmi-v2-d02-holdings-risk-matrix.json` (`lmi-v2-d02-holdings-risk`)
-- `grafana_lmi/dashboards/lmi-v2-d03-income-calendar-reliability.json` (`lmi-v2-d03-income-calendar`)
-- `grafana_lmi/dashboards/lmi-v2-d04-margin-stress-desk.json` (`lmi-v2-d04-margin-stress`)
-- `grafana_lmi/dashboards/lmi-v2-d05-rolling-completed-scorecard.json` (`lmi-v2-d05-period-scorecard`)
-- `grafana_lmi/dashboards/lmi-v2-d06-period-interval-activity-ledger.json` (`lmi-v2-d06-interval-ledger`)
-- `grafana_lmi/dashboards/lmi-v2-d07-goals-tier-scenarios.json` (`lmi-v2-d07-goals-tiers`)
-- `grafana_lmi/dashboards/lmi-v2-d08-alerts-console.json` (`lmi-v2-d08-alerts-console`)
-- `grafana_lmi/dashboards/lmi-v2-d09-data-quality-guardrail.json` (`lmi-v2-d09-data-quality`)
+## Dashboard inventory (23)
 
-### Graph
-- `grafana_lmi/dashboards/lmi-v2-g01-portfolio-trajectory.json` (`lmi-v2-g01-portfolio-trajectory`)
-- `grafana_lmi/dashboards/lmi-v2-g02-risk-tail-trends.json` (`lmi-v2-g02-risk-tail`)
-- `grafana_lmi/dashboards/lmi-v2-g03-income-yield-trends.json` (`lmi-v2-g03-income-yield`)
-- `grafana_lmi/dashboards/lmi-v2-g04-margin-stress-trends.json` (`lmi-v2-g04-margin-trends`)
-- `grafana_lmi/dashboards/lmi-v2-g05-period-dynamics.json` (`lmi-v2-g05-period-dynamics`)
-- `grafana_lmi/dashboards/lmi-v2-g06-goal-pace-trends.json` (`lmi-v2-g06-goal-pace`)
-- `grafana_lmi/dashboards/lmi-v2-g07-alert-trends.json` (`lmi-v2-g07-alert-trends`)
+### Data-heavy (12)
+- `lmi-v2-d01-daily-command-board.json` (`lmi-v2-d01-daily-command`)
+- `lmi-v2-d02-holdings-risk-matrix.json` (`lmi-v2-d02-holdings-risk`)
+- `lmi-v2-d03-income-calendar-reliability.json` (`lmi-v2-d03-income-calendar`)
+- `lmi-v2-d04-margin-stress-desk.json` (`lmi-v2-d04-margin-stress`)
+- `lmi-v2-d05-rolling-completed-scorecard.json` (`lmi-v2-d05-period-scorecard`)
+- `lmi-v2-d06-period-interval-activity-ledger.json` (`lmi-v2-d06-interval-ledger`)
+- `lmi-v2-d07-goals-tier-scenarios.json` (`lmi-v2-d07-goals-tiers`)
+- `lmi-v2-d08-alerts-console.json` (`lmi-v2-d08-alerts-console`)
+- `lmi-v2-d09-data-quality-guardrail.json` (`lmi-v2-d09-data-quality`)
+- `lmi-v2-d10-period-activity-flows.json` (`lmi-v2-d10-period-activity`)
+- `lmi-v2-d11-period-positions-dividends.json` (`lmi-v2-d11-period-positions`)
+- `lmi-v2-d12-period-macro-risk.json` (`lmi-v2-d12-period-macro-risk`)
 
-## Mixed kiosk order
-`D01, G01, D02, G02, D03, G03, D04, G04, D05, G05, D06, D07, G06, D08, G07, D09`
+### Graph (11)
+- `lmi-v2-g01-portfolio-trajectory.json` (`lmi-v2-g01-portfolio-trajectory`)
+- `lmi-v2-g02-risk-tail-trends.json` (`lmi-v2-g02-risk-tail`)
+- `lmi-v2-g03-income-yield-trends.json` (`lmi-v2-g03-income-yield`)
+- `lmi-v2-g04-margin-stress-trends.json` (`lmi-v2-g04-margin-trends`)
+- `lmi-v2-g05-period-dynamics.json` (`lmi-v2-g05-period-dynamics`)
+- `lmi-v2-g06-goal-pace-trends.json` (`lmi-v2-g06-goal-pace`)
+- `lmi-v2-g07-alert-trends.json` (`lmi-v2-g07-alert-trends`)
+- `lmi-v2-g08-performance-trends.json` (`lmi-v2-g08-performance-trends`)
+- `lmi-v2-g09-macro-risk-period-trends.json` (`lmi-v2-g09-macro-risk-period`)
+- `lmi-v2-g10-income-stability-trends.json` (`lmi-v2-g10-income-stability`)
+- `lmi-v2-g11-benchmark-concentration-trends.json` (`lmi-v2-g11-benchmark-concentration`)
 
-## Notes
-- This reset is hard-replace: legacy dashboard JSON files are removed from `grafana_lmi/dashboards`.
-- A local point-in-time copy is kept under `grafana_lmi/dashboards.backup.<timestamp>/`.
+## Validation snapshot
+- Query count: `120`
+- SQL parse errors: `0`
+- Required table coverage: complete

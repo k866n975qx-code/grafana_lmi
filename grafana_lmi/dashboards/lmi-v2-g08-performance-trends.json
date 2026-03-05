@@ -21,7 +21,7 @@
     {
       "id": 1,
       "type": "timeseries",
-      "title": "LTV % and Margin Balance",
+      "title": "TWR Windows %",
       "gridPos": {
         "x": 0,
         "y": 0,
@@ -37,8 +37,8 @@
           "refId": "A",
           "format": "time_series",
           "queryType": "timeSeriesQuery",
-          "queryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, ltv_pct AS \"LTV %\", margin_loan_balance AS \"Margin Balance\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, ltv_pct AS \"LTV %\", margin_loan_balance AS \"Margin Balance\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "queryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, twr_1m_pct AS \"TWR 1m\", twr_3m_pct AS \"TWR 3m\", twr_6m_pct AS \"TWR 6m\", twr_12m_pct AS \"TWR 12m\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, twr_1m_pct AS \"TWR 1m\", twr_3m_pct AS \"TWR 3m\", twr_6m_pct AS \"TWR 6m\", twr_12m_pct AS \"TWR 12m\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
         }
       ],
       "options": {
@@ -54,7 +54,7 @@
       },
       "fieldConfig": {
         "defaults": {
-          "unit": "short",
+          "unit": "percent",
           "drawStyle": "line",
           "lineWidth": 2,
           "fillOpacity": 10,
@@ -68,7 +68,7 @@
     {
       "id": 2,
       "type": "timeseries",
-      "title": "Coverage and Buffer %",
+      "title": "Unrealized P&L and Market Value",
       "gridPos": {
         "x": 0,
         "y": 7,
@@ -84,8 +84,8 @@
           "refId": "A",
           "format": "time_series",
           "queryType": "timeSeriesQuery",
-          "queryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, COALESCE(margin_income_coverage, projected_monthly_income / NULLIF(monthly_interest_current,0)) AS \"Coverage\", buffer_to_margin_call_pct AS \"Buffer %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, COALESCE(margin_income_coverage, projected_monthly_income / NULLIF(monthly_interest_current,0)) AS \"Coverage\", buffer_to_margin_call_pct AS \"Buffer %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "queryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, unrealized_pnl AS \"Unrealized P&L\", market_value AS \"Market Value\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, unrealized_pnl AS \"Unrealized P&L\", market_value AS \"Market Value\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
         }
       ],
       "options": {
@@ -101,13 +101,13 @@
       },
       "fieldConfig": {
         "defaults": {
-          "unit": "short",
+          "unit": "currencyUSD",
           "drawStyle": "line",
           "lineWidth": 2,
           "fillOpacity": 10,
           "showPoints": "never",
           "spanNulls": true,
-          "decimals": 2
+          "decimals": 0
         },
         "overrides": []
       }
@@ -131,8 +131,8 @@
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "G04 LMI v2 - Margin Stress Trends",
-  "uid": "lmi-v2-g04-margin-trends",
+  "title": "G08 LMI v2 - Performance Trends",
+  "uid": "lmi-v2-g08-performance-trends",
   "version": 1,
   "weekStart": ""
 }

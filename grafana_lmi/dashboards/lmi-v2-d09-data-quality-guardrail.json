@@ -204,7 +204,7 @@
     {
       "id": 5,
       "type": "stat",
-      "title": "Schema Version",
+      "title": "Schema",
       "gridPos": {
         "x": 16,
         "y": 0,
@@ -249,7 +249,7 @@
     {
       "id": 6,
       "type": "stat",
-      "title": "Price Lag (Hours)",
+      "title": "Price Lag Hours",
       "gridPos": {
         "x": 20,
         "y": 0,
@@ -265,8 +265,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT ROUND((julianday('now') - julianday(COALESCE(prices_as_of_utc, datetime(as_of_date_local)))) * 24.0, 2) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1",
-          "rawQueryText": "SELECT ROUND((julianday('now') - julianday(COALESCE(prices_as_of_utc, datetime(as_of_date_local)))) * 24.0, 2) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1"
+          "queryText": "SELECT ROUND((julianday('now')-julianday(COALESCE(prices_as_of_utc,datetime(as_of_date_local))))*24.0,2) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1",
+          "rawQueryText": "SELECT ROUND((julianday('now')-julianday(COALESCE(prices_as_of_utc,datetime(as_of_date_local))))*24.0,2) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1"
         }
       ],
       "options": {
@@ -295,12 +295,12 @@
     {
       "id": 7,
       "type": "table",
-      "title": "Missing Prices",
+      "title": "Missing Prices (3)",
       "gridPos": {
         "x": 0,
         "y": 3,
         "w": 12,
-        "h": 8
+        "h": 5
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -311,8 +311,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT symbol, market_value, weight_pct, last_price, vol_30d_pct FROM daily_holdings WHERE as_of_date_local=(SELECT MAX(as_of_date_local) FROM daily_holdings) AND (last_price IS NULL OR last_price<=0) ORDER BY weight_pct DESC LIMIT 40",
-          "rawQueryText": "SELECT symbol, market_value, weight_pct, last_price, vol_30d_pct FROM daily_holdings WHERE as_of_date_local=(SELECT MAX(as_of_date_local) FROM daily_holdings) AND (last_price IS NULL OR last_price<=0) ORDER BY weight_pct DESC LIMIT 40"
+          "queryText": "SELECT symbol, weight_pct, market_value, last_price FROM daily_holdings WHERE as_of_date_local=(SELECT MAX(as_of_date_local) FROM daily_holdings) AND (last_price IS NULL OR last_price<=0) ORDER BY weight_pct DESC LIMIT 3",
+          "rawQueryText": "SELECT symbol, weight_pct, market_value, last_price FROM daily_holdings WHERE as_of_date_local=(SELECT MAX(as_of_date_local) FROM daily_holdings) AND (last_price IS NULL OR last_price<=0) ORDER BY weight_pct DESC LIMIT 3"
         }
       ],
       "options": {
@@ -330,12 +330,12 @@
     {
       "id": 8,
       "type": "table",
-      "title": "Stale Data Checks (Daily/Period/Alerts)",
+      "title": "Stale Data Checks",
       "gridPos": {
         "x": 12,
         "y": 3,
         "w": 12,
-        "h": 8
+        "h": 5
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -346,8 +346,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH daily AS (SELECT 'daily_portfolio' AS dataset, MAX(as_of_date_local) AS latest_date FROM daily_portfolio), period AS (SELECT 'period_summary' AS dataset, MAX(period_end_date) AS latest_date FROM period_summary), alerts AS (SELECT 'alert_messages' AS dataset, MAX(as_of_date_local) AS latest_date FROM alert_messages), unioned AS (SELECT * FROM daily UNION ALL SELECT * FROM period UNION ALL SELECT * FROM alerts) SELECT dataset, latest_date, CAST(julianday('now') - julianday(latest_date) AS INTEGER) AS lag_days, CASE WHEN (julianday('now') - julianday(latest_date)) > 3 THEN 'STALE' ELSE 'FRESH' END AS status FROM unioned",
-          "rawQueryText": "WITH daily AS (SELECT 'daily_portfolio' AS dataset, MAX(as_of_date_local) AS latest_date FROM daily_portfolio), period AS (SELECT 'period_summary' AS dataset, MAX(period_end_date) AS latest_date FROM period_summary), alerts AS (SELECT 'alert_messages' AS dataset, MAX(as_of_date_local) AS latest_date FROM alert_messages), unioned AS (SELECT * FROM daily UNION ALL SELECT * FROM period UNION ALL SELECT * FROM alerts) SELECT dataset, latest_date, CAST(julianday('now') - julianday(latest_date) AS INTEGER) AS lag_days, CASE WHEN (julianday('now') - julianday(latest_date)) > 3 THEN 'STALE' ELSE 'FRESH' END AS status FROM unioned"
+          "queryText": "WITH daily AS (SELECT 'daily_portfolio' AS dataset, MAX(as_of_date_local) AS latest_date FROM daily_portfolio), period AS (SELECT 'period_summary' AS dataset, MAX(period_end_date) AS latest_date FROM period_summary), alerts AS (SELECT 'alert_messages' AS dataset, MAX(as_of_date_local) AS latest_date FROM alert_messages), u AS (SELECT * FROM daily UNION ALL SELECT * FROM period UNION ALL SELECT * FROM alerts) SELECT dataset, latest_date, CAST(julianday('now')-julianday(latest_date) AS INTEGER) AS lag_days, CASE WHEN (julianday('now')-julianday(latest_date))>3 THEN 'STALE' ELSE 'FRESH' END AS status FROM u LIMIT 3",
+          "rawQueryText": "WITH daily AS (SELECT 'daily_portfolio' AS dataset, MAX(as_of_date_local) AS latest_date FROM daily_portfolio), period AS (SELECT 'period_summary' AS dataset, MAX(period_end_date) AS latest_date FROM period_summary), alerts AS (SELECT 'alert_messages' AS dataset, MAX(as_of_date_local) AS latest_date FROM alert_messages), u AS (SELECT * FROM daily UNION ALL SELECT * FROM period UNION ALL SELECT * FROM alerts) SELECT dataset, latest_date, CAST(julianday('now')-julianday(latest_date) AS INTEGER) AS lag_days, CASE WHEN (julianday('now')-julianday(latest_date))>3 THEN 'STALE' ELSE 'FRESH' END AS status FROM u LIMIT 3"
         }
       ],
       "options": {
@@ -365,12 +365,12 @@
     {
       "id": 9,
       "type": "table",
-      "title": "Recent Daily Health History",
+      "title": "Daily Health History (4)",
       "gridPos": {
         "x": 0,
-        "y": 11,
+        "y": 8,
         "w": 12,
-        "h": 8
+        "h": 6
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -381,8 +381,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT as_of_date_local, health_status, coverage_derived_pct, coverage_missing_pct, coverage_filled_pct, prices_as_of_utc, schema_version FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 60",
-          "rawQueryText": "SELECT as_of_date_local, health_status, coverage_derived_pct, coverage_missing_pct, coverage_filled_pct, prices_as_of_utc, schema_version FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 60"
+          "queryText": "SELECT as_of_date_local, health_status, coverage_derived_pct, coverage_missing_pct, coverage_filled_pct FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 4",
+          "rawQueryText": "SELECT as_of_date_local, health_status, coverage_derived_pct, coverage_missing_pct, coverage_filled_pct FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 4"
         }
       ],
       "options": {
@@ -400,12 +400,12 @@
     {
       "id": 10,
       "type": "table",
-      "title": "Alert Freshness and Status",
+      "title": "Alert Freshness (4)",
       "gridPos": {
         "x": 12,
-        "y": 11,
+        "y": 8,
         "w": 12,
-        "h": 8
+        "h": 6
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -416,8 +416,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT as_of_date_local, status, category, severity, created_at_utc, updated_at_utc, title FROM alert_messages ORDER BY created_at_utc DESC LIMIT 80",
-          "rawQueryText": "SELECT as_of_date_local, status, category, severity, created_at_utc, updated_at_utc, title FROM alert_messages ORDER BY created_at_utc DESC LIMIT 80"
+          "queryText": "SELECT as_of_date_local, status, category, severity, title FROM alert_messages ORDER BY created_at_utc DESC LIMIT 4",
+          "rawQueryText": "SELECT as_of_date_local, status, category, severity, title FROM alert_messages ORDER BY created_at_utc DESC LIMIT 4"
         }
       ],
       "options": {
@@ -440,7 +440,7 @@
     "lmi",
     "v2",
     "data-heavy",
-    "data-quality"
+    "compact"
   ],
   "templating": {
     "list": []

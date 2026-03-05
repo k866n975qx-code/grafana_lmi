@@ -21,12 +21,12 @@
     {
       "id": 1,
       "type": "timeseries",
-      "title": "Completed MV Delta by Period",
+      "title": "Completed MV and Income Delta (MONTH)",
       "gridPos": {
         "x": 0,
         "y": 0,
-        "w": 12,
-        "h": 8
+        "w": 24,
+        "h": 7
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -35,10 +35,10 @@
       "targets": [
         {
           "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, CASE WHEN period_type='WEEK' THEN mv_delta END AS \"WEEK\", CASE WHEN period_type='MONTH' THEN mv_delta END AS \"MONTH\", CASE WHEN period_type='QUARTER' THEN mv_delta END AS \"QUARTER\", CASE WHEN period_type='YEAR' THEN mv_delta END AS \"YEAR\" FROM period_summary WHERE is_rolling=0 AND period_end_date >= date('now','-365 day') ORDER BY period_end_date",
-          "rawQueryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, CASE WHEN period_type='WEEK' THEN mv_delta END AS \"WEEK\", CASE WHEN period_type='MONTH' THEN mv_delta END AS \"MONTH\", CASE WHEN period_type='QUARTER' THEN mv_delta END AS \"QUARTER\", CASE WHEN period_type='YEAR' THEN mv_delta END AS \"YEAR\" FROM period_summary WHERE is_rolling=0 AND period_end_date >= date('now','-365 day') ORDER BY period_end_date"
+          "format": "time_series",
+          "queryType": "timeSeriesQuery",
+          "queryText": "SELECT CAST(strftime('%s', period_end_date) AS INTEGER) AS time, mv_delta AS \"MV Delta\", monthly_income_delta AS \"Income Delta\" FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 AND period_end_date >= date('now','-365 day') ORDER BY period_end_date",
+          "rawQueryText": "SELECT CAST(strftime('%s', period_end_date) AS INTEGER) AS time, mv_delta AS \"MV Delta\", monthly_income_delta AS \"Income Delta\" FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 AND period_end_date >= date('now','-365 day') ORDER BY period_end_date"
         }
       ],
       "options": {
@@ -60,7 +60,7 @@
           "fillOpacity": 10,
           "showPoints": "never",
           "spanNulls": true,
-          "decimals": 2
+          "decimals": 0
         },
         "overrides": []
       }
@@ -68,59 +68,12 @@
     {
       "id": 2,
       "type": "timeseries",
-      "title": "Completed Income Delta by Period",
-      "gridPos": {
-        "x": 12,
-        "y": 0,
-        "w": 12,
-        "h": 8
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, CASE WHEN period_type='WEEK' THEN monthly_income_delta END AS \"WEEK\", CASE WHEN period_type='MONTH' THEN monthly_income_delta END AS \"MONTH\", CASE WHEN period_type='QUARTER' THEN monthly_income_delta END AS \"QUARTER\", CASE WHEN period_type='YEAR' THEN monthly_income_delta END AS \"YEAR\" FROM period_summary WHERE is_rolling=0 AND period_end_date >= date('now','-365 day') ORDER BY period_end_date",
-          "rawQueryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, CASE WHEN period_type='WEEK' THEN monthly_income_delta END AS \"WEEK\", CASE WHEN period_type='MONTH' THEN monthly_income_delta END AS \"MONTH\", CASE WHEN period_type='QUARTER' THEN monthly_income_delta END AS \"QUARTER\", CASE WHEN period_type='YEAR' THEN monthly_income_delta END AS \"YEAR\" FROM period_summary WHERE is_rolling=0 AND period_end_date >= date('now','-365 day') ORDER BY period_end_date"
-        }
-      ],
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "currencyUSD",
-          "drawStyle": "line",
-          "lineWidth": 2,
-          "fillOpacity": 10,
-          "showPoints": "never",
-          "spanNulls": true,
-          "decimals": 2
-        },
-        "overrides": []
-      }
-    },
-    {
-      "id": 3,
-      "type": "timeseries",
-      "title": "Rolling vs Completed TWR (Monthly)",
+      "title": "Completed TWR % (MONTH)",
       "gridPos": {
         "x": 0,
-        "y": 8,
-        "w": 12,
-        "h": 8
+        "y": 7,
+        "w": 24,
+        "h": 7
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -129,10 +82,10 @@
       "targets": [
         {
           "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "WITH rolling AS (SELECT period_end_date, twr_period_pct FROM period_summary WHERE period_type='MONTH' AND is_rolling=1), completed AS (SELECT period_end_date, twr_period_pct FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 AND period_end_date >= date('now','-365 day')) SELECT (period_end_date || 'T00:00:00Z') AS time, twr_period_pct AS \"Completed Month TWR %\", NULL AS \"Rolling Month TWR %\" FROM completed UNION ALL SELECT (period_end_date || 'T00:00:00Z') AS time, NULL AS \"Completed Month TWR %\", twr_period_pct AS \"Rolling Month TWR %\" FROM rolling ORDER BY time",
-          "rawQueryText": "WITH rolling AS (SELECT period_end_date, twr_period_pct FROM period_summary WHERE period_type='MONTH' AND is_rolling=1), completed AS (SELECT period_end_date, twr_period_pct FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 AND period_end_date >= date('now','-365 day')) SELECT (period_end_date || 'T00:00:00Z') AS time, twr_period_pct AS \"Completed Month TWR %\", NULL AS \"Rolling Month TWR %\" FROM completed UNION ALL SELECT (period_end_date || 'T00:00:00Z') AS time, NULL AS \"Completed Month TWR %\", twr_period_pct AS \"Rolling Month TWR %\" FROM rolling ORDER BY time"
+          "format": "time_series",
+          "queryType": "timeSeriesQuery",
+          "queryText": "SELECT CAST(strftime('%s', period_end_date) AS INTEGER) AS time, twr_period_pct AS value FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 AND period_end_date >= date('now','-365 day') ORDER BY period_end_date",
+          "rawQueryText": "SELECT CAST(strftime('%s', period_end_date) AS INTEGER) AS time, twr_period_pct AS value FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 AND period_end_date >= date('now','-365 day') ORDER BY period_end_date"
         }
       ],
       "options": {
@@ -158,147 +111,6 @@
         },
         "overrides": []
       }
-    },
-    {
-      "id": 4,
-      "type": "timeseries",
-      "title": "Period Risk Stats Trend",
-      "gridPos": {
-        "x": 12,
-        "y": 8,
-        "w": 12,
-        "h": 8
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, MAX(CASE WHEN metric='vol_30d_pct' THEN avg_val END) AS \"Vol30 Avg\", MAX(CASE WHEN metric='sharpe_1y' THEN avg_val END) AS \"Sharpe Avg\", MAX(CASE WHEN metric='sortino_1y' THEN avg_val END) AS \"Sortino Avg\" FROM period_risk_stats WHERE period_type='MONTH' AND period_end_date >= date('now','-365 day') GROUP BY period_end_date ORDER BY period_end_date",
-          "rawQueryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, MAX(CASE WHEN metric='vol_30d_pct' THEN avg_val END) AS \"Vol30 Avg\", MAX(CASE WHEN metric='sharpe_1y' THEN avg_val END) AS \"Sharpe Avg\", MAX(CASE WHEN metric='sortino_1y' THEN avg_val END) AS \"Sortino Avg\" FROM period_risk_stats WHERE period_type='MONTH' AND period_end_date >= date('now','-365 day') GROUP BY period_end_date ORDER BY period_end_date"
-        }
-      ],
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "none",
-          "drawStyle": "line",
-          "lineWidth": 2,
-          "fillOpacity": 10,
-          "showPoints": "never",
-          "spanNulls": true,
-          "decimals": 3
-        },
-        "overrides": []
-      }
-    },
-    {
-      "id": 5,
-      "type": "timeseries",
-      "title": "Period Macro Stats Trend",
-      "gridPos": {
-        "x": 0,
-        "y": 16,
-        "w": 12,
-        "h": 8
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, MAX(CASE WHEN metric='vix' THEN avg_val END) AS \"VIX Avg\", MAX(CASE WHEN metric='ten_year_yield' THEN avg_val END) AS \"10Y Yield Avg\", MAX(CASE WHEN metric='hy_spread_bps' THEN avg_val END) AS \"HY Spread Avg\" FROM period_macro_stats WHERE period_type='MONTH' AND period_end_date >= date('now','-365 day') GROUP BY period_end_date ORDER BY period_end_date",
-          "rawQueryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, MAX(CASE WHEN metric='vix' THEN avg_val END) AS \"VIX Avg\", MAX(CASE WHEN metric='ten_year_yield' THEN avg_val END) AS \"10Y Yield Avg\", MAX(CASE WHEN metric='hy_spread_bps' THEN avg_val END) AS \"HY Spread Avg\" FROM period_macro_stats WHERE period_type='MONTH' AND period_end_date >= date('now','-365 day') GROUP BY period_end_date ORDER BY period_end_date"
-        }
-      ],
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "none",
-          "drawStyle": "line",
-          "lineWidth": 2,
-          "fillOpacity": 10,
-          "showPoints": "never",
-          "spanNulls": true,
-          "decimals": 3
-        },
-        "overrides": []
-      }
-    },
-    {
-      "id": 6,
-      "type": "timeseries",
-      "title": "Margin APR / Min Buffer",
-      "gridPos": {
-        "x": 12,
-        "y": 16,
-        "w": 12,
-        "h": 8
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, margin_apr_end AS \"Margin APR End\", margin_min_buffer_to_call_pct AS \"Min Buffer to Call %\" FROM period_summary WHERE period_type='MONTH' AND period_end_date >= date('now','-365 day') ORDER BY period_end_date",
-          "rawQueryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, margin_apr_end AS \"Margin APR End\", margin_min_buffer_to_call_pct AS \"Min Buffer to Call %\" FROM period_summary WHERE period_type='MONTH' AND period_end_date >= date('now','-365 day') ORDER BY period_end_date"
-        }
-      ],
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "none",
-          "drawStyle": "line",
-          "lineWidth": 2,
-          "fillOpacity": 10,
-          "showPoints": "never",
-          "spanNulls": true,
-          "decimals": 3
-        },
-        "overrides": []
-      }
     }
   ],
   "refresh": "2m",
@@ -308,7 +120,7 @@
     "lmi",
     "v2",
     "graph",
-    "periods"
+    "compact"
   ],
   "templating": {
     "list": []

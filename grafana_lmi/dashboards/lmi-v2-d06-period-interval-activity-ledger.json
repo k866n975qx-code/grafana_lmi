@@ -21,11 +21,11 @@
     {
       "id": 1,
       "type": "table",
-      "title": "Interval Table",
+      "title": "Latest Intervals (5)",
       "gridPos": {
         "x": 0,
         "y": 0,
-        "w": 24,
+        "w": 12,
         "h": 7
       },
       "datasource": {
@@ -37,8 +37,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT period_type, period_start_date, period_end_date, interval_label, interval_start, interval_end, mv, monthly_income, ltv_pct, vol_30d_pct, var_95_1d_pct, cvar_90_1d_pct, goal_progress_pct FROM period_intervals ORDER BY period_end_date DESC, interval_start DESC LIMIT 60",
-          "rawQueryText": "SELECT period_type, period_start_date, period_end_date, interval_label, interval_start, interval_end, mv, monthly_income, ltv_pct, vol_30d_pct, var_95_1d_pct, cvar_90_1d_pct, goal_progress_pct FROM period_intervals ORDER BY period_end_date DESC, interval_start DESC LIMIT 60"
+          "queryText": "SELECT period_type, interval_label, interval_start, interval_end, mv, monthly_income, ltv_pct FROM period_intervals ORDER BY period_end_date DESC, interval_start DESC LIMIT 5",
+          "rawQueryText": "SELECT period_type, interval_label, interval_start, interval_end, mv, monthly_income, ltv_pct FROM period_intervals ORDER BY period_end_date DESC, interval_start DESC LIMIT 5"
         }
       ],
       "options": {
@@ -56,10 +56,10 @@
     {
       "id": 2,
       "type": "table",
-      "title": "Latest Interval Holdings",
+      "title": "Latest Interval Holdings (5)",
       "gridPos": {
-        "x": 0,
-        "y": 7,
+        "x": 12,
+        "y": 0,
         "w": 12,
         "h": 7
       },
@@ -72,8 +72,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT period_type, period_start_date, period_end_date, interval_label FROM period_intervals ORDER BY period_end_date DESC, interval_start DESC LIMIT 1) SELECT h.period_type, h.period_start_date, h.period_end_date, h.interval_label, h.symbol, h.weight_pct, h.market_value, h.pnl_pct, h.projected_monthly_dividend, h.current_yield_pct, h.risk_quality_category FROM period_interval_holdings h JOIN latest l ON h.period_type=l.period_type AND h.period_start_date=l.period_start_date AND h.period_end_date=l.period_end_date AND h.interval_label=l.interval_label ORDER BY h.weight_pct DESC",
-          "rawQueryText": "WITH latest AS (SELECT period_type, period_start_date, period_end_date, interval_label FROM period_intervals ORDER BY period_end_date DESC, interval_start DESC LIMIT 1) SELECT h.period_type, h.period_start_date, h.period_end_date, h.interval_label, h.symbol, h.weight_pct, h.market_value, h.pnl_pct, h.projected_monthly_dividend, h.current_yield_pct, h.risk_quality_category FROM period_interval_holdings h JOIN latest l ON h.period_type=l.period_type AND h.period_start_date=l.period_start_date AND h.period_end_date=l.period_end_date AND h.interval_label=l.interval_label ORDER BY h.weight_pct DESC"
+          "queryText": "WITH latest AS (SELECT period_type, period_start_date, period_end_date, interval_label FROM period_intervals ORDER BY period_end_date DESC, interval_start DESC LIMIT 5) SELECT h.symbol, h.weight_pct, h.market_value, h.pnl_pct, h.current_yield_pct FROM period_interval_holdings h JOIN latest l ON h.period_type=l.period_type AND h.period_start_date=l.period_start_date AND h.period_end_date=l.period_end_date AND h.interval_label=l.interval_label ORDER BY h.weight_pct DESC LIMIT 5",
+          "rawQueryText": "WITH latest AS (SELECT period_type, period_start_date, period_end_date, interval_label FROM period_intervals ORDER BY period_end_date DESC, interval_start DESC LIMIT 5) SELECT h.symbol, h.weight_pct, h.market_value, h.pnl_pct, h.current_yield_pct FROM period_interval_holdings h JOIN latest l ON h.period_type=l.period_type AND h.period_start_date=l.period_start_date AND h.period_end_date=l.period_end_date AND h.interval_label=l.interval_label ORDER BY h.weight_pct DESC LIMIT 5"
         }
       ],
       "options": {
@@ -93,7 +93,7 @@
       "type": "table",
       "title": "Latest Interval Attribution",
       "gridPos": {
-        "x": 12,
+        "x": 0,
         "y": 7,
         "w": 12,
         "h": 7
@@ -107,8 +107,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT period_type, period_start_date, period_end_date, interval_label FROM period_intervals ORDER BY period_end_date DESC, interval_start DESC LIMIT 1) SELECT a.period_type, a.period_start_date, a.period_end_date, a.interval_label, a.window, a.total_return_pct, a.income_contribution_pct, a.price_contribution_pct FROM period_interval_attribution a JOIN latest l ON a.period_type=l.period_type AND a.period_start_date=l.period_start_date AND a.period_end_date=l.period_end_date AND a.interval_label=l.interval_label ORDER BY CASE a.window WHEN '1m' THEN 1 WHEN '3m' THEN 2 WHEN '6m' THEN 3 WHEN '12m' THEN 4 ELSE 9 END",
-          "rawQueryText": "WITH latest AS (SELECT period_type, period_start_date, period_end_date, interval_label FROM period_intervals ORDER BY period_end_date DESC, interval_start DESC LIMIT 1) SELECT a.period_type, a.period_start_date, a.period_end_date, a.interval_label, a.window, a.total_return_pct, a.income_contribution_pct, a.price_contribution_pct FROM period_interval_attribution a JOIN latest l ON a.period_type=l.period_type AND a.period_start_date=l.period_start_date AND a.period_end_date=l.period_end_date AND a.interval_label=l.interval_label ORDER BY CASE a.window WHEN '1m' THEN 1 WHEN '3m' THEN 2 WHEN '6m' THEN 3 WHEN '12m' THEN 4 ELSE 9 END"
+          "queryText": "WITH latest AS (SELECT period_type, period_start_date, period_end_date, interval_label FROM period_intervals ORDER BY period_end_date DESC, interval_start DESC LIMIT 5) SELECT a.window, a.total_return_pct, a.income_contribution_pct, a.price_contribution_pct FROM period_interval_attribution a JOIN latest l ON a.period_type=l.period_type AND a.period_start_date=l.period_start_date AND a.period_end_date=l.period_end_date AND a.interval_label=l.interval_label ORDER BY CASE a.window WHEN '1m' THEN 1 WHEN '3m' THEN 2 WHEN '6m' THEN 3 WHEN '12m' THEN 4 ELSE 9 END",
+          "rawQueryText": "WITH latest AS (SELECT period_type, period_start_date, period_end_date, interval_label FROM period_intervals ORDER BY period_end_date DESC, interval_start DESC LIMIT 5) SELECT a.window, a.total_return_pct, a.income_contribution_pct, a.price_contribution_pct FROM period_interval_attribution a JOIN latest l ON a.period_type=l.period_type AND a.period_start_date=l.period_start_date AND a.period_end_date=l.period_end_date AND a.interval_label=l.interval_label ORDER BY CASE a.window WHEN '1m' THEN 1 WHEN '3m' THEN 2 WHEN '6m' THEN 3 WHEN '12m' THEN 4 ELSE 9 END"
         }
       ],
       "options": {
@@ -126,10 +126,10 @@
     {
       "id": 4,
       "type": "table",
-      "title": "Holding Changes",
+      "title": "Period Margin Detail (5)",
       "gridPos": {
-        "x": 0,
-        "y": 14,
+        "x": 12,
+        "y": 7,
         "w": 12,
         "h": 7
       },
@@ -142,253 +142,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT period_type, period_start_date, period_end_date, symbol, change_type, market_value_delta, weight_delta_pct, end_projected_monthly, period_max_drawdown_pct FROM period_holding_changes ORDER BY period_end_date DESC, abs(COALESCE(market_value_delta,0)) DESC LIMIT 60",
-          "rawQueryText": "SELECT period_type, period_start_date, period_end_date, symbol, change_type, market_value_delta, weight_delta_pct, end_projected_monthly, period_max_drawdown_pct FROM period_holding_changes ORDER BY period_end_date DESC, abs(COALESCE(market_value_delta,0)) DESC LIMIT 60"
-        }
-      ],
-      "options": {
-        "showHeader": true,
-        "cellHeight": "sm",
-        "footer": {
-          "show": false
-        }
-      },
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      }
-    },
-    {
-      "id": 5,
-      "type": "table",
-      "title": "Position List Matrix",
-      "gridPos": {
-        "x": 12,
-        "y": 14,
-        "w": 12,
-        "h": 7
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT period_type, period_start_date, period_end_date, list_type, symbol FROM period_position_lists ORDER BY period_end_date DESC, list_type, symbol LIMIT 100",
-          "rawQueryText": "SELECT period_type, period_start_date, period_end_date, list_type, symbol FROM period_position_lists ORDER BY period_end_date DESC, list_type, symbol LIMIT 100"
-        }
-      ],
-      "options": {
-        "showHeader": true,
-        "cellHeight": "sm",
-        "footer": {
-          "show": false
-        }
-      },
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      }
-    },
-    {
-      "id": 6,
-      "type": "table",
-      "title": "Contributions Ledger",
-      "gridPos": {
-        "x": 0,
-        "y": 21,
-        "w": 8,
-        "h": 6
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT period_type, period_start_date, period_end_date, contribution_date, amount, account_id FROM period_contributions ORDER BY period_end_date DESC, contribution_date DESC LIMIT 50",
-          "rawQueryText": "SELECT period_type, period_start_date, period_end_date, contribution_date, amount, account_id FROM period_contributions ORDER BY period_end_date DESC, contribution_date DESC LIMIT 50"
-        }
-      ],
-      "options": {
-        "showHeader": true,
-        "cellHeight": "sm",
-        "footer": {
-          "show": false
-        }
-      },
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      }
-    },
-    {
-      "id": 7,
-      "type": "table",
-      "title": "Withdrawals Ledger",
-      "gridPos": {
-        "x": 8,
-        "y": 21,
-        "w": 8,
-        "h": 6
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT period_type, period_start_date, period_end_date, withdrawal_date, amount, account_id FROM period_withdrawals ORDER BY period_end_date DESC, withdrawal_date DESC LIMIT 50",
-          "rawQueryText": "SELECT period_type, period_start_date, period_end_date, withdrawal_date, amount, account_id FROM period_withdrawals ORDER BY period_end_date DESC, withdrawal_date DESC LIMIT 50"
-        }
-      ],
-      "options": {
-        "showHeader": true,
-        "cellHeight": "sm",
-        "footer": {
-          "show": false
-        }
-      },
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      }
-    },
-    {
-      "id": 8,
-      "type": "table",
-      "title": "Period Margin Detail",
-      "gridPos": {
-        "x": 16,
-        "y": 21,
-        "w": 8,
-        "h": 6
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT period_type, period_start_date, period_end_date, borrowed, repaid, net_change FROM period_margin_detail ORDER BY period_end_date DESC LIMIT 50",
-          "rawQueryText": "SELECT period_type, period_start_date, period_end_date, borrowed, repaid, net_change FROM period_margin_detail ORDER BY period_end_date DESC LIMIT 50"
-        }
-      ],
-      "options": {
-        "showHeader": true,
-        "cellHeight": "sm",
-        "footer": {
-          "show": false
-        }
-      },
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      }
-    },
-    {
-      "id": 9,
-      "type": "table",
-      "title": "Dividend Events Ledger",
-      "gridPos": {
-        "x": 0,
-        "y": 27,
-        "w": 12,
-        "h": 6
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT period_type, period_start_date, period_end_date, symbol, ex_date, pay_date, amount FROM period_dividend_events ORDER BY period_end_date DESC, ex_date DESC LIMIT 60",
-          "rawQueryText": "SELECT period_type, period_start_date, period_end_date, symbol, ex_date, pay_date, amount FROM period_dividend_events ORDER BY period_end_date DESC, ex_date DESC LIMIT 60"
-        }
-      ],
-      "options": {
-        "showHeader": true,
-        "cellHeight": "sm",
-        "footer": {
-          "show": false
-        }
-      },
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      }
-    },
-    {
-      "id": 10,
-      "type": "table",
-      "title": "Trades Ledger",
-      "gridPos": {
-        "x": 12,
-        "y": 27,
-        "w": 12,
-        "h": 6
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT period_type, period_start_date, period_end_date, symbol, buy_count, sell_count FROM period_trades ORDER BY period_end_date DESC, symbol LIMIT 60",
-          "rawQueryText": "SELECT period_type, period_start_date, period_end_date, symbol, buy_count, sell_count FROM period_trades ORDER BY period_end_date DESC, symbol LIMIT 60"
-        }
-      ],
-      "options": {
-        "showHeader": true,
-        "cellHeight": "sm",
-        "footer": {
-          "show": false
-        }
-      },
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      }
-    },
-    {
-      "id": 11,
-      "type": "table",
-      "title": "Activity Totals",
-      "gridPos": {
-        "x": 0,
-        "y": 33,
-        "w": 24,
-        "h": 6
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT period_type, period_start_date, period_end_date, contributions_total, contributions_count, withdrawals_total, withdrawals_count, dividends_total_received, dividends_count, interest_total_paid, trades_total_count, positions_added_count, positions_removed_count, positions_increased_count, positions_decreased_count FROM period_activity ORDER BY period_end_date DESC LIMIT 50",
-          "rawQueryText": "SELECT period_type, period_start_date, period_end_date, contributions_total, contributions_count, withdrawals_total, withdrawals_count, dividends_total_received, dividends_count, interest_total_paid, trades_total_count, positions_added_count, positions_removed_count, positions_increased_count, positions_decreased_count FROM period_activity ORDER BY period_end_date DESC LIMIT 50"
+          "queryText": "SELECT period_type, period_end_date, borrowed, repaid, net_change FROM period_margin_detail ORDER BY period_end_date DESC LIMIT 5",
+          "rawQueryText": "SELECT period_type, period_end_date, borrowed, repaid, net_change FROM period_margin_detail ORDER BY period_end_date DESC LIMIT 5"
         }
       ],
       "options": {
@@ -411,7 +166,7 @@
     "lmi",
     "v2",
     "data-heavy",
-    "periods"
+    "compact"
   ],
   "templating": {
     "list": []
@@ -422,7 +177,7 @@
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "D06 LMI v2 - Period Interval & Activity Ledger",
+  "title": "D06 LMI v2 - Period Interval Snapshot",
   "uid": "lmi-v2-d06-interval-ledger",
   "version": 1,
   "weekStart": ""

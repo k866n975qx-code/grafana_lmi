@@ -159,55 +159,9 @@
     {
       "id": 4,
       "type": "stat",
-      "title": "Annual Interest",
+      "title": "Coverage",
       "gridPos": {
         "x": 12,
-        "y": 0,
-        "w": 4,
-        "h": 3
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT annual_interest_current AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1",
-          "rawQueryText": "SELECT annual_interest_current AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1"
-        }
-      ],
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "value",
-          "values": false
-        },
-        "textMode": "value",
-        "wideLayout": true
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "currencyUSD",
-          "decimals": 2
-        },
-        "overrides": []
-      }
-    },
-    {
-      "id": 5,
-      "type": "stat",
-      "title": "Income Coverage",
-      "gridPos": {
-        "x": 16,
         "y": 0,
         "w": 4,
         "h": 3
@@ -249,11 +203,11 @@
       }
     },
     {
-      "id": 6,
+      "id": 5,
       "type": "stat",
       "title": "Buffer to Call %",
       "gridPos": {
-        "x": 20,
+        "x": 16,
         "y": 0,
         "w": 4,
         "h": 3
@@ -295,13 +249,59 @@
       }
     },
     {
+      "id": 6,
+      "type": "stat",
+      "title": "Annual Interest",
+      "gridPos": {
+        "x": 20,
+        "y": 0,
+        "w": 4,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT annual_interest_current AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1",
+          "rawQueryText": "SELECT annual_interest_current AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
       "id": 7,
       "type": "stat",
       "title": "Max Loan @25%",
       "gridPos": {
         "x": 0,
         "y": 3,
-        "w": 4,
+        "w": 6,
         "h": 3
       },
       "datasource": {
@@ -345,9 +345,9 @@
       "type": "stat",
       "title": "Max Loan @30%",
       "gridPos": {
-        "x": 4,
+        "x": 6,
         "y": 3,
-        "w": 4,
+        "w": 6,
         "h": 3
       },
       "datasource": {
@@ -389,57 +389,11 @@
     {
       "id": 9,
       "type": "stat",
-      "title": "MV @ 30% LTV",
-      "gridPos": {
-        "x": 8,
-        "y": 3,
-        "w": 4,
-        "h": 3
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT margin_loan_balance / 0.30 AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1",
-          "rawQueryText": "SELECT margin_loan_balance / 0.30 AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1"
-        }
-      ],
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "value",
-          "values": false
-        },
-        "textMode": "value",
-        "wideLayout": true
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "currencyUSD",
-          "decimals": 0
-        },
-        "overrides": []
-      }
-    },
-    {
-      "id": 10,
-      "type": "stat",
       "title": "Drop to 30% %",
       "gridPos": {
         "x": 12,
         "y": 3,
-        "w": 4,
+        "w": 6,
         "h": 3
       },
       "datasource": {
@@ -451,8 +405,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (((margin_loan_balance/0.30)-market_value)/NULLIF(market_value,0))/100.0 AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1",
-          "rawQueryText": "SELECT (((margin_loan_balance/0.30)-market_value)/NULLIF(market_value,0))/100.0 AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1"
+          "queryText": "SELECT ((((margin_loan_balance/0.30)-market_value)/NULLIF(market_value,0))/100.0) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1",
+          "rawQueryText": "SELECT ((((margin_loan_balance/0.30)-market_value)/NULLIF(market_value,0))/100.0) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1"
         }
       ],
       "options": {
@@ -479,59 +433,13 @@
       }
     },
     {
-      "id": 11,
-      "type": "stat",
-      "title": "Net Benefit 1y",
-      "gridPos": {
-        "x": 16,
-        "y": 3,
-        "w": 4,
-        "h": 3
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT (projected_monthly_income*12.0)-annual_interest_current AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1",
-          "rawQueryText": "SELECT (projected_monthly_income*12.0)-annual_interest_current AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1"
-        }
-      ],
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "value",
-          "values": false
-        },
-        "textMode": "value",
-        "wideLayout": true
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "currencyUSD",
-          "decimals": 0
-        },
-        "overrides": []
-      }
-    },
-    {
-      "id": 12,
+      "id": 10,
       "type": "stat",
       "title": "ROI on Margin 1y %",
       "gridPos": {
-        "x": 20,
+        "x": 18,
         "y": 3,
-        "w": 4,
+        "w": 6,
         "h": 3
       },
       "datasource": {
@@ -571,13 +479,13 @@
       }
     },
     {
-      "id": 13,
+      "id": 11,
       "type": "table",
-      "title": "Rate Scenarios (+100/+200/+300)",
+      "title": "Rate Scenarios",
       "gridPos": {
         "x": 0,
         "y": 6,
-        "w": 8,
+        "w": 12,
         "h": 8
       },
       "datasource": {
@@ -589,8 +497,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT as_of_date_local, scenario, new_rate_pct, new_monthly_cost, income_coverage, margin_impact_pct FROM daily_margin_rate_scenarios WHERE as_of_date_local=(SELECT MAX(as_of_date_local) FROM daily_margin_rate_scenarios) ORDER BY scenario",
-          "rawQueryText": "SELECT as_of_date_local, scenario, new_rate_pct, new_monthly_cost, income_coverage, margin_impact_pct FROM daily_margin_rate_scenarios WHERE as_of_date_local=(SELECT MAX(as_of_date_local) FROM daily_margin_rate_scenarios) ORDER BY scenario"
+          "queryText": "SELECT scenario, new_rate_pct, new_monthly_cost, income_coverage FROM daily_margin_rate_scenarios WHERE as_of_date_local=(SELECT MAX(as_of_date_local) FROM daily_margin_rate_scenarios) ORDER BY scenario LIMIT 6",
+          "rawQueryText": "SELECT scenario, new_rate_pct, new_monthly_cost, income_coverage FROM daily_margin_rate_scenarios WHERE as_of_date_local=(SELECT MAX(as_of_date_local) FROM daily_margin_rate_scenarios) ORDER BY scenario LIMIT 6"
         }
       ],
       "options": {
@@ -606,13 +514,13 @@
       }
     },
     {
-      "id": 14,
-      "type": "timeseries",
-      "title": "Margin Balance History (Fallback Safe)",
+      "id": 12,
+      "type": "table",
+      "title": "Margin Balance History (6)",
       "gridPos": {
-        "x": 8,
+        "x": 12,
         "y": 6,
-        "w": 8,
+        "w": 12,
         "h": 8
       },
       "datasource": {
@@ -624,78 +532,19 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, balance AS value FROM ( SELECT as_of_date_local, balance FROM margin_balance_history UNION ALL SELECT as_of_date_local, margin_loan_balance AS balance FROM daily_portfolio WHERE NOT EXISTS (SELECT 1 FROM margin_balance_history) ) src WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, balance AS value FROM ( SELECT as_of_date_local, balance FROM margin_balance_history UNION ALL SELECT as_of_date_local, margin_loan_balance AS balance FROM daily_portfolio WHERE NOT EXISTS (SELECT 1 FROM margin_balance_history) ) src WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "queryText": "SELECT as_of_date_local, balance FROM ( SELECT as_of_date_local, balance FROM margin_balance_history UNION ALL SELECT as_of_date_local, margin_loan_balance AS balance FROM daily_portfolio WHERE NOT EXISTS (SELECT 1 FROM margin_balance_history) ) src ORDER BY as_of_date_local DESC LIMIT 6",
+          "rawQueryText": "SELECT as_of_date_local, balance FROM ( SELECT as_of_date_local, balance FROM margin_balance_history UNION ALL SELECT as_of_date_local, margin_loan_balance AS balance FROM daily_portfolio WHERE NOT EXISTS (SELECT 1 FROM margin_balance_history) ) src ORDER BY as_of_date_local DESC LIMIT 6"
         }
       ],
       "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
         }
       },
       "fieldConfig": {
-        "defaults": {
-          "unit": "currencyUSD",
-          "drawStyle": "line",
-          "lineWidth": 2,
-          "fillOpacity": 10,
-          "showPoints": "never",
-          "spanNulls": true,
-          "decimals": 2
-        },
-        "overrides": []
-      }
-    },
-    {
-      "id": 15,
-      "type": "timeseries",
-      "title": "LTV / Coverage Trend",
-      "gridPos": {
-        "x": 16,
-        "y": 6,
-        "w": 8,
-        "h": 8
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, ltv_pct AS \"LTV %\", COALESCE(margin_income_coverage, projected_monthly_income / NULLIF(monthly_interest_current,0)) AS \"Income Coverage\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, ltv_pct AS \"LTV %\", COALESCE(margin_income_coverage, projected_monthly_income / NULLIF(monthly_interest_current,0)) AS \"Income Coverage\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
-        }
-      ],
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short",
-          "drawStyle": "line",
-          "lineWidth": 2,
-          "fillOpacity": 10,
-          "showPoints": "never",
-          "spanNulls": true,
-          "decimals": 2
-        },
+        "defaults": {},
         "overrides": []
       }
     }
@@ -707,7 +556,7 @@
     "lmi",
     "v2",
     "data-heavy",
-    "margin"
+    "compact"
   ],
   "templating": {
     "list": []

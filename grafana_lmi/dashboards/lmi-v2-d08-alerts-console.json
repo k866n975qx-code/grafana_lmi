@@ -175,8 +175,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT COUNT(*) AS value FROM alert_notifications WHERE sent_at_utc >= datetime('now','-1 day') AND success=1",
-          "rawQueryText": "SELECT COUNT(*) AS value FROM alert_notifications WHERE sent_at_utc >= datetime('now','-1 day') AND success=1"
+          "queryText": "SELECT COUNT(*) AS value FROM alert_notifications WHERE sent_at_utc>=datetime('now','-1 day') AND success=1",
+          "rawQueryText": "SELECT COUNT(*) AS value FROM alert_notifications WHERE sent_at_utc>=datetime('now','-1 day') AND success=1"
         }
       ],
       "options": {
@@ -251,7 +251,7 @@
     {
       "id": 6,
       "type": "stat",
-      "title": "Newest Alert Date",
+      "title": "Latest Alert Date",
       "gridPos": {
         "x": 20,
         "y": 0,
@@ -296,12 +296,12 @@
     {
       "id": 7,
       "type": "table",
-      "title": "Open Alerts Queue",
+      "title": "Open Alerts (3)",
       "gridPos": {
         "x": 0,
         "y": 3,
         "w": 12,
-        "h": 8
+        "h": 5
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -312,8 +312,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT id, category, severity, as_of_date_local, title, notification_count, reminder_count, last_notified_at_utc FROM alert_messages WHERE status='open' ORDER BY severity DESC, as_of_date_local DESC",
-          "rawQueryText": "SELECT id, category, severity, as_of_date_local, title, notification_count, reminder_count, last_notified_at_utc FROM alert_messages WHERE status='open' ORDER BY severity DESC, as_of_date_local DESC"
+          "queryText": "SELECT substr(id,1,12) AS id, category, severity, as_of_date_local, substr(title,1,48) AS title FROM alert_messages WHERE status='open' ORDER BY severity DESC, as_of_date_local DESC LIMIT 3",
+          "rawQueryText": "SELECT substr(id,1,12) AS id, category, severity, as_of_date_local, substr(title,1,48) AS title FROM alert_messages WHERE status='open' ORDER BY severity DESC, as_of_date_local DESC LIMIT 3"
         }
       ],
       "options": {
@@ -331,12 +331,12 @@
     {
       "id": 8,
       "type": "table",
-      "title": "Recently Acked Alerts",
+      "title": "Recently Acked (3)",
       "gridPos": {
         "x": 12,
         "y": 3,
         "w": 12,
-        "h": 8
+        "h": 5
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -347,8 +347,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT id, category, severity, as_of_date_local, acked_at_utc, acked_by, title FROM alert_messages WHERE status='acked' ORDER BY acked_at_utc DESC, created_at_utc DESC LIMIT 40",
-          "rawQueryText": "SELECT id, category, severity, as_of_date_local, acked_at_utc, acked_by, title FROM alert_messages WHERE status='acked' ORDER BY acked_at_utc DESC, created_at_utc DESC LIMIT 40"
+          "queryText": "SELECT substr(id,1,12) AS id, category, severity, as_of_date_local, substr(acked_at_utc,1,16) AS acked_at FROM alert_messages WHERE status='acked' ORDER BY acked_at_utc DESC, created_at_utc DESC LIMIT 3",
+          "rawQueryText": "SELECT substr(id,1,12) AS id, category, severity, as_of_date_local, substr(acked_at_utc,1,16) AS acked_at FROM alert_messages WHERE status='acked' ORDER BY acked_at_utc DESC, created_at_utc DESC LIMIT 3"
         }
       ],
       "options": {
@@ -366,12 +366,12 @@
     {
       "id": 9,
       "type": "table",
-      "title": "Counts by Category/Status/Severity",
+      "title": "Category/Severity Counts",
       "gridPos": {
         "x": 0,
-        "y": 11,
+        "y": 8,
         "w": 12,
-        "h": 8
+        "h": 6
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -382,8 +382,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT category, status, severity, COUNT(*) AS alert_count, MAX(as_of_date_local) AS latest_as_of FROM alert_messages GROUP BY category, status, severity ORDER BY category, status, severity DESC",
-          "rawQueryText": "SELECT category, status, severity, COUNT(*) AS alert_count, MAX(as_of_date_local) AS latest_as_of FROM alert_messages GROUP BY category, status, severity ORDER BY category, status, severity DESC"
+          "queryText": "SELECT category, status, severity, COUNT(*) AS alert_count FROM alert_messages GROUP BY category, status, severity ORDER BY category, status, severity DESC LIMIT 4",
+          "rawQueryText": "SELECT category, status, severity, COUNT(*) AS alert_count FROM alert_messages GROUP BY category, status, severity ORDER BY category, status, severity DESC LIMIT 4"
         }
       ],
       "options": {
@@ -401,12 +401,12 @@
     {
       "id": 10,
       "type": "table",
-      "title": "High Severity Detail",
+      "title": "Notification Daily (4)",
       "gridPos": {
         "x": 12,
-        "y": 11,
+        "y": 8,
         "w": 12,
-        "h": 8
+        "h": 6
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -417,78 +417,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT id, category, severity, status, as_of_date_local, created_at_utc, title, last_notified_at_utc FROM alert_messages WHERE severity>=5 ORDER BY status, severity DESC, created_at_utc DESC LIMIT 50",
-          "rawQueryText": "SELECT id, category, severity, status, as_of_date_local, created_at_utc, title, last_notified_at_utc FROM alert_messages WHERE severity>=5 ORDER BY status, severity DESC, created_at_utc DESC LIMIT 50"
-        }
-      ],
-      "options": {
-        "showHeader": true,
-        "cellHeight": "sm",
-        "footer": {
-          "show": false
-        }
-      },
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      }
-    },
-    {
-      "id": 11,
-      "type": "table",
-      "title": "Alert Aging and Repeat Fingerprints",
-      "gridPos": {
-        "x": 0,
-        "y": 19,
-        "w": 12,
-        "h": 8
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT fingerprint, COUNT(*) AS repeats, SUM(CASE WHEN status='open' THEN 1 ELSE 0 END) AS open_count, MIN(created_at_utc) AS first_seen_utc, MAX(created_at_utc) AS last_seen_utc FROM alert_messages GROUP BY fingerprint ORDER BY repeats DESC, last_seen_utc DESC LIMIT 50",
-          "rawQueryText": "SELECT fingerprint, COUNT(*) AS repeats, SUM(CASE WHEN status='open' THEN 1 ELSE 0 END) AS open_count, MIN(created_at_utc) AS first_seen_utc, MAX(created_at_utc) AS last_seen_utc FROM alert_messages GROUP BY fingerprint ORDER BY repeats DESC, last_seen_utc DESC LIMIT 50"
-        }
-      ],
-      "options": {
-        "showHeader": true,
-        "cellHeight": "sm",
-        "footer": {
-          "show": false
-        }
-      },
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      }
-    },
-    {
-      "id": 12,
-      "type": "table",
-      "title": "Daily Notifications",
-      "gridPos": {
-        "x": 12,
-        "y": 19,
-        "w": 12,
-        "h": 8
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT date(sent_at_utc) AS day, channel, COUNT(*) AS sent_total, SUM(CASE WHEN success=1 THEN 1 ELSE 0 END) AS success_total FROM alert_notifications GROUP BY date(sent_at_utc), channel ORDER BY day DESC LIMIT 60",
-          "rawQueryText": "SELECT date(sent_at_utc) AS day, channel, COUNT(*) AS sent_total, SUM(CASE WHEN success=1 THEN 1 ELSE 0 END) AS success_total FROM alert_notifications GROUP BY date(sent_at_utc), channel ORDER BY day DESC LIMIT 60"
+          "queryText": "SELECT date(sent_at_utc) AS day, channel, COUNT(*) AS sent, SUM(CASE WHEN success=1 THEN 1 ELSE 0 END) AS success_count FROM alert_notifications GROUP BY day, channel ORDER BY day DESC LIMIT 4",
+          "rawQueryText": "SELECT date(sent_at_utc) AS day, channel, COUNT(*) AS sent, SUM(CASE WHEN success=1 THEN 1 ELSE 0 END) AS success_count FROM alert_notifications GROUP BY day, channel ORDER BY day DESC LIMIT 4"
         }
       ],
       "options": {
@@ -511,7 +441,7 @@
     "lmi",
     "v2",
     "data-heavy",
-    "alerts"
+    "compact"
   ],
   "templating": {
     "list": []

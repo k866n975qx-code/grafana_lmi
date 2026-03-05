@@ -21,7 +21,7 @@
     {
       "id": 1,
       "type": "timeseries",
-      "title": "LTV % and Margin Balance",
+      "title": "Benchmark Metrics",
       "gridPos": {
         "x": 0,
         "y": 0,
@@ -37,8 +37,8 @@
           "refId": "A",
           "format": "time_series",
           "queryType": "timeSeriesQuery",
-          "queryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, ltv_pct AS \"LTV %\", margin_loan_balance AS \"Margin Balance\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, ltv_pct AS \"LTV %\", margin_loan_balance AS \"Margin Balance\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "queryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, vs_benchmark_excess_1y_pct AS \"Excess 1y %\", tracking_error_1y_pct AS \"Tracking Error %\", information_ratio_1y AS \"Info Ratio\", beta_portfolio AS \"Beta\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, vs_benchmark_excess_1y_pct AS \"Excess 1y %\", tracking_error_1y_pct AS \"Tracking Error %\", information_ratio_1y AS \"Info Ratio\", beta_portfolio AS \"Beta\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
         }
       ],
       "options": {
@@ -54,7 +54,7 @@
       },
       "fieldConfig": {
         "defaults": {
-          "unit": "short",
+          "unit": "none",
           "drawStyle": "line",
           "lineWidth": 2,
           "fillOpacity": 10,
@@ -68,7 +68,7 @@
     {
       "id": 2,
       "type": "timeseries",
-      "title": "Coverage and Buffer %",
+      "title": "Concentration and Correlation",
       "gridPos": {
         "x": 0,
         "y": 7,
@@ -84,8 +84,8 @@
           "refId": "A",
           "format": "time_series",
           "queryType": "timeSeriesQuery",
-          "queryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, COALESCE(margin_income_coverage, projected_monthly_income / NULLIF(monthly_interest_current,0)) AS \"Coverage\", buffer_to_margin_call_pct AS \"Buffer %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, COALESCE(margin_income_coverage, projected_monthly_income / NULLIF(monthly_interest_current,0)) AS \"Coverage\", buffer_to_margin_call_pct AS \"Buffer %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "queryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, top3_weight_pct AS \"Top3 %\", top5_weight_pct AS \"Top5 %\", vs_benchmark_corr_1y AS \"Corr 1y\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, top3_weight_pct AS \"Top3 %\", top5_weight_pct AS \"Top5 %\", vs_benchmark_corr_1y AS \"Corr 1y\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
         }
       ],
       "options": {
@@ -101,7 +101,7 @@
       },
       "fieldConfig": {
         "defaults": {
-          "unit": "short",
+          "unit": "none",
           "drawStyle": "line",
           "lineWidth": 2,
           "fillOpacity": 10,
@@ -131,8 +131,8 @@
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "G04 LMI v2 - Margin Stress Trends",
-  "uid": "lmi-v2-g04-margin-trends",
+  "title": "G11 LMI v2 - Benchmark & Concentration Trends",
+  "uid": "lmi-v2-g11-benchmark-concentration",
   "version": 1,
   "weekStart": ""
 }

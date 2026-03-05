@@ -21,12 +21,12 @@
     {
       "id": 1,
       "type": "timeseries",
-      "title": "Projected Monthly + Forward 12m",
+      "title": "Yield vs Yield on Cost %",
       "gridPos": {
         "x": 0,
         "y": 0,
-        "w": 12,
-        "h": 8
+        "w": 24,
+        "h": 7
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -35,10 +35,10 @@
       "targets": [
         {
           "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, projected_monthly_income AS \"Projected Monthly\", forward_12m_total AS \"Forward 12m\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, projected_monthly_income AS \"Projected Monthly\", forward_12m_total AS \"Forward 12m\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "format": "time_series",
+          "queryType": "timeSeriesQuery",
+          "queryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, portfolio_yield_pct AS \"Yield %\", portfolio_yield_on_cost_pct AS \"YoC %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, portfolio_yield_pct AS \"Yield %\", portfolio_yield_on_cost_pct AS \"YoC %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
         }
       ],
       "options": {
@@ -54,7 +54,7 @@
       },
       "fieldConfig": {
         "defaults": {
-          "unit": "currencyUSD",
+          "unit": "percent",
           "drawStyle": "line",
           "lineWidth": 2,
           "fillOpacity": 10,
@@ -68,59 +68,12 @@
     {
       "id": 2,
       "type": "timeseries",
-      "title": "Yield vs Yield on Cost",
-      "gridPos": {
-        "x": 12,
-        "y": 0,
-        "w": 12,
-        "h": 8
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, portfolio_yield_pct AS \"Current Yield %\", portfolio_yield_on_cost_pct AS \"Yield on Cost %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, portfolio_yield_pct AS \"Current Yield %\", portfolio_yield_on_cost_pct AS \"Yield on Cost %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
-        }
-      ],
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "drawStyle": "line",
-          "lineWidth": 2,
-          "fillOpacity": 10,
-          "showPoints": "never",
-          "spanNulls": true,
-          "decimals": 2
-        },
-        "overrides": []
-      }
-    },
-    {
-      "id": 3,
-      "type": "timeseries",
-      "title": "Realized Dividends Trend",
+      "title": "Realized Dividends MTD/30d/YTD",
       "gridPos": {
         "x": 0,
-        "y": 8,
-        "w": 12,
-        "h": 8
+        "y": 7,
+        "w": 24,
+        "h": 7
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -129,10 +82,10 @@
       "targets": [
         {
           "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, dividends_realized_mtd AS \"Realized MTD\", dividends_realized_30d AS \"Realized 30d\", dividends_realized_qtd AS \"Realized QTD\", dividends_realized_ytd AS \"Realized YTD\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, dividends_realized_mtd AS \"Realized MTD\", dividends_realized_30d AS \"Realized 30d\", dividends_realized_qtd AS \"Realized QTD\", dividends_realized_ytd AS \"Realized YTD\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "format": "time_series",
+          "queryType": "timeSeriesQuery",
+          "queryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, dividends_realized_mtd AS \"MTD\", dividends_realized_30d AS \"30d\", dividends_realized_ytd AS \"YTD\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, dividends_realized_mtd AS \"MTD\", dividends_realized_30d AS \"30d\", dividends_realized_ytd AS \"YTD\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
         }
       ],
       "options": {
@@ -149,147 +102,6 @@
       "fieldConfig": {
         "defaults": {
           "unit": "currencyUSD",
-          "drawStyle": "line",
-          "lineWidth": 2,
-          "fillOpacity": 10,
-          "showPoints": "never",
-          "spanNulls": true,
-          "decimals": 2
-        },
-        "overrides": []
-      }
-    },
-    {
-      "id": 4,
-      "type": "timeseries",
-      "title": "Income Stability Score",
-      "gridPos": {
-        "x": 12,
-        "y": 8,
-        "w": 12,
-        "h": 8
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, income_stability_score AS value FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, income_stability_score AS value FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
-        }
-      ],
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "none",
-          "drawStyle": "line",
-          "lineWidth": 2,
-          "fillOpacity": 10,
-          "showPoints": "never",
-          "spanNulls": true,
-          "decimals": 3
-        },
-        "overrides": []
-      }
-    },
-    {
-      "id": 5,
-      "type": "timeseries",
-      "title": "Income Volatility 30d",
-      "gridPos": {
-        "x": 0,
-        "y": 16,
-        "w": 12,
-        "h": 8
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, income_volatility_30d_pct AS value FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, income_volatility_30d_pct AS value FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
-        }
-      ],
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "drawStyle": "line",
-          "lineWidth": 2,
-          "fillOpacity": 10,
-          "showPoints": "never",
-          "spanNulls": true,
-          "decimals": 2
-        },
-        "overrides": []
-      }
-    },
-    {
-      "id": 6,
-      "type": "timeseries",
-      "title": "Dividend Cut Count 12m",
-      "gridPos": {
-        "x": 12,
-        "y": 16,
-        "w": 12,
-        "h": 8
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, dividend_cut_count_12m AS value FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, dividend_cut_count_12m AS value FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
-        }
-      ],
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "none",
           "drawStyle": "line",
           "lineWidth": 2,
           "fillOpacity": 10,
@@ -308,7 +120,7 @@
     "lmi",
     "v2",
     "graph",
-    "income"
+    "compact"
   ],
   "templating": {
     "list": []
