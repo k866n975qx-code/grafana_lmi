@@ -35,10 +35,10 @@
       "targets": [
         {
           "refId": "A",
-          "format": "time_series",
-          "queryType": "timeSeriesQuery",
-          "queryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, portfolio_yield_pct AS \"Yield %\", portfolio_yield_on_cost_pct AS \"YoC %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, portfolio_yield_pct AS \"Yield %\", portfolio_yield_on_cost_pct AS \"YoC %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, portfolio_yield_pct AS \"Yield %\", portfolio_yield_on_cost_pct AS \"YoC %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, portfolio_yield_pct AS \"Yield %\", portfolio_yield_on_cost_pct AS \"YoC %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
         }
       ],
       "options": {
@@ -82,10 +82,10 @@
       "targets": [
         {
           "refId": "A",
-          "format": "time_series",
-          "queryType": "timeSeriesQuery",
-          "queryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, dividends_realized_mtd AS \"MTD\", dividends_realized_30d AS \"30d\", dividends_realized_ytd AS \"YTD\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, dividends_realized_mtd AS \"MTD\", dividends_realized_30d AS \"30d\", dividends_realized_ytd AS \"YTD\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, dividends_realized_mtd AS \"MTD\", dividends_realized_30d AS \"30d\", dividends_realized_ytd AS \"YTD\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, dividends_realized_mtd AS \"MTD\", dividends_realized_30d AS \"30d\", dividends_realized_ytd AS \"YTD\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
         }
       ],
       "options": {

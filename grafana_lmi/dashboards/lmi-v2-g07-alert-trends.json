@@ -35,10 +35,10 @@
       "targets": [
         {
           "refId": "A",
-          "format": "time_series",
-          "queryType": "timeSeriesQuery",
-          "queryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, SUM(CASE WHEN category='income' THEN 1 ELSE 0 END) AS income, SUM(CASE WHEN category='margin' THEN 1 ELSE 0 END) AS margin, SUM(CASE WHEN category='goal_pace' THEN 1 ELSE 0 END) AS goal_pace FROM alert_messages WHERE as_of_date_local >= date('now','-120 day') GROUP BY as_of_date_local ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, SUM(CASE WHEN category='income' THEN 1 ELSE 0 END) AS income, SUM(CASE WHEN category='margin' THEN 1 ELSE 0 END) AS margin, SUM(CASE WHEN category='goal_pace' THEN 1 ELSE 0 END) AS goal_pace FROM alert_messages WHERE as_of_date_local >= date('now','-120 day') GROUP BY as_of_date_local ORDER BY as_of_date_local"
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, SUM(CASE WHEN category='income' THEN 1 ELSE 0 END) AS income, SUM(CASE WHEN category='margin' THEN 1 ELSE 0 END) AS margin, SUM(CASE WHEN category='goal_pace' THEN 1 ELSE 0 END) AS goal_pace FROM alert_messages WHERE as_of_date_local >= date('now','-120 day') GROUP BY as_of_date_local ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, SUM(CASE WHEN category='income' THEN 1 ELSE 0 END) AS income, SUM(CASE WHEN category='margin' THEN 1 ELSE 0 END) AS margin, SUM(CASE WHEN category='goal_pace' THEN 1 ELSE 0 END) AS goal_pace FROM alert_messages WHERE as_of_date_local >= date('now','-120 day') GROUP BY as_of_date_local ORDER BY as_of_date_local"
         }
       ],
       "options": {
@@ -82,10 +82,10 @@
       "targets": [
         {
           "refId": "A",
-          "format": "time_series",
-          "queryType": "timeSeriesQuery",
-          "queryText": "WITH d AS (SELECT date(sent_at_utc) AS day, COUNT(*) AS sent_count, SUM(CASE WHEN success=1 THEN 1 ELSE 0 END) AS success_count FROM alert_notifications WHERE sent_at_utc >= datetime('now','-120 day') GROUP BY date(sent_at_utc)) SELECT CAST(strftime('%s', day) AS INTEGER) AS time, sent_count AS \"Notifications\", CASE WHEN sent_count=0 THEN NULL ELSE (success_count*100.0/sent_count) END AS \"Success %\" FROM d ORDER BY day",
-          "rawQueryText": "WITH d AS (SELECT date(sent_at_utc) AS day, COUNT(*) AS sent_count, SUM(CASE WHEN success=1 THEN 1 ELSE 0 END) AS success_count FROM alert_notifications WHERE sent_at_utc >= datetime('now','-120 day') GROUP BY date(sent_at_utc)) SELECT CAST(strftime('%s', day) AS INTEGER) AS time, sent_count AS \"Notifications\", CASE WHEN sent_count=0 THEN NULL ELSE (success_count*100.0/sent_count) END AS \"Success %\" FROM d ORDER BY day"
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH d AS (SELECT date(sent_at_utc) AS day, COUNT(*) AS sent_count, SUM(CASE WHEN success=1 THEN 1 ELSE 0 END) AS success_count FROM alert_notifications WHERE sent_at_utc >= datetime('now','-120 day') GROUP BY date(sent_at_utc)) SELECT (day || 'T00:00:00Z') AS time, sent_count AS \"Notifications\", CASE WHEN sent_count=0 THEN NULL ELSE (success_count*100.0/sent_count) END AS \"Success %\" FROM d ORDER BY day",
+          "rawQueryText": "WITH d AS (SELECT date(sent_at_utc) AS day, COUNT(*) AS sent_count, SUM(CASE WHEN success=1 THEN 1 ELSE 0 END) AS success_count FROM alert_notifications WHERE sent_at_utc >= datetime('now','-120 day') GROUP BY date(sent_at_utc)) SELECT (day || 'T00:00:00Z') AS time, sent_count AS \"Notifications\", CASE WHEN sent_count=0 THEN NULL ELSE (success_count*100.0/sent_count) END AS \"Success %\" FROM d ORDER BY day"
         }
       ],
       "options": {

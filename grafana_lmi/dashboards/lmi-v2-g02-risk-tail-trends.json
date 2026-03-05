@@ -35,10 +35,10 @@
       "targets": [
         {
           "refId": "A",
-          "format": "time_series",
-          "queryType": "timeSeriesQuery",
-          "queryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, vol_30d_pct AS \"Vol 30d %\", vol_90d_pct AS \"Vol 90d %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, vol_30d_pct AS \"Vol 30d %\", vol_90d_pct AS \"Vol 90d %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, vol_30d_pct AS \"Vol 30d %\", vol_90d_pct AS \"Vol 90d %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, vol_30d_pct AS \"Vol 30d %\", vol_90d_pct AS \"Vol 90d %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
         }
       ],
       "options": {
@@ -82,10 +82,10 @@
       "targets": [
         {
           "refId": "A",
-          "format": "time_series",
-          "queryType": "timeSeriesQuery",
-          "queryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, sharpe_1y AS \"Sharpe\", sortino_1y AS \"Sortino\", calmar_1y AS \"Calmar\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, sharpe_1y AS \"Sharpe\", sortino_1y AS \"Sortino\", calmar_1y AS \"Calmar\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, sharpe_1y AS \"Sharpe\", sortino_1y AS \"Sortino\", calmar_1y AS \"Calmar\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, sharpe_1y AS \"Sharpe\", sortino_1y AS \"Sortino\", calmar_1y AS \"Calmar\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
         }
       ],
       "options": {

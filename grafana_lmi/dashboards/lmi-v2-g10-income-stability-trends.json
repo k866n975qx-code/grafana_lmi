@@ -35,10 +35,10 @@
       "targets": [
         {
           "refId": "A",
-          "format": "time_series",
-          "queryType": "timeSeriesQuery",
-          "queryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, income_stability_score AS \"Stability\", income_volatility_30d_pct AS \"Income Vol 30d %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, income_stability_score AS \"Stability\", income_volatility_30d_pct AS \"Income Vol 30d %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, income_stability_score AS \"Stability\", income_volatility_30d_pct AS \"Income Vol 30d %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, income_stability_score AS \"Stability\", income_volatility_30d_pct AS \"Income Vol 30d %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
         }
       ],
       "options": {
@@ -82,10 +82,10 @@
       "targets": [
         {
           "refId": "A",
-          "format": "time_series",
-          "queryType": "timeSeriesQuery",
-          "queryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, dividend_cut_count_12m AS \"Cuts 12m\", dividends_upcoming_count AS \"Upcoming Count\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, dividend_cut_count_12m AS \"Cuts 12m\", dividends_upcoming_count AS \"Upcoming Count\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, dividend_cut_count_12m AS \"Cuts 12m\", dividends_upcoming_count AS \"Upcoming Count\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, dividend_cut_count_12m AS \"Cuts 12m\", dividends_upcoming_count AS \"Upcoming Count\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
         }
       ],
       "options": {

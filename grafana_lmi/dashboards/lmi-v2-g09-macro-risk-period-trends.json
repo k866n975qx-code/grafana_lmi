@@ -35,10 +35,10 @@
       "targets": [
         {
           "refId": "A",
-          "format": "time_series",
-          "queryType": "timeSeriesQuery",
-          "queryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, macro_vix AS \"VIX\", macro_ten_year_yield AS \"10Y Yield\", macro_stress_score AS \"Stress\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, macro_vix AS \"VIX\", macro_ten_year_yield AS \"10Y Yield\", macro_stress_score AS \"Stress\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, macro_vix AS \"VIX\", macro_ten_year_yield AS \"10Y Yield\", macro_stress_score AS \"Stress\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, macro_vix AS \"VIX\", macro_ten_year_yield AS \"10Y Yield\", macro_stress_score AS \"Stress\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
         }
       ],
       "options": {
@@ -82,10 +82,10 @@
       "targets": [
         {
           "refId": "A",
-          "format": "time_series",
-          "queryType": "timeSeriesQuery",
-          "queryText": "SELECT CAST(strftime('%s', period_end_date) AS INTEGER) AS time, MAX(CASE WHEN metric='vol_30d_pct' THEN avg_val END) AS \"Vol30 Avg\", MAX(CASE WHEN metric='sharpe_1y' THEN avg_val END) AS \"Sharpe Avg\", MAX(CASE WHEN metric='sortino_1y' THEN avg_val END) AS \"Sortino Avg\" FROM period_risk_stats WHERE period_type='MONTH' AND period_end_date >= date('now','-365 day') GROUP BY period_end_date ORDER BY period_end_date",
-          "rawQueryText": "SELECT CAST(strftime('%s', period_end_date) AS INTEGER) AS time, MAX(CASE WHEN metric='vol_30d_pct' THEN avg_val END) AS \"Vol30 Avg\", MAX(CASE WHEN metric='sharpe_1y' THEN avg_val END) AS \"Sharpe Avg\", MAX(CASE WHEN metric='sortino_1y' THEN avg_val END) AS \"Sortino Avg\" FROM period_risk_stats WHERE period_type='MONTH' AND period_end_date >= date('now','-365 day') GROUP BY period_end_date ORDER BY period_end_date"
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, MAX(CASE WHEN metric='vol_30d_pct' THEN avg_val END) AS \"Vol30 Avg\", MAX(CASE WHEN metric='sharpe_1y' THEN avg_val END) AS \"Sharpe Avg\", MAX(CASE WHEN metric='sortino_1y' THEN avg_val END) AS \"Sortino Avg\" FROM period_risk_stats WHERE period_type='MONTH' AND period_end_date >= date('now','-365 day') GROUP BY period_end_date ORDER BY period_end_date",
+          "rawQueryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, MAX(CASE WHEN metric='vol_30d_pct' THEN avg_val END) AS \"Vol30 Avg\", MAX(CASE WHEN metric='sharpe_1y' THEN avg_val END) AS \"Sharpe Avg\", MAX(CASE WHEN metric='sortino_1y' THEN avg_val END) AS \"Sortino Avg\" FROM period_risk_stats WHERE period_type='MONTH' AND period_end_date >= date('now','-365 day') GROUP BY period_end_date ORDER BY period_end_date"
         }
       ],
       "options": {

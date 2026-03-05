@@ -35,10 +35,10 @@
       "targets": [
         {
           "refId": "A",
-          "format": "time_series",
-          "queryType": "timeSeriesQuery",
-          "queryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, vs_benchmark_excess_1y_pct AS \"Excess 1y %\", tracking_error_1y_pct AS \"Tracking Error %\", information_ratio_1y AS \"Info Ratio\", beta_portfolio AS \"Beta\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, vs_benchmark_excess_1y_pct AS \"Excess 1y %\", tracking_error_1y_pct AS \"Tracking Error %\", information_ratio_1y AS \"Info Ratio\", beta_portfolio AS \"Beta\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, vs_benchmark_excess_1y_pct AS \"Excess 1y %\", tracking_error_1y_pct AS \"Tracking Error %\", information_ratio_1y AS \"Info Ratio\", beta_portfolio AS \"Beta\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, vs_benchmark_excess_1y_pct AS \"Excess 1y %\", tracking_error_1y_pct AS \"Tracking Error %\", information_ratio_1y AS \"Info Ratio\", beta_portfolio AS \"Beta\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
         }
       ],
       "options": {
@@ -82,10 +82,10 @@
       "targets": [
         {
           "refId": "A",
-          "format": "time_series",
-          "queryType": "timeSeriesQuery",
-          "queryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, top3_weight_pct AS \"Top3 %\", top5_weight_pct AS \"Top5 %\", vs_benchmark_corr_1y AS \"Corr 1y\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT CAST(strftime('%s', as_of_date_local) AS INTEGER) AS time, top3_weight_pct AS \"Top3 %\", top5_weight_pct AS \"Top5 %\", vs_benchmark_corr_1y AS \"Corr 1y\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, top3_weight_pct AS \"Top3 %\", top5_weight_pct AS \"Top5 %\", vs_benchmark_corr_1y AS \"Corr 1y\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, top3_weight_pct AS \"Top3 %\", top5_weight_pct AS \"Top5 %\", vs_benchmark_corr_1y AS \"Corr 1y\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
         }
       ],
       "options": {

@@ -35,10 +35,10 @@
       "targets": [
         {
           "refId": "A",
-          "format": "time_series",
-          "queryType": "timeSeriesQuery",
-          "queryText": "SELECT CAST(strftime('%s', period_end_date) AS INTEGER) AS time, mv_delta AS \"MV Delta\", monthly_income_delta AS \"Income Delta\" FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 AND period_end_date >= date('now','-365 day') ORDER BY period_end_date",
-          "rawQueryText": "SELECT CAST(strftime('%s', period_end_date) AS INTEGER) AS time, mv_delta AS \"MV Delta\", monthly_income_delta AS \"Income Delta\" FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 AND period_end_date >= date('now','-365 day') ORDER BY period_end_date"
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, mv_delta AS \"MV Delta\", monthly_income_delta AS \"Income Delta\" FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 AND period_end_date >= date('now','-365 day') ORDER BY period_end_date",
+          "rawQueryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, mv_delta AS \"MV Delta\", monthly_income_delta AS \"Income Delta\" FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 AND period_end_date >= date('now','-365 day') ORDER BY period_end_date"
         }
       ],
       "options": {
@@ -82,10 +82,10 @@
       "targets": [
         {
           "refId": "A",
-          "format": "time_series",
-          "queryType": "timeSeriesQuery",
-          "queryText": "SELECT CAST(strftime('%s', period_end_date) AS INTEGER) AS time, twr_period_pct AS value FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 AND period_end_date >= date('now','-365 day') ORDER BY period_end_date",
-          "rawQueryText": "SELECT CAST(strftime('%s', period_end_date) AS INTEGER) AS time, twr_period_pct AS value FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 AND period_end_date >= date('now','-365 day') ORDER BY period_end_date"
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, twr_period_pct AS value FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 AND period_end_date >= date('now','-365 day') ORDER BY period_end_date",
+          "rawQueryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, twr_period_pct AS value FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 AND period_end_date >= date('now','-365 day') ORDER BY period_end_date"
         }
       ],
       "options": {
