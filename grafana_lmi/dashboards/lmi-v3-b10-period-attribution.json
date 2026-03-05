@@ -1,0 +1,613 @@
+{
+  "__inputs": [],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    }
+  ],
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "TR 1m",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 3,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), li AS (SELECT interval_label FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end DESC LIMIT 1) SELECT (SELECT total_return_pct FROM period_interval_attribution WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) AND interval_label=(SELECT interval_label FROM li) AND window='1m' LIMIT 1) AS value",
+          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), li AS (SELECT interval_label FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end DESC LIMIT 1) SELECT (SELECT total_return_pct FROM period_interval_attribution WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) AND interval_label=(SELECT interval_label FROM li) AND window='1m' LIMIT 1) AS value"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "TR 3m",
+      "gridPos": {
+        "x": 3,
+        "y": 0,
+        "w": 3,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), li AS (SELECT interval_label FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end DESC LIMIT 1) SELECT (SELECT total_return_pct FROM period_interval_attribution WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) AND interval_label=(SELECT interval_label FROM li) AND window='3m' LIMIT 1) AS value",
+          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), li AS (SELECT interval_label FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end DESC LIMIT 1) SELECT (SELECT total_return_pct FROM period_interval_attribution WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) AND interval_label=(SELECT interval_label FROM li) AND window='3m' LIMIT 1) AS value"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "TR 6m",
+      "gridPos": {
+        "x": 6,
+        "y": 0,
+        "w": 3,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), li AS (SELECT interval_label FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end DESC LIMIT 1) SELECT (SELECT total_return_pct FROM period_interval_attribution WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) AND interval_label=(SELECT interval_label FROM li) AND window='6m' LIMIT 1) AS value",
+          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), li AS (SELECT interval_label FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end DESC LIMIT 1) SELECT (SELECT total_return_pct FROM period_interval_attribution WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) AND interval_label=(SELECT interval_label FROM li) AND window='6m' LIMIT 1) AS value"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "TR 12m",
+      "gridPos": {
+        "x": 9,
+        "y": 0,
+        "w": 3,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), li AS (SELECT interval_label FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end DESC LIMIT 1) SELECT (SELECT total_return_pct FROM period_interval_attribution WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) AND interval_label=(SELECT interval_label FROM li) AND window='12m' LIMIT 1) AS value",
+          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), li AS (SELECT interval_label FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end DESC LIMIT 1) SELECT (SELECT total_return_pct FROM period_interval_attribution WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) AND interval_label=(SELECT interval_label FROM li) AND window='12m' LIMIT 1) AS value"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 5,
+      "type": "stat",
+      "title": "Income 1m",
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 3,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), li AS (SELECT interval_label FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end DESC LIMIT 1) SELECT (SELECT income_contribution_pct FROM period_interval_attribution WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) AND interval_label=(SELECT interval_label FROM li) AND window='1m' LIMIT 1) AS value",
+          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), li AS (SELECT interval_label FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end DESC LIMIT 1) SELECT (SELECT income_contribution_pct FROM period_interval_attribution WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) AND interval_label=(SELECT interval_label FROM li) AND window='1m' LIMIT 1) AS value"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 6,
+      "type": "stat",
+      "title": "Price 1m",
+      "gridPos": {
+        "x": 15,
+        "y": 0,
+        "w": 3,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), li AS (SELECT interval_label FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end DESC LIMIT 1) SELECT (SELECT price_contribution_pct FROM period_interval_attribution WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) AND interval_label=(SELECT interval_label FROM li) AND window='1m' LIMIT 1) AS value",
+          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), li AS (SELECT interval_label FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end DESC LIMIT 1) SELECT (SELECT price_contribution_pct FROM period_interval_attribution WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) AND interval_label=(SELECT interval_label FROM li) AND window='1m' LIMIT 1) AS value"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 7,
+      "type": "stat",
+      "title": "Interval",
+      "gridPos": {
+        "x": 18,
+        "y": 0,
+        "w": 3,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), li AS (SELECT interval_label FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end DESC LIMIT 1) SELECT COALESCE((SELECT interval_label FROM li),'n/a') AS value",
+          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), li AS (SELECT interval_label FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end DESC LIMIT 1) SELECT COALESCE((SELECT interval_label FROM li),'n/a') AS value"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "string"
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 8,
+      "type": "stat",
+      "title": "Period",
+      "gridPos": {
+        "x": 21,
+        "y": 0,
+        "w": 3,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT period_start_date || '..' || period_end_date AS value FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1",
+          "rawQueryText": "SELECT period_start_date || '..' || period_end_date AS value FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "string"
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 9,
+      "type": "timeseries",
+      "title": "Attribution Windows Trend",
+      "gridPos": {
+        "x": 0,
+        "y": 3,
+        "w": 12,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (pi.interval_end || 'T00:00:00Z') AS time, MAX(CASE WHEN pia.window='1m' THEN pia.total_return_pct END) AS TR1m, MAX(CASE WHEN pia.window='3m' THEN pia.total_return_pct END) AS TR3m, MAX(CASE WHEN pia.window='6m' THEN pia.total_return_pct END) AS TR6m, MAX(CASE WHEN pia.window='12m' THEN pia.total_return_pct END) AS TR12m FROM period_interval_attribution pia JOIN period_intervals pi ON pi.period_type=pia.period_type AND pi.period_start_date=pia.period_start_date AND pi.period_end_date=pia.period_end_date AND pi.interval_label=pia.interval_label WHERE pia.period_type='MONTH' AND pia.period_start_date=(SELECT period_start_date FROM latest) AND pia.period_end_date=(SELECT period_end_date FROM latest) GROUP BY pi.interval_end ORDER BY pi.interval_end",
+          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (pi.interval_end || 'T00:00:00Z') AS time, MAX(CASE WHEN pia.window='1m' THEN pia.total_return_pct END) AS TR1m, MAX(CASE WHEN pia.window='3m' THEN pia.total_return_pct END) AS TR3m, MAX(CASE WHEN pia.window='6m' THEN pia.total_return_pct END) AS TR6m, MAX(CASE WHEN pia.window='12m' THEN pia.total_return_pct END) AS TR12m FROM period_interval_attribution pia JOIN period_intervals pi ON pi.period_type=pia.period_type AND pi.period_start_date=pia.period_start_date AND pi.period_end_date=pia.period_end_date AND pi.interval_label=pia.interval_label WHERE pia.period_type='MONTH' AND pia.period_start_date=(SELECT period_start_date FROM latest) AND pia.period_end_date=(SELECT period_end_date FROM latest) GROUP BY pi.interval_end ORDER BY pi.interval_end"
+        }
+      ],
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "drawStyle": "line",
+          "lineWidth": 2,
+          "fillOpacity": 12,
+          "showPoints": "never",
+          "spanNulls": true,
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 10,
+      "type": "timeseries",
+      "title": "TWR Windows Trend",
+      "gridPos": {
+        "x": 12,
+        "y": 3,
+        "w": 12,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (interval_end || 'T00:00:00Z') AS time, twr_1m_pct AS TWR1m, twr_3m_pct AS TWR3m, twr_6m_pct AS TWR6m, twr_12m_pct AS TWR12m FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end",
+          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (interval_end || 'T00:00:00Z') AS time, twr_1m_pct AS TWR1m, twr_3m_pct AS TWR3m, twr_6m_pct AS TWR6m, twr_12m_pct AS TWR12m FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end"
+        }
+      ],
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "drawStyle": "line",
+          "lineWidth": 2,
+          "fillOpacity": 12,
+          "showPoints": "never",
+          "spanNulls": true,
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 11,
+      "type": "table",
+      "title": "Interval Attribution Rows",
+      "gridPos": {
+        "x": 0,
+        "y": 7,
+        "w": 24,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), li AS (SELECT interval_label FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end DESC LIMIT 1) SELECT window AS Win, round(total_return_pct,3) AS TRPct, round(income_contribution_pct,3) AS IncomePct, round(price_contribution_pct,3) AS PricePct, substr(COALESCE(top_json,''),1,28) AS Top, substr(COALESCE(bottom_json,''),1,28) AS Bottom FROM period_interval_attribution WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) AND interval_label=(SELECT interval_label FROM li) ORDER BY CASE window WHEN '1m' THEN 1 WHEN '3m' THEN 2 WHEN '6m' THEN 3 WHEN '12m' THEN 4 ELSE 5 END LIMIT 5",
+          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), li AS (SELECT interval_label FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end DESC LIMIT 1) SELECT window AS Win, round(total_return_pct,3) AS TRPct, round(income_contribution_pct,3) AS IncomePct, round(price_contribution_pct,3) AS PricePct, substr(COALESCE(top_json,''),1,28) AS Top, substr(COALESCE(bottom_json,''),1,28) AS Bottom FROM period_interval_attribution WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) AND interval_label=(SELECT interval_label FROM li) ORDER BY CASE window WHEN '1m' THEN 1 WHEN '3m' THEN 2 WHEN '6m' THEN 3 WHEN '12m' THEN 4 ELSE 5 END LIMIT 5"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Win"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 60
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "TRPct"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 82
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "IncomePct"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 90
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "PricePct"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 90
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Top"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 160
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Bottom"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 160
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "refresh": "2m",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": [
+    "lmi",
+    "v3",
+    "blended",
+    "period",
+    "attribution"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-120d",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "America/Los_Angeles",
+  "title": "B10 LMI v3 - Period Attribution",
+  "uid": "lmi-v3-b10-period-attribution",
+  "version": 1,
+  "weekStart": ""
+}

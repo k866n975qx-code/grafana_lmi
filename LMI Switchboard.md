@@ -1,35 +1,40 @@
-# LMI v2 Switchboard
+# LMI v3 Switchboard
 
 - **Hosted Grafana**: [https://grafana.joseai.dev](https://grafana.joseai.dev)
 - **Server path**: `/home/jose/grafana_lmi`
 - **Dashboards path**: `/home/jose/grafana_lmi/grafana_lmi/dashboards`
+- **Datasource UID**: `lmi_sqlite`
 
-## Data-heavy (Compact)
-1. **[D01 Daily Command Board](/d/lmi-v2-d01-daily-command)**
-2. **[D02 Holdings Risk Matrix](/d/lmi-v2-d02-holdings-risk)**
-3. **[D03 Income Calendar & Reliability](/d/lmi-v2-d03-income-calendar)**
-4. **[D04 Margin & Stress Desk](/d/lmi-v2-d04-margin-stress)**
-5. **[D05 Rolling + Completed Period Scorecard](/d/lmi-v2-d05-period-scorecard)**
-6. **[D06 Period Interval Snapshot](/d/lmi-v2-d06-interval-ledger)**
-7. **[D07 Goals & Tier Scenarios](/d/lmi-v2-d07-goals-tiers)**
-8. **[D08 Alerts Console](/d/lmi-v2-d08-alerts-console)**
-9. **[D09 Data Quality Guardrail](/d/lmi-v2-d09-data-quality)**
-10. **[D10 Period Activity Flows](/d/lmi-v2-d10-period-activity)**
-11. **[D11 Period Positions & Dividends](/d/lmi-v2-d11-period-positions)**
-12. **[D12 Period Macro & Risk Stats](/d/lmi-v2-d12-period-macro-risk)**
+## Blended Core
+1. **[B01 Command Center](/d/lmi-v3-b01-command-center)**
+2. **[B02 Income and Dividends](/d/lmi-v3-b02-income-dividends)**
+3. **[B03 Holdings and Risk](/d/lmi-v3-b03-holdings-risk)**
+4. **[B04 Margin and Stress](/d/lmi-v3-b04-margin-stress)**
+5. **[B05 Goals and Pace](/d/lmi-v3-b05-goals-pace)**
+6. **[B06 Alerts and Data Quality](/d/lmi-v3-b06-alerts-quality)**
+7. **[B07 Macro and Benchmark](/d/lmi-v3-b07-macro-benchmark)**
+8. **[B08 Period Activity](/d/lmi-v3-b08-period-activity)**
+9. **[B09 Period Intervals](/d/lmi-v3-b09-period-intervals)**
+10. **[B10 Period Attribution](/d/lmi-v3-b10-period-attribution)**
 
-## Graph (Time-Field Fixed)
-1. **[G01 Portfolio Trajectory](/d/lmi-v2-g01-portfolio-trajectory)**
-2. **[G02 Risk & Tail Trends](/d/lmi-v2-g02-risk-tail)**
-3. **[G03 Income & Yield Trends](/d/lmi-v2-g03-income-yield)**
-4. **[G04 Margin Stress Trends](/d/lmi-v2-g04-margin-trends)**
-5. **[G05 Period Dynamics](/d/lmi-v2-g05-period-dynamics)**
-6. **[G06 Goal Pace Trends](/d/lmi-v2-g06-goal-pace)**
-7. **[G07 Alert Trends](/d/lmi-v2-g07-alert-trends)**
-8. **[G08 Performance Trends](/d/lmi-v2-g08-performance-trends)**
-9. **[G09 Macro & Period Risk Trends](/d/lmi-v2-g09-macro-risk-period)**
-10. **[G10 Income Stability Trends](/d/lmi-v2-g10-income-stability)**
-11. **[G11 Benchmark & Concentration Trends](/d/lmi-v2-g11-benchmark-concentration)**
+## Period Mode Overviews
+11. **[R01 Rolling Overview](/d/lmi-v3-r01-rolling-overview)**
+12. **[C01 Completed Overview](/d/lmi-v3-c01-completed-overview)**
+
+## Diff Dashboards
+13. **[D01 Diff Daily](/d/lmi-v3-d01-diff-daily)**
+14. **[D02 Diff Week](/d/lmi-v3-d02-diff-week)**
+15. **[D03 Diff Month](/d/lmi-v3-d03-diff-month)**
+16. **[D04 Diff Quarter](/d/lmi-v3-d04-diff-quarter)**
+17. **[D05 Diff Year](/d/lmi-v3-d05-diff-year)**
+18. **[D06 Rolling vs Completed Gap](/d/lmi-v3-d06-rolling-vs-completed-gap)**
+
+## Deploy (Git-First)
+1. Commit and push from local.
+2. On server:
+   - `cd /home/jose/grafana_lmi`
+   - `git pull`
+   - `docker restart grafana`
 
 ## Kiosk URL Format
-- `https://grafana.joseai.dev/playlists/play/<playlist_uid>?kiosk=true&autofitpanels=true`
+- `https://grafana.joseai.dev/d/<dashboard_uid>?kiosk=true&autofitpanels=true`
