@@ -1,40 +1,54 @@
-# LMI v3 Switchboard
+# LMI Switchboard (Local Backup Restore)
 
 - **Hosted Grafana**: [https://grafana.joseai.dev](https://grafana.joseai.dev)
 - **Server path**: `/home/jose/grafana_lmi`
 - **Dashboards path**: `/home/jose/grafana_lmi/grafana_lmi/dashboards`
 - **Datasource UID**: `lmi_sqlite`
+- **Restored from local backup**: `grafana_lmi/dashboards.backup.20260304_195814`
 
-## Blended Core
-1. **[B01 Command Center](/d/lmi-v3-b01-command-center)**
-2. **[B02 Income and Dividends](/d/lmi-v3-b02-income-dividends)**
-3. **[B03 Holdings and Risk](/d/lmi-v3-b03-holdings-risk)**
-4. **[B04 Margin and Stress](/d/lmi-v3-b04-margin-stress)**
-5. **[B05 Goals and Pace](/d/lmi-v3-b05-goals-pace)**
-6. **[B06 Alerts and Data Quality](/d/lmi-v3-b06-alerts-quality)**
-7. **[B07 Macro and Benchmark](/d/lmi-v3-b07-macro-benchmark)**
-8. **[B08 Period Activity](/d/lmi-v3-b08-period-activity)**
-9. **[B09 Period Intervals](/d/lmi-v3-b09-period-intervals)**
-10. **[B10 Period Attribution](/d/lmi-v3-b10-period-attribution)**
+## Core
+1. **[LMI - Kiosk Surface](/d/lmi-kiosk-surface)**
+2. **[LMI Overview](/d/lmi-overview)**
+3. **[LMI - Daily Regime & Tail Risk](/d/lmi-daily-regime)**
+4. **[LMI - Data Quality](/d/lmi-data-quality)**
 
-## Period Mode Overviews
-11. **[R01 Rolling Overview](/d/lmi-v3-r01-rolling-overview)**
-12. **[C01 Completed Overview](/d/lmi-v3-c01-completed-overview)**
+## Holdings, Income, Risk
+5. **[LMI - Holdings](/d/lmi-holdings)**
+6. **[LMI - Income](/d/lmi-income)**
+7. **[LMI - Dividend Calendar](/d/lmi-dividend-calendar)**
+8. **[LMI - Income Stability](/d/lmi-income-stability)**
+9. **[LMI - Margin Stress](/d/lmi-margin-stress)**
+10. **[LMI - Risk KPIs](/d/lmi-risk-kpis)**
+11. **[LMI - Risk Trends](/d/lmi-risk-trends)**
+12. **[LMI - Macro Context](/d/lmi-macro-context)**
+13. **[LMI - vs Benchmark](/d/lmi-vs-benchmark)**
+14. **[LMI - Attribution](/d/lmi-attribution)**
 
-## Diff Dashboards
-13. **[D01 Diff Daily](/d/lmi-v3-d01-diff-daily)**
-14. **[D02 Diff Week](/d/lmi-v3-d02-diff-week)**
-15. **[D03 Diff Month](/d/lmi-v3-d03-diff-month)**
-16. **[D04 Diff Quarter](/d/lmi-v3-d04-diff-quarter)**
-17. **[D05 Diff Year](/d/lmi-v3-d05-diff-year)**
-18. **[D06 Rolling vs Completed Gap](/d/lmi-v3-d06-rolling-vs-completed-gap)**
+## Goals
+15. **[LMI - Goal Progress](/d/lmi-goal-progress)**
+16. **[LMI - Goal Pace](/d/lmi-goal-pace)**
+17. **[LMI - Goal Tiers](/d/lmi-goal-tiers)**
 
-## Deploy (Git-First)
+## Periods
+18. **[LMI - Rolling Periods (WTD/MTD/QTD/YTD)](/d/lmi-rolling-periods)**
+19. **[LMI - Rolling Detail](/d/lmi-rolling-detail)**
+20. **[LMI - Latest Periods](/d/lmi-latest-periods)**
+21. **[LMI - Period Performance](/d/lmi-period-performance)**
+22. **[LMI - Period Interval Pro](/d/lmi-period-interval-pro)**
+23. **[LMI - Period Macro & Rates](/d/lmi-period-macro)**
+24. **[LMI - Period Drivers (Week/Month)](/d/lmi-period-drivers-short)**
+25. **[LMI - Period Drivers (Quarter/Year)](/d/lmi-period-drivers-long)**
+
+## Diffs
+26. **[LMI - Diff (Daily Latest vs Previous)](/d/lmi-diff)**
+27. **[LMI - Diff (WEEK vs Previous WEEK)](/d/lmi-diff-week)**
+28. **[LMI - Diff (MONTH vs Previous MONTH)](/d/lmi-diff-month)**
+29. **[LMI - Diff (QUARTER vs Previous QUARTER)](/d/lmi-diff-quarter)**
+30. **[LMI - Diff (YEAR vs Previous YEAR)](/d/lmi-diff-year)**
+
+## Deploy
 1. Commit and push from local.
 2. On server:
    - `cd /home/jose/grafana_lmi`
    - `git pull`
    - `docker restart grafana`
-
-## Kiosk URL Format
-- `https://grafana.joseai.dev/d/<dashboard_uid>?kiosk=true&autofitpanels=true`
