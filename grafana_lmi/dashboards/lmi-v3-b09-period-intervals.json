@@ -24,9 +24,9 @@
       "title": "Interval MV",
       "gridPos": {
         "x": 0,
-        "y": 0,
+        "y": 5,
         "w": 3,
-        "h": 3
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -70,9 +70,9 @@
       "title": "Interval Income",
       "gridPos": {
         "x": 3,
-        "y": 0,
+        "y": 5,
         "w": 3,
-        "h": 3
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -116,9 +116,9 @@
       "title": "Interval LTV",
       "gridPos": {
         "x": 6,
-        "y": 0,
+        "y": 5,
         "w": 3,
-        "h": 3
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -162,9 +162,9 @@
       "title": "Vol30",
       "gridPos": {
         "x": 9,
-        "y": 0,
+        "y": 5,
         "w": 3,
-        "h": 3
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -208,9 +208,9 @@
       "title": "VaR95",
       "gridPos": {
         "x": 12,
-        "y": 0,
+        "y": 5,
         "w": 3,
-        "h": 3
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -254,9 +254,9 @@
       "title": "CVaR90",
       "gridPos": {
         "x": 15,
-        "y": 0,
+        "y": 5,
         "w": 3,
-        "h": 3
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -300,9 +300,9 @@
       "title": "Risk",
       "gridPos": {
         "x": 18,
-        "y": 0,
+        "y": 5,
         "w": 3,
-        "h": 3
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -345,9 +345,9 @@
       "title": "Interval",
       "gridPos": {
         "x": 21,
-        "y": 0,
+        "y": 5,
         "w": 3,
-        "h": 3
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -390,9 +390,9 @@
       "title": "Interval MV and Income",
       "gridPos": {
         "x": 0,
-        "y": 3,
-        "w": 12,
-        "h": 4
+        "y": 0,
+        "w": 16,
+        "h": 5
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -403,8 +403,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (strftime('%s', interval_end || ' 00:00:00') * 1000) AS time, mv AS MV, monthly_income AS MoIncome FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end",
-          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (strftime('%s', interval_end || ' 00:00:00') * 1000) AS time, mv AS MV, monthly_income AS MoIncome FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end"
+          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (interval_end || 'T00:00:00Z') AS time, mv AS MV, monthly_income AS MoIncome FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end",
+          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (interval_end || 'T00:00:00Z') AS time, mv AS MV, monthly_income AS MoIncome FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end"
         }
       ],
       "options": {
@@ -436,10 +436,10 @@
       "type": "timeseries",
       "title": "Interval Risk Trend",
       "gridPos": {
-        "x": 12,
-        "y": 3,
-        "w": 12,
-        "h": 4
+        "x": 16,
+        "y": 0,
+        "w": 8,
+        "h": 5
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -450,8 +450,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (strftime('%s', interval_end || ' 00:00:00') * 1000) AS time, vol_30d_pct AS Vol30, var_95_1d_pct AS VaR95, cvar_90_1d_pct AS CVaR90 FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end",
-          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (strftime('%s', interval_end || ' 00:00:00') * 1000) AS time, vol_30d_pct AS Vol30, var_95_1d_pct AS VaR95, cvar_90_1d_pct AS CVaR90 FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end"
+          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (interval_end || 'T00:00:00Z') AS time, vol_30d_pct AS Vol30, var_95_1d_pct AS VaR95, cvar_90_1d_pct AS CVaR90 FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end",
+          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (interval_end || 'T00:00:00Z') AS time, vol_30d_pct AS Vol30, var_95_1d_pct AS VaR95, cvar_90_1d_pct AS CVaR90 FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end"
         }
       ],
       "options": {
@@ -485,7 +485,7 @@
       "gridPos": {
         "x": 0,
         "y": 7,
-        "w": 12,
+        "w": 24,
         "h": 4
       },
       "datasource": {
@@ -497,8 +497,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), li AS (SELECT interval_label FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end DESC LIMIT 1) SELECT substr(symbol,1,8) AS Sym, round(weight_pct,2) AS WtPct, round(market_value,0) AS MV, round(pnl_pct,2) AS PnlPct FROM period_interval_holdings WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) AND interval_label=(SELECT interval_label FROM li) ORDER BY weight_pct DESC LIMIT 5",
-          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), li AS (SELECT interval_label FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end DESC LIMIT 1) SELECT substr(symbol,1,8) AS Sym, round(weight_pct,2) AS WtPct, round(market_value,0) AS MV, round(pnl_pct,2) AS PnlPct FROM period_interval_holdings WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) AND interval_label=(SELECT interval_label FROM li) ORDER BY weight_pct DESC LIMIT 5"
+          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), li AS (SELECT interval_label FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end DESC LIMIT 1) SELECT substr(symbol,1,8) AS Sym, round(weight_pct,2) AS WtPct, round(market_value,0) AS MV, round(pnl_pct,2) AS PnlPct, round(projected_monthly_dividend,2) AS MoInc, substr(COALESCE(risk_quality_category,''),1,14) AS Risk FROM period_interval_holdings WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) AND interval_label=(SELECT interval_label FROM li) ORDER BY weight_pct DESC LIMIT 5",
+          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), li AS (SELECT interval_label FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end DESC LIMIT 1) SELECT substr(symbol,1,8) AS Sym, round(weight_pct,2) AS WtPct, round(market_value,0) AS MV, round(pnl_pct,2) AS PnlPct, round(projected_monthly_dividend,2) AS MoInc, substr(COALESCE(risk_quality_category,''),1,14) AS Risk FROM period_interval_holdings WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) AND interval_label=(SELECT interval_label FROM li) ORDER BY weight_pct DESC LIMIT 5"
         }
       ],
       "options": {
@@ -558,59 +558,11 @@
                 "value": 82
               }
             ]
-          }
-        ]
-      }
-    },
-    {
-      "id": 12,
-      "type": "table",
-      "title": "Interval Attribution",
-      "gridPos": {
-        "x": 12,
-        "y": 7,
-        "w": 12,
-        "h": 4
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), li AS (SELECT interval_label FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end DESC LIMIT 1) SELECT window AS Win, round(total_return_pct,2) AS TRPct, round(income_contribution_pct,2) AS IncPct, round(price_contribution_pct,2) AS PricePct FROM period_interval_attribution WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) AND interval_label=(SELECT interval_label FROM li) ORDER BY CASE window WHEN '1m' THEN 1 WHEN '3m' THEN 2 WHEN '6m' THEN 3 WHEN '12m' THEN 4 ELSE 5 END LIMIT 5",
-          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), li AS (SELECT interval_label FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end DESC LIMIT 1) SELECT window AS Win, round(total_return_pct,2) AS TRPct, round(income_contribution_pct,2) AS IncPct, round(price_contribution_pct,2) AS PricePct FROM period_interval_attribution WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) AND interval_label=(SELECT interval_label FROM li) ORDER BY CASE window WHEN '1m' THEN 1 WHEN '3m' THEN 2 WHEN '6m' THEN 3 WHEN '12m' THEN 4 ELSE 5 END LIMIT 5"
-        }
-      ],
-      "options": {
-        "showHeader": true,
-        "cellHeight": "sm",
-        "footer": {
-          "show": false
-        }
-      },
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Win"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 60
-              }
-            ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "TRPct"
+              "options": "MoInc"
             },
             "properties": [
               {
@@ -622,24 +574,12 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "IncPct"
+              "options": "Risk"
             },
             "properties": [
               {
                 "id": "custom.width",
-                "value": 84
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "PricePct"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 94
+                "value": 96
               }
             ]
           }
@@ -667,7 +607,6 @@
   "timepicker": {},
   "timezone": "America/Los_Angeles",
   "title": "B09 LMI v3 - Period Intervals",
-  "description": "Interval microstructure board: latest interval state, interval trendline, and attribution snapshot.",
   "uid": "lmi-v3-b09-period-intervals",
   "version": 1,
   "weekStart": ""

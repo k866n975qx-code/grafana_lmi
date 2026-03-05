@@ -391,7 +391,7 @@
       "title": "Alerts by Category per Day",
       "gridPos": {
         "x": 0,
-        "y": 3,
+        "y": 7,
         "w": 12,
         "h": 4
       },
@@ -404,8 +404,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, SUM(CASE WHEN category='income' THEN 1 ELSE 0 END) AS Income, SUM(CASE WHEN category='ex_dividend' THEN 1 ELSE 0 END) AS ExDividend, SUM(CASE WHEN category NOT IN ('income','ex_dividend') THEN 1 ELSE 0 END) AS Other FROM alert_messages WHERE as_of_date_local >= date('now','-120 day') GROUP BY as_of_date_local ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, SUM(CASE WHEN category='income' THEN 1 ELSE 0 END) AS Income, SUM(CASE WHEN category='ex_dividend' THEN 1 ELSE 0 END) AS ExDividend, SUM(CASE WHEN category NOT IN ('income','ex_dividend') THEN 1 ELSE 0 END) AS Other FROM alert_messages WHERE as_of_date_local >= date('now','-120 day') GROUP BY as_of_date_local ORDER BY as_of_date_local"
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, SUM(CASE WHEN category='income' THEN 1 ELSE 0 END) AS Income, SUM(CASE WHEN category='ex_dividend' THEN 1 ELSE 0 END) AS ExDividend, SUM(CASE WHEN category NOT IN ('income','ex_dividend') THEN 1 ELSE 0 END) AS Other FROM alert_messages WHERE as_of_date_local >= date('now','-120 day') GROUP BY as_of_date_local ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, SUM(CASE WHEN category='income' THEN 1 ELSE 0 END) AS Income, SUM(CASE WHEN category='ex_dividend' THEN 1 ELSE 0 END) AS ExDividend, SUM(CASE WHEN category NOT IN ('income','ex_dividend') THEN 1 ELSE 0 END) AS Other FROM alert_messages WHERE as_of_date_local >= date('now','-120 day') GROUP BY as_of_date_local ORDER BY as_of_date_local"
         }
       ],
       "options": {
@@ -438,7 +438,7 @@
       "title": "Notification Success Trend",
       "gridPos": {
         "x": 12,
-        "y": 3,
+        "y": 7,
         "w": 12,
         "h": 4
       },
@@ -451,8 +451,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (strftime('%s', date(sent_at_utc) || ' 00:00:00') * 1000) AS time, COUNT(*) AS Notifications, 100.0 * AVG(CASE WHEN success=1 THEN 1.0 ELSE 0.0 END) AS SuccessPct FROM alert_notifications WHERE date(sent_at_utc) >= date('now','-120 day') GROUP BY date(sent_at_utc) ORDER BY date(sent_at_utc)",
-          "rawQueryText": "SELECT (strftime('%s', date(sent_at_utc) || ' 00:00:00') * 1000) AS time, COUNT(*) AS Notifications, 100.0 * AVG(CASE WHEN success=1 THEN 1.0 ELSE 0.0 END) AS SuccessPct FROM alert_notifications WHERE date(sent_at_utc) >= date('now','-120 day') GROUP BY date(sent_at_utc) ORDER BY date(sent_at_utc)"
+          "queryText": "SELECT (date(sent_at_utc) || 'T00:00:00Z') AS time, COUNT(*) AS Notifications, 100.0 * AVG(CASE WHEN success=1 THEN 1.0 ELSE 0.0 END) AS SuccessPct FROM alert_notifications WHERE date(sent_at_utc) >= date('now','-120 day') GROUP BY date(sent_at_utc) ORDER BY date(sent_at_utc)",
+          "rawQueryText": "SELECT (date(sent_at_utc) || 'T00:00:00Z') AS time, COUNT(*) AS Notifications, 100.0 * AVG(CASE WHEN success=1 THEN 1.0 ELSE 0.0 END) AS SuccessPct FROM alert_notifications WHERE date(sent_at_utc) >= date('now','-120 day') GROUP BY date(sent_at_utc) ORDER BY date(sent_at_utc)"
         }
       ],
       "options": {
@@ -485,8 +485,8 @@
       "title": "Open Alerts Compact",
       "gridPos": {
         "x": 0,
-        "y": 7,
-        "w": 12,
+        "y": 3,
+        "w": 24,
         "h": 4
       },
       "datasource": {
@@ -498,8 +498,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT as_of_date_local AS Date, substr(category,1,14) AS Category, severity AS Sev, substr(title,1,32) AS Title FROM alert_messages WHERE status='open' ORDER BY severity DESC, as_of_date_local DESC LIMIT 5",
-          "rawQueryText": "SELECT as_of_date_local AS Date, substr(category,1,14) AS Category, severity AS Sev, substr(title,1,32) AS Title FROM alert_messages WHERE status='open' ORDER BY severity DESC, as_of_date_local DESC LIMIT 5"
+          "queryText": "SELECT as_of_date_local AS Date, substr(category,1,14) AS Category, severity AS Sev, substr(title,1,32) AS Title, status AS Status, notification_count AS Notif FROM alert_messages WHERE status='open' ORDER BY severity DESC, as_of_date_local DESC LIMIT 5",
+          "rawQueryText": "SELECT as_of_date_local AS Date, substr(category,1,14) AS Category, severity AS Sev, substr(title,1,32) AS Title, status AS Status, notification_count AS Notif FROM alert_messages WHERE status='open' ORDER BY severity DESC, as_of_date_local DESC LIMIT 5"
         }
       ],
       "options": {
@@ -559,88 +559,28 @@
                 "value": 180
               }
             ]
-          }
-        ]
-      }
-    },
-    {
-      "id": 12,
-      "type": "table",
-      "title": "Recent Notifications",
-      "gridPos": {
-        "x": 12,
-        "y": 7,
-        "w": 12,
-        "h": 4
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "SELECT date(sent_at_utc) AS Date, substr(channel,1,10) AS Chan, success AS Ok, substr(COALESCE(error,''),1,18) AS Err FROM alert_notifications ORDER BY sent_at_utc DESC LIMIT 5",
-          "rawQueryText": "SELECT date(sent_at_utc) AS Date, substr(channel,1,10) AS Chan, success AS Ok, substr(COALESCE(error,''),1,18) AS Err FROM alert_notifications ORDER BY sent_at_utc DESC LIMIT 5"
-        }
-      ],
-      "options": {
-        "showHeader": true,
-        "cellHeight": "sm",
-        "footer": {
-          "show": false
-        }
-      },
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": [
+          },
           {
             "matcher": {
               "id": "byName",
-              "options": "Date"
+              "options": "Status"
             },
             "properties": [
               {
                 "id": "custom.width",
-                "value": 90
+                "value": 72
               }
             ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "Chan"
+              "options": "Notif"
             },
             "properties": [
               {
                 "id": "custom.width",
-                "value": 84
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Ok"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 60
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Err"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 140
+                "value": 66
               }
             ]
           }
@@ -667,7 +607,6 @@
   "timepicker": {},
   "timezone": "America/Los_Angeles",
   "title": "B06 LMI v3 - Alerts and Data Quality",
-  "description": "Operational alerts surface: open/aged risk messages, notification quality, and dataset freshness indicators.",
   "uid": "lmi-v3-b06-alerts-quality",
   "version": 1,
   "weekStart": ""

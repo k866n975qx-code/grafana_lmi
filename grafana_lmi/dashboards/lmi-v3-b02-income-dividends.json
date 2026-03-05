@@ -21,12 +21,12 @@
     {
       "id": 1,
       "type": "stat",
-      "title": "Projected MTD",
+      "title": "MTD Projected",
       "gridPos": {
         "x": 0,
         "y": 0,
-        "w": 6,
-        "h": 2
+        "w": 3,
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -67,12 +67,12 @@
     {
       "id": 2,
       "type": "stat",
-      "title": "Realized MTD",
+      "title": "MTD Realized",
       "gridPos": {
-        "x": 6,
+        "x": 3,
         "y": 0,
-        "w": 6,
-        "h": 2
+        "w": 3,
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -113,12 +113,12 @@
     {
       "id": 3,
       "type": "stat",
-      "title": "Gap MTD",
+      "title": "MTD Gap",
       "gridPos": {
-        "x": 12,
+        "x": 6,
         "y": 0,
-        "w": 6,
-        "h": 2
+        "w": 3,
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -159,12 +159,12 @@
     {
       "id": 4,
       "type": "stat",
-      "title": "Received %",
+      "title": "ReceivedPct",
       "gridPos": {
-        "x": 18,
+        "x": 9,
         "y": 0,
-        "w": 6,
-        "h": 2
+        "w": 3,
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -205,12 +205,12 @@
     {
       "id": 5,
       "type": "stat",
-      "title": "Realized 30d",
+      "title": "Realized30d",
       "gridPos": {
-        "x": 0,
-        "y": 2,
-        "w": 6,
-        "h": 2
+        "x": 12,
+        "y": 0,
+        "w": 3,
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -251,12 +251,12 @@
     {
       "id": 6,
       "type": "stat",
-      "title": "Realized QTD",
+      "title": "RealizedQTD",
       "gridPos": {
-        "x": 6,
-        "y": 2,
-        "w": 6,
-        "h": 2
+        "x": 15,
+        "y": 0,
+        "w": 3,
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -297,12 +297,12 @@
     {
       "id": 7,
       "type": "stat",
-      "title": "Realized YTD",
+      "title": "RealizedYTD",
       "gridPos": {
-        "x": 12,
-        "y": 2,
-        "w": 6,
-        "h": 2
+        "x": 18,
+        "y": 0,
+        "w": 3,
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -343,12 +343,12 @@
     {
       "id": 8,
       "type": "stat",
-      "title": "Upcoming Events",
+      "title": "UpcomingCnt",
       "gridPos": {
-        "x": 18,
-        "y": 2,
-        "w": 6,
-        "h": 2
+        "x": 21,
+        "y": 0,
+        "w": 3,
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -389,12 +389,12 @@
     {
       "id": 9,
       "type": "timeseries",
-      "title": "Yield Stack (120d)",
+      "title": "Yield vs YoC (120d)",
       "gridPos": {
         "x": 0,
-        "y": 4,
-        "w": 16,
-        "h": 3
+        "y": 7,
+        "w": 12,
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -405,8 +405,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, portfolio_yield_pct AS YieldPct, portfolio_yield_on_cost_pct AS YoCPct FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, portfolio_yield_pct AS YieldPct, portfolio_yield_on_cost_pct AS YoCPct FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, portfolio_yield_pct AS YieldPct, portfolio_yield_on_cost_pct AS YoCPct FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, portfolio_yield_pct AS YieldPct, portfolio_yield_on_cost_pct AS YoCPct FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
         }
       ],
       "options": {
@@ -436,12 +436,12 @@
     {
       "id": 10,
       "type": "timeseries",
-      "title": "Projected vs Realized Income",
+      "title": "Realized Dividend Trend",
       "gridPos": {
-        "x": 16,
-        "y": 4,
-        "w": 8,
-        "h": 3
+        "x": 12,
+        "y": 7,
+        "w": 12,
+        "h": 4
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -452,8 +452,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, dividends_projected_monthly AS ProjectedMTD, dividends_realized_mtd AS RealizedMTD, dividends_realized_30d AS Realized30d FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, dividends_projected_monthly AS ProjectedMTD, dividends_realized_mtd AS RealizedMTD, dividends_realized_30d AS Realized30d FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, dividends_realized_mtd AS MTD, dividends_realized_30d AS D30, dividends_realized_qtd AS QTD, dividends_realized_ytd AS YTD FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, dividends_realized_mtd AS MTD, dividends_realized_30d AS D30, dividends_realized_qtd AS QTD, dividends_realized_ytd AS YTD FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
         }
       ],
       "options": {
@@ -483,11 +483,11 @@
     {
       "id": 11,
       "type": "table",
-      "title": "Ex/Pay Calendar (Near)",
+      "title": "Upcoming Ex/Pay Compact",
       "gridPos": {
         "x": 0,
-        "y": 7,
-        "w": 12,
+        "y": 3,
+        "w": 24,
         "h": 4
       },
       "datasource": {
@@ -499,8 +499,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest_day AS (SELECT MAX(as_of_date_local) AS d FROM daily_dividends_upcoming), latest_period AS (SELECT period_type, period_start_date, period_end_date FROM period_summary WHERE is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), u AS (SELECT substr(symbol,1,8) AS Sym, ex_date_est AS ExDate, COALESCE(pay_date_est,'') AS PayDate, round(amount_est,2) AS Amount FROM daily_dividends_upcoming WHERE as_of_date_local=(SELECT d FROM latest_day) ORDER BY ex_date_est LIMIT 4), p AS (SELECT substr(symbol,1,8) AS Sym, ex_date AS ExDate, COALESCE(pay_date,'') AS PayDate, round(amount,2) AS Amount FROM period_dividend_events WHERE (period_type,period_start_date,period_end_date) IN (SELECT period_type,period_start_date,period_end_date FROM latest_period) ORDER BY ex_date DESC LIMIT 2) SELECT Sym, ExDate, PayDate, Amount FROM (SELECT * FROM u UNION ALL SELECT * FROM p) ORDER BY ExDate LIMIT 5",
-          "rawQueryText": "WITH latest_day AS (SELECT MAX(as_of_date_local) AS d FROM daily_dividends_upcoming), latest_period AS (SELECT period_type, period_start_date, period_end_date FROM period_summary WHERE is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), u AS (SELECT substr(symbol,1,8) AS Sym, ex_date_est AS ExDate, COALESCE(pay_date_est,'') AS PayDate, round(amount_est,2) AS Amount FROM daily_dividends_upcoming WHERE as_of_date_local=(SELECT d FROM latest_day) ORDER BY ex_date_est LIMIT 4), p AS (SELECT substr(symbol,1,8) AS Sym, ex_date AS ExDate, COALESCE(pay_date,'') AS PayDate, round(amount,2) AS Amount FROM period_dividend_events WHERE (period_type,period_start_date,period_end_date) IN (SELECT period_type,period_start_date,period_end_date FROM latest_period) ORDER BY ex_date DESC LIMIT 2) SELECT Sym, ExDate, PayDate, Amount FROM (SELECT * FROM u UNION ALL SELECT * FROM p) ORDER BY ExDate LIMIT 5"
+          "queryText": "WITH latest_day AS (SELECT MAX(as_of_date_local) AS d FROM daily_dividends_upcoming), latest_period AS (SELECT period_type, period_start_date, period_end_date FROM period_summary WHERE is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), u AS (SELECT substr(symbol,1,8) AS Sym, ex_date_est AS ExDate, COALESCE(pay_date_est,'') AS PayDate, round(amount_est,2) AS Amount, 'upcoming' AS Src FROM daily_dividends_upcoming WHERE as_of_date_local=(SELECT d FROM latest_day) ORDER BY ex_date_est LIMIT 3), p AS (SELECT substr(symbol,1,8) AS Sym, ex_date AS ExDate, COALESCE(pay_date,'') AS PayDate, round(amount,2) AS Amount, 'period' AS Src FROM period_dividend_events WHERE (period_type,period_start_date,period_end_date) IN (SELECT period_type,period_start_date,period_end_date FROM latest_period) ORDER BY ex_date DESC LIMIT 2) SELECT Sym, ExDate, PayDate, Amount, Src FROM (SELECT * FROM u UNION ALL SELECT * FROM p) ORDER BY ExDate LIMIT 5",
+          "rawQueryText": "WITH latest_day AS (SELECT MAX(as_of_date_local) AS d FROM daily_dividends_upcoming), latest_period AS (SELECT period_type, period_start_date, period_end_date FROM period_summary WHERE is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), u AS (SELECT substr(symbol,1,8) AS Sym, ex_date_est AS ExDate, COALESCE(pay_date_est,'') AS PayDate, round(amount_est,2) AS Amount, 'upcoming' AS Src FROM daily_dividends_upcoming WHERE as_of_date_local=(SELECT d FROM latest_day) ORDER BY ex_date_est LIMIT 3), p AS (SELECT substr(symbol,1,8) AS Sym, ex_date AS ExDate, COALESCE(pay_date,'') AS PayDate, round(amount,2) AS Amount, 'period' AS Src FROM period_dividend_events WHERE (period_type,period_start_date,period_end_date) IN (SELECT period_type,period_start_date,period_end_date FROM latest_period) ORDER BY ex_date DESC LIMIT 2) SELECT Sym, ExDate, PayDate, Amount, Src FROM (SELECT * FROM u UNION ALL SELECT * FROM p) ORDER BY ExDate LIMIT 5"
         }
       ],
       "options": {
@@ -560,88 +560,16 @@
                 "value": 84
               }
             ]
-          }
-        ]
-      }
-    },
-    {
-      "id": 12,
-      "type": "table",
-      "title": "Income Leaders",
-      "gridPos": {
-        "x": 12,
-        "y": 7,
-        "w": 12,
-        "h": 4
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "WITH d AS (SELECT MAX(as_of_date_local) AS d FROM daily_holdings) SELECT substr(symbol,1,8) AS Sym, round(projected_monthly_dividend,2) AS MoInc, round(current_yield_pct,2) AS YieldPct, round(dividends_30d,2) AS Div30d FROM daily_holdings WHERE as_of_date_local=(SELECT d FROM d) ORDER BY projected_monthly_dividend DESC LIMIT 5",
-          "rawQueryText": "WITH d AS (SELECT MAX(as_of_date_local) AS d FROM daily_holdings) SELECT substr(symbol,1,8) AS Sym, round(projected_monthly_dividend,2) AS MoInc, round(current_yield_pct,2) AS YieldPct, round(dividends_30d,2) AS Div30d FROM daily_holdings WHERE as_of_date_local=(SELECT d FROM d) ORDER BY projected_monthly_dividend DESC LIMIT 5"
-        }
-      ],
-      "options": {
-        "showHeader": true,
-        "cellHeight": "sm",
-        "footer": {
-          "show": false
-        }
-      },
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Sym"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 72
-              }
-            ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "MoInc"
+              "options": "Src"
             },
             "properties": [
               {
                 "id": "custom.width",
-                "value": 84
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "YieldPct"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 84
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Div30d"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 84
+                "value": 86
               }
             ]
           }
@@ -668,7 +596,6 @@
   "timepicker": {},
   "timezone": "America/Los_Angeles",
   "title": "B02 LMI v3 - Income and Dividends",
-  "description": "Income reliability desk: projection vs realization, yield behavior, and near-term ex/pay pipeline.",
   "uid": "lmi-v3-b02-income-dividends",
   "version": 1,
   "weekStart": ""

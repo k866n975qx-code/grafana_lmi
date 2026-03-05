@@ -158,7 +158,7 @@
     {
       "id": 4,
       "type": "stat",
-      "title": "LTV %",
+      "title": "LTVPct",
       "gridPos": {
         "x": 9,
         "y": 5,
@@ -204,55 +204,9 @@
     {
       "id": 5,
       "type": "stat",
-      "title": "Day MV Delta",
-      "gridPos": {
-        "x": 12,
-        "y": 5,
-        "w": 3,
-        "h": 2
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "WITH latest AS (SELECT MAX(as_of_date_local) AS d FROM daily_portfolio), prev AS (SELECT MAX(as_of_date_local) AS d FROM daily_portfolio WHERE as_of_date_local < (SELECT d FROM latest)) SELECT (SELECT market_value FROM daily_portfolio WHERE as_of_date_local=(SELECT d FROM latest)) - (SELECT market_value FROM daily_portfolio WHERE as_of_date_local=(SELECT d FROM prev)) AS value",
-          "rawQueryText": "WITH latest AS (SELECT MAX(as_of_date_local) AS d FROM daily_portfolio), prev AS (SELECT MAX(as_of_date_local) AS d FROM daily_portfolio WHERE as_of_date_local < (SELECT d FROM latest)) SELECT (SELECT market_value FROM daily_portfolio WHERE as_of_date_local=(SELECT d FROM latest)) - (SELECT market_value FROM daily_portfolio WHERE as_of_date_local=(SELECT d FROM prev)) AS value"
-        }
-      ],
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "value",
-          "values": false
-        },
-        "textMode": "value",
-        "wideLayout": true
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "currencyUSD",
-          "decimals": 0
-        },
-        "overrides": []
-      }
-    },
-    {
-      "id": 6,
-      "type": "stat",
       "title": "Projected Mo",
       "gridPos": {
-        "x": 15,
+        "x": 12,
         "y": 5,
         "w": 3,
         "h": 2
@@ -294,11 +248,11 @@
       }
     },
     {
-      "id": 7,
+      "id": 6,
       "type": "stat",
-      "title": "Forward 12m",
+      "title": "Forward12m",
       "gridPos": {
-        "x": 18,
+        "x": 15,
         "y": 5,
         "w": 3,
         "h": 2
@@ -340,9 +294,55 @@
       }
     },
     {
+      "id": 7,
+      "type": "stat",
+      "title": "DrawdownPct",
+      "gridPos": {
+        "x": 18,
+        "y": 5,
+        "w": 3,
+        "h": 2
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT drawdown_depth_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1",
+          "rawQueryText": "SELECT drawdown_depth_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
       "id": 8,
       "type": "stat",
-      "title": "Drawdown State",
+      "title": "Health",
       "gridPos": {
         "x": 21,
         "y": 5,
@@ -358,8 +358,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CASE WHEN currently_in_drawdown=1 THEN 'IN DRAWDOWN' ELSE 'RECOVERED' END AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1",
-          "rawQueryText": "SELECT CASE WHEN currently_in_drawdown=1 THEN 'IN DRAWDOWN' ELSE 'RECOVERED' END AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1"
+          "queryText": "SELECT COALESCE(health_status,'unknown') AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1",
+          "rawQueryText": "SELECT COALESCE(health_status,'unknown') AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1"
         }
       ],
       "options": {
@@ -387,11 +387,11 @@
     {
       "id": 9,
       "type": "timeseries",
-      "title": "Portfolio Trajectory (120d)",
+      "title": "MV vs NLV (120d)",
       "gridPos": {
         "x": 0,
         "y": 0,
-        "w": 14,
+        "w": 16,
         "h": 5
       },
       "datasource": {
@@ -403,8 +403,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, market_value AS MarketValue, net_liquidation_value AS NetLiquidation FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, market_value AS MarketValue, net_liquidation_value AS NetLiquidation FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, market_value AS MarketValue, net_liquidation_value AS NetLiquidation FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, market_value AS MarketValue, net_liquidation_value AS NetLiquidation FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
         }
       ],
       "options": {
@@ -434,11 +434,11 @@
     {
       "id": 10,
       "type": "timeseries",
-      "title": "Income Realization vs Projection",
+      "title": "Income Forward Trend (120d)",
       "gridPos": {
-        "x": 14,
+        "x": 16,
         "y": 0,
-        "w": 10,
+        "w": 8,
         "h": 5
       },
       "datasource": {
@@ -450,8 +450,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, projected_monthly_income AS ProjectedMo, dividends_realized_mtd AS RealizedMTD, dividends_realized_30d AS Realized30d FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, projected_monthly_income AS ProjectedMo, dividends_realized_mtd AS RealizedMTD, dividends_realized_30d AS Realized30d FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, projected_monthly_income AS ProjectedMonthly, forward_12m_total AS Forward12m FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, projected_monthly_income AS ProjectedMonthly, forward_12m_total AS Forward12m FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
         }
       ],
       "options": {
@@ -481,11 +481,11 @@
     {
       "id": 11,
       "type": "table",
-      "title": "Top Holdings by MV",
+      "title": "Top Holdings Compact",
       "gridPos": {
         "x": 0,
         "y": 7,
-        "w": 12,
+        "w": 24,
         "h": 4
       },
       "datasource": {
@@ -497,8 +497,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH d AS (SELECT MAX(as_of_date_local) AS d FROM daily_holdings) SELECT substr(h.symbol,1,8) AS Sym, round(h.market_value,0) AS MV, round(h.weight_pct,2) AS WtPct, round(h.projected_monthly_dividend,2) AS MoInc FROM daily_holdings h WHERE h.as_of_date_local=(SELECT d FROM d) ORDER BY h.market_value DESC LIMIT 5",
-          "rawQueryText": "WITH d AS (SELECT MAX(as_of_date_local) AS d FROM daily_holdings) SELECT substr(h.symbol,1,8) AS Sym, round(h.market_value,0) AS MV, round(h.weight_pct,2) AS WtPct, round(h.projected_monthly_dividend,2) AS MoInc FROM daily_holdings h WHERE h.as_of_date_local=(SELECT d FROM d) ORDER BY h.market_value DESC LIMIT 5"
+          "queryText": "WITH d AS (SELECT MAX(as_of_date_local) AS d FROM daily_holdings) SELECT substr(h.symbol,1,8) AS Sym, round(h.market_value,0) AS MV, round(h.weight_pct,2) AS WtPct, round(h.projected_monthly_dividend,2) AS MoInc, round(h.current_yield_pct,2) AS YieldPct, round(COALESCE(r.contribution_pct,0),3) AS Ctr1m FROM daily_holdings h LEFT JOIN daily_return_attribution r ON r.as_of_date_local=h.as_of_date_local AND r.symbol=h.symbol AND r.window='1m' WHERE h.as_of_date_local=(SELECT d FROM d) ORDER BY h.market_value DESC LIMIT 5",
+          "rawQueryText": "WITH d AS (SELECT MAX(as_of_date_local) AS d FROM daily_holdings) SELECT substr(h.symbol,1,8) AS Sym, round(h.market_value,0) AS MV, round(h.weight_pct,2) AS WtPct, round(h.projected_monthly_dividend,2) AS MoInc, round(h.current_yield_pct,2) AS YieldPct, round(COALESCE(r.contribution_pct,0),3) AS Ctr1m FROM daily_holdings h LEFT JOIN daily_return_attribution r ON r.as_of_date_local=h.as_of_date_local AND r.symbol=h.symbol AND r.window='1m' WHERE h.as_of_date_local=(SELECT d FROM d) ORDER BY h.market_value DESC LIMIT 5"
         }
       ],
       "options": {
@@ -558,88 +558,28 @@
                 "value": 84
               }
             ]
-          }
-        ]
-      }
-    },
-    {
-      "id": 12,
-      "type": "table",
-      "title": "Return Attribution Windows",
-      "gridPos": {
-        "x": 12,
-        "y": 7,
-        "w": 12,
-        "h": 4
-      },
-      "datasource": {
-        "type": "frser-sqlite-datasource",
-        "uid": "lmi_sqlite"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "format": "table",
-          "queryType": "table",
-          "queryText": "WITH d AS (SELECT MAX(as_of_date_local) AS d FROM daily_return_attribution) SELECT window AS Win, round(contribution_pct,3) AS ContribPct, round(return_pct,3) AS ReturnPct, round(weight_avg_pct,2) AS AvgWeight FROM daily_return_attribution WHERE as_of_date_local=(SELECT d FROM d) AND symbol='_portfolio' ORDER BY CASE window WHEN '1m' THEN 1 WHEN '3m' THEN 2 WHEN '6m' THEN 3 WHEN '12m' THEN 4 ELSE 5 END LIMIT 5",
-          "rawQueryText": "WITH d AS (SELECT MAX(as_of_date_local) AS d FROM daily_return_attribution) SELECT window AS Win, round(contribution_pct,3) AS ContribPct, round(return_pct,3) AS ReturnPct, round(weight_avg_pct,2) AS AvgWeight FROM daily_return_attribution WHERE as_of_date_local=(SELECT d FROM d) AND symbol='_portfolio' ORDER BY CASE window WHEN '1m' THEN 1 WHEN '3m' THEN 2 WHEN '6m' THEN 3 WHEN '12m' THEN 4 ELSE 5 END LIMIT 5"
-        }
-      ],
-      "options": {
-        "showHeader": true,
-        "cellHeight": "sm",
-        "footer": {
-          "show": false
-        }
-      },
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": [
+          },
           {
             "matcher": {
               "id": "byName",
-              "options": "Sym"
+              "options": "YieldPct"
             },
             "properties": [
               {
                 "id": "custom.width",
-                "value": 60
+                "value": 84
               }
             ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "ContribPct"
+              "options": "Ctr1m"
             },
             "properties": [
               {
                 "id": "custom.width",
-                "value": 94
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "ReturnPct"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 90
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "AvgWeight"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 96
+                "value": 84
               }
             ]
           }
@@ -666,7 +606,6 @@
   "timepicker": {},
   "timezone": "America/Los_Angeles",
   "title": "B01 LMI v3 - Command Center",
-  "description": "Executive command surface for daily state: valuation, income trajectory, and immediate concentration/dividend watch.",
   "uid": "lmi-v3-b01-command-center",
   "version": 1,
   "weekStart": ""
