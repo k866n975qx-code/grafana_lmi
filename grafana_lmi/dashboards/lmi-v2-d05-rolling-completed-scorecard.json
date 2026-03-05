@@ -1,0 +1,254 @@
+{
+  "__inputs": [],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    }
+  ],
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "id": 1,
+      "type": "table",
+      "title": "Rolling WTD/MTD/QTD/YTD Strip",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 12,
+        "h": 7
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT CASE period_type WHEN 'WEEK' THEN 'WTD' WHEN 'MONTH' THEN 'MTD' WHEN 'QUARTER' THEN 'QTD' WHEN 'YEAR' THEN 'YTD' END AS period, period_start_date || ' -> ' || period_end_date AS range, mv_delta, monthly_income_delta, twr_period_pct, ltv_pct_delta FROM period_summary WHERE is_rolling=1 AND period_type IN ('WEEK','MONTH','QUARTER','YEAR') ORDER BY CASE period_type WHEN 'WEEK' THEN 1 WHEN 'MONTH' THEN 2 WHEN 'QUARTER' THEN 3 WHEN 'YEAR' THEN 4 END",
+          "rawQueryText": "SELECT CASE period_type WHEN 'WEEK' THEN 'WTD' WHEN 'MONTH' THEN 'MTD' WHEN 'QUARTER' THEN 'QTD' WHEN 'YEAR' THEN 'YTD' END AS period, period_start_date || ' -> ' || period_end_date AS range, mv_delta, monthly_income_delta, twr_period_pct, ltv_pct_delta FROM period_summary WHERE is_rolling=1 AND period_type IN ('WEEK','MONTH','QUARTER','YEAR') ORDER BY CASE period_type WHEN 'WEEK' THEN 1 WHEN 'MONTH' THEN 2 WHEN 'QUARTER' THEN 3 WHEN 'YEAR' THEN 4 END"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      }
+    },
+    {
+      "id": 2,
+      "type": "table",
+      "title": "Latest Completed W/M/Q/Y",
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 12,
+        "h": 7
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT period_type, period_start_date, period_end_date, mv_end, monthly_income_end, ltv_pct_end, twr_period_pct FROM period_summary WHERE is_rolling=0 AND period_type IN ('WEEK','MONTH','QUARTER','YEAR') AND (period_type, period_end_date) IN ( SELECT period_type, MAX(period_end_date) FROM period_summary WHERE is_rolling=0 AND period_type IN ('WEEK','MONTH','QUARTER','YEAR') GROUP BY period_type ) ORDER BY CASE period_type WHEN 'WEEK' THEN 1 WHEN 'MONTH' THEN 2 WHEN 'QUARTER' THEN 3 WHEN 'YEAR' THEN 4 END",
+          "rawQueryText": "SELECT period_type, period_start_date, period_end_date, mv_end, monthly_income_end, ltv_pct_end, twr_period_pct FROM period_summary WHERE is_rolling=0 AND period_type IN ('WEEK','MONTH','QUARTER','YEAR') AND (period_type, period_end_date) IN ( SELECT period_type, MAX(period_end_date) FROM period_summary WHERE is_rolling=0 AND period_type IN ('WEEK','MONTH','QUARTER','YEAR') GROUP BY period_type ) ORDER BY CASE period_type WHEN 'WEEK' THEN 1 WHEN 'MONTH' THEN 2 WHEN 'QUARTER' THEN 3 WHEN 'YEAR' THEN 4 END"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      }
+    },
+    {
+      "id": 3,
+      "type": "table",
+      "title": "Rolling vs Completed Comparison",
+      "gridPos": {
+        "x": 0,
+        "y": 7,
+        "w": 12,
+        "h": 7
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH r AS (SELECT period_type, mv_delta AS rolling_mv_delta, monthly_income_delta AS rolling_income_delta, twr_period_pct AS rolling_twr FROM period_summary WHERE is_rolling=1), c AS (SELECT p1.period_type, p1.mv_delta AS completed_mv_delta, p1.monthly_income_delta AS completed_income_delta, p1.twr_period_pct AS completed_twr FROM period_summary p1 JOIN (SELECT period_type, MAX(period_end_date) AS max_end FROM period_summary WHERE is_rolling=0 GROUP BY period_type) m ON p1.period_type=m.period_type AND p1.period_end_date=m.max_end WHERE p1.is_rolling=0) SELECT r.period_type, r.rolling_mv_delta, c.completed_mv_delta, r.rolling_income_delta, c.completed_income_delta, r.rolling_twr, c.completed_twr FROM r LEFT JOIN c USING(period_type) ORDER BY CASE r.period_type WHEN 'WEEK' THEN 1 WHEN 'MONTH' THEN 2 WHEN 'QUARTER' THEN 3 WHEN 'YEAR' THEN 4 END",
+          "rawQueryText": "WITH r AS (SELECT period_type, mv_delta AS rolling_mv_delta, monthly_income_delta AS rolling_income_delta, twr_period_pct AS rolling_twr FROM period_summary WHERE is_rolling=1), c AS (SELECT p1.period_type, p1.mv_delta AS completed_mv_delta, p1.monthly_income_delta AS completed_income_delta, p1.twr_period_pct AS completed_twr FROM period_summary p1 JOIN (SELECT period_type, MAX(period_end_date) AS max_end FROM period_summary WHERE is_rolling=0 GROUP BY period_type) m ON p1.period_type=m.period_type AND p1.period_end_date=m.max_end WHERE p1.is_rolling=0) SELECT r.period_type, r.rolling_mv_delta, c.completed_mv_delta, r.rolling_income_delta, c.completed_income_delta, r.rolling_twr, c.completed_twr FROM r LEFT JOIN c USING(period_type) ORDER BY CASE r.period_type WHEN 'WEEK' THEN 1 WHEN 'MONTH' THEN 2 WHEN 'QUARTER' THEN 3 WHEN 'YEAR' THEN 4 END"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      }
+    },
+    {
+      "id": 4,
+      "type": "table",
+      "title": "Risk Event Table",
+      "gridPos": {
+        "x": 12,
+        "y": 7,
+        "w": 12,
+        "h": 7
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT period_type, period_start_date, period_end_date, days_exceeding_var_95, margin_call_events, period_max_drawdown_pct, worst_day_return_pct, best_day_return_pct FROM period_summary WHERE period_type IN ('WEEK','MONTH','QUARTER','YEAR') ORDER BY period_end_date DESC LIMIT 40",
+          "rawQueryText": "SELECT period_type, period_start_date, period_end_date, days_exceeding_var_95, margin_call_events, period_max_drawdown_pct, worst_day_return_pct, best_day_return_pct FROM period_summary WHERE period_type IN ('WEEK','MONTH','QUARTER','YEAR') ORDER BY period_end_date DESC LIMIT 40"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      }
+    },
+    {
+      "id": 5,
+      "type": "table",
+      "title": "Period Macro Summary",
+      "gridPos": {
+        "x": 0,
+        "y": 14,
+        "w": 12,
+        "h": 7
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT period_type, period_start_date, period_end_date, metric, avg_val, min_val, max_val, min_date, max_date FROM period_macro_stats WHERE period_type IN ('WEEK','MONTH','QUARTER','YEAR') ORDER BY period_end_date DESC, metric LIMIT 60",
+          "rawQueryText": "SELECT period_type, period_start_date, period_end_date, metric, avg_val, min_val, max_val, min_date, max_date FROM period_macro_stats WHERE period_type IN ('WEEK','MONTH','QUARTER','YEAR') ORDER BY period_end_date DESC, metric LIMIT 60"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      }
+    },
+    {
+      "id": 6,
+      "type": "table",
+      "title": "Period Risk Stats Summary",
+      "gridPos": {
+        "x": 12,
+        "y": 14,
+        "w": 12,
+        "h": 7
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT period_type, period_start_date, period_end_date, metric, avg_val, min_val, max_val FROM period_risk_stats WHERE period_type IN ('WEEK','MONTH','QUARTER','YEAR') ORDER BY period_end_date DESC, metric LIMIT 60",
+          "rawQueryText": "SELECT period_type, period_start_date, period_end_date, metric, avg_val, min_val, max_val FROM period_risk_stats WHERE period_type IN ('WEEK','MONTH','QUARTER','YEAR') ORDER BY period_end_date DESC, metric LIMIT 60"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      }
+    }
+  ],
+  "refresh": "2m",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": [
+    "lmi",
+    "v2",
+    "data-heavy",
+    "periods"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-120d",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "D05 LMI v2 - Rolling + Completed Period Scorecard",
+  "uid": "lmi-v2-d05-period-scorecard",
+  "version": 1,
+  "weekStart": ""
+}

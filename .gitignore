@@ -28,3 +28,4 @@ __pycache__/
 *.md
 1-30 snapshot 
 dashboards.backup.20260211
+grafana_lmi/dashboards.backup.*
