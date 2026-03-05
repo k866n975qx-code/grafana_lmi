@@ -391,7 +391,7 @@
       "title": "Alerts by Category per Day",
       "gridPos": {
         "x": 0,
-        "y": 3,
+        "y": 7,
         "w": 12,
         "h": 4
       },
@@ -438,7 +438,7 @@
       "title": "Notification Success Trend",
       "gridPos": {
         "x": 12,
-        "y": 3,
+        "y": 7,
         "w": 12,
         "h": 4
       },
@@ -485,7 +485,7 @@
       "title": "Open Alerts Compact",
       "gridPos": {
         "x": 0,
-        "y": 7,
+        "y": 3,
         "w": 24,
         "h": 4
       },

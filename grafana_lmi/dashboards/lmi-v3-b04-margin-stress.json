@@ -25,8 +25,8 @@
       "gridPos": {
         "x": 0,
         "y": 0,
-        "w": 3,
-        "h": 3
+        "w": 6,
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -68,10 +68,10 @@
       "type": "stat",
       "title": "Loan Balance",
       "gridPos": {
-        "x": 3,
+        "x": 6,
         "y": 0,
-        "w": 3,
-        "h": 3
+        "w": 6,
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -114,10 +114,10 @@
       "type": "stat",
       "title": "LTVPct",
       "gridPos": {
-        "x": 6,
+        "x": 12,
         "y": 0,
-        "w": 3,
-        "h": 3
+        "w": 6,
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -160,10 +160,10 @@
       "type": "stat",
       "title": "Mo Interest",
       "gridPos": {
-        "x": 9,
+        "x": 18,
         "y": 0,
-        "w": 3,
-        "h": 3
+        "w": 6,
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -206,10 +206,10 @@
       "type": "stat",
       "title": "Annual Int",
       "gridPos": {
-        "x": 12,
-        "y": 0,
-        "w": 3,
-        "h": 3
+        "x": 0,
+        "y": 2,
+        "w": 6,
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -252,10 +252,10 @@
       "type": "stat",
       "title": "Coverage",
       "gridPos": {
-        "x": 15,
-        "y": 0,
-        "w": 3,
-        "h": 3
+        "x": 6,
+        "y": 2,
+        "w": 6,
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -298,10 +298,10 @@
       "type": "stat",
       "title": "BufferPct",
       "gridPos": {
-        "x": 18,
-        "y": 0,
-        "w": 3,
-        "h": 3
+        "x": 12,
+        "y": 2,
+        "w": 6,
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -344,10 +344,10 @@
       "type": "stat",
       "title": "BufferStatus",
       "gridPos": {
-        "x": 21,
-        "y": 0,
-        "w": 3,
-        "h": 3
+        "x": 18,
+        "y": 2,
+        "w": 6,
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -390,9 +390,9 @@
       "title": "LTV and Loan Trend",
       "gridPos": {
         "x": 0,
-        "y": 3,
+        "y": 4,
         "w": 12,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -437,9 +437,9 @@
       "title": "Coverage and Buffer Trend",
       "gridPos": {
         "x": 12,
-        "y": 3,
+        "y": 4,
         "w": 12,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",

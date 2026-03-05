@@ -24,9 +24,9 @@
       "title": "As Of",
       "gridPos": {
         "x": 0,
-        "y": 0,
+        "y": 5,
         "w": 3,
-        "h": 3
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -69,9 +69,9 @@
       "title": "Market Value",
       "gridPos": {
         "x": 3,
-        "y": 0,
+        "y": 5,
         "w": 3,
-        "h": 3
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -115,9 +115,9 @@
       "title": "Net Liquidation",
       "gridPos": {
         "x": 6,
-        "y": 0,
+        "y": 5,
         "w": 3,
-        "h": 3
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -161,9 +161,9 @@
       "title": "LTVPct",
       "gridPos": {
         "x": 9,
-        "y": 0,
+        "y": 5,
         "w": 3,
-        "h": 3
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -207,9 +207,9 @@
       "title": "Projected Mo",
       "gridPos": {
         "x": 12,
-        "y": 0,
+        "y": 5,
         "w": 3,
-        "h": 3
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -253,9 +253,9 @@
       "title": "Forward12m",
       "gridPos": {
         "x": 15,
-        "y": 0,
+        "y": 5,
         "w": 3,
-        "h": 3
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -299,9 +299,9 @@
       "title": "DrawdownPct",
       "gridPos": {
         "x": 18,
-        "y": 0,
+        "y": 5,
         "w": 3,
-        "h": 3
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -345,9 +345,9 @@
       "title": "Health",
       "gridPos": {
         "x": 21,
-        "y": 0,
+        "y": 5,
         "w": 3,
-        "h": 3
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -390,9 +390,9 @@
       "title": "MV vs NLV (120d)",
       "gridPos": {
         "x": 0,
-        "y": 3,
-        "w": 12,
-        "h": 4
+        "y": 0,
+        "w": 16,
+        "h": 5
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -436,10 +436,10 @@
       "type": "timeseries",
       "title": "Income Forward Trend (120d)",
       "gridPos": {
-        "x": 12,
-        "y": 3,
-        "w": 12,
-        "h": 4
+        "x": 16,
+        "y": 0,
+        "w": 8,
+        "h": 5
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -458,7 +458,7 @@
         "legend": {
           "displayMode": "list",
           "placement": "bottom",
-          "showLegend": true
+          "showLegend": false
         },
         "tooltip": {
           "mode": "single",

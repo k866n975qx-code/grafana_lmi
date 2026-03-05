@@ -25,8 +25,8 @@
       "gridPos": {
         "x": 0,
         "y": 0,
-        "w": 3,
-        "h": 3
+        "w": 6,
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -69,10 +69,10 @@
       "type": "stat",
       "title": "Withdraw",
       "gridPos": {
-        "x": 3,
+        "x": 6,
         "y": 0,
-        "w": 3,
-        "h": 3
+        "w": 6,
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -115,10 +115,10 @@
       "type": "stat",
       "title": "Dividends",
       "gridPos": {
-        "x": 6,
+        "x": 12,
         "y": 0,
-        "w": 3,
-        "h": 3
+        "w": 6,
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -161,10 +161,10 @@
       "type": "stat",
       "title": "Trades",
       "gridPos": {
-        "x": 9,
+        "x": 18,
         "y": 0,
-        "w": 3,
-        "h": 3
+        "w": 6,
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -207,10 +207,10 @@
       "type": "stat",
       "title": "MarginNet",
       "gridPos": {
-        "x": 12,
-        "y": 0,
-        "w": 3,
-        "h": 3
+        "x": 0,
+        "y": 2,
+        "w": 6,
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -253,10 +253,10 @@
       "type": "stat",
       "title": "Pos Added",
       "gridPos": {
-        "x": 15,
-        "y": 0,
-        "w": 3,
-        "h": 3
+        "x": 6,
+        "y": 2,
+        "w": 6,
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -299,10 +299,10 @@
       "type": "stat",
       "title": "Pos Removed",
       "gridPos": {
-        "x": 18,
-        "y": 0,
-        "w": 3,
-        "h": 3
+        "x": 12,
+        "y": 2,
+        "w": 6,
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -345,10 +345,10 @@
       "type": "stat",
       "title": "Period",
       "gridPos": {
-        "x": 21,
-        "y": 0,
-        "w": 3,
-        "h": 3
+        "x": 18,
+        "y": 2,
+        "w": 6,
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -391,9 +391,9 @@
       "title": "Completed MONTH Activity Totals",
       "gridPos": {
         "x": 0,
-        "y": 3,
+        "y": 4,
         "w": 12,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -438,9 +438,9 @@
       "title": "Trade Count and Margin Net",
       "gridPos": {
         "x": 12,
-        "y": 3,
+        "y": 4,
         "w": 12,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",

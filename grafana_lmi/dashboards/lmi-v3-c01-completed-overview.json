@@ -25,8 +25,8 @@
       "gridPos": {
         "x": 0,
         "y": 0,
-        "w": 3,
-        "h": 3
+        "w": 6,
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -69,10 +69,10 @@
       "type": "stat",
       "title": "M MVDelta",
       "gridPos": {
-        "x": 3,
+        "x": 6,
         "y": 0,
-        "w": 3,
-        "h": 3
+        "w": 6,
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -115,10 +115,10 @@
       "type": "stat",
       "title": "Q MVDelta",
       "gridPos": {
-        "x": 6,
+        "x": 12,
         "y": 0,
-        "w": 3,
-        "h": 3
+        "w": 6,
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -161,10 +161,10 @@
       "type": "stat",
       "title": "Y MVDelta",
       "gridPos": {
-        "x": 9,
+        "x": 18,
         "y": 0,
-        "w": 3,
-        "h": 3
+        "w": 6,
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -207,10 +207,10 @@
       "type": "stat",
       "title": "W TWR",
       "gridPos": {
-        "x": 12,
-        "y": 0,
-        "w": 3,
-        "h": 3
+        "x": 0,
+        "y": 2,
+        "w": 6,
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -253,10 +253,10 @@
       "type": "stat",
       "title": "M TWR",
       "gridPos": {
-        "x": 15,
-        "y": 0,
-        "w": 3,
-        "h": 3
+        "x": 6,
+        "y": 2,
+        "w": 6,
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -299,10 +299,10 @@
       "type": "stat",
       "title": "Q TWR",
       "gridPos": {
-        "x": 18,
-        "y": 0,
-        "w": 3,
-        "h": 3
+        "x": 12,
+        "y": 2,
+        "w": 6,
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -345,10 +345,10 @@
       "type": "stat",
       "title": "Y TWR",
       "gridPos": {
-        "x": 21,
-        "y": 0,
-        "w": 3,
-        "h": 3
+        "x": 18,
+        "y": 2,
+        "w": 6,
+        "h": 2
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -392,9 +392,9 @@
       "title": "Completed MV Delta",
       "gridPos": {
         "x": 0,
-        "y": 3,
+        "y": 4,
         "w": 12,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
@@ -439,9 +439,9 @@
       "title": "Completed TWR",
       "gridPos": {
         "x": 12,
-        "y": 3,
+        "y": 4,
         "w": 12,
-        "h": 4
+        "h": 3
       },
       "datasource": {
         "type": "frser-sqlite-datasource",
