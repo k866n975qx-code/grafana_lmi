@@ -211,7 +211,10 @@
     "to": "now"
   },
   "timezone": "browser",
-  "title": "LMI - Data Quality",
-  "uid": "lmi-data-quality",
-  "version": 2
+  "title": "D27 - LMI - Data Quality",
+  "uid": "lmi-d27-data-quality",
+  "version": 2,
+  "__annotations": {
+    "grafana.app/sourcePath": "dashboards/D27-lmi-data-quality.json"
+  }
 }

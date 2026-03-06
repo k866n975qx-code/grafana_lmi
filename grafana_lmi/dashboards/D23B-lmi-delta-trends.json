@@ -1,7 +1,16 @@
 {
   "__inputs": [],
-  "__requires": [{ "type": "grafana", "id": "grafana", "name": "Grafana", "version": "10.0.0" }],
-  "annotations": { "list": [] },
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    }
+  ],
+  "annotations": {
+    "list": []
+  },
   "editable": true,
   "graphTooltip": 0,
   "id": null,
@@ -10,8 +19,16 @@
       "id": 1,
       "type": "timeseries",
       "title": "Quarter-over-Quarter MV Delta Trend (4 years)",
-      "gridPos": { "x": 0, "y": 0, "w": 24, "h": 6 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 6
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -23,11 +40,21 @@
       "transformations": [
         {
           "id": "convertFieldType",
-          "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] }
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
         }
       ],
       "fieldConfig": {
-        "defaults": { "unit": "currencyUSD", "decimals": 0 },
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
         "overrides": []
       }
     },
@@ -35,8 +62,16 @@
       "id": 2,
       "type": "timeseries",
       "title": "Month-over-Month TWR % Trend (24 months)",
-      "gridPos": { "x": 0, "y": 6, "w": 24, "h": 6 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 6,
+        "w": 24,
+        "h": 6
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -48,11 +83,21 @@
       "transformations": [
         {
           "id": "convertFieldType",
-          "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] }
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
         }
       ],
       "fieldConfig": {
-        "defaults": { "unit": "percent", "decimals": 2 },
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
         "overrides": []
       }
     },
@@ -60,8 +105,16 @@
       "id": 3,
       "type": "timeseries",
       "title": "Week-over-Week Income Trend (52 weeks)",
-      "gridPos": { "x": 0, "y": 12, "w": 24, "h": 6 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 12,
+        "w": 24,
+        "h": 6
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -73,11 +126,21 @@
       "transformations": [
         {
           "id": "convertFieldType",
-          "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] }
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
         }
       ],
       "fieldConfig": {
-        "defaults": { "unit": "currencyUSD", "decimals": 0 },
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
         "overrides": []
       }
     }
@@ -85,11 +148,19 @@
   "refresh": "5m",
   "schemaVersion": 39,
   "style": "dark",
-  "tags": ["lmi", "periods"],
-  "time": { "from": "now-4y", "to": "now" },
+  "tags": [
+    "lmi",
+    "periods"
+  ],
+  "time": {
+    "from": "now-4y",
+    "to": "now"
+  },
   "timezone": "browser",
-  "title": "LMI - Delta Trends",
-  "uid": "lmi-delta-trends",
+  "title": "D23B - LMI - Delta Trends",
+  "uid": "lmi-d23b-delta-trends",
   "version": 1,
-  "__annotations": { "grafana.app/sourcePath": "dashboards/lmi-delta-trends.json" }
+  "__annotations": {
+    "grafana.app/sourcePath": "dashboards/D23B-lmi-delta-trends.json"
+  }
 }

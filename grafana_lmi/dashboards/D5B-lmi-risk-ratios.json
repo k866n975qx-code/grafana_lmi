@@ -1,7 +1,16 @@
 {
   "__inputs": [],
-  "__requires": [{ "type": "grafana", "id": "grafana", "name": "Grafana", "version": "10.0.0" }],
-  "annotations": { "list": [] },
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    }
+  ],
+  "annotations": {
+    "list": []
+  },
   "editable": true,
   "graphTooltip": 0,
   "id": null,
@@ -10,40 +19,76 @@
       "id": 1,
       "type": "stat",
       "title": "Sharpe 1m",
-      "gridPos": { "x": 0, "y": 0, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT sharpe_1m AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT ROUND(twr_1m_pct / NULLIF(vol_30d_pct, 0), 3) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "short", "decimals": 2 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 2
+        },
+        "overrides": []
+      }
     },
     {
       "id": 2,
       "type": "stat",
       "title": "Sharpe 6m",
-      "gridPos": { "x": 6, "y": 0, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 6,
+        "y": 0,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT sharpe_6m AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT ROUND(twr_6m_pct / NULLIF(vol_90d_pct, 0), 3) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "short", "decimals": 2 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 2
+        },
+        "overrides": []
+      }
     },
     {
       "id": 3,
       "type": "stat",
       "title": "Sharpe 1y",
-      "gridPos": { "x": 12, "y": 0, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -52,14 +97,28 @@
           "queryText": "SELECT sharpe_1y AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "short", "decimals": 2 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 2
+        },
+        "overrides": []
+      }
     },
     {
       "id": 4,
       "type": "stat",
       "title": "Sortino 1y",
-      "gridPos": { "x": 18, "y": 0, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 18,
+        "y": 0,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -68,14 +127,28 @@
           "queryText": "SELECT sortino_1y AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "short", "decimals": 2 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 2
+        },
+        "overrides": []
+      }
     },
     {
       "id": 5,
       "type": "stat",
       "title": "Calmar 1y",
-      "gridPos": { "x": 0, "y": 3, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 3,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -84,14 +157,28 @@
           "queryText": "SELECT calmar_1y AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "short", "decimals": 2 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 2
+        },
+        "overrides": []
+      }
     },
     {
       "id": 6,
       "type": "stat",
       "title": "Omega Ratio 1y",
-      "gridPos": { "x": 6, "y": 3, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 6,
+        "y": 3,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -100,14 +187,28 @@
           "queryText": "SELECT omega_ratio_1y AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "short", "decimals": 2 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 2
+        },
+        "overrides": []
+      }
     },
     {
       "id": 7,
       "type": "stat",
       "title": "Ulcer Index 1y",
-      "gridPos": { "x": 12, "y": 3, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 12,
+        "y": 3,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -116,14 +217,28 @@
           "queryText": "SELECT ulcer_index_1y AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "short", "decimals": 2 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 2
+        },
+        "overrides": []
+      }
     },
     {
       "id": 8,
       "type": "stat",
       "title": "Sortino/Sharpe",
-      "gridPos": { "x": 18, "y": 3, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 18,
+        "y": 3,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -132,14 +247,28 @@
           "queryText": "SELECT sortino_sharpe_ratio AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "short", "decimals": 2 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 2
+        },
+        "overrides": []
+      }
     },
     {
       "id": 9,
       "type": "timeseries",
       "title": "Sharpe 1y Trend (365d)",
-      "gridPos": { "x": 0, "y": 6, "w": 12, "h": 8 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 6,
+        "w": 12,
+        "h": 8
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -151,11 +280,21 @@
       "transformations": [
         {
           "id": "convertFieldType",
-          "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] }
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
         }
       ],
       "fieldConfig": {
-        "defaults": { "unit": "short", "decimals": 2 },
+        "defaults": {
+          "unit": "short",
+          "decimals": 2
+        },
         "overrides": []
       }
     },
@@ -163,8 +302,16 @@
       "id": 10,
       "type": "timeseries",
       "title": "Sortino 1y Trend (365d)",
-      "gridPos": { "x": 12, "y": 6, "w": 12, "h": 8 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 12,
+        "y": 6,
+        "w": 12,
+        "h": 8
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -176,11 +323,21 @@
       "transformations": [
         {
           "id": "convertFieldType",
-          "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] }
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
         }
       ],
       "fieldConfig": {
-        "defaults": { "unit": "short", "decimals": 2 },
+        "defaults": {
+          "unit": "short",
+          "decimals": 2
+        },
         "overrides": []
       }
     }
@@ -188,11 +345,19 @@
   "refresh": "2m",
   "schemaVersion": 39,
   "style": "dark",
-  "tags": ["lmi", "risk"],
-  "time": { "from": "now-365d", "to": "now" },
+  "tags": [
+    "lmi",
+    "risk"
+  ],
+  "time": {
+    "from": "now-365d",
+    "to": "now"
+  },
   "timezone": "browser",
-  "title": "LMI - Risk Dashboard: Ratios",
-  "uid": "lmi-risk-ratios",
+  "title": "D5B - LMI - Risk Dashboard: Ratios",
+  "uid": "lmi-d5b-risk-ratios",
   "version": 1,
-  "__annotations": { "grafana.app/sourcePath": "dashboards/lmi-risk-ratios.json" }
+  "__annotations": {
+    "grafana.app/sourcePath": "dashboards/D5B-lmi-risk-ratios.json"
+  }
 }

@@ -1,0 +1,270 @@
+{
+  "__inputs": [],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    }
+  ],
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "graphTooltip": 0,
+  "id": null,
+  "panels": [
+    {
+      "id": 1,
+      "type": "table",
+      "title": "All Metric Changes",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 12
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest_portfolio AS (SELECT * FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1), prev_portfolio AS (SELECT * FROM daily_portfolio WHERE as_of_date_local < (SELECT as_of_date_local FROM latest_portfolio) ORDER BY as_of_date_local DESC LIMIT 1), latest_holdings AS (SELECT COUNT(*) AS cnt FROM daily_holdings WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_holdings)), prev_holdings AS (SELECT COUNT(*) AS cnt FROM daily_holdings WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_holdings WHERE as_of_date_local < (SELECT MAX(as_of_date_local) FROM daily_holdings))) SELECT 'Market Value' AS \"Metric\", ROUND(lp.market_value, 0) AS \"Today\", ROUND(COALESCE(pp.market_value, 0), 0) AS \"Yesterday\", ROUND(lp.market_value - COALESCE(pp.market_value, 0), 0) AS \"Delta\" FROM latest_portfolio lp LEFT JOIN prev_portfolio pp UNION ALL SELECT 'Net Liquidation', ROUND(lp.net_liquidation_value, 0), ROUND(COALESCE(pp.net_liquidation_value, 0), 0), ROUND(lp.net_liquidation_value - COALESCE(pp.net_liquidation_value, 0), 0) FROM latest_portfolio lp LEFT JOIN prev_portfolio pp UNION ALL SELECT 'Monthly Income', ROUND(lp.projected_monthly_income, 2), ROUND(COALESCE(pp.projected_monthly_income, 0), 2), ROUND(lp.projected_monthly_income - COALESCE(pp.projected_monthly_income, 0), 2) FROM latest_portfolio lp LEFT JOIN prev_portfolio pp UNION ALL SELECT 'LTV %', ROUND(lp.ltv_pct, 1), ROUND(COALESCE(pp.ltv_pct, 0), 1), ROUND(lp.ltv_pct - COALESCE(pp.ltv_pct, 0), 1) FROM latest_portfolio lp LEFT JOIN prev_portfolio pp UNION ALL SELECT 'Holdings Count', lh.cnt AS \"Today\", COALESCE(ph.cnt, 0) AS \"Yesterday\", lh.cnt - COALESCE(ph.cnt, 0) AS \"Delta\" FROM latest_holdings lh LEFT JOIN prev_holdings ph;"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm"
+      },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true
+            },
+            "indexByName": {
+              "Metric": 0,
+              "Today": 1,
+              "Yesterday": 2,
+              "Delta": 3
+            },
+            "renameByName": {}
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Metric"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 150
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Today"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 150
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Yesterday"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 150
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Delta"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 140
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "type": "table",
+      "title": "Holdings Changes",
+      "gridPos": {
+        "x": 0,
+        "y": 12,
+        "w": 24,
+        "h": 6
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT h1.symbol AS \"Symbol\", ROUND(h1.weight_pct, 2) AS \"Today Weight %\", ROUND(h2.weight_pct, 2) AS \"Prev Weight %\", ROUND(h1.weight_pct - h2.weight_pct, 2) AS \"Weight Delta %\", ROUND(h1.market_value, 0) AS \"Today MV\", ROUND(h2.market_value, 0) AS \"Prev MV\", ROUND(h1.market_value - h2.market_value, 0) AS \"MV Delta\" FROM daily_holdings h1 LEFT JOIN daily_holdings h2 ON h1.symbol = h2.symbol AND h2.as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_holdings WHERE as_of_date_local < (SELECT MAX(as_of_date_local) FROM daily_holdings)) WHERE h1.as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_holdings) AND h2.symbol IS NOT NULL ORDER BY ABS(h1.weight_pct - h2.weight_pct) DESC LIMIT 10;"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm"
+      },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true
+            },
+            "indexByName": {
+              "Symbol": 0,
+              "Today Weight %": 1,
+              "Prev Weight %": 2,
+              "Weight Delta %": 3,
+              "Today MV": 4,
+              "Prev MV": 5,
+              "MV Delta": 6
+            },
+            "renameByName": {}
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Symbol"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Today Weight %"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Prev Weight %"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Weight Delta %"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Today MV"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Prev MV"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "MV Delta"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 110
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "refresh": "1m",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": [
+    "lmi",
+    "daily"
+  ],
+  "time": {
+    "from": "now-2d",
+    "to": "now"
+  },
+  "timezone": "browser",
+  "title": "D22A - LMI - Delta Details",
+  "uid": "lmi-d22a-delta-details",
+  "version": 1,
+  "__annotations": {
+    "grafana.app/sourcePath": "dashboards/D22A-lmi-delta-details.json"
+  }
+}

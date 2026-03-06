@@ -1,7 +1,16 @@
 {
   "__inputs": [],
-  "__requires": [{ "type": "grafana", "id": "grafana", "name": "Grafana", "version": "10.0.0" }],
-  "annotations": { "list": [] },
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    }
+  ],
+  "annotations": {
+    "list": []
+  },
   "editable": true,
   "graphTooltip": 0,
   "id": null,
@@ -10,8 +19,16 @@
       "id": 1,
       "type": "stat",
       "title": "Week Trades",
-      "gridPos": { "x": 0, "y": 0, "w": 4, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 4,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -20,14 +37,27 @@
           "queryText": "SELECT trades_total_count AS value FROM period_activity WHERE period_type = 'week' AND period_end_date = (SELECT MAX(period_end_date) FROM period_activity WHERE period_type = 'week');"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      }
     },
     {
       "id": 2,
       "type": "stat",
       "title": "Week Buys",
-      "gridPos": { "x": 4, "y": 0, "w": 4, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 4,
+        "y": 0,
+        "w": 4,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -36,14 +66,27 @@
           "queryText": "SELECT trades_buy_count AS value FROM period_activity WHERE period_type = 'week' AND period_end_date = (SELECT MAX(period_end_date) FROM period_activity WHERE period_type = 'week');"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      }
     },
     {
       "id": 3,
       "type": "stat",
       "title": "Week Sells",
-      "gridPos": { "x": 8, "y": 0, "w": 4, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 8,
+        "y": 0,
+        "w": 4,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -52,14 +95,27 @@
           "queryText": "SELECT trades_sell_count AS value FROM period_activity WHERE period_type = 'week' AND period_end_date = (SELECT MAX(period_end_date) FROM period_activity WHERE period_type = 'week');"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      }
     },
     {
       "id": 4,
       "type": "stat",
       "title": "Week Dividends",
-      "gridPos": { "x": 12, "y": 0, "w": 4, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 4,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -68,14 +124,27 @@
           "queryText": "SELECT dividends_count AS value FROM period_activity WHERE period_type = 'week' AND period_end_date = (SELECT MAX(period_end_date) FROM period_activity WHERE period_type = 'week');"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      }
     },
     {
       "id": 5,
       "type": "stat",
       "title": "Week Contributions",
-      "gridPos": { "x": 16, "y": 0, "w": 4, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 16,
+        "y": 0,
+        "w": 4,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -84,14 +153,27 @@
           "queryText": "SELECT contributions_count AS value FROM period_activity WHERE period_type = 'week' AND period_end_date = (SELECT MAX(period_end_date) FROM period_activity WHERE period_type = 'week');"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      }
     },
     {
       "id": 6,
       "type": "stat",
       "title": "Position Changes",
-      "gridPos": { "x": 20, "y": 0, "w": 4, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 20,
+        "y": 0,
+        "w": 4,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -100,14 +182,27 @@
           "queryText": "SELECT positions_added_count + positions_removed_count AS value FROM period_activity WHERE period_type = 'week' AND period_end_date = (SELECT MAX(period_end_date) FROM period_activity WHERE period_type = 'week');"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      }
     },
     {
       "id": 7,
       "type": "table",
       "title": "Recent Trades (Week)",
-      "gridPos": { "x": 0, "y": 3, "w": 24, "h": 5 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 3,
+        "w": 24,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -116,13 +211,23 @@
           "queryText": "SELECT symbol AS \"Symbol\", buy_count AS \"Buys\", sell_count AS \"Sells\", buy_count - sell_count AS \"Net\" FROM period_trades WHERE period_type = 'week' AND period_end_date = (SELECT MAX(period_end_date) FROM period_trades WHERE period_type = 'week') ORDER BY (buy_count + sell_count) DESC LIMIT 15;"
         }
       ],
-      "options": { "showHeader": true, "cellHeight": "sm" },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm"
+      },
       "transformations": [
         {
           "id": "organize",
           "options": {
-            "excludeByName": { "Time": true },
-            "indexByName": { "Symbol": 0, "Buys": 1, "Sells": 2, "Net": 3 },
+            "excludeByName": {
+              "Time": true
+            },
+            "indexByName": {
+              "Symbol": 0,
+              "Buys": 1,
+              "Sells": 2,
+              "Net": 3
+            },
             "renameByName": {}
           }
         }
@@ -130,10 +235,54 @@
       "fieldConfig": {
         "defaults": {},
         "overrides": [
-          { "matcher": { "id": "byName", "options": "Symbol" }, "properties": [{ "id": "custom.width", "value": 150 }] },
-          { "matcher": { "id": "byName", "options": "Buys" }, "properties": [{ "id": "custom.width", "value": 120 }] },
-          { "matcher": { "id": "byName", "options": "Sells" }, "properties": [{ "id": "custom.width", "value": 120 }] },
-          { "matcher": { "id": "byName", "options": "Net" }, "properties": [{ "id": "custom.width", "value": 120 }] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Symbol"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 150
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Buys"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Sells"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Net"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          }
         ]
       }
     },
@@ -141,8 +290,16 @@
       "id": 8,
       "type": "table",
       "title": "Added Positions (Week)",
-      "gridPos": { "x": 0, "y": 8, "w": 12, "h": 4 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 8,
+        "w": 12,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -151,13 +308,20 @@
           "queryText": "SELECT symbol AS \"Symbol\" FROM period_position_lists WHERE period_type = 'week' AND list_type = 'added' AND period_end_date = (SELECT MAX(period_end_date) FROM period_position_lists WHERE period_type = 'week' AND list_type = 'added');"
         }
       ],
-      "options": { "showHeader": true, "cellHeight": "sm" },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm"
+      },
       "transformations": [
         {
           "id": "organize",
           "options": {
-            "excludeByName": { "Time": true },
-            "indexByName": { "Symbol": 0 },
+            "excludeByName": {
+              "Time": true
+            },
+            "indexByName": {
+              "Symbol": 0
+            },
             "renameByName": {}
           }
         }
@@ -165,7 +329,18 @@
       "fieldConfig": {
         "defaults": {},
         "overrides": [
-          { "matcher": { "id": "byName", "options": "Symbol" }, "properties": [{ "id": "custom.width", "value": 200 }] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Symbol"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 200
+              }
+            ]
+          }
         ]
       }
     },
@@ -173,8 +348,16 @@
       "id": 9,
       "type": "table",
       "title": "Removed Positions (Week)",
-      "gridPos": { "x": 12, "y": 8, "w": 12, "h": 4 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 12,
+        "y": 8,
+        "w": 12,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -183,13 +366,20 @@
           "queryText": "SELECT symbol AS \"Symbol\" FROM period_position_lists WHERE period_type = 'week' AND list_type = 'removed' AND period_end_date = (SELECT MAX(period_end_date) FROM period_position_lists WHERE period_type = 'week' AND list_type = 'removed');"
         }
       ],
-      "options": { "showHeader": true, "cellHeight": "sm" },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm"
+      },
       "transformations": [
         {
           "id": "organize",
           "options": {
-            "excludeByName": { "Time": true },
-            "indexByName": { "Symbol": 0 },
+            "excludeByName": {
+              "Time": true
+            },
+            "indexByName": {
+              "Symbol": 0
+            },
             "renameByName": {}
           }
         }
@@ -197,7 +387,18 @@
       "fieldConfig": {
         "defaults": {},
         "overrides": [
-          { "matcher": { "id": "byName", "options": "Symbol" }, "properties": [{ "id": "custom.width", "value": 200 }] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Symbol"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 200
+              }
+            ]
+          }
         ]
       }
     }
@@ -205,11 +406,19 @@
   "refresh": "5m",
   "schemaVersion": 39,
   "style": "dark",
-  "tags": ["lmi", "activity"],
-  "time": { "from": "now-90d", "to": "now" },
+  "tags": [
+    "lmi",
+    "activity"
+  ],
+  "time": {
+    "from": "now-90d",
+    "to": "now"
+  },
   "timezone": "browser",
-  "title": "LMI - Activity Log",
-  "uid": "lmi-activity-log",
+  "title": "D25 - LMI - Activity Log",
+  "uid": "lmi-d25-activity-log",
   "version": 1,
-  "__annotations": { "grafana.app/sourcePath": "dashboards/lmi-activity-log.json" }
+  "__annotations": {
+    "grafana.app/sourcePath": "dashboards/D25-lmi-activity-log.json"
+  }
 }

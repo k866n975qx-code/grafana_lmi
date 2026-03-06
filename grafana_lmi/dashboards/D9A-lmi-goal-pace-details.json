@@ -590,7 +590,10 @@
     "to": "now"
   },
   "timezone": "browser",
-  "title": "LMI - Goal Pace",
-  "uid": "lmi-goal-pace",
-  "version": 1
+  "title": "D9A - LMI - Goal Pace",
+  "uid": "lmi-d9a-goal-pace-details",
+  "version": 1,
+  "__annotations": {
+    "grafana.app/sourcePath": "dashboards/D9A-lmi-goal-pace-details.json"
+  }
 }

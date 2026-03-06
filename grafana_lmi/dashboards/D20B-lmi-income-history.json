@@ -1,7 +1,16 @@
 {
   "__inputs": [],
-  "__requires": [{ "type": "grafana", "id": "grafana", "name": "Grafana", "version": "10.0.0" }],
-  "annotations": { "list": [] },
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    }
+  ],
+  "annotations": {
+    "list": []
+  },
   "editable": true,
   "graphTooltip": 0,
   "id": null,
@@ -10,23 +19,40 @@
       "id": 1,
       "type": "table",
       "title": "Dividends by Period",
-      "gridPos": { "x": 0, "y": 0, "w": 24, "h": 12 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 12
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT period_label AS \"Period\", ROUND(dividends_received_period, 2) AS \"Dividends\", dividends_count AS \"Count\" FROM period_summary WHERE period_type IN ('month', 'quarter') AND is_rolling = 0 AND dividends_received_period IS NOT NULL ORDER BY period_end_date DESC LIMIT 12;"
+          "queryText": "SELECT ps.period_label AS \"Period\", ROUND(ps.dividends_received_period, 2) AS \"Dividends\", COALESCE(pde.event_count, 0) AS \"Count\" FROM period_summary ps LEFT JOIN (SELECT period_type, period_start_date, period_end_date, COUNT(*) AS event_count FROM period_dividend_events GROUP BY period_type, period_start_date, period_end_date) pde ON pde.period_type = ps.period_type AND pde.period_start_date = ps.period_start_date AND pde.period_end_date = ps.period_end_date WHERE ps.period_type IN ('month', 'quarter') AND ps.is_rolling = 0 AND ps.dividends_received_period IS NOT NULL ORDER BY ps.period_end_date DESC LIMIT 12;"
         }
       ],
-      "options": { "showHeader": true, "cellHeight": "sm" },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm"
+      },
       "transformations": [
         {
           "id": "organize",
           "options": {
-            "excludeByName": { "Time": true },
-            "indexByName": { "Period": 0, "Dividends": 1, "Count": 2 },
+            "excludeByName": {
+              "Time": true
+            },
+            "indexByName": {
+              "Period": 0,
+              "Dividends": 1,
+              "Count": 2
+            },
             "renameByName": {}
           }
         }
@@ -34,9 +60,42 @@
       "fieldConfig": {
         "defaults": {},
         "overrides": [
-          { "matcher": { "id": "byName", "options": "Period" }, "properties": [{ "id": "custom.width", "value": 150 }] },
-          { "matcher": { "id": "byName", "options": "Dividends" }, "properties": [{ "id": "custom.width", "value": 140 }] },
-          { "matcher": { "id": "byName", "options": "Count" }, "properties": [{ "id": "custom.width", "value": 100 }] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Period"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 150
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Dividends"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 140
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Count"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          }
         ]
       }
     },
@@ -44,8 +103,16 @@
       "id": 2,
       "type": "timeseries",
       "title": "Dividends Trend (12 months)",
-      "gridPos": { "x": 0, "y": 12, "w": 24, "h": 6 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 12,
+        "w": 24,
+        "h": 6
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -57,11 +124,21 @@
       "transformations": [
         {
           "id": "convertFieldType",
-          "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] }
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
         }
       ],
       "fieldConfig": {
-        "defaults": { "unit": "currencyUSD", "decimals": 0 },
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
         "overrides": []
       }
     }
@@ -69,11 +146,19 @@
   "refresh": "5m",
   "schemaVersion": 39,
   "style": "dark",
-  "tags": ["lmi", "income"],
-  "time": { "from": "now-365d", "to": "now" },
+  "tags": [
+    "lmi",
+    "income"
+  ],
+  "time": {
+    "from": "now-365d",
+    "to": "now"
+  },
   "timezone": "browser",
-  "title": "LMI - Income History",
-  "uid": "lmi-income-history",
+  "title": "D20B - LMI - Income History",
+  "uid": "lmi-d20b-income-history",
   "version": 1,
-  "__annotations": { "grafana.app/sourcePath": "dashboards/lmi-income-history.json" }
+  "__annotations": {
+    "grafana.app/sourcePath": "dashboards/D20B-lmi-income-history.json"
+  }
 }

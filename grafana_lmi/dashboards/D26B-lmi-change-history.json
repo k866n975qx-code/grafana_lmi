@@ -1,7 +1,16 @@
 {
   "__inputs": [],
-  "__requires": [{ "type": "grafana", "id": "grafana", "name": "Grafana", "version": "10.0.0" }],
-  "annotations": { "list": [] },
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    }
+  ],
+  "annotations": {
+    "list": []
+  },
   "editable": true,
   "graphTooltip": 0,
   "id": null,
@@ -10,8 +19,16 @@
       "id": 1,
       "type": "timeseries",
       "title": "Position Additions/Removals Trend (52 weeks)",
-      "gridPos": { "x": 0, "y": 0, "w": 24, "h": 6 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 6
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -23,11 +40,20 @@
       "transformations": [
         {
           "id": "convertFieldType",
-          "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] }
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
         }
       ],
       "fieldConfig": {
-        "defaults": { "unit": "short" },
+        "defaults": {
+          "unit": "short"
+        },
         "overrides": []
       }
     },
@@ -35,8 +61,16 @@
       "id": 2,
       "type": "timeseries",
       "title": "Turnover Rate Trend (52 weeks)",
-      "gridPos": { "x": 0, "y": 6, "w": 24, "h": 6 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 6,
+        "w": 24,
+        "h": 6
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -48,11 +82,21 @@
       "transformations": [
         {
           "id": "convertFieldType",
-          "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] }
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
         }
       ],
       "fieldConfig": {
-        "defaults": { "unit": "percent", "decimals": 1 },
+        "defaults": {
+          "unit": "percent",
+          "decimals": 1
+        },
         "overrides": []
       }
     },
@@ -60,23 +104,42 @@
       "id": 3,
       "type": "table",
       "title": "Change History by Week",
-      "gridPos": { "x": 0, "y": 12, "w": 24, "h": 6 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 12,
+        "w": 24,
+        "h": 6
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT period_label AS \"Week\", positions_added_count AS \"Added\", positions_removed_count AS \"Removed\", positions_increased_count AS \"Increased\", positions_decreased_count AS \"Decreased\" FROM period_change_summary WHERE period_type = 'week' ORDER BY period_end_date DESC LIMIT 12;"
+          "queryText": "SELECT ps.period_label AS \"Week\", SUM(CASE WHEN ppl.list_type = 'added' THEN 1 ELSE 0 END) AS \"Added\", SUM(CASE WHEN ppl.list_type = 'removed' THEN 1 ELSE 0 END) AS \"Removed\", SUM(CASE WHEN ppl.list_type = 'increased' THEN 1 ELSE 0 END) AS \"Increased\", SUM(CASE WHEN ppl.list_type = 'decreased' THEN 1 ELSE 0 END) AS \"Decreased\" FROM period_summary ps LEFT JOIN period_position_lists ppl ON ppl.period_type = ps.period_type AND ppl.period_start_date = ps.period_start_date AND ppl.period_end_date = ps.period_end_date WHERE ps.period_type = 'week' AND ps.is_rolling = 0 GROUP BY ps.period_label, ps.period_end_date ORDER BY ps.period_end_date DESC LIMIT 12;"
         }
       ],
-      "options": { "showHeader": true, "cellHeight": "sm" },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm"
+      },
       "transformations": [
         {
           "id": "organize",
           "options": {
-            "excludeByName": { "Time": true },
-            "indexByName": { "Week": 0, "Added": 1, "Removed": 2, "Increased": 3, "Decreased": 4 },
+            "excludeByName": {
+              "Time": true
+            },
+            "indexByName": {
+              "Week": 0,
+              "Added": 1,
+              "Removed": 2,
+              "Increased": 3,
+              "Decreased": 4
+            },
             "renameByName": {}
           }
         }
@@ -84,11 +147,66 @@
       "fieldConfig": {
         "defaults": {},
         "overrides": [
-          { "matcher": { "id": "byName", "options": "Week" }, "properties": [{ "id": "custom.width", "value": 120 }] },
-          { "matcher": { "id": "byName", "options": "Added" }, "properties": [{ "id": "custom.width", "value": 100 }] },
-          { "matcher": { "id": "byName", "options": "Removed" }, "properties": [{ "id": "custom.width", "value": 100 }] },
-          { "matcher": { "id": "byName", "options": "Increased" }, "properties": [{ "id": "custom.width", "value": 120 }] },
-          { "matcher": { "id": "byName", "options": "Decreased" }, "properties": [{ "id": "custom.width", "value": 120 }] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Week"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Added"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Removed"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Increased"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Decreased"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          }
         ]
       }
     }
@@ -96,11 +214,19 @@
   "refresh": "5m",
   "schemaVersion": 39,
   "style": "dark",
-  "tags": ["lmi", "holdings"],
-  "time": { "from": "now-52w", "to": "now" },
+  "tags": [
+    "lmi",
+    "holdings"
+  ],
+  "time": {
+    "from": "now-52w",
+    "to": "now"
+  },
   "timezone": "browser",
-  "title": "LMI - Change History",
-  "uid": "lmi-change-history",
+  "title": "D26B - LMI - Change History",
+  "uid": "lmi-d26b-change-history",
   "version": 1,
-  "__annotations": { "grafana.app/sourcePath": "dashboards/lmi-change-history.json" }
+  "__annotations": {
+    "grafana.app/sourcePath": "dashboards/D26B-lmi-change-history.json"
+  }
 }

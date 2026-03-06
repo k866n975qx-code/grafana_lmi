@@ -1,7 +1,16 @@
 {
   "__inputs": [],
-  "__requires": [{ "type": "grafana", "id": "grafana", "name": "Grafana", "version": "10.0.0" }],
-  "annotations": { "list": [] },
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    }
+  ],
+  "annotations": {
+    "list": []
+  },
   "editable": true,
   "graphTooltip": 0,
   "id": null,
@@ -10,8 +19,16 @@
       "id": 1,
       "type": "stat",
       "title": "Last Run Status",
-      "gridPos": { "x": 0, "y": 0, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -23,16 +40,37 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "textMode": "value"
       },
       "fieldConfig": {
         "defaults": {
           "unit": "string",
           "mappings": [
-            { "type": "value", "value": "success", "text": "SUCCESS", "color": "green" },
-            { "type": "value", "value": "failure", "text": "FAILURE", "color": "red" },
-            { "type": "value", "value": "running", "text": "RUNNING", "color": "blue" }
+            {
+              "type": "value",
+              "value": "success",
+              "text": "SUCCESS",
+              "color": "green"
+            },
+            {
+              "type": "value",
+              "value": "failure",
+              "text": "FAILURE",
+              "color": "red"
+            },
+            {
+              "type": "value",
+              "value": "running",
+              "text": "RUNNING",
+              "color": "blue"
+            }
           ]
         },
         "overrides": []
@@ -42,8 +80,16 @@
       "id": 2,
       "type": "stat",
       "title": "Total Runs",
-      "gridPos": { "x": 6, "y": 0, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 6,
+        "y": 0,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -52,14 +98,27 @@
           "queryText": "SELECT COUNT(*) AS value FROM runs;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      }
     },
     {
       "id": 3,
       "type": "stat",
       "title": "Success Rate",
-      "gridPos": { "x": 12, "y": 0, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -71,13 +130,35 @@
       "options": {
         "colorMode": "value",
         "graphMode": "none",
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        }
       },
       "fieldConfig": {
         "defaults": {
           "unit": "percent",
           "decimals": 0,
-          "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 80, "color": "yellow" }, { "value": 95, "color": "green" }] }
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 80,
+                "color": "yellow"
+              },
+              {
+                "value": 95,
+                "color": "green"
+              }
+            ]
+          }
         },
         "overrides": []
       }
@@ -86,8 +167,16 @@
       "id": 4,
       "type": "stat",
       "title": "Last Run Time",
-      "gridPos": { "x": 18, "y": 0, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 18,
+        "y": 0,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -96,29 +185,53 @@
           "queryText": "SELECT started_at_utc AS value FROM runs ORDER BY started_at_utc DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "string" }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "string"
+        },
+        "overrides": []
+      }
     },
     {
       "id": 5,
       "type": "table",
       "title": "Recent Runs",
-      "gridPos": { "x": 0, "y": 3, "w": 24, "h": 8 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 3,
+        "w": 24,
+        "h": 8
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT run_id AS \"Run ID\", started_at_utc AS \"Started\", finished_at_utc AS \"Finished\", UPPER(status) AS \"Status\", ROUND(CAST(julianday(COALESCE(finished_at_utc, started_at_utc)) * 24, 1), 1) AS \"Duration Hrs\" FROM runs ORDER BY started_at_utc DESC LIMIT 10;"
+          "queryText": "SELECT run_id AS \"Run ID\", started_at_utc AS \"Started\", finished_at_utc AS \"Finished\", UPPER(status) AS \"Status\", ROUND((julianday(COALESCE(finished_at_utc, started_at_utc)) - julianday(started_at_utc)) * 24, 1) AS \"Duration Hrs\" FROM runs ORDER BY started_at_utc DESC LIMIT 10;"
         }
       ],
-      "options": { "showHeader": true, "cellHeight": "sm" },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm"
+      },
       "transformations": [
         {
           "id": "organize",
           "options": {
-            "excludeByName": { "Time": true },
-            "indexByName": { "Run ID": 0, "Started": 1, "Finished": 2, "Status": 3, "Duration Hrs": 4 },
+            "excludeByName": {
+              "Time": true
+            },
+            "indexByName": {
+              "Run ID": 0,
+              "Started": 1,
+              "Finished": 2,
+              "Status": 3,
+              "Duration Hrs": 4
+            },
             "renameByName": {}
           }
         }
@@ -126,11 +239,66 @@
       "fieldConfig": {
         "defaults": {},
         "overrides": [
-          { "matcher": { "id": "byName", "options": "Run ID" }, "properties": [{ "id": "custom.width", "value": 200 }] },
-          { "matcher": { "id": "byName", "options": "Started" }, "properties": [{ "id": "custom.width", { "value": 180 }] },
-          { "matcher": { "id": "byName", "options": "Finished" }, "properties": [{ "id": "custom.width", { "value": 180 }] },
-          { "matcher": { "id": "byName", "options": "Status" }, "properties": [{ "id": "custom.width", { "value": 100 }] },
-          { "matcher": { "id": "byName", "options": "Duration Hrs" }, "properties": [{ "id": "custom.width", { "value": 120 }] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Run ID"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 200
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Started"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 180
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Finished"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 180
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Status"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Duration Hrs"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          }
         ]
       }
     }
@@ -138,11 +306,19 @@
   "refresh": "1m",
   "schemaVersion": 39,
   "style": "dark",
-  "tags": ["lmi", "system"],
-  "time": { "from": "now-7d", "to": "now" },
+  "tags": [
+    "lmi",
+    "system"
+  ],
+  "time": {
+    "from": "now-7d",
+    "to": "now"
+  },
   "timezone": "browser",
-  "title": "LMI - System Pulse",
-  "uid": "lmi-system-pulse",
+  "title": "D28 - LMI - System Pulse",
+  "uid": "lmi-d28-system-pulse",
   "version": 1,
-  "__annotations": { "grafana.app/sourcePath": "dashboards/lmi-system-pulse.json" }
+  "__annotations": {
+    "grafana.app/sourcePath": "dashboards/D28-lmi-system-pulse.json"
+  }
 }

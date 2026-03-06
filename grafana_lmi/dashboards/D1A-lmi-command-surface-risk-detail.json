@@ -1,7 +1,16 @@
 {
   "__inputs": [],
-  "__requires": [{ "type": "grafana", "id": "grafana", "name": "Grafana", "version": "10.0.0" }],
-  "annotations": { "list": [] },
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    }
+  ],
+  "annotations": {
+    "list": []
+  },
   "editable": true,
   "graphTooltip": 0,
   "id": null,
@@ -10,8 +19,16 @@
       "id": 1,
       "type": "stat",
       "title": "CVaR to Income Ratio",
-      "gridPos": { "x": 0, "y": 0, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -21,7 +38,10 @@
         }
       ],
       "fieldConfig": {
-        "defaults": { "unit": "short", "decimals": 2 },
+        "defaults": {
+          "unit": "short",
+          "decimals": 2
+        },
         "overrides": []
       }
     },
@@ -29,8 +49,16 @@
       "id": 2,
       "type": "stat",
       "title": "Max DD 1y %",
-      "gridPos": { "x": 6, "y": 0, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 6,
+        "y": 0,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -40,7 +68,10 @@
         }
       ],
       "fieldConfig": {
-        "defaults": { "unit": "percent", "decimals": 1 },
+        "defaults": {
+          "unit": "percent",
+          "decimals": 1
+        },
         "overrides": []
       }
     },
@@ -48,8 +79,16 @@
       "id": 3,
       "type": "stat",
       "title": "DD Duration Days",
-      "gridPos": { "x": 12, "y": 0, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -59,7 +98,9 @@
         }
       ],
       "fieldConfig": {
-        "defaults": { "unit": "short" },
+        "defaults": {
+          "unit": "short"
+        },
         "overrides": []
       }
     },
@@ -67,8 +108,16 @@
       "id": 4,
       "type": "stat",
       "title": "Ulcer Index",
-      "gridPos": { "x": 18, "y": 0, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 18,
+        "y": 0,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -78,7 +127,10 @@
         }
       ],
       "fieldConfig": {
-        "defaults": { "unit": "short", "decimals": 2 },
+        "defaults": {
+          "unit": "short",
+          "decimals": 2
+        },
         "overrides": []
       }
     },
@@ -86,8 +138,16 @@
       "id": 5,
       "type": "timeseries",
       "title": "Drawdown Depth 180d",
-      "gridPos": { "x": 0, "y": 3, "w": 12, "h": 6 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 3,
+        "w": 12,
+        "h": 6
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -99,11 +159,21 @@
       "transformations": [
         {
           "id": "convertFieldType",
-          "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] }
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
         }
       ],
       "fieldConfig": {
-        "defaults": { "unit": "percent", "decimals": 1 },
+        "defaults": {
+          "unit": "percent",
+          "decimals": 1
+        },
         "overrides": []
       }
     },
@@ -111,8 +181,16 @@
       "id": 6,
       "type": "timeseries",
       "title": "CVaR 95 1d 180d",
-      "gridPos": { "x": 12, "y": 3, "w": 12, "h": 6 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 12,
+        "y": 3,
+        "w": 12,
+        "h": 6
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -124,11 +202,21 @@
       "transformations": [
         {
           "id": "convertFieldType",
-          "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] }
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
         }
       ],
       "fieldConfig": {
-        "defaults": { "unit": "percent", "decimals": 1 },
+        "defaults": {
+          "unit": "percent",
+          "decimals": 1
+        },
         "overrides": []
       }
     },
@@ -136,23 +224,41 @@
       "id": 7,
       "type": "table",
       "title": "VaR/CVaR Summary",
-      "gridPos": { "x": 0, "y": 9, "w": 24, "h": 5 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 9,
+        "w": 24,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT 'VaR 95' AS Metric, ROUND(var_95_1d_pct, 2) AS \"1d\", ROUND(var_95_1w_pct, 2) AS \"1w\", ROUND(var_95_1m_pct, 2) AS \"1m\" FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1 UNION ALL SELECT 'CVaR 95', ROUND(cvar_95_1d_pct, 2), ROUND(cvar_95_1w_pct, 2), ROUND(cvar_95_1m_pct, 2) FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "WITH latest AS (SELECT * FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1) SELECT 'VaR 95' AS Metric, ROUND(var_95_1d_pct, 2) AS \"1d\", ROUND(var_95_1w_pct, 2) AS \"1w\", ROUND(var_95_1m_pct, 2) AS \"1m\" FROM latest UNION ALL SELECT 'CVaR 95', ROUND(cvar_95_1d_pct, 2), ROUND(cvar_95_1w_pct, 2), ROUND(cvar_95_1m_pct, 2) FROM latest;"
         }
       ],
-      "options": { "showHeader": true, "cellHeight": "sm" },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm"
+      },
       "transformations": [
         {
           "id": "organize",
           "options": {
-            "excludeByName": { "Time": true },
-            "indexByName": { "Metric": 0, "1d": 1, "1w": 2, "1m": 3 },
+            "excludeByName": {
+              "Time": true
+            },
+            "indexByName": {
+              "Metric": 0,
+              "1d": 1,
+              "1w": 2,
+              "1m": 3
+            },
             "renameByName": {}
           }
         }
@@ -160,10 +266,54 @@
       "fieldConfig": {
         "defaults": {},
         "overrides": [
-          { "matcher": { "id": "byName", "options": "Metric" }, "properties": [{ "id": "custom.width", "value": 150 }] },
-          { "matcher": { "id": "byName", "options": "1d" }, "properties": [{ "id": "custom.width", "value": 150 }] },
-          { "matcher": { "id": "byName", "options": "1w" }, "properties": [{ "id": "custom.width", "value": 150 }] },
-          { "matcher": { "id": "byName", "options": "1m" }, "properties": [{ "id": "custom.width", "value": 150 }] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Metric"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 150
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "1d"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 150
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "1w"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 150
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "1m"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 150
+              }
+            ]
+          }
         ]
       }
     }
@@ -171,11 +321,19 @@
   "refresh": "2m",
   "schemaVersion": 39,
   "style": "dark",
-  "tags": ["lmi", "risk"],
-  "time": { "from": "now-180d", "to": "now" },
+  "tags": [
+    "lmi",
+    "risk"
+  ],
+  "time": {
+    "from": "now-180d",
+    "to": "now"
+  },
   "timezone": "browser",
-  "title": "LMI - Command Surface: Risk Detail",
-  "uid": "lmi-command-surface-risk-detail",
+  "title": "D1A - LMI - Command Surface: Risk Detail",
+  "uid": "lmi-d1a-command-surface-risk-detail",
   "version": 1,
-  "__annotations": { "grafana.app/sourcePath": "dashboards/lmi-command-surface-risk-detail.json" }
+  "__annotations": {
+    "grafana.app/sourcePath": "dashboards/D1A-lmi-command-surface-risk-detail.json"
+  }
 }

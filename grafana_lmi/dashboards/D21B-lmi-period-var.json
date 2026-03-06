@@ -1,7 +1,16 @@
 {
   "__inputs": [],
-  "__requires": [{ "type": "grafana", "id": "grafana", "name": "Grafana", "version": "10.0.0" }],
-  "annotations": { "list": [] },
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    }
+  ],
+  "annotations": {
+    "list": []
+  },
   "editable": true,
   "graphTooltip": 0,
   "id": null,
@@ -10,8 +19,16 @@
       "id": 1,
       "type": "table",
       "title": "VaR by Period",
-      "gridPos": { "x": 0, "y": 0, "w": 24, "h": 12 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 12
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -20,13 +37,23 @@
           "queryText": "SELECT period_label AS \"Period\", ROUND(var_95_1d_avg, 2) AS \"VaR 95 1d Avg\", ROUND(cvar_95_1d_avg, 2) AS \"CVaR 95 1d Avg\", days_exceeding_var_95 AS \"Days > VaR\" FROM period_summary WHERE var_95_1d_avg IS NOT NULL AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 12;"
         }
       ],
-      "options": { "showHeader": true, "cellHeight": "sm" },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm"
+      },
       "transformations": [
         {
           "id": "organize",
           "options": {
-            "excludeByName": { "Time": true },
-            "indexByName": { "Period": 0, "VaR 95 1d Avg": 1, "CVaR 95 1d Avg": 2, "Days > VaR": 3 },
+            "excludeByName": {
+              "Time": true
+            },
+            "indexByName": {
+              "Period": 0,
+              "VaR 95 1d Avg": 1,
+              "CVaR 95 1d Avg": 2,
+              "Days > VaR": 3
+            },
             "renameByName": {}
           }
         }
@@ -34,10 +61,54 @@
       "fieldConfig": {
         "defaults": {},
         "overrides": [
-          { "matcher": { "id": "byName", "options": "Period" }, "properties": [{ "id": "custom.width", "value": 150 }] },
-          { "matcher": { "id": "byName", "options": "VaR 95 1d Avg" }, "properties": [{ "id": "custom.width", "value": 140 }] },
-          { "matcher": { "id": "byName", "options": "CVaR 95 1d Avg" }, "properties": [{ "id": "custom.width", "value": 140 }] },
-          { "matcher": { "id": "byName", "options": "Days > VaR" }, "properties": [{ "id": "custom.width", "value": 120 }] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Period"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 150
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "VaR 95 1d Avg"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 140
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CVaR 95 1d Avg"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 140
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Days > VaR"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          }
         ]
       }
     },
@@ -45,8 +116,16 @@
       "id": 2,
       "type": "timeseries",
       "title": "CVaR by Period Type (180d)",
-      "gridPos": { "x": 0, "y": 12, "w": 24, "h": 6 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 12,
+        "w": 24,
+        "h": 6
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -58,11 +137,21 @@
       "transformations": [
         {
           "id": "convertFieldType",
-          "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] }
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
         }
       ],
       "fieldConfig": {
-        "defaults": { "unit": "percent", "decimals": 2 },
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
         "overrides": []
       }
     }
@@ -70,11 +159,19 @@
   "refresh": "5m",
   "schemaVersion": 39,
   "style": "dark",
-  "tags": ["lmi", "risk"],
-  "time": { "from": "now-180d", "to": "now" },
+  "tags": [
+    "lmi",
+    "risk"
+  ],
+  "time": {
+    "from": "now-180d",
+    "to": "now"
+  },
   "timezone": "browser",
-  "title": "LMI - Period VaR Stats",
-  "uid": "lmi-period-var",
+  "title": "D21B - LMI - Period VaR Stats",
+  "uid": "lmi-d21b-period-var",
   "version": 1,
-  "__annotations": { "grafana.app/sourcePath": "dashboards/lmi-period-var.json" }
+  "__annotations": {
+    "grafana.app/sourcePath": "dashboards/D21B-lmi-period-var.json"
+  }
 }

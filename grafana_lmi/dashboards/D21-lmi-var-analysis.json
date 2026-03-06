@@ -1,7 +1,16 @@
 {
   "__inputs": [],
-  "__requires": [{ "type": "grafana", "id": "grafana", "name": "Grafana", "version": "10.0.0" }],
-  "annotations": { "list": [] },
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    }
+  ],
+  "annotations": {
+    "list": []
+  },
   "editable": true,
   "graphTooltip": 0,
   "id": null,
@@ -10,8 +19,16 @@
       "id": 1,
       "type": "stat",
       "title": "VaR 95 1d",
-      "gridPos": { "x": 0, "y": 0, "w": 4, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 4,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -20,14 +37,28 @@
           "queryText": "SELECT var_95_1d_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
     },
     {
       "id": 2,
       "type": "stat",
       "title": "VaR 95 1w",
-      "gridPos": { "x": 4, "y": 0, "w": 4, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 4,
+        "y": 0,
+        "w": 4,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -36,14 +67,28 @@
           "queryText": "SELECT var_95_1w_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
     },
     {
       "id": 3,
       "type": "stat",
       "title": "VaR 95 1m",
-      "gridPos": { "x": 8, "y": 0, "w": 4, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 8,
+        "y": 0,
+        "w": 4,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -52,14 +97,28 @@
           "queryText": "SELECT var_95_1m_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
     },
     {
       "id": 4,
       "type": "stat",
       "title": "CVaR 95 1d",
-      "gridPos": { "x": 12, "y": 0, "w": 4, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 4,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -68,14 +127,28 @@
           "queryText": "SELECT cvar_95_1d_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
     },
     {
       "id": 5,
       "type": "stat",
       "title": "CVaR 95 1w",
-      "gridPos": { "x": 16, "y": 0, "w": 4, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 16,
+        "y": 0,
+        "w": 4,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -84,14 +157,28 @@
           "queryText": "SELECT cvar_95_1w_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
     },
     {
       "id": 6,
       "type": "stat",
       "title": "CVaR 95 1m",
-      "gridPos": { "x": 20, "y": 0, "w": 4, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 20,
+        "y": 0,
+        "w": 4,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -100,14 +187,28 @@
           "queryText": "SELECT cvar_95_1m_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
     },
     {
       "id": 7,
       "type": "timeseries",
       "title": "CVaR Trend (180d)",
-      "gridPos": { "x": 0, "y": 3, "w": 24, "h": 5 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 3,
+        "w": 24,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -119,11 +220,21 @@
       "transformations": [
         {
           "id": "convertFieldType",
-          "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] }
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
         }
       ],
       "fieldConfig": {
-        "defaults": { "unit": "percent", "decimals": 2 },
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
         "overrides": []
       }
     },
@@ -131,8 +242,16 @@
       "id": 8,
       "type": "table",
       "title": "VaR Breach Analysis",
-      "gridPos": { "x": 0, "y": 8, "w": 24, "h": 4 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 8,
+        "w": 24,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -141,25 +260,93 @@
           "queryText": "SELECT period_type AS \"Period\", days_exceeding_var_95 AS \"Days > VaR 95\", ROUND(worst_day_return_pct, 2) AS \"Worst Day\", worst_day_date AS \"Date\", ROUND(best_day_return_pct, 2) AS \"Best Day\", best_day_date AS \"Date\" FROM period_summary WHERE days_exceeding_var_95 IS NOT NULL AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 8;"
         }
       ],
-      "options": { "showHeader": true, "cellHeight": "sm" },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm"
+      },
       "transformations": [
         {
           "id": "organize",
           "options": {
-            "excludeByName": { "Time": true },
-            "indexByName": { "Period": 0, "Days > VaR 95": 1, "Worst Day": 2, "Date": 3, "Best Day": 4 },
-            "renameByName": { "Date_1": "Best Date" }
+            "excludeByName": {
+              "Time": true
+            },
+            "indexByName": {
+              "Period": 0,
+              "Days > VaR 95": 1,
+              "Worst Day": 2,
+              "Date": 3,
+              "Best Day": 4
+            },
+            "renameByName": {
+              "Date_1": "Best Date"
+            }
           }
         }
       ],
       "fieldConfig": {
         "defaults": {},
         "overrides": [
-          { "matcher": { "id": "byName", "options": "Period" }, "properties": [{ "id": "custom.width", "value": 100 }] },
-          { "matcher": { "id": "byName", "options": "Days > VaR 95" }, "properties": [{ "id": "custom.width", "value": 120 }] },
-          { "matcher": { "id": "byName", "options": "Worst Day" }, "properties": [{ "id": "custom.width", "value": 110 }] },
-          { "matcher": { "id": "byName", "options": "Date" }, "properties": [{ "id": "custom.width", "value": 120 }] },
-          { "matcher": { "id": "byName", "options": "Best Day" }, "properties": [{ "id": "custom.width", "value": 110 }] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Period"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Days > VaR 95"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Worst Day"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 110
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Date"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Best Day"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 110
+              }
+            ]
+          }
         ]
       }
     },
@@ -167,8 +354,16 @@
       "id": 9,
       "type": "timeseries",
       "title": "VaR to Income Ratio (180d)",
-      "gridPos": { "x": 0, "y": 12, "w": 24, "h": 4 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 12,
+        "w": 24,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -180,11 +375,21 @@
       "transformations": [
         {
           "id": "convertFieldType",
-          "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] }
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
         }
       ],
       "fieldConfig": {
-        "defaults": { "unit": "short", "decimals": 2 },
+        "defaults": {
+          "unit": "short",
+          "decimals": 2
+        },
         "overrides": []
       }
     }
@@ -192,11 +397,19 @@
   "refresh": "5m",
   "schemaVersion": 39,
   "style": "dark",
-  "tags": ["lmi", "risk"],
-  "time": { "from": "now-180d", "to": "now" },
+  "tags": [
+    "lmi",
+    "risk"
+  ],
+  "time": {
+    "from": "now-180d",
+    "to": "now"
+  },
   "timezone": "browser",
-  "title": "LMI - VaR Analysis",
-  "uid": "lmi-var-analysis",
+  "title": "D21 - LMI - VaR Analysis",
+  "uid": "lmi-d21-var-analysis",
   "version": 1,
-  "__annotations": { "grafana.app/sourcePath": "dashboards/lmi-var-analysis.json" }
+  "__annotations": {
+    "grafana.app/sourcePath": "dashboards/D21-lmi-var-analysis.json"
+  }
 }

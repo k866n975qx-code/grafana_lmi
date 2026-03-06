@@ -1,7 +1,16 @@
 {
   "__inputs": [],
-  "__requires": [{ "type": "grafana", "id": "grafana", "name": "Grafana", "version": "10.0.0" }],
-  "annotations": { "list": [] },
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    }
+  ],
+  "annotations": {
+    "list": []
+  },
   "editable": true,
   "graphTooltip": 0,
   "id": null,
@@ -10,8 +19,16 @@
       "id": 1,
       "type": "stat",
       "title": "Week Return",
-      "gridPos": { "x": 0, "y": 0, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -20,14 +37,28 @@
           "queryText": "SELECT twr_period_pct AS value FROM period_summary WHERE period_type = 'week' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
     },
     {
       "id": 2,
       "type": "stat",
       "title": "Month Return",
-      "gridPos": { "x": 6, "y": 0, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 6,
+        "y": 0,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -36,14 +67,28 @@
           "queryText": "SELECT twr_period_pct AS value FROM period_summary WHERE period_type = 'month' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
     },
     {
       "id": 3,
       "type": "stat",
       "title": "Quarter Return",
-      "gridPos": { "x": 12, "y": 0, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -52,14 +97,28 @@
           "queryText": "SELECT twr_period_pct AS value FROM period_summary WHERE period_type = 'quarter' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
     },
     {
       "id": 4,
       "type": "stat",
       "title": "Year Return",
-      "gridPos": { "x": 18, "y": 0, "w": 6, "h": 3 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 18,
+        "y": 0,
+        "w": 6,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -68,14 +127,28 @@
           "queryText": "SELECT twr_period_pct AS value FROM period_summary WHERE period_type = 'year' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1;"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2 }, "overrides": [] }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
     },
     {
       "id": 5,
       "type": "table",
       "title": "Closed Periods Summary",
-      "gridPos": { "x": 0, "y": 3, "w": 24, "h": 11 },
-      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "gridPos": {
+        "x": 0,
+        "y": 3,
+        "w": 24,
+        "h": 11
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
       "targets": [
         {
           "refId": "A",
@@ -84,13 +157,25 @@
           "queryText": "SELECT period_label AS \"Period\", period_end_date AS \"End Date\", ROUND(mv_delta, 0) AS \"MV $\", ROUND(twr_period_pct, 2) AS \"Return %\", ROUND(dividends_received_period, 2) AS \"Dividends\", ROUND(period_max_drawdown_pct, 2) AS \"Max DD %\" FROM period_summary WHERE is_rolling = 0 AND twr_period_pct IS NOT NULL ORDER BY period_end_date DESC LIMIT 16;"
         }
       ],
-      "options": { "showHeader": true, "cellHeight": "sm" },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm"
+      },
       "transformations": [
         {
           "id": "organize",
           "options": {
-            "excludeByName": { "Time": true },
-            "indexByName": { "Period": 0, "End Date": 1, "MV $": 2, "Return %": 3, "Dividends": 4, "Max DD %": 5 },
+            "excludeByName": {
+              "Time": true
+            },
+            "indexByName": {
+              "Period": 0,
+              "End Date": 1,
+              "MV $": 2,
+              "Return %": 3,
+              "Dividends": 4,
+              "Max DD %": 5
+            },
             "renameByName": {}
           }
         }
@@ -98,12 +183,78 @@
       "fieldConfig": {
         "defaults": {},
         "overrides": [
-          { "matcher": { "id": "byName", "options": "Period" }, "properties": [{ "id": "custom.width", "value": 100 }] },
-          { "matcher": { "id": "byName", "options": "End Date" }, "properties": [{ "id": "custom.width", "value": 120 }] },
-          { "matcher": { "id": "byName", "options": "MV $" }, "properties": [{ "id": "custom.width", "value": 120 }] },
-          { "matcher": { "id": "byName", "options": "Return %" }, "properties": [{ "id": "custom.width", "value": 100 }] },
-          { "matcher": { "id": "byName", "options": "Dividends" }, "properties": [{ "id": "custom.width", "value": 120 }] },
-          { "matcher": { "id": "byName", "options": "Max DD %" }, "properties": [{ "id": "custom.width", "value": 100 }] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Period"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "End Date"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "MV $"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Return %"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Dividends"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Max DD %"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          }
         ]
       }
     }
@@ -111,11 +262,19 @@
   "refresh": "5m",
   "schemaVersion": 39,
   "style": "dark",
-  "tags": ["lmi", "periods"],
-  "time": { "from": "now-2y", "to": "now" },
+  "tags": [
+    "lmi",
+    "periods"
+  ],
+  "time": {
+    "from": "now-2y",
+    "to": "now"
+  },
   "timezone": "browser",
-  "title": "LMI - Closed Periods",
-  "uid": "lmi-closed-periods",
+  "title": "D11 - LMI - Closed Periods",
+  "uid": "lmi-d11-closed-periods",
   "version": 1,
-  "__annotations": { "grafana.app/sourcePath": "dashboards/lmi-closed-periods.json" }
+  "__annotations": {
+    "grafana.app/sourcePath": "dashboards/D11-lmi-closed-periods.json"
+  }
 }

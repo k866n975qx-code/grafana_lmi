@@ -338,7 +338,10 @@
     "to": "now"
   },
   "timezone": "browser",
-  "title": "LMI - Macro Context",
-  "uid": "lmi-macro-context",
-  "version": 1
+  "title": "D18 - LMI - Macro Context",
+  "uid": "lmi-d18-macro-context",
+  "version": 1,
+  "__annotations": {
+    "grafana.app/sourcePath": "dashboards/D18-lmi-macro-context.json"
+  }
 }
