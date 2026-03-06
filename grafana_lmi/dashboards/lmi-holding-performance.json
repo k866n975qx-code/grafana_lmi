@@ -1,0 +1,150 @@
+{
+  "__inputs": [],
+  "__requires": [{ "type": "grafana", "id": "grafana", "name": "Grafana", "version": "10.0.0" }],
+  "annotations": { "list": [] },
+  "editable": true,
+  "graphTooltip": 0,
+  "id": null,
+  "panels": [
+    {
+      "id": 1,
+      "type": "table",
+      "title": "Holdings by Performance (Week)",
+      "gridPos": { "x": 0, "y": 0, "w": 24, "h": 12 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT symbol AS \"Symbol\", ROUND(pl_pct, 2) AS \"P&L %\", ROUND(pl_dollar, 2) AS \"P&L $\", ROUND(contribution_pct, 2) AS \"Contribution %\", ROUND(start_shares, 2) AS \"Start Shares\", ROUND(end_shares, 2) AS \"End Shares\", ROUND(share_delta, 2) AS \"Share Delta\" FROM period_holding_performance WHERE period_type = 'week' AND period_end_date = (SELECT MAX(period_end_date) FROM period_holding_performance WHERE period_type = 'week') ORDER BY pl_pct DESC;"
+        }
+      ],
+      "options": { "showHeader": true, "cellHeight": "sm" },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": { "Time": true },
+            "indexByName": { "Symbol": 0, "P&L %": 1, "P&L $": 2, "Contribution %": 3, "Start Shares": 4, "End Shares": 5, "Share Delta": 6 },
+            "renameByName": {}
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "Symbol" }, "properties": [{ "id": "custom.width", "value": 120 }] },
+          { "matcher": { "id": "byName", "options": "P&L %" }, "properties": [{ "id": "custom.width", "value": 110 }] },
+          { "matcher": { "id": "byName", "options": "P&L $" }, "properties": [{ "id": "custom.width", "value": 120 }] },
+          { "matcher": { "id": "byName", "options": "Contribution %" }, "properties": [{ "id": "custom.width", "value": 140 }] },
+          { "matcher": { "id": "byName", "options": "Start Shares" }, "properties": [{ "id": "custom.width", "value": 130 }] },
+          { "matcher": { "id": "byName", "options": "End Shares" }, "properties": [{ "id": "custom.width", "value": 130 }] },
+          { "matcher": { "id": "byName", "options": "Share Delta" }, "properties": [{ "id": "custom.width", "value": 120 }] }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Best Performer (Week)",
+      "gridPos": { "x": 0, "y": 12, "w": 6, "h": 3 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT symbol || ': ' || ROUND(pl_pct, 2) || '%' AS value FROM period_holding_performance WHERE period_type = 'week' AND period_end_date = (SELECT MAX(period_end_date) FROM period_holding_performance WHERE period_type = 'week') ORDER BY pl_pct DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }
+      },
+      "fieldConfig": {
+        "defaults": { "unit": "string", "mappings": [{ "type": "value", "value": "", "text": "N/A", "color": "gray" }] },
+        "overrides": []
+      }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "Worst Performer (Week)",
+      "gridPos": { "x": 6, "y": 12, "w": 6, "h": 3 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT symbol || ': ' || ROUND(pl_pct, 2) || '%' AS value FROM period_holding_performance WHERE period_type = 'week' AND period_end_date = (SELECT MAX(period_end_date) FROM period_holding_performance WHERE period_type = 'week') ORDER BY pl_pct ASC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }
+      },
+      "fieldConfig": {
+        "defaults": { "unit": "string", "mappings": [{ "type": "value", "value": "", "text": "N/A", "color": "gray" }] },
+        "overrides": []
+      }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "Total P&L (Week)",
+      "gridPos": { "x": 12, "y": 12, "w": 6, "h": 3 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT ROUND(SUM(pl_dollar), 2) AS value FROM period_holding_performance WHERE period_type = 'week' AND period_end_date = (SELECT MAX(period_end_date) FROM period_holding_performance WHERE period_type = 'week');"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0,
+          "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "green" }] }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 5,
+      "type": "stat",
+      "title": "Avg P&L % (Week)",
+      "gridPos": { "x": 18, "y": 12, "w": 6, "h": 3 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT ROUND(AVG(pl_pct), 2) AS value FROM period_holding_performance WHERE period_type = 'week' AND period_end_date = (SELECT MAX(period_end_date) FROM period_holding_performance WHERE period_type = 'week');"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2 }, "overrides": [] }
+    }
+  ],
+  "refresh": "5m",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": ["lmi", "holdings"],
+  "time": { "from": "now-90d", "to": "now" },
+  "timezone": "browser",
+  "title": "LMI - Holding Performance",
+  "uid": "lmi-holding-performance",
+  "version": 1,
+  "__annotations": { "grafana.app/sourcePath": "dashboards/lmi-holding-performance.json" }
+}

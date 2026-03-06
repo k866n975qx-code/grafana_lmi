@@ -1,0 +1,105 @@
+{
+  "__inputs": [],
+  "__requires": [{ "type": "grafana", "id": "grafana", "name": "Grafana", "version": "10.0.0" }],
+  "annotations": { "list": [] },
+  "editable": true,
+  "graphTooltip": 0,
+  "id": null,
+  "panels": [
+    {
+      "id": 1,
+      "type": "table",
+      "title": "Attribution by Window",
+      "gridPos": { "x": 0, "y": 0, "w": 24, "h": 5 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT window AS \"Window\", ROUND(SUM(contribution_pct), 2) AS \"Total %\", ROUND(SUM(CASE WHEN symbol = '__INCOME__' THEN contribution_pct ELSE 0 END), 2) AS \"Income %\", ROUND(SUM(CASE WHEN symbol != '__INCOME__' THEN contribution_pct ELSE 0 END), 2) AS \"Price %\" FROM daily_return_attribution WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_return_attribution) GROUP BY window ORDER BY CASE window WHEN '1m' THEN 1 WHEN '3m' THEN 2 WHEN '6m' THEN 3 WHEN '12m' THEN 4 END;"
+        }
+      ],
+      "options": { "showHeader": true, "cellHeight": "sm" },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": { "Time": true },
+            "indexByName": { "Window": 0, "Total %": 1, "Income %": 2, "Price %": 3 },
+            "renameByName": {}
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "Window" }, "properties": [{ "id": "custom.width", "value": 120 }] },
+          { "matcher": { "id": "byName", "options": "Total %" }, "properties": [{ "id": "custom.width", "value": 120 }] },
+          { "matcher": { "id": "byName", "options": "Income %" }, "properties": [{ "id": "custom.width", "value": 120 }] },
+          { "matcher": { "id": "byName", "options": "Price %" }, "properties": [{ "id": "custom.width", "value": 120 }] }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "type": "timeseries",
+      "title": "Income vs Price Contribution (180d)",
+      "gridPos": { "x": 0, "y": 5, "w": 24, "h": 6 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT as_of_date_local AS time, ROUND(SUM(contribution_pct) FILTER (WHERE symbol = '__INCOME__'), 2) AS \"Income %\", ROUND(SUM(contribution_pct) FILTER (WHERE symbol != '__INCOME__'), 2) AS \"Price %\" FROM daily_return_attribution WHERE window = '1m' AND as_of_date_local >= date('now','-180 day') GROUP BY as_of_date_local ORDER BY as_of_date_local;"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "percent", "decimals": 2 },
+        "overrides": []
+      }
+    },
+    {
+      "id": 3,
+      "type": "timeseries",
+      "title": "Total Return by Window (180d)",
+      "gridPos": { "x": 0, "y": 11, "w": 24, "h": 6 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT as_of_date_local AS time, ROUND(SUM(contribution_pct) FILTER (WHERE window = '1m'), 2) AS \"1m\", ROUND(SUM(contribution_pct) FILTER (WHERE window = '3m'), 2) AS \"3m\", ROUND(SUM(contribution_pct) FILTER (WHERE window = '12m'), 2) AS \"12m\" FROM daily_return_attribution WHERE as_of_date_local >= date('now','-180 day') GROUP BY as_of_date_local ORDER BY as_of_date_local;"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "percent", "decimals": 2 },
+        "overrides": []
+      }
+    }
+  ],
+  "refresh": "5m",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": ["lmi", "performance"],
+  "time": { "from": "now-180d", "to": "now" },
+  "timezone": "browser",
+  "title": "LMI - Performance: Decomposition",
+  "uid": "lmi-performance-decomposition",
+  "version": 1,
+  "__annotations": { "grafana.app/sourcePath": "dashboards/lmi-performance-decomposition.json" }
+}

@@ -1,0 +1,120 @@
+{
+  "__inputs": [],
+  "__requires": [{ "type": "grafana", "id": "grafana", "name": "Grafana", "version": "10.0.0" }],
+  "annotations": { "list": [] },
+  "editable": true,
+  "graphTooltip": 0,
+  "id": null,
+  "panels": [
+    {
+      "id": 1,
+      "type": "table",
+      "title": "Dividend Events (Week)",
+      "gridPos": { "x": 0, "y": 0, "w": 24, "h": 12 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT symbol AS \"Symbol\", ex_date AS \"Ex Date\", pay_date AS \"Pay Date\", ROUND(amount, 2) AS \"Amount\", frequency AS \"Freq\" FROM period_dividend_events WHERE period_type = 'week' AND period_end_date = (SELECT MAX(period_end_date) FROM period_dividend_events WHERE period_type = 'week') ORDER BY ex_date DESC;"
+        }
+      ],
+      "options": { "showHeader": true, "cellHeight": "sm" },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": { "Time": true },
+            "indexByName": { "Symbol": 0, "Ex Date": 1, "Pay Date": 2, "Amount": 3, "Freq": 4 },
+            "renameByName": {}
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "Symbol" }, "properties": [{ "id": "custom.width", "value": 140 }] },
+          { "matcher": { "id": "byName", "options": "Ex Date" }, "properties": [{ "id": "custom.width", "value": 140 }] },
+          { "matcher": { "id": "byName", "options": "Pay Date" }, "properties": [{ "id": "custom.width", "value": 140 }] },
+          { "matcher": { "id": "byName", "options": "Amount" }, "properties": [{ "id": "custom.width", "value": 120 }] },
+          { "matcher": { "id": "byName", "options": "Freq" }, "properties": [{ "id": "custom.width", "value": 100 }] }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Week Dividend Count",
+      "gridPos": { "x": 0, "y": 12, "w": 6, "h": 3 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT COUNT(*) AS value FROM period_dividend_events WHERE period_type = 'week' AND period_end_date = (SELECT MAX(period_end_date) FROM period_dividend_events WHERE period_type = 'week');"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "Week Dividend Total",
+      "gridPos": { "x": 6, "y": 12, "w": 6, "h": 3 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT ROUND(SUM(amount), 2) AS value FROM period_dividend_events WHERE period_type = 'week' AND period_end_date = (SELECT MAX(period_end_date) FROM period_dividend_events WHERE period_type = 'week');"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "Month Dividend Count",
+      "gridPos": { "x": 12, "y": 12, "w": 6, "h": 3 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT COUNT(*) AS value FROM period_dividend_events WHERE period_type = 'month' AND period_end_date = (SELECT MAX(period_end_date) FROM period_dividend_events WHERE period_type = 'month');"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] }
+    },
+    {
+      "id": 5,
+      "type": "stat",
+      "title": "Month Dividend Total",
+      "gridPos": { "x": 18, "y": 12, "w": 6, "h": 3 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT ROUND(SUM(amount), 2) AS value FROM period_dividend_events WHERE period_type = 'month' AND period_end_date = (SELECT MAX(period_end_date) FROM period_dividend_events WHERE period_type = 'month');"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
+    }
+  ],
+  "refresh": "5m",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": ["lmi", "income"],
+  "time": { "from": "now-90d", "to": "now" },
+  "timezone": "browser",
+  "title": "LMI - Dividend Events",
+  "uid": "lmi-dividend-events",
+  "version": 1,
+  "__annotations": { "grafana.app/sourcePath": "dashboards/lmi-dividend-events.json" }
+}

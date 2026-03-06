@@ -1,0 +1,124 @@
+{
+  "__inputs": [],
+  "__requires": [{ "type": "grafana", "id": "grafana", "name": "Grafana", "version": "10.0.0" }],
+  "annotations": { "list": [] },
+  "editable": true,
+  "graphTooltip": 0,
+  "id": null,
+  "panels": [
+    {
+      "id": 1,
+      "type": "table",
+      "title": "Period Comparison",
+      "gridPos": { "x": 0, "y": 0, "w": 24, "h": 3 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT 'Week' AS \"Comparison\", ROUND((SELECT mv_delta FROM period_summary WHERE period_type = 'week' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1), 0) AS \"Current Period\", ROUND((SELECT mv_delta FROM period_summary WHERE period_type = 'week' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1), 0) AS \"Previous Period\", ROUND((SELECT mv_delta FROM period_summary WHERE period_type = 'week' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1) - (SELECT mv_delta FROM period_summary WHERE period_type = 'week' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1), 0) AS \"Delta\" UNION ALL SELECT 'Month', ROUND((SELECT mv_delta FROM period_summary WHERE period_type = 'month' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1), 0), ROUND((SELECT mv_delta FROM period_summary WHERE period_type = 'month' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1), 0), ROUND((SELECT mv_delta FROM period_summary WHERE period_type = 'month' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1) - (SELECT mv_delta FROM period_summary WHERE period_type = 'month' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1), 0) UNION ALL SELECT 'Quarter', ROUND((SELECT mv_delta FROM period_summary WHERE period_type = 'quarter' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1), 0), ROUND((SELECT mv_delta FROM period_summary WHERE period_type = 'quarter' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1), 0), ROUND((SELECT mv_delta FROM period_summary WHERE period_type = 'quarter' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1) - (SELECT mv_delta FROM period_summary WHERE period_type = 'quarter' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1), 0) UNION ALL SELECT 'Year', ROUND((SELECT mv_delta FROM period_summary WHERE period_type = 'year' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1), 0), ROUND((SELECT mv_delta FROM period_summary WHERE period_type = 'year' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1), 0), ROUND((SELECT mv_delta FROM period_summary WHERE period_type = 'year' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1) - (SELECT mv_delta FROM period_summary WHERE period_type = 'year' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1), 0);"
+        }
+      ],
+      "options": { "showHeader": true, "cellHeight": "sm" },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": { "Time": true },
+            "indexByName": { "Comparison": 0, "Current Period": 1, "Previous Period": 2, "Delta": 3 },
+            "renameByName": {}
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "Comparison" }, "properties": [{ "id": "custom.width", "value": 120 }] },
+          { "matcher": { "id": "byName", "options": "Current Period" }, "properties": [{ "id": "custom.width", "value": 140 }] },
+          { "matcher": { "id": "byName", "options": "Previous Period" }, "properties": [{ "id": "custom.width", "value": 140 }] },
+          { "matcher": { "id": "byName", "options": "Delta" }, "properties": [{ "id": "custom.width", "value": 140 }] }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "type": "table",
+      "title": "Delta Matrix",
+      "gridPos": { "x": 0, "y": 3, "w": 24, "h": 8 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT 'MV Delta' AS \"Metric\", ROUND((SELECT mv_delta FROM period_summary WHERE period_type = 'week' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1) - (SELECT mv_delta FROM period_summary WHERE period_type = 'week' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1), 0) AS \"WoW\", ROUND((SELECT mv_delta FROM period_summary WHERE period_type = 'month' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1) - (SELECT mv_delta FROM period_summary WHERE period_type = 'month' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1), 0) AS \"MoM\", ROUND((SELECT mv_delta FROM period_summary WHERE period_type = 'quarter' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1) - (SELECT mv_delta FROM period_summary WHERE period_type = 'quarter' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1), 0) AS \"QoQ\", ROUND((SELECT mv_delta FROM period_summary WHERE period_type = 'year' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1) - (SELECT mv_delta FROM period_summary WHERE period_type = 'year' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1), 0) AS \"YoY\" UNION ALL SELECT 'TWR %', ROUND((SELECT twr_period_pct FROM period_summary WHERE period_type = 'week' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1) - (SELECT twr_period_pct FROM period_summary WHERE period_type = 'week' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1), 2), ROUND((SELECT twr_period_pct FROM period_summary WHERE period_type = 'month' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1) - (SELECT twr_period_pct FROM period_summary WHERE period_type = 'month' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1), 2), ROUND((SELECT twr_period_pct FROM period_summary WHERE period_type = 'quarter' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1) - (SELECT twr_period_pct FROM period_summary WHERE period_type = 'quarter' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1), 2), ROUND((SELECT twr_period_pct FROM period_summary WHERE period_type = 'year' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1) - (SELECT twr_period_pct FROM period_summary WHERE period_type = 'year' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1), 2) UNION ALL SELECT 'Income $', ROUND((SELECT dividends_received_period FROM period_summary WHERE period_type = 'week' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1) - (SELECT dividends_received_period FROM period_summary WHERE period_type = 'week' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1), 2), ROUND((SELECT dividends_received_period FROM period_summary WHERE period_type = 'month' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1) - (SELECT dividends_received_period FROM period_summary WHERE period_type = 'month' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1), 2), ROUND((SELECT dividends_received_period FROM period_summary WHERE period_type = 'quarter' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1) - (SELECT dividends_received_period FROM period_summary WHERE period_type = 'quarter' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1), 2), ROUND((SELECT dividends_received_period FROM period_summary WHERE period_type = 'year' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1) - (SELECT dividends_received_period FROM period_summary WHERE period_type = 'year' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1), 2);"
+        }
+      ],
+      "options": { "showHeader": true, "cellHeight": "sm" },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": { "Time": true },
+            "indexByName": { "Metric": 0, "WoW": 1, "MoM": 2, "QoQ": 3, "YoY": 4 },
+            "renameByName": {}
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "Metric" }, "properties": [{ "id": "custom.width", "value": 120 }] },
+          { "matcher": { "id": "byName", "options": "WoW" }, "properties": [{ "id": "custom.width", "value": 120 }] },
+          { "matcher": { "id": "byName", "options": "MoM" }, "properties": [{ "id": "custom.width", "value": 120 }] },
+          { "matcher": { "id": "byName", "options": "QoQ" }, "properties": [{ "id": "custom.width", "value": 120 }] },
+          { "matcher": { "id": "byName", "options": "YoY" }, "properties": [{ "id": "custom.width", "value": 120 }] }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "type": "table",
+      "title": "Acceleration",
+      "gridPos": { "x": 0, "y": 11, "w": 24, "h": 3 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT 'MV Growth' AS \"Metric\", CASE WHEN (SELECT mv_delta FROM period_summary WHERE period_type = 'quarter' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1) > (SELECT mv_delta FROM period_summary WHERE period_type = 'quarter' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1) THEN 'Accelerating' ELSE 'Decelerating' END AS \"QoQ Trend\" UNION ALL SELECT 'Income Growth', CASE WHEN (SELECT dividends_received_period FROM period_summary WHERE period_type = 'quarter' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1) > (SELECT dividends_received_period FROM period_summary WHERE period_type = 'quarter' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1) THEN 'Accelerating' ELSE 'Decelerating' END UNION ALL SELECT 'Goal Progress', CASE WHEN (SELECT goal_progress_pct FROM period_summary WHERE period_type = 'quarter' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1) > (SELECT goal_progress_pct FROM period_summary WHERE period_type = 'quarter' AND is_rolling = 0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1) THEN 'Accelerating' ELSE 'Decelerating' END;"
+        }
+      ],
+      "options": { "showHeader": true, "cellHeight": "sm" },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": { "Time": true },
+            "indexByName": { "Metric": 0, "QoQ Trend": 1 },
+            "renameByName": {}
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "Metric" }, "properties": [{ "id": "custom.width", "value": 150 }] },
+          { "matcher": { "id": "byName", "options": "QoQ Trend" }, "properties": [{ "id": "custom.width", "value": 150 }] }
+        ]
+      }
+    }
+  ],
+  "refresh": "5m",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": ["lmi", "periods"],
+  "time": { "from": "now-365d", "to": "now" },
+  "timezone": "browser",
+  "title": "LMI - Period Deltas",
+  "uid": "lmi-period-deltas",
+  "version": 1,
+  "__annotations": { "grafana.app/sourcePath": "dashboards/lmi-period-deltas.json" }
+}

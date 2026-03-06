@@ -1,0 +1,79 @@
+{
+  "__inputs": [],
+  "__requires": [{ "type": "grafana", "id": "grafana", "name": "Grafana", "version": "10.0.0" }],
+  "annotations": { "list": [] },
+  "editable": true,
+  "graphTooltip": 0,
+  "id": null,
+  "panels": [
+    {
+      "id": 1,
+      "type": "table",
+      "title": "Dividends by Period",
+      "gridPos": { "x": 0, "y": 0, "w": 24, "h": 12 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT period_label AS \"Period\", ROUND(dividends_received_period, 2) AS \"Dividends\", dividends_count AS \"Count\" FROM period_summary WHERE period_type IN ('month', 'quarter') AND is_rolling = 0 AND dividends_received_period IS NOT NULL ORDER BY period_end_date DESC LIMIT 12;"
+        }
+      ],
+      "options": { "showHeader": true, "cellHeight": "sm" },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": { "Time": true },
+            "indexByName": { "Period": 0, "Dividends": 1, "Count": 2 },
+            "renameByName": {}
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "Period" }, "properties": [{ "id": "custom.width", "value": 150 }] },
+          { "matcher": { "id": "byName", "options": "Dividends" }, "properties": [{ "id": "custom.width", "value": 140 }] },
+          { "matcher": { "id": "byName", "options": "Count" }, "properties": [{ "id": "custom.width", "value": 100 }] }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "type": "timeseries",
+      "title": "Dividends Trend (12 months)",
+      "gridPos": { "x": 0, "y": 12, "w": 24, "h": 6 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, ROUND(dividends_received_period, 2) AS \"Dividends\" FROM period_summary WHERE period_type = 'month' AND is_rolling = 0 AND dividends_received_period IS NOT NULL ORDER BY period_end_date DESC LIMIT 12;"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "currencyUSD", "decimals": 0 },
+        "overrides": []
+      }
+    }
+  ],
+  "refresh": "5m",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": ["lmi", "income"],
+  "time": { "from": "now-365d", "to": "now" },
+  "timezone": "browser",
+  "title": "LMI - Income History",
+  "uid": "lmi-income-history",
+  "version": 1,
+  "__annotations": { "grafana.app/sourcePath": "dashboards/lmi-income-history.json" }
+}

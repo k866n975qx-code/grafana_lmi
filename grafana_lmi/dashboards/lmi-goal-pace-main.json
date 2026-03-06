@@ -1,0 +1,246 @@
+{
+  "__inputs": [],
+  "__requires": [{ "type": "grafana", "id": "grafana", "name": "Grafana", "version": "10.0.0" }],
+  "annotations": { "list": [] },
+  "editable": true,
+  "graphTooltip": 0,
+  "id": null,
+  "panels": [
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "Months Ahead/Behind",
+      "gridPos": { "x": 0, "y": 0, "w": 6, "h": 3 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT goal_pace_months_ahead_behind AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 1,
+          "thresholds": { "mode": "absolute", "steps": [{ "value": null, "color": "red" }, { "value": 0, "color": "yellow" }, { "value": 1, "color": "green" }] }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Pace Category",
+      "gridPos": { "x": 6, "y": 0, "w": 6, "h": 3 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT UPPER(goal_pace_category) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "value"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "string",
+          "mappings": [
+            { "type": "value", "value": "AHEAD", "text": "AHEAD", "color": "green" },
+            { "type": "value", "value": "ON TRACK", "text": "ON TRACK", "color": "green" },
+            { "type": "value", "value": "BEHIND", "text": "BEHIND", "color": "red" }
+          ]
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "On Track",
+      "gridPos": { "x": 12, "y": 0, "w": 6, "h": 3 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT goal_pace_on_track AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "value"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "mappings": [
+            { "type": "value", "value": 0, "text": "NO", "color": "red" },
+            { "type": "value", "value": 1, "text": "YES", "color": "green" }
+          ]
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "Pace % of Tier",
+      "gridPos": { "x": 18, "y": 0, "w": 6, "h": 3 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT goal_pace_pct_of_tier AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 1 }, "overrides": [] }
+    },
+    {
+      "id": 5,
+      "type": "timeseries",
+      "title": "Pace Trend (180d)",
+      "gridPos": { "x": 0, "y": 3, "w": 12, "h": 5 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, goal_pace_months_ahead_behind AS \"Months Ahead/Behind\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "short", "decimals": 1 },
+        "overrides": []
+      }
+    },
+    {
+      "id": 6,
+      "type": "table",
+      "title": "Goal Pace Windows",
+      "gridPos": { "x": 12, "y": 3, "w": 12, "h": 5 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT 'MTD' AS \"Window\", ROUND(mv_delta, 0) AS \"MV $\", ROUND(twr_period_pct, 2) AS \"Return %\" FROM period_summary WHERE period_type = 'month' AND is_rolling = 1 UNION ALL SELECT 'QTD', ROUND(mv_delta, 0), ROUND(twr_period_pct, 2) FROM period_summary WHERE period_type = 'quarter' AND is_rolling = 1 UNION ALL SELECT 'YTD', ROUND(mv_delta, 0), ROUND(twr_period_pct, 2) FROM period_summary WHERE period_type = 'year' AND is_rolling = 1;"
+        }
+      ],
+      "options": { "showHeader": true, "cellHeight": "sm" },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": { "Time": true },
+            "indexByName": { "Window": 0, "MV $": 1, "Return %": 2 },
+            "renameByName": {}
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "Window" }, "properties": [{ "id": "custom.width", "value": 100 }] },
+          { "matcher": { "id": "byName", "options": "MV $" }, "properties": [{ "id": "custom.width", "value": 150 }] },
+          { "matcher": { "id": "byName", "options": "Return %" }, "properties": [{ "id": "custom.width", "value": 120 }] }
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "type": "timeseries",
+      "title": "Goal Progress (180d)",
+      "gridPos": { "x": 0, "y": 8, "w": 12, "h": 6 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, goal_progress_pct AS \"Progress %\", goal_net_progress_pct AS \"Net Progress %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": { "conversions": [{ "targetField": "time", "destinationType": "time" }] }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "percent", "decimals": 1 },
+        "overrides": []
+      }
+    },
+    {
+      "id": 8,
+      "type": "table",
+      "title": "Likely Tier Analysis",
+      "gridPos": { "x": 12, "y": 8, "w": 12, "h": 6 },
+      "datasource": { "type": "frser-sqlite-datasource", "uid": "lmi_sqlite" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT goal_likely_tier AS \"Tier\", goal_likely_tier_name AS \"Name\", ROUND(goal_likely_tier_confidence, 2) AS \"Confidence\", SUBSTR(goal_likely_tier_reason, 1, 50) AS \"Reason\" FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "options": { "showHeader": true, "cellHeight": "sm" },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": { "Time": true },
+            "indexByName": { "Tier": 0, "Name": 1, "Confidence": 2, "Reason": 3 },
+            "renameByName": {}
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "Tier" }, "properties": [{ "id": "custom.width", "value": 80 }] },
+          { "matcher": { "id": "byName", "options": "Name" }, "properties": [{ "id": "custom.width", "value": 180 }] },
+          { "matcher": { "id": "byName", "options": "Confidence" }, "properties": [{ "id": "custom.width", "value": 120 }] },
+          { "matcher": { "id": "byName", "options": "Reason" }, "properties": [{ "id": "custom.width", "value": 300 }] }
+        ]
+      }
+    }
+  ],
+  "refresh": "5m",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": ["lmi", "goals"],
+  "time": { "from": "now-180d", "to": "now" },
+  "timezone": "browser",
+  "title": "LMI - Goal Pace",
+  "uid": "lmi-goal-pace-detail",
+  "version": 1,
+  "__annotations": { "grafana.app/sourcePath": "dashboards/lmi-goal-pace-detail.json" }
+}
