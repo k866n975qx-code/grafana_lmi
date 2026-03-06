@@ -1,0 +1,578 @@
+{
+  "__inputs": [],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    }
+  ],
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "graphTooltip": 0,
+  "id": null,
+  "panels": [
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "As Of Date",
+      "gridPos": {"x": 0, "y": 0, "w": 4, "h": 3},
+      "datasource": {"type": "frser-sqlite-datasource", "uid": "lmi_sqlite"},
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT as_of_date_local AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT as_of_date_local AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {"calcs": ["lastNotNull"], "fields": "value", "values": false},
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {"unit": "string"},
+        "overrides": []
+      }
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Market Value",
+      "gridPos": {"x": 4, "y": 0, "w": 4, "h": 3},
+      "datasource": {"type": "frser-sqlite-datasource", "uid": "lmi_sqlite"},
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT market_value AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT market_value AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {"unit": "currencyUSD", "decimals": 0},
+        "overrides": []
+      }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "Net Liquidation Value",
+      "gridPos": {"x": 8, "y": 0, "w": 4, "h": 3},
+      "datasource": {"type": "frser-sqlite-datasource", "uid": "lmi_sqlite"},
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT net_liquidation_value AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT net_liquidation_value AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {"unit": "currencyUSD", "decimals": 0},
+        "overrides": []
+      }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "LTV %",
+      "gridPos": {"x": 12, "y": 0, "w": 4, "h": 3},
+      "datasource": {"type": "frser-sqlite-datasource", "uid": "lmi_sqlite"},
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT ltv_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT ltv_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"color": "green", "value": null},
+              {"color": "yellow", "value": 20},
+              {"color": "red", "value": 30}
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 5,
+      "type": "stat",
+      "title": "Health Status",
+      "gridPos": {"x": 16, "y": 0, "w": 4, "h": 3},
+      "datasource": {"type": "frser-sqlite-datasource", "uid": "lmi_sqlite"},
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT risk_quality_category AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT risk_quality_category AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {"calcs": ["lastNotNull"], "fields": "value", "values": false},
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "excellent": {"text": "EXCELLENT", "color": "green"},
+                "good": {"text": "GOOD", "color": "green"},
+                "acceptable": {"text": "ACCEPTABLE", "color": "yellow"},
+                "concerning": {"text": "CONCERNING", "color": "orange"},
+                "fragile": {"text": "FRAGILE", "color": "red"}
+              }
+            }
+          ]
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 6,
+      "type": "stat",
+      "title": "Tail Risk Category",
+      "gridPos": {"x": 20, "y": 0, "w": 4, "h": 3},
+      "datasource": {"type": "frser-sqlite-datasource", "uid": "lmi_sqlite"},
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT tail_risk_category AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT tail_risk_category AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "low": {"text": "LOW", "color": "green"},
+                "moderate": {"text": "MODERATE", "color": "yellow"},
+                "elevated": {"text": "ELEVATED", "color": "orange"},
+                "high": {"text": "HIGH", "color": "red"}
+              }
+            }
+          ]
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 7,
+      "type": "stat",
+      "title": "Currently In Drawdown",
+      "gridPos": {"x": 0, "y": 3, "w": 4, "h": 3},
+      "datasource": {"type": "frser-sqlite-datasource", "uid": "lmi_sqlite"},
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT currently_in_drawdown AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT currently_in_drawdown AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {"calcs": ["lastNotNull"], "fields": "value", "values": false},
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "mappings": [
+            {"type": "value", "options": {"0": {"text": "NO", "color": "green"}, "1": {"text": "YES", "color": "red"}}}
+          ]
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 8,
+      "type": "stat",
+      "title": "Drawdown Depth %",
+      "gridPos": {"x": 4, "y": 3, "w": 4, "h": 3},
+      "datasource": {"type": "frser-sqlite-datasource", "uid": "lmi_sqlite"},
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT drawdown_depth_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT drawdown_depth_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"color": "green", "value": null},
+              {"color": "yellow", "value": 5},
+              {"color": "orange", "value": 10},
+              {"color": "red", "value": 20}
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 9,
+      "type": "stat",
+      "title": "Days Since Peak",
+      "gridPos": {"x": 8, "y": 3, "w": 4, "h": 3},
+      "datasource": {"type": "frser-sqlite-datasource", "uid": "lmi_sqlite"},
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT CASE WHEN drawdown_peak_date IS NULL THEN NULL ELSE CAST(julianday(as_of_date_local) - julianday(drawdown_peak_date) AS INTEGER) END AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT CASE WHEN drawdown_peak_date IS NULL THEN NULL ELSE CAST(julianday(as_of_date_local) - julianday(drawdown_peak_date) AS INTEGER) END AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {"unit": "d", "decimals": 0},
+        "overrides": []
+      }
+    },
+    {
+      "id": 10,
+      "type": "stat",
+      "title": "Recovery %",
+      "gridPos": {"x": 12, "y": 3, "w": 4, "h": 3},
+      "datasource": {"type": "frser-sqlite-datasource", "uid": "lmi_sqlite"},
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (100 + COALESCE(drawdown_depth_pct, 0)) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT (100 + COALESCE(drawdown_depth_pct, 0)) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {"unit": "percent", "decimals": 1},
+        "overrides": []
+      }
+    },
+    {
+      "id": 11,
+      "type": "stat",
+      "title": "Projected Monthly Income",
+      "gridPos": {"x": 16, "y": 3, "w": 4, "h": 3},
+      "datasource": {"type": "frser-sqlite-datasource", "uid": "lmi_sqlite"},
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT projected_monthly_income AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT projected_monthly_income AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {"unit": "currencyUSD", "decimals": 0},
+        "overrides": []
+      }
+    },
+    {
+      "id": 12,
+      "type": "stat",
+      "title": "Forward 12m Income",
+      "gridPos": {"x": 20, "y": 3, "w": 4, "h": 3},
+      "datasource": {"type": "frser-sqlite-datasource", "uid": "lmi_sqlite"},
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT forward_12m_total AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT forward_12m_total AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {"unit": "currencyUSD", "decimals": 0},
+        "overrides": []
+      }
+    },
+    {
+      "id": 13,
+      "type": "stat",
+      "title": "Risk Quality Category",
+      "gridPos": {"x": 0, "y": 6, "w": 4, "h": 3},
+      "datasource": {"type": "frser-sqlite-datasource", "uid": "lmi_sqlite"},
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT UPPER(risk_quality_category) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT UPPER(risk_quality_category) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {"calcs": ["lastNotNull"], "fields": "value", "values": false},
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "EXCELLENT": {"text": "EXCELLENT", "color": "green"},
+                "GOOD": {"text": "GOOD", "color": "green"},
+                "ACCEPTABLE": {"text": "ACCEPTABLE", "color": "yellow"},
+                "CONCERNING": {"text": "CONCERNING", "color": "orange"}
+              }
+            }
+          ]
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 14,
+      "type": "stat",
+      "title": "Volatility 30d %",
+      "gridPos": {"x": 4, "y": 6, "w": 4, "h": 3},
+      "datasource": {"type": "frser-sqlite-datasource", "uid": "lmi_sqlite"},
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT vol_30d_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT vol_30d_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {"unit": "percent", "decimals": 1},
+        "overrides": []
+      }
+    },
+    {
+      "id": 15,
+      "type": "stat",
+      "title": "VaR 95 1d %",
+      "gridPos": {"x": 8, "y": 6, "w": 4, "h": 3},
+      "datasource": {"type": "frser-sqlite-datasource", "uid": "lmi_sqlite"},
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT var_95_1d_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT var_95_1d_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {"unit": "percent", "decimals": 1},
+        "overrides": []
+      }
+    },
+    {
+      "id": 16,
+      "type": "stat",
+      "title": "CVaR 95 1d %",
+      "gridPos": {"x": 12, "y": 6, "w": 4, "h": 3},
+      "datasource": {"type": "frser-sqlite-datasource", "uid": "lmi_sqlite"},
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT cvar_95_1d_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT cvar_95_1d_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {"unit": "percent", "decimals": 1},
+        "overrides": []
+      }
+    },
+    {
+      "id": 17,
+      "type": "stat",
+      "title": "Macro Stress Score",
+      "gridPos": {"x": 16, "y": 6, "w": 4, "h": 3},
+      "datasource": {"type": "frser-sqlite-datasource", "uid": "lmi_sqlite"},
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT macro_stress_score AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT macro_stress_score AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {"unit": "short", "decimals": 2},
+        "overrides": []
+      }
+    },
+    {
+      "id": 18,
+      "type": "stat",
+      "title": "Margin Buffer Status",
+      "gridPos": {"x": 20, "y": 6, "w": 4, "h": 3},
+      "datasource": {"type": "frser-sqlite-datasource", "uid": "lmi_sqlite"},
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT UPPER(margin_call_buffer_status) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT UPPER(margin_call_buffer_status) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+        }
+      ],
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "orientation": "auto",
+        "reduceOptions": {"calcs": ["lastNotNull"], "fields": "value", "values": false},
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "mappings": [
+            {"type": "value", "options": {"SAFE": {"text": "SAFE", "color": "green"}, "WARNING": {"text": "WARNING", "color": "yellow"}, "CRITICAL": {"text": "CRITICAL", "color": "red"}}}
+          ]
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 19,
+      "type": "timeseries",
+      "title": "Market Value (90d)",
+      "gridPos": {"x": 0, "y": 9, "w": 12, "h": 4},
+      "datasource": {"type": "frser-sqlite-datasource", "uid": "lmi_sqlite"},
+      "targets": [
+        {
+          "refId": "A",
+          "format": "time_series",
+          "queryType": "time_series",
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, market_value AS value FROM daily_portfolio WHERE as_of_date_local >= date('now','-90 day') ORDER BY as_of_date_local;",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, market_value AS value FROM daily_portfolio WHERE as_of_date_local >= date('now','-90 day') ORDER BY as_of_date_local;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {"unit": "currencyUSD", "decimals": 0},
+        "overrides": []
+      }
+    },
+    {
+      "id": 20,
+      "type": "timeseries",
+      "title": "Monthly Income (90d)",
+      "gridPos": {"x": 12, "y": 9, "w": 12, "h": 4},
+      "datasource": {"type": "frser-sqlite-datasource", "uid": "lmi_sqlite"},
+      "targets": [
+        {
+          "refId": "A",
+          "format": "time_series",
+          "queryType": "time_series",
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, projected_monthly_income AS value FROM daily_portfolio WHERE as_of_date_local >= date('now','-90 day') ORDER BY as_of_date_local;",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, projected_monthly_income AS value FROM daily_portfolio WHERE as_of_date_local >= date('now','-90 day') ORDER BY as_of_date_local;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {"unit": "currencyUSD", "decimals": 0},
+        "overrides": []
+      }
+    },
+    {
+      "id": 21,
+      "type": "table",
+      "title": "Top 10 Holdings",
+      "gridPos": {"x": 0, "y": 13, "w": 24, "h": 5},
+      "datasource": {"type": "frser-sqlite-datasource", "uid": "lmi_sqlite"},
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT symbol, weight_pct, market_value, current_yield_pct, risk_quality_category FROM daily_holdings WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_holdings) ORDER BY weight_pct DESC LIMIT 10;",
+          "rawQueryText": "SELECT symbol, weight_pct, market_value, current_yield_pct, risk_quality_category FROM daily_holdings WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_holdings) ORDER BY weight_pct DESC LIMIT 10;"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          {
+            "matcher": {"id": "byName", "options": "weight_pct"},
+            "properties": [{"id": "unit", "value": "percent"}, {"id": "decimals", "value": 1}]
+          },
+          {
+            "matcher": {"id": "byName", "options": "market_value"},
+            "properties": [{"id": "unit", "value": "currencyUSD"}, {"id": "decimals", "value": 0}]
+          },
+          {
+            "matcher": {"id": "byName", "options": "current_yield_pct"},
+            "properties": [{"id": "unit", "value": "percent"}, {"id": "decimals", "value": 1}]
+          }
+        ]
+      },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "md"
+      }
+    }
+  ],
+  "refresh": "2m",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": ["lmi", "v3", "command"],
+  "time": {"from": "now-90d", "to": "now"},
+  "timezone": "browser",
+  "title": "LMI Command Center",
+  "uid": "lmi-v3-command-center",
+  "version": 1
+}
