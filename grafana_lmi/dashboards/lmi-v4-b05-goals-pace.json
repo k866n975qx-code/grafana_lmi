@@ -1,0 +1,673 @@
+{
+  "__inputs": [],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    }
+  ],
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "Goal Progress",
+      "gridPos": {
+        "x": 0,
+        "y": 5,
+        "w": 3,
+        "h": 2
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT goal_progress_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1",
+          "rawQueryText": "SELECT goal_progress_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Net Progress",
+      "gridPos": {
+        "x": 3,
+        "y": 5,
+        "w": 3,
+        "h": 2
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT goal_net_progress_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1",
+          "rawQueryText": "SELECT goal_net_progress_pct AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "Months To Goal",
+      "gridPos": {
+        "x": 6,
+        "y": 5,
+        "w": 3,
+        "h": 2
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT goal_months_to_goal AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1",
+          "rawQueryText": "SELECT goal_months_to_goal AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 1
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "Net Months",
+      "gridPos": {
+        "x": 9,
+        "y": 5,
+        "w": 3,
+        "h": 2
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT goal_net_months_to_goal AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1",
+          "rawQueryText": "SELECT goal_net_months_to_goal AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 1
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 5,
+      "type": "stat",
+      "title": "Likely Tier",
+      "gridPos": {
+        "x": 12,
+        "y": 5,
+        "w": 3,
+        "h": 2
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT goal_likely_tier AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1",
+          "rawQueryText": "SELECT goal_likely_tier AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 6,
+      "type": "stat",
+      "title": "Tier Conf",
+      "gridPos": {
+        "x": 15,
+        "y": 5,
+        "w": 3,
+        "h": 2
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT CAST(goal_likely_tier_confidence AS TEXT) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1",
+          "rawQueryText": "SELECT CAST(goal_likely_tier_confidence AS TEXT) AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "string"
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 7,
+      "type": "stat",
+      "title": "Pace Cat",
+      "gridPos": {
+        "x": 18,
+        "y": 5,
+        "w": 3,
+        "h": 2
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT COALESCE(goal_pace_category,'n/a') AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1",
+          "rawQueryText": "SELECT COALESCE(goal_pace_category,'n/a') AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "string"
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 8,
+      "type": "stat",
+      "title": "AheadBehind",
+      "gridPos": {
+        "x": 21,
+        "y": 5,
+        "w": 3,
+        "h": 2
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT goal_pace_months_ahead_behind AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1",
+          "rawQueryText": "SELECT goal_pace_months_ahead_behind AS value FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 1
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 9,
+      "type": "timeseries",
+      "title": "Goal Progress Trend",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, goal_progress_pct AS GoalProgress, goal_net_progress_pct AS NetProgress FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, goal_progress_pct AS GoalProgress, goal_net_progress_pct AS NetProgress FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+        }
+      ],
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "drawStyle": "line",
+          "lineWidth": 2,
+          "fillOpacity": 12,
+          "showPoints": "never",
+          "spanNulls": true,
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 10,
+      "type": "timeseries",
+      "title": "Months To Goal Trend",
+      "gridPos": {
+        "x": 16,
+        "y": 0,
+        "w": 8,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, goal_months_to_goal AS MonthsToGoal, goal_net_months_to_goal AS NetMonthsToGoal FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, goal_months_to_goal AS MonthsToGoal, goal_net_months_to_goal AS NetMonthsToGoal FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+        }
+      ],
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "drawStyle": "line",
+          "lineWidth": 2,
+          "fillOpacity": 12,
+          "showPoints": "never",
+          "spanNulls": true,
+          "decimals": 1
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 11,
+      "type": "table",
+      "title": "Tier Roadmap",
+      "gridPos": {
+        "x": 0,
+        "y": 7,
+        "w": 12,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH d AS (SELECT MAX(as_of_date_local) AS d FROM daily_goal_tiers) SELECT tier AS Tier, substr(COALESCE(name,''),1,16) AS Name, round(target_monthly,0) AS TargetMo, round(months_to_goal,1) AS Months FROM daily_goal_tiers WHERE as_of_date_local=(SELECT d FROM d) ORDER BY tier LIMIT 5",
+          "rawQueryText": "WITH d AS (SELECT MAX(as_of_date_local) AS d FROM daily_goal_tiers) SELECT tier AS Tier, substr(COALESCE(name,''),1,16) AS Name, round(target_monthly,0) AS TargetMo, round(months_to_goal,1) AS Months FROM daily_goal_tiers WHERE as_of_date_local=(SELECT d FROM d) ORDER BY tier LIMIT 5"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tier"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 56
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "TargetMo"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 84
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Months"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 82
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "type": "table",
+      "title": "Period Goal Deltas",
+      "gridPos": {
+        "x": 12,
+        "y": 7,
+        "w": 12,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT period_type, MAX(period_end_date) AS period_end_date FROM period_summary WHERE is_rolling=0 GROUP BY period_type) SELECT ps.period_type AS PType, ps.period_end_date AS EndDate, round(ps.goal_progress_pct_delta,2) AS GoalDelta, round(ps.goal_months_to_goal_delta,2) AS MonthsDelta FROM period_summary ps JOIN latest l ON l.period_type=ps.period_type AND l.period_end_date=ps.period_end_date ORDER BY CASE ps.period_type WHEN 'WEEK' THEN 1 WHEN 'MONTH' THEN 2 WHEN 'QUARTER' THEN 3 WHEN 'YEAR' THEN 4 ELSE 5 END LIMIT 5",
+          "rawQueryText": "WITH latest AS (SELECT period_type, MAX(period_end_date) AS period_end_date FROM period_summary WHERE is_rolling=0 GROUP BY period_type) SELECT ps.period_type AS PType, ps.period_end_date AS EndDate, round(ps.goal_progress_pct_delta,2) AS GoalDelta, round(ps.goal_months_to_goal_delta,2) AS MonthsDelta FROM period_summary ps JOIN latest l ON l.period_type=ps.period_type AND l.period_end_date=ps.period_end_date ORDER BY CASE ps.period_type WHEN 'WEEK' THEN 1 WHEN 'MONTH' THEN 2 WHEN 'QUARTER' THEN 3 WHEN 'YEAR' THEN 4 ELSE 5 END LIMIT 5"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "PType"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 72
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "EndDate"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 96
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "GoalDelta"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 88
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "MonthsDelta"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 98
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "refresh": "2m",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": [
+    "lmi",
+    "v4",
+    "blended",
+    "goals"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-120d",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "America/Los_Angeles",
+  "title": "B05 LMI v4 - Goals and Pace",
+  "description": "Goal pacing board for progress, months-to-target pressure, and tier roadmap vs recent period deltas.",
+  "uid": "lmi-v4-b05-goals-pace",
+  "version": 1,
+  "weekStart": ""
+}

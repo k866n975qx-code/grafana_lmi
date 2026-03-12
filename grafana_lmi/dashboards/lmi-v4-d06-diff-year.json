@@ -1,0 +1,664 @@
+{
+  "__inputs": [],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    }
+  ],
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "MV Delta Diff",
+      "gridPos": {
+        "x": 0,
+        "y": 5,
+        "w": 3,
+        "h": 2
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), prev AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1) SELECT (SELECT mv_delta FROM latest) - (SELECT mv_delta FROM prev) AS value",
+          "rawQueryText": "WITH latest AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), prev AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1) SELECT (SELECT mv_delta FROM latest) - (SELECT mv_delta FROM prev) AS value"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Income Delta Diff",
+      "gridPos": {
+        "x": 3,
+        "y": 5,
+        "w": 3,
+        "h": 2
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), prev AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1) SELECT (SELECT monthly_income_delta FROM latest) - (SELECT monthly_income_delta FROM prev) AS value",
+          "rawQueryText": "WITH latest AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), prev AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1) SELECT (SELECT monthly_income_delta FROM latest) - (SELECT monthly_income_delta FROM prev) AS value"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "F12 Delta Diff",
+      "gridPos": {
+        "x": 6,
+        "y": 5,
+        "w": 3,
+        "h": 2
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), prev AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1) SELECT (SELECT forward_12m_delta FROM latest) - (SELECT forward_12m_delta FROM prev) AS value",
+          "rawQueryText": "WITH latest AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), prev AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1) SELECT (SELECT forward_12m_delta FROM latest) - (SELECT forward_12m_delta FROM prev) AS value"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "LTV Delta Diff",
+      "gridPos": {
+        "x": 9,
+        "y": 5,
+        "w": 3,
+        "h": 2
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), prev AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1) SELECT (SELECT ltv_pct_delta FROM latest) - (SELECT ltv_pct_delta FROM prev) AS value",
+          "rawQueryText": "WITH latest AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), prev AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1) SELECT (SELECT ltv_pct_delta FROM latest) - (SELECT ltv_pct_delta FROM prev) AS value"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 5,
+      "type": "stat",
+      "title": "TWR Diff",
+      "gridPos": {
+        "x": 12,
+        "y": 5,
+        "w": 3,
+        "h": 2
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), prev AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1) SELECT (SELECT twr_period_pct FROM latest) - (SELECT twr_period_pct FROM prev) AS value",
+          "rawQueryText": "WITH latest AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), prev AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1) SELECT (SELECT twr_period_pct FROM latest) - (SELECT twr_period_pct FROM prev) AS value"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 6,
+      "type": "stat",
+      "title": "Risk Diff",
+      "gridPos": {
+        "x": 15,
+        "y": 5,
+        "w": 3,
+        "h": 2
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), prev AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1) SELECT (SELECT var_95_1d_avg FROM latest) - (SELECT var_95_1d_avg FROM prev) AS value",
+          "rawQueryText": "WITH latest AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), prev AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1) SELECT (SELECT var_95_1d_avg FROM latest) - (SELECT var_95_1d_avg FROM prev) AS value"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 7,
+      "type": "stat",
+      "title": "Goal Diff",
+      "gridPos": {
+        "x": 18,
+        "y": 5,
+        "w": 3,
+        "h": 2
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), prev AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1) SELECT (SELECT goal_progress_pct_delta FROM latest) - (SELECT goal_progress_pct_delta FROM prev) AS value",
+          "rawQueryText": "WITH latest AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), prev AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1) SELECT (SELECT goal_progress_pct_delta FROM latest) - (SELECT goal_progress_pct_delta FROM prev) AS value"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 8,
+      "type": "stat",
+      "title": "Open Alerts Diff",
+      "gridPos": {
+        "x": 21,
+        "y": 5,
+        "w": 3,
+        "h": 2
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), prev AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1) SELECT COALESCE((SELECT COUNT(*) FROM alert_messages WHERE status='open' AND as_of_date_local=(SELECT period_end_date FROM latest)),0) - COALESCE((SELECT COUNT(*) FROM alert_messages WHERE status='open' AND as_of_date_local=(SELECT period_end_date FROM prev)),0) AS value",
+          "rawQueryText": "WITH latest AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), prev AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1) SELECT COALESCE((SELECT COUNT(*) FROM alert_messages WHERE status='open' AND as_of_date_local=(SELECT period_end_date FROM latest)),0) - COALESCE((SELECT COUNT(*) FROM alert_messages WHERE status='open' AND as_of_date_local=(SELECT period_end_date FROM prev)),0) AS value"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 9,
+      "type": "timeseries",
+      "title": "YEAR Completed Delta Trend",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (strftime('%s', period_end_date || ' 00:00:00') * 1000) AS time, mv_delta AS MVDelta, monthly_income_delta AS IncomeDelta FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date",
+          "rawQueryText": "SELECT (strftime('%s', period_end_date || ' 00:00:00') * 1000) AS time, mv_delta AS MVDelta, monthly_income_delta AS IncomeDelta FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date"
+        }
+      ],
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "drawStyle": "line",
+          "lineWidth": 2,
+          "fillOpacity": 12,
+          "showPoints": "never",
+          "spanNulls": true,
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 10,
+      "type": "timeseries",
+      "title": "YEAR Completed Risk Trend",
+      "gridPos": {
+        "x": 16,
+        "y": 0,
+        "w": 8,
+        "h": 5
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT (strftime('%s', period_end_date || ' 00:00:00') * 1000) AS time, twr_period_pct AS TWR, ltv_pct_delta AS LTVDelta, forward_12m_delta AS F12Delta FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date",
+          "rawQueryText": "SELECT (strftime('%s', period_end_date || ' 00:00:00') * 1000) AS time, twr_period_pct AS TWR, ltv_pct_delta AS LTVDelta, forward_12m_delta AS F12Delta FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date"
+        }
+      ],
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "drawStyle": "line",
+          "lineWidth": 2,
+          "fillOpacity": 12,
+          "showPoints": "never",
+          "spanNulls": true,
+          "decimals": 3
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 11,
+      "type": "table",
+      "title": "YEAR Holding Drivers",
+      "gridPos": {
+        "x": 0,
+        "y": 7,
+        "w": 12,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT substr(symbol,1,8) AS Sym, round(market_value_delta,2) AS MVDelta, round(weight_delta_pct,3) AS WtDelta, substr(change_type,1,10) AS ChgType FROM period_holding_changes WHERE period_type='YEAR' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY abs(market_value_delta) DESC LIMIT 5",
+          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT substr(symbol,1,8) AS Sym, round(market_value_delta,2) AS MVDelta, round(weight_delta_pct,3) AS WtDelta, substr(change_type,1,10) AS ChgType FROM period_holding_changes WHERE period_type='YEAR' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY abs(market_value_delta) DESC LIMIT 5"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Sym"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 72
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "MVDelta"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 92
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ChgType"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "type": "table",
+      "title": "YEAR Current vs Previous",
+      "gridPos": {
+        "x": 12,
+        "y": 7,
+        "w": 12,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH latest AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), prev AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1) SELECT 'current' AS Which, (SELECT period_start_date || '..' || period_end_date FROM latest) AS Range, round((SELECT mv_delta FROM latest),2) AS MVDelta, round((SELECT twr_period_pct FROM latest),2) AS TWR UNION ALL SELECT 'previous' AS Which, (SELECT period_start_date || '..' || period_end_date FROM prev) AS Range, round((SELECT mv_delta FROM prev),2) AS MVDelta, round((SELECT twr_period_pct FROM prev),2) AS TWR LIMIT 5",
+          "rawQueryText": "WITH latest AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1), prev AS (SELECT * FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1 OFFSET 1) SELECT 'current' AS Which, (SELECT period_start_date || '..' || period_end_date FROM latest) AS Range, round((SELECT mv_delta FROM latest),2) AS MVDelta, round((SELECT twr_period_pct FROM latest),2) AS TWR UNION ALL SELECT 'previous' AS Which, (SELECT period_start_date || '..' || period_end_date FROM prev) AS Range, round((SELECT mv_delta FROM prev),2) AS MVDelta, round((SELECT twr_period_pct FROM prev),2) AS TWR LIMIT 5"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Which"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 82
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Range"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 130
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "MVDelta"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 88
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "TWR"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 74
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "refresh": "2m",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": [
+    "lmi",
+    "v4",
+    "blended",
+    "diff",
+    "year"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-120d",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "America/Los_Angeles",
+  "title": "D06 LMI v4 - Diff Year",
+  "description": "Completed year-over-year comparison board focused on structural drift, risk shift, and holding drivers.",
+  "uid": "lmi-v4-d06-diff-year",
+  "version": 1,
+  "weekStart": ""
+}

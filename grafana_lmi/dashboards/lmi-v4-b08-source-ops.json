@@ -1,0 +1,676 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "string"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "targets": [
+        {
+          "format": "table",
+          "queryText": "SELECT UPPER(COALESCE(status,'n/a')) AS value FROM runs ORDER BY started_at_utc DESC LIMIT 1",
+          "queryType": "table",
+          "rawQueryText": "SELECT UPPER(COALESCE(status,'n/a')) AS value FROM runs ORDER BY started_at_utc DESC LIMIT 1",
+          "refId": "A"
+        }
+      ],
+      "title": "Latest Run",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 0,
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 3,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "targets": [
+        {
+          "format": "table",
+          "queryText": "SELECT COUNT(*) AS value FROM runs WHERE status='succeeded' AND substr(started_at_utc,1,10) >= date('now','-7 day')",
+          "queryType": "table",
+          "rawQueryText": "SELECT COUNT(*) AS value FROM runs WHERE status='succeeded' AND substr(started_at_utc,1,10) >= date('now','-7 day')",
+          "refId": "A"
+        }
+      ],
+      "title": "Succeeded 7d",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 0,
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 6,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "targets": [
+        {
+          "format": "table",
+          "queryText": "SELECT COUNT(*) AS value FROM runs WHERE status='failed' AND substr(started_at_utc,1,10) >= date('now','-30 day')",
+          "queryType": "table",
+          "rawQueryText": "SELECT COUNT(*) AS value FROM runs WHERE status='failed' AND substr(started_at_utc,1,10) >= date('now','-30 day')",
+          "refId": "A"
+        }
+      ],
+      "title": "Failed 30d",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 0,
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 9,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "targets": [
+        {
+          "format": "table",
+          "queryText": "SELECT COUNT(*) AS value FROM facts_source_daily",
+          "queryType": "table",
+          "rawQueryText": "SELECT COUNT(*) AS value FROM facts_source_daily",
+          "refId": "A"
+        }
+      ],
+      "title": "Facts Rows",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 0,
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 12,
+        "y": 0
+      },
+      "id": 5,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "targets": [
+        {
+          "format": "table",
+          "queryText": "SELECT COUNT(*) AS value FROM lm_raw",
+          "queryType": "table",
+          "rawQueryText": "SELECT COUNT(*) AS value FROM lm_raw",
+          "refId": "A"
+        }
+      ],
+      "title": "Raw Rows",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 0,
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 15,
+        "y": 0
+      },
+      "id": 6,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "targets": [
+        {
+          "format": "table",
+          "queryText": "SELECT COUNT(*) AS value FROM investment_transactions",
+          "queryType": "table",
+          "rawQueryText": "SELECT COUNT(*) AS value FROM investment_transactions",
+          "refId": "A"
+        }
+      ],
+      "title": "Txn Rows",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 0,
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 18,
+        "y": 0
+      },
+      "id": 7,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "targets": [
+        {
+          "format": "table",
+          "queryText": "SELECT COUNT(*) AS value FROM account_balances",
+          "queryType": "table",
+          "rawQueryText": "SELECT COUNT(*) AS value FROM account_balances",
+          "refId": "A"
+        }
+      ],
+      "title": "Balance Rows",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 0,
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 21,
+        "y": 0
+      },
+      "id": 8,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "targets": [
+        {
+          "format": "table",
+          "queryText": "SELECT COUNT(*) AS value FROM dividend_events_provider",
+          "queryType": "table",
+          "rawQueryText": "SELECT COUNT(*) AS value FROM dividend_events_provider",
+          "refId": "A"
+        }
+      ],
+      "title": "Provider Div Rows",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 0,
+          "drawStyle": "line",
+          "fillOpacity": 12,
+          "lineWidth": 2,
+          "showPoints": "never",
+          "spanNulls": true,
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 0,
+        "y": 3
+      },
+      "id": 9,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "format": "table",
+          "queryText": "SELECT (strftime('%s', day || ' 00:00:00') * 1000) AS time, runs_total AS Runs, runs_failed AS Failed FROM (SELECT substr(started_at_utc,1,10) AS day, COUNT(*) AS runs_total, SUM(CASE WHEN status='failed' THEN 1 ELSE 0 END) AS runs_failed FROM runs WHERE substr(started_at_utc,1,10) >= date('now','-120 day') GROUP BY substr(started_at_utc,1,10)) ORDER BY day",
+          "queryType": "table",
+          "rawQueryText": "SELECT (strftime('%s', day || ' 00:00:00') * 1000) AS time, runs_total AS Runs, runs_failed AS Failed FROM (SELECT substr(started_at_utc,1,10) AS day, COUNT(*) AS runs_total, SUM(CASE WHEN status='failed' THEN 1 ELSE 0 END) AS runs_failed FROM runs WHERE substr(started_at_utc,1,10) >= date('now','-120 day') GROUP BY substr(started_at_utc,1,10)) ORDER BY day",
+          "refId": "A"
+        }
+      ],
+      "title": "Runs per Day",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 0,
+          "drawStyle": "line",
+          "fillOpacity": 12,
+          "lineWidth": 2,
+          "showPoints": "never",
+          "spanNulls": true,
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 12,
+        "y": 3
+      },
+      "id": 10,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "format": "table",
+          "queryText": "WITH facts AS (SELECT as_of_date_local AS day, COUNT(*) AS facts_rows, 0 AS raw_rows FROM facts_source_daily WHERE as_of_date_local >= date('now','-120 day') GROUP BY as_of_date_local), raw AS (SELECT substr(pulled_at_utc,1,10) AS day, 0 AS facts_rows, COUNT(*) AS raw_rows FROM lm_raw WHERE substr(pulled_at_utc,1,10) >= date('now','-120 day') GROUP BY substr(pulled_at_utc,1,10)), combined AS (SELECT * FROM facts UNION ALL SELECT * FROM raw) SELECT (strftime('%s', day || ' 00:00:00') * 1000) AS time, SUM(facts_rows) AS Facts, SUM(raw_rows) AS Raw FROM combined GROUP BY day ORDER BY day",
+          "queryType": "table",
+          "rawQueryText": "WITH facts AS (SELECT as_of_date_local AS day, COUNT(*) AS facts_rows, 0 AS raw_rows FROM facts_source_daily WHERE as_of_date_local >= date('now','-120 day') GROUP BY as_of_date_local), raw AS (SELECT substr(pulled_at_utc,1,10) AS day, 0 AS facts_rows, COUNT(*) AS raw_rows FROM lm_raw WHERE substr(pulled_at_utc,1,10) >= date('now','-120 day') GROUP BY substr(pulled_at_utc,1,10)), combined AS (SELECT * FROM facts UNION ALL SELECT * FROM raw) SELECT (strftime('%s', day || ' 00:00:00') * 1000) AS time, SUM(facts_rows) AS Facts, SUM(raw_rows) AS Raw FROM combined GROUP BY day ORDER BY day",
+          "refId": "A"
+        }
+      ],
+      "title": "Facts and Raw Ingest per Day",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Started"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 130
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Finished"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 130
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Status"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 80
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Min"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 56
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Error"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 220
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 0,
+        "y": 7
+      },
+      "id": 11,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        },
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "format": "table",
+          "queryText": "SELECT substr(started_at_utc,1,16) AS Started, COALESCE(substr(finished_at_utc,1,16),'') AS Finished, UPPER(status) AS Status, CASE WHEN finished_at_utc IS NULL THEN NULL ELSE round((julianday(replace(substr(finished_at_utc,1,19),'T',' ')) - julianday(replace(substr(started_at_utc,1,19),'T',' '))) * 24 * 60, 1) END AS Min, substr(COALESCE(error_message,''),1,36) AS Error FROM runs ORDER BY started_at_utc DESC LIMIT 6",
+          "queryType": "table",
+          "rawQueryText": "SELECT substr(started_at_utc,1,16) AS Started, COALESCE(substr(finished_at_utc,1,16),'') AS Finished, UPPER(status) AS Status, CASE WHEN finished_at_utc IS NULL THEN NULL ELSE round((julianday(replace(substr(finished_at_utc,1,19),'T',' ')) - julianday(replace(substr(started_at_utc,1,19),'T',' '))) * 24 * 60, 1) END AS Min, substr(COALESCE(error_message,''),1,36) AS Error FROM runs ORDER BY started_at_utc DESC LIMIT 6",
+          "refId": "A"
+        }
+      ],
+      "title": "Recent Runs",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "TableName"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 150
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Rows"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 84
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Latest"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 132
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Notes"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 170
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 12,
+        "y": 7
+      },
+      "id": 12,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        },
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "format": "table",
+          "queryText": "SELECT * FROM (SELECT 'runs' AS TableName, COUNT(*) AS Rows, MAX(substr(started_at_utc,1,16)) AS Latest, 'status log' AS Notes FROM runs UNION ALL SELECT 'facts_source_daily', COUNT(*), MAX(as_of_date_local), 'facts rows' FROM facts_source_daily UNION ALL SELECT 'lm_raw', COUNT(*), MAX(substr(pulled_at_utc,1,16)), 'raw pulls' FROM lm_raw UNION ALL SELECT 'investment_transactions', COUNT(*), MAX(date), 'broker txns' FROM investment_transactions UNION ALL SELECT 'account_balances', COUNT(*), MAX(as_of_date_local), 'balance pulls' FROM account_balances UNION ALL SELECT 'dividend_events_provider', COUNT(*), MAX(ex_date), 'provider divs' FROM dividend_events_provider UNION ALL SELECT 'dividend_events_lm', COUNT(*), MAX(ex_date), 'lm divs' FROM dividend_events_lm UNION ALL SELECT 'split_events', COUNT(*), MAX(ex_date), 'splits' FROM split_events UNION ALL SELECT 'cusip_map', COUNT(*), 'n/a', 'mapping rows' FROM cusip_map UNION ALL SELECT 'locks', COUNT(*), MAX(substr(expires_at_utc,1,16)), 'active locks' FROM locks UNION ALL SELECT 'metadata', COUNT(*), 'n/a', 'key/value' FROM metadata UNION ALL SELECT 'margin_balance_history', COUNT(*), MAX(as_of_date_local), 'margin hist' FROM margin_balance_history) ORDER BY Rows DESC, TableName",
+          "queryType": "table",
+          "rawQueryText": "SELECT * FROM (SELECT 'runs' AS TableName, COUNT(*) AS Rows, MAX(substr(started_at_utc,1,16)) AS Latest, 'status log' AS Notes FROM runs UNION ALL SELECT 'facts_source_daily', COUNT(*), MAX(as_of_date_local), 'facts rows' FROM facts_source_daily UNION ALL SELECT 'lm_raw', COUNT(*), MAX(substr(pulled_at_utc,1,16)), 'raw pulls' FROM lm_raw UNION ALL SELECT 'investment_transactions', COUNT(*), MAX(date), 'broker txns' FROM investment_transactions UNION ALL SELECT 'account_balances', COUNT(*), MAX(as_of_date_local), 'balance pulls' FROM account_balances UNION ALL SELECT 'dividend_events_provider', COUNT(*), MAX(ex_date), 'provider divs' FROM dividend_events_provider UNION ALL SELECT 'dividend_events_lm', COUNT(*), MAX(ex_date), 'lm divs' FROM dividend_events_lm UNION ALL SELECT 'split_events', COUNT(*), MAX(ex_date), 'splits' FROM split_events UNION ALL SELECT 'cusip_map', COUNT(*), 'n/a', 'mapping rows' FROM cusip_map UNION ALL SELECT 'locks', COUNT(*), MAX(substr(expires_at_utc,1,16)), 'active locks' FROM locks UNION ALL SELECT 'metadata', COUNT(*), 'n/a', 'key/value' FROM metadata UNION ALL SELECT 'margin_balance_history', COUNT(*), MAX(as_of_date_local), 'margin hist' FROM margin_balance_history) ORDER BY Rows DESC, TableName",
+          "refId": "A"
+        }
+      ],
+      "title": "Source Inventory",
+      "type": "table"
+    }
+  ],
+  "refresh": "2m",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": [
+    "lmi",
+    "v4",
+    "blended",
+    "ops",
+    "sources"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-120d",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "America/Los_Angeles",
+  "title": "B08 LMI v4 - Source and Ops",
+  "uid": "lmi-v4-b08-source-ops",
+  "version": 1,
+  "weekStart": ""
+}

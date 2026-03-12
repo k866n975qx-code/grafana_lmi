@@ -1,0 +1,676 @@
+{
+  "__inputs": [],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    }
+  ],
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "W MV Gap",
+      "gridPos": {
+        "x": 0,
+        "y": 4,
+        "w": 3,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH r AS (SELECT mv_delta AS v FROM period_summary WHERE period_type='WEEK' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1), c AS (SELECT mv_delta AS v FROM period_summary WHERE period_type='WEEK' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (SELECT v FROM r) - (SELECT v FROM c) AS value",
+          "rawQueryText": "WITH r AS (SELECT mv_delta AS v FROM period_summary WHERE period_type='WEEK' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1), c AS (SELECT mv_delta AS v FROM period_summary WHERE period_type='WEEK' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (SELECT v FROM r) - (SELECT v FROM c) AS value"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "M MV Gap",
+      "gridPos": {
+        "x": 3,
+        "y": 4,
+        "w": 3,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH r AS (SELECT mv_delta AS v FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1), c AS (SELECT mv_delta AS v FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (SELECT v FROM r) - (SELECT v FROM c) AS value",
+          "rawQueryText": "WITH r AS (SELECT mv_delta AS v FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1), c AS (SELECT mv_delta AS v FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (SELECT v FROM r) - (SELECT v FROM c) AS value"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "Q MV Gap",
+      "gridPos": {
+        "x": 6,
+        "y": 4,
+        "w": 3,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH r AS (SELECT mv_delta AS v FROM period_summary WHERE period_type='QUARTER' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1), c AS (SELECT mv_delta AS v FROM period_summary WHERE period_type='QUARTER' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (SELECT v FROM r) - (SELECT v FROM c) AS value",
+          "rawQueryText": "WITH r AS (SELECT mv_delta AS v FROM period_summary WHERE period_type='QUARTER' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1), c AS (SELECT mv_delta AS v FROM period_summary WHERE period_type='QUARTER' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (SELECT v FROM r) - (SELECT v FROM c) AS value"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "Y MV Gap",
+      "gridPos": {
+        "x": 9,
+        "y": 4,
+        "w": 3,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH r AS (SELECT mv_delta AS v FROM period_summary WHERE period_type='YEAR' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1), c AS (SELECT mv_delta AS v FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (SELECT v FROM r) - (SELECT v FROM c) AS value",
+          "rawQueryText": "WITH r AS (SELECT mv_delta AS v FROM period_summary WHERE period_type='YEAR' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1), c AS (SELECT mv_delta AS v FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (SELECT v FROM r) - (SELECT v FROM c) AS value"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 5,
+      "type": "stat",
+      "title": "W TWR Gap",
+      "gridPos": {
+        "x": 12,
+        "y": 4,
+        "w": 3,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH r AS (SELECT twr_period_pct AS v FROM period_summary WHERE period_type='WEEK' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1), c AS (SELECT twr_period_pct AS v FROM period_summary WHERE period_type='WEEK' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (SELECT v FROM r) - (SELECT v FROM c) AS value",
+          "rawQueryText": "WITH r AS (SELECT twr_period_pct AS v FROM period_summary WHERE period_type='WEEK' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1), c AS (SELECT twr_period_pct AS v FROM period_summary WHERE period_type='WEEK' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (SELECT v FROM r) - (SELECT v FROM c) AS value"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 6,
+      "type": "stat",
+      "title": "M TWR Gap",
+      "gridPos": {
+        "x": 15,
+        "y": 4,
+        "w": 3,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH r AS (SELECT twr_period_pct AS v FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1), c AS (SELECT twr_period_pct AS v FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (SELECT v FROM r) - (SELECT v FROM c) AS value",
+          "rawQueryText": "WITH r AS (SELECT twr_period_pct AS v FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1), c AS (SELECT twr_period_pct AS v FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (SELECT v FROM r) - (SELECT v FROM c) AS value"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 7,
+      "type": "stat",
+      "title": "Q TWR Gap",
+      "gridPos": {
+        "x": 18,
+        "y": 4,
+        "w": 3,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH r AS (SELECT twr_period_pct AS v FROM period_summary WHERE period_type='QUARTER' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1), c AS (SELECT twr_period_pct AS v FROM period_summary WHERE period_type='QUARTER' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (SELECT v FROM r) - (SELECT v FROM c) AS value",
+          "rawQueryText": "WITH r AS (SELECT twr_period_pct AS v FROM period_summary WHERE period_type='QUARTER' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1), c AS (SELECT twr_period_pct AS v FROM period_summary WHERE period_type='QUARTER' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (SELECT v FROM r) - (SELECT v FROM c) AS value"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 8,
+      "type": "stat",
+      "title": "Y TWR Gap",
+      "gridPos": {
+        "x": 21,
+        "y": 4,
+        "w": 3,
+        "h": 3
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH r AS (SELECT twr_period_pct AS v FROM period_summary WHERE period_type='YEAR' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1), c AS (SELECT twr_period_pct AS v FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (SELECT v FROM r) - (SELECT v FROM c) AS value",
+          "rawQueryText": "WITH r AS (SELECT twr_period_pct AS v FROM period_summary WHERE period_type='YEAR' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1), c AS (SELECT twr_period_pct AS v FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (SELECT v FROM r) - (SELECT v FROM c) AS value"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "value",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 9,
+      "type": "timeseries",
+      "title": "Rolling vs Completed MV and Income Gap",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 12,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH types AS (SELECT 'WEEK' AS period_type UNION ALL SELECT 'MONTH' UNION ALL SELECT 'QUARTER' UNION ALL SELECT 'YEAR'), r AS (SELECT period_type, period_start_date, period_end_date, mv_delta, monthly_income_delta, twr_period_pct, ltv_pct_delta FROM period_summary WHERE is_rolling=1), c AS (SELECT ps.period_type, ps.period_start_date, ps.period_end_date, ps.mv_delta, ps.monthly_income_delta, ps.twr_period_pct, ps.ltv_pct_delta FROM period_summary ps JOIN (SELECT period_type, MAX(period_end_date) AS period_end_date FROM period_summary WHERE is_rolling=0 GROUP BY period_type) lc ON lc.period_type=ps.period_type AND lc.period_end_date=ps.period_end_date), g AS (SELECT t.period_type, COALESCE(r.period_end_date, c.period_end_date) AS period_end_date, COALESCE(r.period_start_date,'') || '..' || COALESCE(r.period_end_date,'') AS rolling_range, COALESCE(c.period_start_date,'') || '..' || COALESCE(c.period_end_date,'') AS completed_range, r.mv_delta - c.mv_delta AS mv_gap, r.monthly_income_delta - c.monthly_income_delta AS income_gap, r.twr_period_pct - c.twr_period_pct AS twr_gap, r.ltv_pct_delta - c.ltv_pct_delta AS ltv_gap FROM types t LEFT JOIN r ON r.period_type=t.period_type LEFT JOIN c ON c.period_type=t.period_type) SELECT (strftime('%s', period_end_date || ' 00:00:00') * 1000) AS time, CASE WHEN period_type='WEEK' THEN mv_gap END AS W_MVGap, CASE WHEN period_type='MONTH' THEN mv_gap END AS M_MVGap, CASE WHEN period_type='QUARTER' THEN mv_gap END AS Q_MVGap, CASE WHEN period_type='YEAR' THEN mv_gap END AS Y_MVGap, CASE WHEN period_type='WEEK' THEN income_gap END AS W_IncGap, CASE WHEN period_type='MONTH' THEN income_gap END AS M_IncGap, CASE WHEN period_type='QUARTER' THEN income_gap END AS Q_IncGap, CASE WHEN period_type='YEAR' THEN income_gap END AS Y_IncGap FROM g ORDER BY period_end_date, period_type",
+          "rawQueryText": "WITH types AS (SELECT 'WEEK' AS period_type UNION ALL SELECT 'MONTH' UNION ALL SELECT 'QUARTER' UNION ALL SELECT 'YEAR'), r AS (SELECT period_type, period_start_date, period_end_date, mv_delta, monthly_income_delta, twr_period_pct, ltv_pct_delta FROM period_summary WHERE is_rolling=1), c AS (SELECT ps.period_type, ps.period_start_date, ps.period_end_date, ps.mv_delta, ps.monthly_income_delta, ps.twr_period_pct, ps.ltv_pct_delta FROM period_summary ps JOIN (SELECT period_type, MAX(period_end_date) AS period_end_date FROM period_summary WHERE is_rolling=0 GROUP BY period_type) lc ON lc.period_type=ps.period_type AND lc.period_end_date=ps.period_end_date), g AS (SELECT t.period_type, COALESCE(r.period_end_date, c.period_end_date) AS period_end_date, COALESCE(r.period_start_date,'') || '..' || COALESCE(r.period_end_date,'') AS rolling_range, COALESCE(c.period_start_date,'') || '..' || COALESCE(c.period_end_date,'') AS completed_range, r.mv_delta - c.mv_delta AS mv_gap, r.monthly_income_delta - c.monthly_income_delta AS income_gap, r.twr_period_pct - c.twr_period_pct AS twr_gap, r.ltv_pct_delta - c.ltv_pct_delta AS ltv_gap FROM types t LEFT JOIN r ON r.period_type=t.period_type LEFT JOIN c ON c.period_type=t.period_type) SELECT (strftime('%s', period_end_date || ' 00:00:00') * 1000) AS time, CASE WHEN period_type='WEEK' THEN mv_gap END AS W_MVGap, CASE WHEN period_type='MONTH' THEN mv_gap END AS M_MVGap, CASE WHEN period_type='QUARTER' THEN mv_gap END AS Q_MVGap, CASE WHEN period_type='YEAR' THEN mv_gap END AS Y_MVGap, CASE WHEN period_type='WEEK' THEN income_gap END AS W_IncGap, CASE WHEN period_type='MONTH' THEN income_gap END AS M_IncGap, CASE WHEN period_type='QUARTER' THEN income_gap END AS Q_IncGap, CASE WHEN period_type='YEAR' THEN income_gap END AS Y_IncGap FROM g ORDER BY period_end_date, period_type"
+        }
+      ],
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "drawStyle": "line",
+          "lineWidth": 2,
+          "fillOpacity": 12,
+          "showPoints": "never",
+          "spanNulls": true,
+          "decimals": 3
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 10,
+      "type": "timeseries",
+      "title": "Rolling vs Completed TWR and LTV Gap",
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 12,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH types AS (SELECT 'WEEK' AS period_type UNION ALL SELECT 'MONTH' UNION ALL SELECT 'QUARTER' UNION ALL SELECT 'YEAR'), r AS (SELECT period_type, period_start_date, period_end_date, mv_delta, monthly_income_delta, twr_period_pct, ltv_pct_delta FROM period_summary WHERE is_rolling=1), c AS (SELECT ps.period_type, ps.period_start_date, ps.period_end_date, ps.mv_delta, ps.monthly_income_delta, ps.twr_period_pct, ps.ltv_pct_delta FROM period_summary ps JOIN (SELECT period_type, MAX(period_end_date) AS period_end_date FROM period_summary WHERE is_rolling=0 GROUP BY period_type) lc ON lc.period_type=ps.period_type AND lc.period_end_date=ps.period_end_date), g AS (SELECT t.period_type, COALESCE(r.period_end_date, c.period_end_date) AS period_end_date, COALESCE(r.period_start_date,'') || '..' || COALESCE(r.period_end_date,'') AS rolling_range, COALESCE(c.period_start_date,'') || '..' || COALESCE(c.period_end_date,'') AS completed_range, r.mv_delta - c.mv_delta AS mv_gap, r.monthly_income_delta - c.monthly_income_delta AS income_gap, r.twr_period_pct - c.twr_period_pct AS twr_gap, r.ltv_pct_delta - c.ltv_pct_delta AS ltv_gap FROM types t LEFT JOIN r ON r.period_type=t.period_type LEFT JOIN c ON c.period_type=t.period_type) SELECT (strftime('%s', period_end_date || ' 00:00:00') * 1000) AS time, CASE WHEN period_type='WEEK' THEN twr_gap END AS W_TWRGap, CASE WHEN period_type='MONTH' THEN twr_gap END AS M_TWRGap, CASE WHEN period_type='QUARTER' THEN twr_gap END AS Q_TWRGap, CASE WHEN period_type='YEAR' THEN twr_gap END AS Y_TWRGap, CASE WHEN period_type='WEEK' THEN ltv_gap END AS W_LTVGap, CASE WHEN period_type='MONTH' THEN ltv_gap END AS M_LTVGap, CASE WHEN period_type='QUARTER' THEN ltv_gap END AS Q_LTVGap, CASE WHEN period_type='YEAR' THEN ltv_gap END AS Y_LTVGap FROM g ORDER BY period_end_date, period_type",
+          "rawQueryText": "WITH types AS (SELECT 'WEEK' AS period_type UNION ALL SELECT 'MONTH' UNION ALL SELECT 'QUARTER' UNION ALL SELECT 'YEAR'), r AS (SELECT period_type, period_start_date, period_end_date, mv_delta, monthly_income_delta, twr_period_pct, ltv_pct_delta FROM period_summary WHERE is_rolling=1), c AS (SELECT ps.period_type, ps.period_start_date, ps.period_end_date, ps.mv_delta, ps.monthly_income_delta, ps.twr_period_pct, ps.ltv_pct_delta FROM period_summary ps JOIN (SELECT period_type, MAX(period_end_date) AS period_end_date FROM period_summary WHERE is_rolling=0 GROUP BY period_type) lc ON lc.period_type=ps.period_type AND lc.period_end_date=ps.period_end_date), g AS (SELECT t.period_type, COALESCE(r.period_end_date, c.period_end_date) AS period_end_date, COALESCE(r.period_start_date,'') || '..' || COALESCE(r.period_end_date,'') AS rolling_range, COALESCE(c.period_start_date,'') || '..' || COALESCE(c.period_end_date,'') AS completed_range, r.mv_delta - c.mv_delta AS mv_gap, r.monthly_income_delta - c.monthly_income_delta AS income_gap, r.twr_period_pct - c.twr_period_pct AS twr_gap, r.ltv_pct_delta - c.ltv_pct_delta AS ltv_gap FROM types t LEFT JOIN r ON r.period_type=t.period_type LEFT JOIN c ON c.period_type=t.period_type) SELECT (strftime('%s', period_end_date || ' 00:00:00') * 1000) AS time, CASE WHEN period_type='WEEK' THEN twr_gap END AS W_TWRGap, CASE WHEN period_type='MONTH' THEN twr_gap END AS M_TWRGap, CASE WHEN period_type='QUARTER' THEN twr_gap END AS Q_TWRGap, CASE WHEN period_type='YEAR' THEN twr_gap END AS Y_TWRGap, CASE WHEN period_type='WEEK' THEN ltv_gap END AS W_LTVGap, CASE WHEN period_type='MONTH' THEN ltv_gap END AS M_LTVGap, CASE WHEN period_type='QUARTER' THEN ltv_gap END AS Q_LTVGap, CASE WHEN period_type='YEAR' THEN ltv_gap END AS Y_LTVGap FROM g ORDER BY period_end_date, period_type"
+        }
+      ],
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "drawStyle": "line",
+          "lineWidth": 2,
+          "fillOpacity": 12,
+          "showPoints": "never",
+          "spanNulls": true,
+          "decimals": 3
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 11,
+      "type": "table",
+      "title": "Gap Metrics",
+      "gridPos": {
+        "x": 0,
+        "y": 7,
+        "w": 12,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH types AS (SELECT 'WEEK' AS period_type UNION ALL SELECT 'MONTH' UNION ALL SELECT 'QUARTER' UNION ALL SELECT 'YEAR'), r AS (SELECT period_type, period_start_date, period_end_date, mv_delta, monthly_income_delta, twr_period_pct, ltv_pct_delta FROM period_summary WHERE is_rolling=1), c AS (SELECT ps.period_type, ps.period_start_date, ps.period_end_date, ps.mv_delta, ps.monthly_income_delta, ps.twr_period_pct, ps.ltv_pct_delta FROM period_summary ps JOIN (SELECT period_type, MAX(period_end_date) AS period_end_date FROM period_summary WHERE is_rolling=0 GROUP BY period_type) lc ON lc.period_type=ps.period_type AND lc.period_end_date=ps.period_end_date), g AS (SELECT t.period_type, COALESCE(r.period_end_date, c.period_end_date) AS period_end_date, COALESCE(r.period_start_date,'') || '..' || COALESCE(r.period_end_date,'') AS rolling_range, COALESCE(c.period_start_date,'') || '..' || COALESCE(c.period_end_date,'') AS completed_range, r.mv_delta - c.mv_delta AS mv_gap, r.monthly_income_delta - c.monthly_income_delta AS income_gap, r.twr_period_pct - c.twr_period_pct AS twr_gap, r.ltv_pct_delta - c.ltv_pct_delta AS ltv_gap FROM types t LEFT JOIN r ON r.period_type=t.period_type LEFT JOIN c ON c.period_type=t.period_type) SELECT period_type AS PType, round(mv_gap,2) AS MVGap, round(income_gap,2) AS IncGap, round(twr_gap,2) AS TWRGap FROM g ORDER BY CASE period_type WHEN 'WEEK' THEN 1 WHEN 'MONTH' THEN 2 WHEN 'QUARTER' THEN 3 WHEN 'YEAR' THEN 4 ELSE 5 END LIMIT 5",
+          "rawQueryText": "WITH types AS (SELECT 'WEEK' AS period_type UNION ALL SELECT 'MONTH' UNION ALL SELECT 'QUARTER' UNION ALL SELECT 'YEAR'), r AS (SELECT period_type, period_start_date, period_end_date, mv_delta, monthly_income_delta, twr_period_pct, ltv_pct_delta FROM period_summary WHERE is_rolling=1), c AS (SELECT ps.period_type, ps.period_start_date, ps.period_end_date, ps.mv_delta, ps.monthly_income_delta, ps.twr_period_pct, ps.ltv_pct_delta FROM period_summary ps JOIN (SELECT period_type, MAX(period_end_date) AS period_end_date FROM period_summary WHERE is_rolling=0 GROUP BY period_type) lc ON lc.period_type=ps.period_type AND lc.period_end_date=ps.period_end_date), g AS (SELECT t.period_type, COALESCE(r.period_end_date, c.period_end_date) AS period_end_date, COALESCE(r.period_start_date,'') || '..' || COALESCE(r.period_end_date,'') AS rolling_range, COALESCE(c.period_start_date,'') || '..' || COALESCE(c.period_end_date,'') AS completed_range, r.mv_delta - c.mv_delta AS mv_gap, r.monthly_income_delta - c.monthly_income_delta AS income_gap, r.twr_period_pct - c.twr_period_pct AS twr_gap, r.ltv_pct_delta - c.ltv_pct_delta AS ltv_gap FROM types t LEFT JOIN r ON r.period_type=t.period_type LEFT JOIN c ON c.period_type=t.period_type) SELECT period_type AS PType, round(mv_gap,2) AS MVGap, round(income_gap,2) AS IncGap, round(twr_gap,2) AS TWRGap FROM g ORDER BY CASE period_type WHEN 'WEEK' THEN 1 WHEN 'MONTH' THEN 2 WHEN 'QUARTER' THEN 3 WHEN 'YEAR' THEN 4 ELSE 5 END LIMIT 5"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "PType"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 70
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "MVGap"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 84
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "IncGap"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 84
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "TWRGap"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 84
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "type": "table",
+      "title": "Mode Side-by-Side",
+      "gridPos": {
+        "x": 12,
+        "y": 7,
+        "w": 12,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "WITH types AS (SELECT 'WEEK' AS period_type UNION ALL SELECT 'MONTH' UNION ALL SELECT 'QUARTER' UNION ALL SELECT 'YEAR'), r AS (SELECT period_type, period_start_date, period_end_date, mv_delta, monthly_income_delta, twr_period_pct, ltv_pct_delta FROM period_summary WHERE is_rolling=1), c AS (SELECT ps.period_type, ps.period_start_date, ps.period_end_date, ps.mv_delta, ps.monthly_income_delta, ps.twr_period_pct, ps.ltv_pct_delta FROM period_summary ps JOIN (SELECT period_type, MAX(period_end_date) AS period_end_date FROM period_summary WHERE is_rolling=0 GROUP BY period_type) lc ON lc.period_type=ps.period_type AND lc.period_end_date=ps.period_end_date), g AS (SELECT t.period_type, COALESCE(r.period_end_date, c.period_end_date) AS period_end_date, COALESCE(r.period_start_date,'') || '..' || COALESCE(r.period_end_date,'') AS rolling_range, COALESCE(c.period_start_date,'') || '..' || COALESCE(c.period_end_date,'') AS completed_range, r.mv_delta - c.mv_delta AS mv_gap, r.monthly_income_delta - c.monthly_income_delta AS income_gap, r.twr_period_pct - c.twr_period_pct AS twr_gap, r.ltv_pct_delta - c.ltv_pct_delta AS ltv_gap FROM types t LEFT JOIN r ON r.period_type=t.period_type LEFT JOIN c ON c.period_type=t.period_type) SELECT period_type AS PType, round(ltv_gap,2) AS LTVGap, substr(rolling_range,1,24) AS Rolling, substr(completed_range,1,24) AS Completed FROM g ORDER BY CASE period_type WHEN 'WEEK' THEN 1 WHEN 'MONTH' THEN 2 WHEN 'QUARTER' THEN 3 WHEN 'YEAR' THEN 4 ELSE 5 END LIMIT 5",
+          "rawQueryText": "WITH types AS (SELECT 'WEEK' AS period_type UNION ALL SELECT 'MONTH' UNION ALL SELECT 'QUARTER' UNION ALL SELECT 'YEAR'), r AS (SELECT period_type, period_start_date, period_end_date, mv_delta, monthly_income_delta, twr_period_pct, ltv_pct_delta FROM period_summary WHERE is_rolling=1), c AS (SELECT ps.period_type, ps.period_start_date, ps.period_end_date, ps.mv_delta, ps.monthly_income_delta, ps.twr_period_pct, ps.ltv_pct_delta FROM period_summary ps JOIN (SELECT period_type, MAX(period_end_date) AS period_end_date FROM period_summary WHERE is_rolling=0 GROUP BY period_type) lc ON lc.period_type=ps.period_type AND lc.period_end_date=ps.period_end_date), g AS (SELECT t.period_type, COALESCE(r.period_end_date, c.period_end_date) AS period_end_date, COALESCE(r.period_start_date,'') || '..' || COALESCE(r.period_end_date,'') AS rolling_range, COALESCE(c.period_start_date,'') || '..' || COALESCE(c.period_end_date,'') AS completed_range, r.mv_delta - c.mv_delta AS mv_gap, r.monthly_income_delta - c.monthly_income_delta AS income_gap, r.twr_period_pct - c.twr_period_pct AS twr_gap, r.ltv_pct_delta - c.ltv_pct_delta AS ltv_gap FROM types t LEFT JOIN r ON r.period_type=t.period_type LEFT JOIN c ON c.period_type=t.period_type) SELECT period_type AS PType, round(ltv_gap,2) AS LTVGap, substr(rolling_range,1,24) AS Rolling, substr(completed_range,1,24) AS Completed FROM g ORDER BY CASE period_type WHEN 'WEEK' THEN 1 WHEN 'MONTH' THEN 2 WHEN 'QUARTER' THEN 3 WHEN 'YEAR' THEN 4 ELSE 5 END LIMIT 5"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "PType"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 70
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "LTVGap"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 84
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Rolling"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 128
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Completed"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 128
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "refresh": "2m",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": [
+    "lmi",
+    "v4",
+    "blended",
+    "diff",
+    "gap"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-120d",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "America/Los_Angeles",
+  "title": "D07 LMI v4 - Rolling vs Completed Gap",
+  "description": "Mode-gap board that explicitly measures rolling-to-date vs latest completed divergence by period type.",
+  "uid": "lmi-v4-d07-rolling-vs-completed-gap",
+  "version": 1,
+  "weekStart": ""
+}
