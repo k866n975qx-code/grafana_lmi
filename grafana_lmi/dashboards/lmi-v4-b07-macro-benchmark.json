@@ -405,8 +405,11 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, macro_vix AS VIX, macro_ten_year_yield AS TenYear, macro_two_year_yield AS TwoYear FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, macro_vix AS VIX, macro_ten_year_yield AS TenYear, macro_two_year_yield AS TwoYear FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, macro_vix AS VIX, macro_ten_year_yield AS TenYear, macro_two_year_yield AS TwoYear FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, macro_vix AS VIX, macro_ten_year_yield AS TenYear, macro_two_year_yield AS TwoYear FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "timeColumns": [
+            "time"
+          ]
         }
       ],
       "options": {
@@ -431,7 +434,20 @@
           "decimals": 3
         },
         "overrides": []
-      }
+      },
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "id": 10,
@@ -452,8 +468,11 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, vs_benchmark_excess_1y_pct AS Excess1Y, tracking_error_1y_pct AS TrackingError, information_ratio_1y AS InformationRatio, beta_portfolio AS Beta FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, vs_benchmark_excess_1y_pct AS Excess1Y, tracking_error_1y_pct AS TrackingError, information_ratio_1y AS InformationRatio, beta_portfolio AS Beta FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, vs_benchmark_excess_1y_pct AS Excess1Y, tracking_error_1y_pct AS TrackingError, information_ratio_1y AS InformationRatio, beta_portfolio AS Beta FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, vs_benchmark_excess_1y_pct AS Excess1Y, tracking_error_1y_pct AS TrackingError, information_ratio_1y AS InformationRatio, beta_portfolio AS Beta FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "timeColumns": [
+            "time"
+          ]
         }
       ],
       "options": {
@@ -478,7 +497,20 @@
           "decimals": 3
         },
         "overrides": []
-      }
+      },
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "id": 11,

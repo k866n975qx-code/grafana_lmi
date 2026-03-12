@@ -403,8 +403,11 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, market_value AS MarketValue, net_liquidation_value AS NetLiquidation FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, market_value AS MarketValue, net_liquidation_value AS NetLiquidation FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, market_value AS MarketValue, net_liquidation_value AS NetLiquidation FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, market_value AS MarketValue, net_liquidation_value AS NetLiquidation FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "timeColumns": [
+            "time"
+          ]
         }
       ],
       "options": {
@@ -429,7 +432,20 @@
           "decimals": 0
         },
         "overrides": []
-      }
+      },
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "id": 10,
@@ -450,8 +466,11 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, projected_monthly_income AS ProjectedMo, dividends_realized_mtd AS RealizedMTD, dividends_realized_30d AS Realized30d FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, projected_monthly_income AS ProjectedMo, dividends_realized_mtd AS RealizedMTD, dividends_realized_30d AS Realized30d FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, projected_monthly_income AS ProjectedMo, dividends_realized_mtd AS RealizedMTD, dividends_realized_30d AS Realized30d FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, projected_monthly_income AS ProjectedMo, dividends_realized_mtd AS RealizedMTD, dividends_realized_30d AS Realized30d FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "timeColumns": [
+            "time"
+          ]
         }
       ],
       "options": {
@@ -476,7 +495,20 @@
           "decimals": 0
         },
         "overrides": []
-      }
+      },
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "id": 11,

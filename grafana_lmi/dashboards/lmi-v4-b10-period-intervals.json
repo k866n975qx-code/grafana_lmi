@@ -326,8 +326,11 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (strftime('%s', period_end_date || ' 00:00:00') * 1000) AS time, period_max_drawdown_pct AS \"Max DD %\", margin_call_events AS \"Margin Call Events\", days_exceeding_var_95 AS \"VaR95 Breach Days\" FROM period_summary WHERE period_type='WEEK' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 12;",
-          "rawQueryText": "SELECT (strftime('%s', period_end_date || ' 00:00:00') * 1000) AS time, period_max_drawdown_pct AS \"Max DD %\", margin_call_events AS \"Margin Call Events\", days_exceeding_var_95 AS \"VaR95 Breach Days\" FROM period_summary WHERE period_type='WEEK' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 12;"
+          "queryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, period_max_drawdown_pct AS \"Max DD %\", margin_call_events AS \"Margin Call Events\", days_exceeding_var_95 AS \"VaR95 Breach Days\" FROM period_summary WHERE period_type='WEEK' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 12;",
+          "rawQueryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, period_max_drawdown_pct AS \"Max DD %\", margin_call_events AS \"Margin Call Events\", days_exceeding_var_95 AS \"VaR95 Breach Days\" FROM period_summary WHERE period_type='WEEK' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 12;",
+          "timeColumns": [
+            "time"
+          ]
         }
       ],
       "transformations": [

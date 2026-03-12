@@ -405,8 +405,11 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH d AS (SELECT as_of_date_local, market_value - LAG(market_value) OVER (ORDER BY as_of_date_local) AS MVDelta, projected_monthly_income - LAG(projected_monthly_income) OVER (ORDER BY as_of_date_local) AS IncomeDelta FROM daily_portfolio WHERE as_of_date_local >= date('now','-60 day')) SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, MVDelta, IncomeDelta FROM d WHERE MVDelta IS NOT NULL ORDER BY as_of_date_local",
-          "rawQueryText": "WITH d AS (SELECT as_of_date_local, market_value - LAG(market_value) OVER (ORDER BY as_of_date_local) AS MVDelta, projected_monthly_income - LAG(projected_monthly_income) OVER (ORDER BY as_of_date_local) AS IncomeDelta FROM daily_portfolio WHERE as_of_date_local >= date('now','-60 day')) SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, MVDelta, IncomeDelta FROM d WHERE MVDelta IS NOT NULL ORDER BY as_of_date_local"
+          "queryText": "WITH d AS (SELECT as_of_date_local, market_value - LAG(market_value) OVER (ORDER BY as_of_date_local) AS MVDelta, projected_monthly_income - LAG(projected_monthly_income) OVER (ORDER BY as_of_date_local) AS IncomeDelta FROM daily_portfolio WHERE as_of_date_local >= date('now','-60 day')) SELECT (as_of_date_local || 'T00:00:00Z') AS time, MVDelta, IncomeDelta FROM d WHERE MVDelta IS NOT NULL ORDER BY as_of_date_local",
+          "rawQueryText": "WITH d AS (SELECT as_of_date_local, market_value - LAG(market_value) OVER (ORDER BY as_of_date_local) AS MVDelta, projected_monthly_income - LAG(projected_monthly_income) OVER (ORDER BY as_of_date_local) AS IncomeDelta FROM daily_portfolio WHERE as_of_date_local >= date('now','-60 day')) SELECT (as_of_date_local || 'T00:00:00Z') AS time, MVDelta, IncomeDelta FROM d WHERE MVDelta IS NOT NULL ORDER BY as_of_date_local",
+          "timeColumns": [
+            "time"
+          ]
         }
       ],
       "options": {
@@ -431,7 +434,20 @@
           "decimals": 2
         },
         "overrides": []
-      }
+      },
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "id": 10,
@@ -452,8 +468,11 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH d AS (SELECT as_of_date_local, forward_12m_total - LAG(forward_12m_total) OVER (ORDER BY as_of_date_local) AS F12Delta, ltv_pct - LAG(ltv_pct) OVER (ORDER BY as_of_date_local) AS LTVDelta, goal_progress_pct - LAG(goal_progress_pct) OVER (ORDER BY as_of_date_local) AS GoalDelta FROM daily_portfolio WHERE as_of_date_local >= date('now','-60 day')) SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, F12Delta, LTVDelta, GoalDelta FROM d WHERE F12Delta IS NOT NULL ORDER BY as_of_date_local",
-          "rawQueryText": "WITH d AS (SELECT as_of_date_local, forward_12m_total - LAG(forward_12m_total) OVER (ORDER BY as_of_date_local) AS F12Delta, ltv_pct - LAG(ltv_pct) OVER (ORDER BY as_of_date_local) AS LTVDelta, goal_progress_pct - LAG(goal_progress_pct) OVER (ORDER BY as_of_date_local) AS GoalDelta FROM daily_portfolio WHERE as_of_date_local >= date('now','-60 day')) SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, F12Delta, LTVDelta, GoalDelta FROM d WHERE F12Delta IS NOT NULL ORDER BY as_of_date_local"
+          "queryText": "WITH d AS (SELECT as_of_date_local, forward_12m_total - LAG(forward_12m_total) OVER (ORDER BY as_of_date_local) AS F12Delta, ltv_pct - LAG(ltv_pct) OVER (ORDER BY as_of_date_local) AS LTVDelta, goal_progress_pct - LAG(goal_progress_pct) OVER (ORDER BY as_of_date_local) AS GoalDelta FROM daily_portfolio WHERE as_of_date_local >= date('now','-60 day')) SELECT (as_of_date_local || 'T00:00:00Z') AS time, F12Delta, LTVDelta, GoalDelta FROM d WHERE F12Delta IS NOT NULL ORDER BY as_of_date_local",
+          "rawQueryText": "WITH d AS (SELECT as_of_date_local, forward_12m_total - LAG(forward_12m_total) OVER (ORDER BY as_of_date_local) AS F12Delta, ltv_pct - LAG(ltv_pct) OVER (ORDER BY as_of_date_local) AS LTVDelta, goal_progress_pct - LAG(goal_progress_pct) OVER (ORDER BY as_of_date_local) AS GoalDelta FROM daily_portfolio WHERE as_of_date_local >= date('now','-60 day')) SELECT (as_of_date_local || 'T00:00:00Z') AS time, F12Delta, LTVDelta, GoalDelta FROM d WHERE F12Delta IS NOT NULL ORDER BY as_of_date_local",
+          "timeColumns": [
+            "time"
+          ]
         }
       ],
       "options": {
@@ -478,7 +497,20 @@
           "decimals": 3
         },
         "overrides": []
-      }
+      },
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "id": 11,

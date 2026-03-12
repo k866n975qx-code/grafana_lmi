@@ -413,14 +413,30 @@
       "targets": [
         {
           "format": "table",
-          "queryText": "SELECT (strftime('%s', day || ' 00:00:00') * 1000) AS time, runs_total AS Runs, runs_failed AS Failed FROM (SELECT substr(started_at_utc,1,10) AS day, COUNT(*) AS runs_total, SUM(CASE WHEN status='failed' THEN 1 ELSE 0 END) AS runs_failed FROM runs WHERE substr(started_at_utc,1,10) >= date('now','-120 day') GROUP BY substr(started_at_utc,1,10)) ORDER BY day",
+          "queryText": "SELECT (day || 'T00:00:00Z') AS time, runs_total AS Runs, runs_failed AS Failed FROM (SELECT substr(started_at_utc,1,10) AS day, COUNT(*) AS runs_total, SUM(CASE WHEN status='failed' THEN 1 ELSE 0 END) AS runs_failed FROM runs WHERE substr(started_at_utc,1,10) >= date('now','-120 day') GROUP BY substr(started_at_utc,1,10)) ORDER BY day",
           "queryType": "table",
-          "rawQueryText": "SELECT (strftime('%s', day || ' 00:00:00') * 1000) AS time, runs_total AS Runs, runs_failed AS Failed FROM (SELECT substr(started_at_utc,1,10) AS day, COUNT(*) AS runs_total, SUM(CASE WHEN status='failed' THEN 1 ELSE 0 END) AS runs_failed FROM runs WHERE substr(started_at_utc,1,10) >= date('now','-120 day') GROUP BY substr(started_at_utc,1,10)) ORDER BY day",
-          "refId": "A"
+          "rawQueryText": "SELECT (day || 'T00:00:00Z') AS time, runs_total AS Runs, runs_failed AS Failed FROM (SELECT substr(started_at_utc,1,10) AS day, COUNT(*) AS runs_total, SUM(CASE WHEN status='failed' THEN 1 ELSE 0 END) AS runs_failed FROM runs WHERE substr(started_at_utc,1,10) >= date('now','-120 day') GROUP BY substr(started_at_utc,1,10)) ORDER BY day",
+          "refId": "A",
+          "timeColumns": [
+            "time"
+          ]
         }
       ],
       "title": "Runs per Day",
-      "type": "timeseries"
+      "type": "timeseries",
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "datasource": {
@@ -460,14 +476,30 @@
       "targets": [
         {
           "format": "table",
-          "queryText": "WITH facts AS (SELECT as_of_date_local AS day, COUNT(*) AS facts_rows, 0 AS raw_rows FROM facts_source_daily WHERE as_of_date_local >= date('now','-120 day') GROUP BY as_of_date_local), raw AS (SELECT substr(pulled_at_utc,1,10) AS day, 0 AS facts_rows, COUNT(*) AS raw_rows FROM lm_raw WHERE substr(pulled_at_utc,1,10) >= date('now','-120 day') GROUP BY substr(pulled_at_utc,1,10)), combined AS (SELECT * FROM facts UNION ALL SELECT * FROM raw) SELECT (strftime('%s', day || ' 00:00:00') * 1000) AS time, SUM(facts_rows) AS Facts, SUM(raw_rows) AS Raw FROM combined GROUP BY day ORDER BY day",
+          "queryText": "WITH facts AS (SELECT as_of_date_local AS day, COUNT(*) AS facts_rows, 0 AS raw_rows FROM facts_source_daily WHERE as_of_date_local >= date('now','-120 day') GROUP BY as_of_date_local), raw AS (SELECT substr(pulled_at_utc,1,10) AS day, 0 AS facts_rows, COUNT(*) AS raw_rows FROM lm_raw WHERE substr(pulled_at_utc,1,10) >= date('now','-120 day') GROUP BY substr(pulled_at_utc,1,10)), combined AS (SELECT * FROM facts UNION ALL SELECT * FROM raw) SELECT (day || 'T00:00:00Z') AS time, SUM(facts_rows) AS Facts, SUM(raw_rows) AS Raw FROM combined GROUP BY day ORDER BY day",
           "queryType": "table",
-          "rawQueryText": "WITH facts AS (SELECT as_of_date_local AS day, COUNT(*) AS facts_rows, 0 AS raw_rows FROM facts_source_daily WHERE as_of_date_local >= date('now','-120 day') GROUP BY as_of_date_local), raw AS (SELECT substr(pulled_at_utc,1,10) AS day, 0 AS facts_rows, COUNT(*) AS raw_rows FROM lm_raw WHERE substr(pulled_at_utc,1,10) >= date('now','-120 day') GROUP BY substr(pulled_at_utc,1,10)), combined AS (SELECT * FROM facts UNION ALL SELECT * FROM raw) SELECT (strftime('%s', day || ' 00:00:00') * 1000) AS time, SUM(facts_rows) AS Facts, SUM(raw_rows) AS Raw FROM combined GROUP BY day ORDER BY day",
-          "refId": "A"
+          "rawQueryText": "WITH facts AS (SELECT as_of_date_local AS day, COUNT(*) AS facts_rows, 0 AS raw_rows FROM facts_source_daily WHERE as_of_date_local >= date('now','-120 day') GROUP BY as_of_date_local), raw AS (SELECT substr(pulled_at_utc,1,10) AS day, 0 AS facts_rows, COUNT(*) AS raw_rows FROM lm_raw WHERE substr(pulled_at_utc,1,10) >= date('now','-120 day') GROUP BY substr(pulled_at_utc,1,10)), combined AS (SELECT * FROM facts UNION ALL SELECT * FROM raw) SELECT (day || 'T00:00:00Z') AS time, SUM(facts_rows) AS Facts, SUM(raw_rows) AS Raw FROM combined GROUP BY day ORDER BY day",
+          "refId": "A",
+          "timeColumns": [
+            "time"
+          ]
         }
       ],
       "title": "Facts and Raw Ingest per Day",
-      "type": "timeseries"
+      "type": "timeseries",
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "datasource": {

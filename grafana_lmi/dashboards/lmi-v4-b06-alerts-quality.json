@@ -404,8 +404,11 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, SUM(CASE WHEN category='income' THEN 1 ELSE 0 END) AS Income, SUM(CASE WHEN category='ex_dividend' THEN 1 ELSE 0 END) AS ExDividend, SUM(CASE WHEN category NOT IN ('income','ex_dividend') THEN 1 ELSE 0 END) AS Other FROM alert_messages WHERE as_of_date_local >= date('now','-120 day') GROUP BY as_of_date_local ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, SUM(CASE WHEN category='income' THEN 1 ELSE 0 END) AS Income, SUM(CASE WHEN category='ex_dividend' THEN 1 ELSE 0 END) AS ExDividend, SUM(CASE WHEN category NOT IN ('income','ex_dividend') THEN 1 ELSE 0 END) AS Other FROM alert_messages WHERE as_of_date_local >= date('now','-120 day') GROUP BY as_of_date_local ORDER BY as_of_date_local"
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, SUM(CASE WHEN category='income' THEN 1 ELSE 0 END) AS Income, SUM(CASE WHEN category='ex_dividend' THEN 1 ELSE 0 END) AS ExDividend, SUM(CASE WHEN category NOT IN ('income','ex_dividend') THEN 1 ELSE 0 END) AS Other FROM alert_messages WHERE as_of_date_local >= date('now','-120 day') GROUP BY as_of_date_local ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, SUM(CASE WHEN category='income' THEN 1 ELSE 0 END) AS Income, SUM(CASE WHEN category='ex_dividend' THEN 1 ELSE 0 END) AS ExDividend, SUM(CASE WHEN category NOT IN ('income','ex_dividend') THEN 1 ELSE 0 END) AS Other FROM alert_messages WHERE as_of_date_local >= date('now','-120 day') GROUP BY as_of_date_local ORDER BY as_of_date_local",
+          "timeColumns": [
+            "time"
+          ]
         }
       ],
       "options": {
@@ -430,7 +433,20 @@
           "decimals": 0
         },
         "overrides": []
-      }
+      },
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "id": 10,
@@ -451,8 +467,11 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (strftime('%s', date(sent_at_utc) || ' 00:00:00') * 1000) AS time, COUNT(*) AS Notifications, 100.0 * AVG(CASE WHEN success=1 THEN 1.0 ELSE 0.0 END) AS SuccessPct FROM alert_notifications WHERE date(sent_at_utc) >= date('now','-120 day') GROUP BY date(sent_at_utc) ORDER BY date(sent_at_utc)",
-          "rawQueryText": "SELECT (strftime('%s', date(sent_at_utc) || ' 00:00:00') * 1000) AS time, COUNT(*) AS Notifications, 100.0 * AVG(CASE WHEN success=1 THEN 1.0 ELSE 0.0 END) AS SuccessPct FROM alert_notifications WHERE date(sent_at_utc) >= date('now','-120 day') GROUP BY date(sent_at_utc) ORDER BY date(sent_at_utc)"
+          "queryText": "SELECT (date(sent_at_utc) || 'T00:00:00Z') AS time, COUNT(*) AS Notifications, 100.0 * AVG(CASE WHEN success=1 THEN 1.0 ELSE 0.0 END) AS SuccessPct FROM alert_notifications WHERE date(sent_at_utc) >= date('now','-120 day') GROUP BY date(sent_at_utc) ORDER BY date(sent_at_utc)",
+          "rawQueryText": "SELECT (date(sent_at_utc) || 'T00:00:00Z') AS time, COUNT(*) AS Notifications, 100.0 * AVG(CASE WHEN success=1 THEN 1.0 ELSE 0.0 END) AS SuccessPct FROM alert_notifications WHERE date(sent_at_utc) >= date('now','-120 day') GROUP BY date(sent_at_utc) ORDER BY date(sent_at_utc)",
+          "timeColumns": [
+            "time"
+          ]
         }
       ],
       "options": {
@@ -477,7 +496,20 @@
           "decimals": 2
         },
         "overrides": []
-      }
+      },
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "id": 11,

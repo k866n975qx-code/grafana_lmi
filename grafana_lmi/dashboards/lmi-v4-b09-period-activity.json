@@ -404,8 +404,11 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (strftime('%s', period_end_date || ' 00:00:00') * 1000) AS time, contributions_total AS Contributions, withdrawals_total AS Withdrawals, dividends_total_received AS Dividends FROM period_activity WHERE period_type='MONTH' ORDER BY period_end_date",
-          "rawQueryText": "SELECT (strftime('%s', period_end_date || ' 00:00:00') * 1000) AS time, contributions_total AS Contributions, withdrawals_total AS Withdrawals, dividends_total_received AS Dividends FROM period_activity WHERE period_type='MONTH' ORDER BY period_end_date"
+          "queryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, contributions_total AS Contributions, withdrawals_total AS Withdrawals, dividends_total_received AS Dividends FROM period_activity WHERE period_type='MONTH' ORDER BY period_end_date",
+          "rawQueryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, contributions_total AS Contributions, withdrawals_total AS Withdrawals, dividends_total_received AS Dividends FROM period_activity WHERE period_type='MONTH' ORDER BY period_end_date",
+          "timeColumns": [
+            "time"
+          ]
         }
       ],
       "options": {
@@ -430,7 +433,20 @@
           "decimals": 0
         },
         "overrides": []
-      }
+      },
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "id": 10,
@@ -451,8 +467,11 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (strftime('%s', period_end_date || ' 00:00:00') * 1000) AS time, trades_total_count AS Trades, margin_net_change AS MarginNet FROM period_activity WHERE period_type='MONTH' ORDER BY period_end_date",
-          "rawQueryText": "SELECT (strftime('%s', period_end_date || ' 00:00:00') * 1000) AS time, trades_total_count AS Trades, margin_net_change AS MarginNet FROM period_activity WHERE period_type='MONTH' ORDER BY period_end_date"
+          "queryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, trades_total_count AS Trades, margin_net_change AS MarginNet FROM period_activity WHERE period_type='MONTH' ORDER BY period_end_date",
+          "rawQueryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, trades_total_count AS Trades, margin_net_change AS MarginNet FROM period_activity WHERE period_type='MONTH' ORDER BY period_end_date",
+          "timeColumns": [
+            "time"
+          ]
         }
       ],
       "options": {
@@ -477,7 +496,20 @@
           "decimals": 2
         },
         "overrides": []
-      }
+      },
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "id": 11,

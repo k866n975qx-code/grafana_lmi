@@ -262,8 +262,11 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, drawdown_depth_pct AS \"Drawdown Depth %\", var_95_1d_pct AS \"VaR 95 1d %\", cvar_95_1d_pct AS \"CVaR 95 1d %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;",
-          "rawQueryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, drawdown_depth_pct AS \"Drawdown Depth %\", var_95_1d_pct AS \"VaR 95 1d %\", cvar_95_1d_pct AS \"CVaR 95 1d %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;"
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, drawdown_depth_pct AS \"Drawdown Depth %\", var_95_1d_pct AS \"VaR 95 1d %\", cvar_95_1d_pct AS \"CVaR 95 1d %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, drawdown_depth_pct AS \"Drawdown Depth %\", var_95_1d_pct AS \"VaR 95 1d %\", cvar_95_1d_pct AS \"CVaR 95 1d %\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;",
+          "timeColumns": [
+            "time"
+          ]
         }
       ],
       "transformations": [
@@ -306,8 +309,11 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, macro_stress_score AS \"Macro Stress\", macro_vix AS \"VIX\", macro_yield_spread_10y_2y AS \"10Y-2Y Spread\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;",
-          "rawQueryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, macro_stress_score AS \"Macro Stress\", macro_vix AS \"VIX\", macro_yield_spread_10y_2y AS \"10Y-2Y Spread\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;"
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, macro_stress_score AS \"Macro Stress\", macro_vix AS \"VIX\", macro_yield_spread_10y_2y AS \"10Y-2Y Spread\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, macro_stress_score AS \"Macro Stress\", macro_vix AS \"VIX\", macro_yield_spread_10y_2y AS \"10Y-2Y Spread\" FROM daily_portfolio WHERE as_of_date_local >= date('now','-180 day') ORDER BY as_of_date_local;",
+          "timeColumns": [
+            "time"
+          ]
         }
       ],
       "transformations": [

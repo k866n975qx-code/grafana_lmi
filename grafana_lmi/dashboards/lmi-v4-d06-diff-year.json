@@ -405,8 +405,11 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (strftime('%s', period_end_date || ' 00:00:00') * 1000) AS time, mv_delta AS MVDelta, monthly_income_delta AS IncomeDelta FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date",
-          "rawQueryText": "SELECT (strftime('%s', period_end_date || ' 00:00:00') * 1000) AS time, mv_delta AS MVDelta, monthly_income_delta AS IncomeDelta FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date"
+          "queryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, mv_delta AS MVDelta, monthly_income_delta AS IncomeDelta FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date",
+          "rawQueryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, mv_delta AS MVDelta, monthly_income_delta AS IncomeDelta FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date",
+          "timeColumns": [
+            "time"
+          ]
         }
       ],
       "options": {
@@ -431,7 +434,20 @@
           "decimals": 0
         },
         "overrides": []
-      }
+      },
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "id": 10,
@@ -452,8 +468,11 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (strftime('%s', period_end_date || ' 00:00:00') * 1000) AS time, twr_period_pct AS TWR, ltv_pct_delta AS LTVDelta, forward_12m_delta AS F12Delta FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date",
-          "rawQueryText": "SELECT (strftime('%s', period_end_date || ' 00:00:00') * 1000) AS time, twr_period_pct AS TWR, ltv_pct_delta AS LTVDelta, forward_12m_delta AS F12Delta FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date"
+          "queryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, twr_period_pct AS TWR, ltv_pct_delta AS LTVDelta, forward_12m_delta AS F12Delta FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date",
+          "rawQueryText": "SELECT (period_end_date || 'T00:00:00Z') AS time, twr_period_pct AS TWR, ltv_pct_delta AS LTVDelta, forward_12m_delta AS F12Delta FROM period_summary WHERE period_type='YEAR' AND is_rolling=0 ORDER BY period_end_date",
+          "timeColumns": [
+            "time"
+          ]
         }
       ],
       "options": {
@@ -478,7 +497,20 @@
           "decimals": 3
         },
         "overrides": []
-      }
+      },
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "id": 11,

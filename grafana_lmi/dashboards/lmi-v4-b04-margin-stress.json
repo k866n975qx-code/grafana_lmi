@@ -403,8 +403,11 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH hist AS (SELECT as_of_date_local, balance AS loan FROM margin_balance_history WHERE as_of_date_local >= date('now','-120 day')), fallback AS (SELECT as_of_date_local, margin_loan_balance AS loan FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day')), loan_series AS (SELECT as_of_date_local, loan FROM hist UNION ALL SELECT f.as_of_date_local, f.loan FROM fallback f WHERE NOT EXISTS (SELECT 1 FROM hist)) SELECT (strftime('%s', ls.as_of_date_local || ' 00:00:00') * 1000) AS time, ls.loan AS Loan, dp.ltv_pct AS LTVPct FROM loan_series ls LEFT JOIN daily_portfolio dp ON dp.as_of_date_local = ls.as_of_date_local ORDER BY ls.as_of_date_local",
-          "rawQueryText": "WITH hist AS (SELECT as_of_date_local, balance AS loan FROM margin_balance_history WHERE as_of_date_local >= date('now','-120 day')), fallback AS (SELECT as_of_date_local, margin_loan_balance AS loan FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day')), loan_series AS (SELECT as_of_date_local, loan FROM hist UNION ALL SELECT f.as_of_date_local, f.loan FROM fallback f WHERE NOT EXISTS (SELECT 1 FROM hist)) SELECT (strftime('%s', ls.as_of_date_local || ' 00:00:00') * 1000) AS time, ls.loan AS Loan, dp.ltv_pct AS LTVPct FROM loan_series ls LEFT JOIN daily_portfolio dp ON dp.as_of_date_local = ls.as_of_date_local ORDER BY ls.as_of_date_local"
+          "queryText": "WITH hist AS (SELECT as_of_date_local, balance AS loan FROM margin_balance_history WHERE as_of_date_local >= date('now','-120 day')), fallback AS (SELECT as_of_date_local, margin_loan_balance AS loan FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day')), loan_series AS (SELECT as_of_date_local, loan FROM hist UNION ALL SELECT f.as_of_date_local, f.loan FROM fallback f WHERE NOT EXISTS (SELECT 1 FROM hist)) SELECT (ls.as_of_date_local || 'T00:00:00Z') AS time, ls.loan AS Loan, dp.ltv_pct AS LTVPct FROM loan_series ls LEFT JOIN daily_portfolio dp ON dp.as_of_date_local = ls.as_of_date_local ORDER BY ls.as_of_date_local",
+          "rawQueryText": "WITH hist AS (SELECT as_of_date_local, balance AS loan FROM margin_balance_history WHERE as_of_date_local >= date('now','-120 day')), fallback AS (SELECT as_of_date_local, margin_loan_balance AS loan FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day')), loan_series AS (SELECT as_of_date_local, loan FROM hist UNION ALL SELECT f.as_of_date_local, f.loan FROM fallback f WHERE NOT EXISTS (SELECT 1 FROM hist)) SELECT (ls.as_of_date_local || 'T00:00:00Z') AS time, ls.loan AS Loan, dp.ltv_pct AS LTVPct FROM loan_series ls LEFT JOIN daily_portfolio dp ON dp.as_of_date_local = ls.as_of_date_local ORDER BY ls.as_of_date_local",
+          "timeColumns": [
+            "time"
+          ]
         }
       ],
       "options": {
@@ -429,7 +432,20 @@
           "decimals": 3
         },
         "overrides": []
-      }
+      },
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "id": 10,
@@ -450,8 +466,11 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, CASE WHEN typeof(margin_income_coverage) IN ('real','integer') THEN margin_income_coverage ELSE NULL END AS Coverage, CASE WHEN typeof(buffer_to_margin_call_pct) IN ('real','integer') THEN buffer_to_margin_call_pct ELSE NULL END AS BufferPct FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
-          "rawQueryText": "SELECT (strftime('%s', as_of_date_local || ' 00:00:00') * 1000) AS time, CASE WHEN typeof(margin_income_coverage) IN ('real','integer') THEN margin_income_coverage ELSE NULL END AS Coverage, CASE WHEN typeof(buffer_to_margin_call_pct) IN ('real','integer') THEN buffer_to_margin_call_pct ELSE NULL END AS BufferPct FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local"
+          "queryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CASE WHEN typeof(margin_income_coverage) IN ('real','integer') THEN margin_income_coverage ELSE NULL END AS Coverage, CASE WHEN typeof(buffer_to_margin_call_pct) IN ('real','integer') THEN buffer_to_margin_call_pct ELSE NULL END AS BufferPct FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "rawQueryText": "SELECT (as_of_date_local || 'T00:00:00Z') AS time, CASE WHEN typeof(margin_income_coverage) IN ('real','integer') THEN margin_income_coverage ELSE NULL END AS Coverage, CASE WHEN typeof(buffer_to_margin_call_pct) IN ('real','integer') THEN buffer_to_margin_call_pct ELSE NULL END AS BufferPct FROM daily_portfolio WHERE as_of_date_local >= date('now','-120 day') ORDER BY as_of_date_local",
+          "timeColumns": [
+            "time"
+          ]
         }
       ],
       "options": {
@@ -476,7 +495,20 @@
           "decimals": 3
         },
         "overrides": []
-      }
+      },
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "id": 11,

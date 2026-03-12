@@ -403,8 +403,11 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (strftime('%s', pi.interval_end || ' 00:00:00') * 1000) AS time, MAX(CASE WHEN pia.window='1m' THEN pia.total_return_pct END) AS TR1m, MAX(CASE WHEN pia.window='3m' THEN pia.total_return_pct END) AS TR3m, MAX(CASE WHEN pia.window='6m' THEN pia.total_return_pct END) AS TR6m, MAX(CASE WHEN pia.window='12m' THEN pia.total_return_pct END) AS TR12m FROM period_interval_attribution pia JOIN period_intervals pi ON pi.period_type=pia.period_type AND pi.period_start_date=pia.period_start_date AND pi.period_end_date=pia.period_end_date AND pi.interval_label=pia.interval_label WHERE pia.period_type='MONTH' AND pia.period_start_date=(SELECT period_start_date FROM latest) AND pia.period_end_date=(SELECT period_end_date FROM latest) GROUP BY pi.interval_end ORDER BY pi.interval_end",
-          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (strftime('%s', pi.interval_end || ' 00:00:00') * 1000) AS time, MAX(CASE WHEN pia.window='1m' THEN pia.total_return_pct END) AS TR1m, MAX(CASE WHEN pia.window='3m' THEN pia.total_return_pct END) AS TR3m, MAX(CASE WHEN pia.window='6m' THEN pia.total_return_pct END) AS TR6m, MAX(CASE WHEN pia.window='12m' THEN pia.total_return_pct END) AS TR12m FROM period_interval_attribution pia JOIN period_intervals pi ON pi.period_type=pia.period_type AND pi.period_start_date=pia.period_start_date AND pi.period_end_date=pia.period_end_date AND pi.interval_label=pia.interval_label WHERE pia.period_type='MONTH' AND pia.period_start_date=(SELECT period_start_date FROM latest) AND pia.period_end_date=(SELECT period_end_date FROM latest) GROUP BY pi.interval_end ORDER BY pi.interval_end"
+          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (pi.interval_end || 'T00:00:00Z') AS time, MAX(CASE WHEN pia.window='1m' THEN pia.total_return_pct END) AS TR1m, MAX(CASE WHEN pia.window='3m' THEN pia.total_return_pct END) AS TR3m, MAX(CASE WHEN pia.window='6m' THEN pia.total_return_pct END) AS TR6m, MAX(CASE WHEN pia.window='12m' THEN pia.total_return_pct END) AS TR12m FROM period_interval_attribution pia JOIN period_intervals pi ON pi.period_type=pia.period_type AND pi.period_start_date=pia.period_start_date AND pi.period_end_date=pia.period_end_date AND pi.interval_label=pia.interval_label WHERE pia.period_type='MONTH' AND pia.period_start_date=(SELECT period_start_date FROM latest) AND pia.period_end_date=(SELECT period_end_date FROM latest) GROUP BY pi.interval_end ORDER BY pi.interval_end",
+          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (pi.interval_end || 'T00:00:00Z') AS time, MAX(CASE WHEN pia.window='1m' THEN pia.total_return_pct END) AS TR1m, MAX(CASE WHEN pia.window='3m' THEN pia.total_return_pct END) AS TR3m, MAX(CASE WHEN pia.window='6m' THEN pia.total_return_pct END) AS TR6m, MAX(CASE WHEN pia.window='12m' THEN pia.total_return_pct END) AS TR12m FROM period_interval_attribution pia JOIN period_intervals pi ON pi.period_type=pia.period_type AND pi.period_start_date=pia.period_start_date AND pi.period_end_date=pia.period_end_date AND pi.interval_label=pia.interval_label WHERE pia.period_type='MONTH' AND pia.period_start_date=(SELECT period_start_date FROM latest) AND pia.period_end_date=(SELECT period_end_date FROM latest) GROUP BY pi.interval_end ORDER BY pi.interval_end",
+          "timeColumns": [
+            "time"
+          ]
         }
       ],
       "options": {
@@ -429,7 +432,20 @@
           "decimals": 2
         },
         "overrides": []
-      }
+      },
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "id": 10,
@@ -450,8 +466,11 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (strftime('%s', interval_end || ' 00:00:00') * 1000) AS time, twr_1m_pct AS TWR1m, twr_3m_pct AS TWR3m, twr_6m_pct AS TWR6m, twr_12m_pct AS TWR12m FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end",
-          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (strftime('%s', interval_end || ' 00:00:00') * 1000) AS time, twr_1m_pct AS TWR1m, twr_3m_pct AS TWR3m, twr_6m_pct AS TWR6m, twr_12m_pct AS TWR12m FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end"
+          "queryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (interval_end || 'T00:00:00Z') AS time, twr_1m_pct AS TWR1m, twr_3m_pct AS TWR3m, twr_6m_pct AS TWR6m, twr_12m_pct AS TWR12m FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end",
+          "rawQueryText": "WITH latest AS (SELECT period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=0 ORDER BY period_end_date DESC LIMIT 1) SELECT (interval_end || 'T00:00:00Z') AS time, twr_1m_pct AS TWR1m, twr_3m_pct AS TWR3m, twr_6m_pct AS TWR6m, twr_12m_pct AS TWR12m FROM period_intervals WHERE period_type='MONTH' AND period_start_date=(SELECT period_start_date FROM latest) AND period_end_date=(SELECT period_end_date FROM latest) ORDER BY interval_end",
+          "timeColumns": [
+            "time"
+          ]
         }
       ],
       "options": {
@@ -476,7 +495,20 @@
           "decimals": 2
         },
         "overrides": []
-      }
+      },
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "targetField": "time",
+                "destinationType": "time"
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "id": 11,
