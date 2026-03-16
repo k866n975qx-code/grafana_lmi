@@ -553,7 +553,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 72
+                "value": 64
               }
             ]
           },
@@ -565,7 +565,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 100
+                "value": 108
               }
             ]
           },
@@ -577,7 +577,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 78
+                "value": 80
               }
             ]
           },
@@ -589,7 +589,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 70
+                "value": 60
               }
             ]
           }
@@ -637,7 +637,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 72
+                "value": 60
               }
             ]
           },
@@ -649,7 +649,28 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 82
+                "value": 78
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red"
+                    },
+                    {
+                      "color": "green",
+                      "value": 0
+                    }
+                  ]
+                }
               }
             ]
           },
@@ -661,7 +682,28 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 86
+                "value": 78
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red"
+                    },
+                    {
+                      "color": "green",
+                      "value": 0
+                    }
+                  ]
+                }
               }
             ]
           },
@@ -673,7 +715,28 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 82
+                "value": 78
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red"
+                    },
+                    {
+                      "color": "green",
+                      "value": 0
+                    }
+                  ]
+                }
               }
             ]
           }
@@ -702,6 +765,6 @@
   "title": "B07 LMI v4 - Macro and Benchmark",
   "description": "Macro regime and benchmark context board: rates, stress, tracking quality, and period-relative return gap.",
   "uid": "lmi-v4-b07-macro-benchmark",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }

@@ -553,7 +553,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 70
+                "value": 60
               }
             ]
           },
@@ -565,7 +565,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 84
+                "value": 76
               }
             ]
           },
@@ -577,7 +577,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 84
+                "value": 76
               }
             ]
           },
@@ -589,7 +589,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 84
+                "value": 76
               }
             ]
           }
@@ -637,7 +637,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 70
+                "value": 60
               }
             ]
           },
@@ -649,7 +649,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 84
+                "value": 76
               }
             ]
           },
@@ -661,7 +661,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 128
+                "value": 84
               }
             ]
           },
@@ -673,7 +673,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 128
+                "value": 84
               }
             ]
           }
@@ -703,6 +703,6 @@
   "title": "D07 LMI v4 - Rolling vs Completed Gap",
   "description": "Mode-gap board that explicitly measures rolling-to-date vs latest completed divergence by period type.",
   "uid": "lmi-v4-d07-rolling-vs-completed-gap",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }

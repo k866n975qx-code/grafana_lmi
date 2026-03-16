@@ -517,7 +517,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 130
+                "value": 100
               }
             ]
           },
@@ -529,7 +529,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 130
+                "value": 100
               }
             ]
           },
@@ -541,7 +541,95 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 80
+                "value": 72
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "SUCCEEDED": {
+                        "text": "SUCCEEDED",
+                        "color": "green"
+                      },
+                      "SUCCESS": {
+                        "text": "SUCCESS",
+                        "color": "green"
+                      },
+                      "OK": {
+                        "text": "OK",
+                        "color": "green"
+                      },
+                      "COMPLETED": {
+                        "text": "COMPLETED",
+                        "color": "green"
+                      },
+                      "SENT": {
+                        "text": "SENT",
+                        "color": "green"
+                      },
+                      "RUNNING": {
+                        "text": "RUNNING",
+                        "color": "orange"
+                      },
+                      "ACKED": {
+                        "text": "ACKED",
+                        "color": "yellow"
+                      },
+                      "ACK": {
+                        "text": "ACK",
+                        "color": "yellow"
+                      },
+                      "OPEN": {
+                        "text": "OPEN",
+                        "color": "red"
+                      },
+                      "FAILED": {
+                        "text": "FAILED",
+                        "color": "red"
+                      },
+                      "ERROR": {
+                        "text": "ERROR",
+                        "color": "red"
+                      },
+                      "DEGRADED": {
+                        "text": "DEGRADED",
+                        "color": "orange"
+                      },
+                      "GOOD": {
+                        "text": "GOOD",
+                        "color": "green"
+                      },
+                      "HEALTHY": {
+                        "text": "HEALTHY",
+                        "color": "green"
+                      },
+                      "BAD": {
+                        "text": "BAD",
+                        "color": "red"
+                      },
+                      "UNHEALTHY": {
+                        "text": "UNHEALTHY",
+                        "color": "red"
+                      },
+                      "N/A": {
+                        "text": "N/A",
+                        "color": "gray"
+                      },
+                      "SAFE": {
+                        "text": "SAFE",
+                        "color": "green"
+                      }
+                    }
+                  }
+                ]
               }
             ]
           },
@@ -553,7 +641,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 56
+                "value": 78
               }
             ]
           },
@@ -565,7 +653,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 220
+                "value": 150
               }
             ]
           }
@@ -613,7 +701,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 150
+                "value": 128
               }
             ]
           },
@@ -625,7 +713,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 84
+                "value": 64
               }
             ]
           },
@@ -637,7 +725,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 132
+                "value": 108
               }
             ]
           },
@@ -649,7 +737,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 170
+                "value": 144
               }
             ]
           }
@@ -703,6 +791,6 @@
   "timezone": "America/Los_Angeles",
   "title": "B08 LMI v4 - Source and Ops",
   "uid": "lmi-v4-b08-source-ops",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }

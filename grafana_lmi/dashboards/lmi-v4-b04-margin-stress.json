@@ -551,7 +551,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 110
+                "value": 104
               }
             ]
           },
@@ -563,7 +563,28 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 92
+                "value": 84
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green"
+                    },
+                    {
+                      "color": "red",
+                      "value": 0
+                    }
+                  ]
+                }
               }
             ]
           },
@@ -575,7 +596,28 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 92
+                "value": 84
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green"
+                    },
+                    {
+                      "color": "red",
+                      "value": 0
+                    }
+                  ]
+                }
               }
             ]
           },
@@ -587,7 +629,28 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 84
+                "value": 76
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red"
+                    },
+                    {
+                      "color": "green",
+                      "value": 0
+                    }
+                  ]
+                }
               }
             ]
           }
@@ -635,7 +698,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 88
+                "value": 76
               }
             ]
           },
@@ -647,7 +710,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 86
+                "value": 90
               }
             ]
           },
@@ -659,7 +722,28 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 82
+                "value": 72
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green"
+                    },
+                    {
+                      "color": "red",
+                      "value": 0
+                    }
+                  ]
+                }
               }
             ]
           },
@@ -671,7 +755,28 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 84
+                "value": 76
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red"
+                    },
+                    {
+                      "color": "green",
+                      "value": 0
+                    }
+                  ]
+                }
               }
             ]
           }
@@ -700,6 +805,6 @@
   "title": "B04 LMI v4 - Margin and Stress",
   "description": "Margin control board: loan exposure, LTV stress path, and scenario-rate impact with history fallback.",
   "uid": "lmi-v4-b04-margin-stress",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }

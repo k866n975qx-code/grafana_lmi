@@ -356,17 +356,93 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT symbol, weight_pct, var_95_1d_pct, cvar_95_1d_pct, max_drawdown_1y_pct, risk_quality_category FROM daily_holdings WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_holdings) ORDER BY cvar_95_1d_pct ASC LIMIT 8;",
-          "rawQueryText": "SELECT symbol, weight_pct, var_95_1d_pct, cvar_95_1d_pct, max_drawdown_1y_pct, risk_quality_category FROM daily_holdings WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_holdings) ORDER BY cvar_95_1d_pct ASC LIMIT 8;"
+          "queryText": "SELECT substr(symbol,1,8) AS Sym, round(weight_pct,2) AS WtPct, round(var_95_1d_pct,2) AS VaR95, round(cvar_95_1d_pct,2) AS CVaR95, round(max_drawdown_1y_pct,2) AS MaxDD, COALESCE(risk_quality_category,'n/a') AS RiskQual FROM daily_holdings WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_holdings) ORDER BY cvar_95_1d_pct ASC LIMIT 8;",
+          "rawQueryText": "SELECT substr(symbol,1,8) AS Sym, round(weight_pct,2) AS WtPct, round(var_95_1d_pct,2) AS VaR95, round(cvar_95_1d_pct,2) AS CVaR95, round(max_drawdown_1y_pct,2) AS MaxDD, COALESCE(risk_quality_category,'n/a') AS RiskQual FROM daily_holdings WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_holdings) ORDER BY cvar_95_1d_pct ASC LIMIT 8;"
         }
       ],
       "options": {
         "showHeader": true,
-        "cellHeight": "sm"
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
       },
       "fieldConfig": {
         "defaults": {},
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Sym"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 54
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "WtPct"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 72
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "VaR95"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 72
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CVaR95"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 74
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "MaxDD"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 72
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RiskQual"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 96
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -388,17 +464,256 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT as_of_date_local, COALESCE(health_status,'n/a') AS health_status, coverage_derived_pct, coverage_missing_pct, coverage_filled_pct, prices_as_of_utc, schema_version FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
-          "rawQueryText": "SELECT as_of_date_local, COALESCE(health_status,'n/a') AS health_status, coverage_derived_pct, coverage_missing_pct, coverage_filled_pct, prices_as_of_utc, schema_version FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
+          "queryText": "SELECT as_of_date_local AS Date, COALESCE(health_status,'n/a') AS Health, round(coverage_derived_pct,1) AS CovDer, round(coverage_missing_pct,1) AS CovMiss, round(coverage_filled_pct,1) AS CovFill, substr(COALESCE(prices_as_of_utc,''),1,16) AS PricesUTC, COALESCE(schema_version,'') AS Schema FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;",
+          "rawQueryText": "SELECT as_of_date_local AS Date, COALESCE(health_status,'n/a') AS Health, round(coverage_derived_pct,1) AS CovDer, round(coverage_missing_pct,1) AS CovMiss, round(coverage_filled_pct,1) AS CovFill, substr(COALESCE(prices_as_of_utc,''),1,16) AS PricesUTC, COALESCE(schema_version,'') AS Schema FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1;"
         }
       ],
       "options": {
         "showHeader": true,
-        "cellHeight": "sm"
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
       },
       "fieldConfig": {
         "defaults": {},
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Date"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 86
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Health"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 80
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "SUCCEEDED": {
+                        "text": "SUCCEEDED",
+                        "color": "green"
+                      },
+                      "SUCCESS": {
+                        "text": "SUCCESS",
+                        "color": "green"
+                      },
+                      "OK": {
+                        "text": "OK",
+                        "color": "green"
+                      },
+                      "COMPLETED": {
+                        "text": "COMPLETED",
+                        "color": "green"
+                      },
+                      "SENT": {
+                        "text": "SENT",
+                        "color": "green"
+                      },
+                      "RUNNING": {
+                        "text": "RUNNING",
+                        "color": "orange"
+                      },
+                      "ACKED": {
+                        "text": "ACKED",
+                        "color": "yellow"
+                      },
+                      "ACK": {
+                        "text": "ACK",
+                        "color": "yellow"
+                      },
+                      "OPEN": {
+                        "text": "OPEN",
+                        "color": "red"
+                      },
+                      "FAILED": {
+                        "text": "FAILED",
+                        "color": "red"
+                      },
+                      "ERROR": {
+                        "text": "ERROR",
+                        "color": "red"
+                      },
+                      "DEGRADED": {
+                        "text": "DEGRADED",
+                        "color": "orange"
+                      },
+                      "GOOD": {
+                        "text": "GOOD",
+                        "color": "green"
+                      },
+                      "HEALTHY": {
+                        "text": "HEALTHY",
+                        "color": "green"
+                      },
+                      "BAD": {
+                        "text": "BAD",
+                        "color": "red"
+                      },
+                      "UNHEALTHY": {
+                        "text": "UNHEALTHY",
+                        "color": "red"
+                      },
+                      "N/A": {
+                        "text": "N/A",
+                        "color": "gray"
+                      },
+                      "SAFE": {
+                        "text": "SAFE",
+                        "color": "green"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CovDer"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 72
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red"
+                    },
+                    {
+                      "color": "green",
+                      "value": 0
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CovMiss"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 76
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green"
+                    },
+                    {
+                      "color": "red",
+                      "value": 0
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CovFill"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 72
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red"
+                    },
+                    {
+                      "color": "green",
+                      "value": 0
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "PricesUTC"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 114
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Schema"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 76
+              }
+            ]
+          }
+        ]
       }
     }
   ],
@@ -418,7 +733,7 @@
   "timezone": "browser",
   "title": "D01 LMI v4 - Daily Regime",
   "uid": "lmi-v4-d01-daily-regime",
-  "version": 1,
+  "version": 2,
   "__annotations": {
     "grafana.app/sourcePath": "dashboards/lmi-daily-regime.json"
   }

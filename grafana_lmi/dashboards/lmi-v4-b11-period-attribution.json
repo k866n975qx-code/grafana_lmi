@@ -551,7 +551,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 60
+                "value": 56
               }
             ]
           },
@@ -563,7 +563,28 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 82
+                "value": 74
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red"
+                    },
+                    {
+                      "color": "green",
+                      "value": 0
+                    }
+                  ]
+                }
               }
             ]
           },
@@ -575,7 +596,28 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 90
+                "value": 78
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red"
+                    },
+                    {
+                      "color": "green",
+                      "value": 0
+                    }
+                  ]
+                }
               }
             ]
           },
@@ -587,7 +629,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 190
+                "value": 132
               }
             ]
           }
@@ -635,7 +677,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 72
+                "value": 54
               }
             ]
           },
@@ -647,7 +689,28 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 90
+                "value": 84
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red"
+                    },
+                    {
+                      "color": "green",
+                      "value": 0
+                    }
+                  ]
+                }
               }
             ]
           },
@@ -659,7 +722,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 82
+                "value": 76
               }
             ]
           },
@@ -671,7 +734,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 104
+                "value": 84
               }
             ]
           }
@@ -701,6 +764,6 @@
   "title": "B11 LMI v4 - Period Attribution",
   "description": "Attribution workstation for return windows, income/price split, and holding-level contribution shifts.",
   "uid": "lmi-v4-b11-period-attribution",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }

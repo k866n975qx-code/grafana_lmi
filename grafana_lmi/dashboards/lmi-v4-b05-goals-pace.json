@@ -529,8 +529,8 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH d AS (SELECT MAX(as_of_date_local) AS d FROM daily_goal_tiers) SELECT tier AS Tier, substr(COALESCE(name,''),1,16) AS Name, round(target_monthly,0) AS TargetMo, round(months_to_goal,1) AS Months FROM daily_goal_tiers WHERE as_of_date_local=(SELECT d FROM d) ORDER BY tier LIMIT 5",
-          "rawQueryText": "WITH d AS (SELECT MAX(as_of_date_local) AS d FROM daily_goal_tiers) SELECT tier AS Tier, substr(COALESCE(name,''),1,16) AS Name, round(target_monthly,0) AS TargetMo, round(months_to_goal,1) AS Months FROM daily_goal_tiers WHERE as_of_date_local=(SELECT d FROM d) ORDER BY tier LIMIT 5"
+          "queryText": "WITH d AS (SELECT MAX(as_of_date_local) AS d FROM daily_goal_tiers) SELECT tier AS Tier, substr(COALESCE(name,''),1,16) AS Name, round(target_monthly,0) AS TargetMo, round(progress_pct,1) AS ProgressPct, round(months_to_goal,1) AS Months, estimated_goal_date AS GoalDate FROM daily_goal_tiers WHERE as_of_date_local=(SELECT d FROM d) ORDER BY tier LIMIT 5;",
+          "rawQueryText": "WITH d AS (SELECT MAX(as_of_date_local) AS d FROM daily_goal_tiers) SELECT tier AS Tier, substr(COALESCE(name,''),1,16) AS Name, round(target_monthly,0) AS TargetMo, round(progress_pct,1) AS ProgressPct, round(months_to_goal,1) AS Months, estimated_goal_date AS GoalDate FROM daily_goal_tiers WHERE as_of_date_local=(SELECT d FROM d) ORDER BY tier LIMIT 5;"
         }
       ],
       "options": {
@@ -551,7 +551,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 56
+                "value": 48
               }
             ]
           },
@@ -563,7 +563,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 100
+                "value": 116
               }
             ]
           },
@@ -575,7 +575,40 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 84
+                "value": 82
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ProgressPct"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 80
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red"
+                    },
+                    {
+                      "color": "green",
+                      "value": 0
+                    }
+                  ]
+                }
               }
             ]
           },
@@ -587,7 +620,40 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 82
+                "value": 72
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green"
+                    },
+                    {
+                      "color": "red",
+                      "value": 0
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "GoalDate"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 92
               }
             ]
           }
@@ -635,7 +701,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 72
+                "value": 60
               }
             ]
           },
@@ -647,7 +713,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 96
+                "value": 92
               }
             ]
           },
@@ -659,7 +725,28 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 88
+                "value": 78
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red"
+                    },
+                    {
+                      "color": "green",
+                      "value": 0
+                    }
+                  ]
+                }
               }
             ]
           },
@@ -671,7 +758,202 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 98
+                "value": 86
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green"
+                    },
+                    {
+                      "color": "red",
+                      "value": 0
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "type": "table",
+      "title": "Likely Tier Detail",
+      "gridPos": {
+        "x": 0,
+        "y": 11,
+        "w": 24,
+        "h": 4
+      },
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "lmi_sqlite"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "queryType": "table",
+          "queryText": "SELECT goal_likely_tier AS Tier, substr(COALESCE(goal_likely_tier_name,''),1,18) AS TierName, round(goal_likely_tier_confidence,2) AS Conf, round(goal_pace_pct_of_tier,1) AS PacePct, round(goal_pace_months_ahead_behind,1) AS AheadBehind, goal_estimated_goal_date AS GoalDate, goal_pace_revised_goal_date AS PaceDate, substr(COALESCE(goal_likely_tier_reason,''),1,52) AS Reason FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1",
+          "rawQueryText": "SELECT goal_likely_tier AS Tier, substr(COALESCE(goal_likely_tier_name,''),1,18) AS TierName, round(goal_likely_tier_confidence,2) AS Conf, round(goal_pace_pct_of_tier,1) AS PacePct, round(goal_pace_months_ahead_behind,1) AS AheadBehind, goal_estimated_goal_date AS GoalDate, goal_pace_revised_goal_date AS PaceDate, substr(COALESCE(goal_likely_tier_reason,''),1,52) AS Reason FROM daily_portfolio ORDER BY as_of_date_local DESC LIMIT 1"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tier"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 48
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "TierName"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 96
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Conf"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 62
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "PacePct"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 74
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red"
+                    },
+                    {
+                      "color": "green",
+                      "value": 0
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "AheadBehind"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 82
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red"
+                    },
+                    {
+                      "color": "green",
+                      "value": 0
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "GoalDate"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 92
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "PaceDate"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 92
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Reason"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 230
               }
             ]
           }
@@ -698,8 +980,8 @@
   "timepicker": {},
   "timezone": "America/Los_Angeles",
   "title": "B05 LMI v4 - Goals and Pace",
-  "description": "Goal pacing board for progress, months-to-target pressure, and tier roadmap vs recent period deltas.",
+  "description": "Goal pacing board for progress, months-to-target pressure, tier roadmap, and likely-tier pace context.",
   "uid": "lmi-v4-b05-goals-pace",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }

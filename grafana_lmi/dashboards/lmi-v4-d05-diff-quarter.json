@@ -553,7 +553,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 72
+                "value": 54
               }
             ]
           },
@@ -565,7 +565,40 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 92
+                "value": 84
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red"
+                    },
+                    {
+                      "color": "green",
+                      "value": 0
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "WtDelta"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 76
               }
             ]
           },
@@ -577,7 +610,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 100
+                "value": 84
               }
             ]
           }
@@ -625,7 +658,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 82
+                "value": 62
               }
             ]
           },
@@ -637,7 +670,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 130
+                "value": 118
               }
             ]
           },
@@ -649,7 +682,28 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 88
+                "value": 84
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red"
+                    },
+                    {
+                      "color": "green",
+                      "value": 0
+                    }
+                  ]
+                }
               }
             ]
           },
@@ -661,7 +715,28 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 74
+                "value": 70
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red"
+                    },
+                    {
+                      "color": "green",
+                      "value": 0
+                    }
+                  ]
+                }
               }
             ]
           }
@@ -691,6 +766,6 @@
   "title": "D05 LMI v4 - Diff Quarter",
   "description": "Completed quarter-over-quarter comparison board with holding drivers and period pair context.",
   "uid": "lmi-v4-d05-diff-quarter",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }

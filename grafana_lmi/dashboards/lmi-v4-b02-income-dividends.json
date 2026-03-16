@@ -553,7 +553,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 72
+                "value": 54
               }
             ]
           },
@@ -565,7 +565,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 90
+                "value": 84
               }
             ]
           },
@@ -577,7 +577,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 90
+                "value": 84
               }
             ]
           },
@@ -589,7 +589,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 84
+                "value": 78
               }
             ]
           }
@@ -637,7 +637,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 72
+                "value": 54
               }
             ]
           },
@@ -649,7 +649,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 84
+                "value": 82
               }
             ]
           },
@@ -661,7 +661,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 84
+                "value": 74
               }
             ]
           },
@@ -673,7 +673,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 84
+                "value": 78
               }
             ]
           }
@@ -702,6 +702,6 @@
   "title": "B02 LMI v4 - Income and Dividends",
   "description": "Income reliability desk: projection vs realization, yield behavior, and near-term ex/pay pipeline.",
   "uid": "lmi-v4-b02-income-dividends",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }

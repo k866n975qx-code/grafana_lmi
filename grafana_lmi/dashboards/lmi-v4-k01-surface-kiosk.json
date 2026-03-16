@@ -360,17 +360,69 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT symbol, weight_pct, market_value, projected_monthly_dividend FROM daily_holdings WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_holdings) ORDER BY weight_pct DESC LIMIT 6;",
-          "rawQueryText": "SELECT symbol, weight_pct, market_value, projected_monthly_dividend FROM daily_holdings WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_holdings) ORDER BY weight_pct DESC LIMIT 6;"
+          "queryText": "SELECT substr(symbol,1,8) AS Sym, round(weight_pct,2) AS WtPct, round(market_value,0) AS MV, round(projected_monthly_dividend,2) AS MoInc FROM daily_holdings WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_holdings) ORDER BY weight_pct DESC LIMIT 6;",
+          "rawQueryText": "SELECT substr(symbol,1,8) AS Sym, round(weight_pct,2) AS WtPct, round(market_value,0) AS MV, round(projected_monthly_dividend,2) AS MoInc FROM daily_holdings WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_holdings) ORDER BY weight_pct DESC LIMIT 6;"
         }
       ],
       "options": {
         "showHeader": true,
-        "cellHeight": "sm"
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
       },
       "fieldConfig": {
         "defaults": {},
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Sym"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 54
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "WtPct"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 72
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "MV"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 82
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "MoInc"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 82
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -392,17 +444,69 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT symbol, ex_date_est, pay_date_est, amount_est FROM daily_dividends_upcoming WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_dividends_upcoming) ORDER BY pay_date_est LIMIT 6;",
-          "rawQueryText": "SELECT symbol, ex_date_est, pay_date_est, amount_est FROM daily_dividends_upcoming WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_dividends_upcoming) ORDER BY pay_date_est LIMIT 6;"
+          "queryText": "SELECT substr(symbol,1,8) AS Sym, ex_date_est AS ExDate, pay_date_est AS PayDate, round(amount_est,2) AS Amount FROM daily_dividends_upcoming WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_dividends_upcoming) ORDER BY pay_date_est LIMIT 6;",
+          "rawQueryText": "SELECT substr(symbol,1,8) AS Sym, ex_date_est AS ExDate, pay_date_est AS PayDate, round(amount_est,2) AS Amount FROM daily_dividends_upcoming WHERE as_of_date_local = (SELECT MAX(as_of_date_local) FROM daily_dividends_upcoming) ORDER BY pay_date_est LIMIT 6;"
         }
       ],
       "options": {
         "showHeader": true,
-        "cellHeight": "sm"
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
       },
       "fieldConfig": {
         "defaults": {},
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Sym"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 54
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ExDate"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 84
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "PayDate"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 84
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Amount"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 78
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -424,17 +528,132 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "SELECT CASE period_type WHEN 'WEEK' THEN 'WTD' WHEN 'MONTH' THEN 'MTD' WHEN 'QUARTER' THEN 'QTD' WHEN 'YEAR' THEN 'YTD' END AS period, mv_delta, monthly_income_delta, twr_period_pct FROM period_summary WHERE period_type IN ('WEEK','MONTH','QUARTER','YEAR') AND is_rolling=1 ORDER BY CASE period_type WHEN 'WEEK' THEN 1 WHEN 'MONTH' THEN 2 WHEN 'QUARTER' THEN 3 WHEN 'YEAR' THEN 4 END;",
-          "rawQueryText": "SELECT CASE period_type WHEN 'WEEK' THEN 'WTD' WHEN 'MONTH' THEN 'MTD' WHEN 'QUARTER' THEN 'QTD' WHEN 'YEAR' THEN 'YTD' END AS period, mv_delta, monthly_income_delta, twr_period_pct FROM period_summary WHERE period_type IN ('WEEK','MONTH','QUARTER','YEAR') AND is_rolling=1 ORDER BY CASE period_type WHEN 'WEEK' THEN 1 WHEN 'MONTH' THEN 2 WHEN 'QUARTER' THEN 3 WHEN 'YEAR' THEN 4 END;"
+          "queryText": "SELECT CASE period_type WHEN 'WEEK' THEN 'WTD' WHEN 'MONTH' THEN 'MTD' WHEN 'QUARTER' THEN 'QTD' WHEN 'YEAR' THEN 'YTD' END AS P, round(mv_delta,0) AS MVDelta, round(monthly_income_delta,2) AS IncDelta, round(twr_period_pct,2) AS TWR FROM period_summary WHERE period_type IN ('WEEK','MONTH','QUARTER','YEAR') AND is_rolling=1 ORDER BY CASE period_type WHEN 'WEEK' THEN 1 WHEN 'MONTH' THEN 2 WHEN 'QUARTER' THEN 3 WHEN 'YEAR' THEN 4 END;",
+          "rawQueryText": "SELECT CASE period_type WHEN 'WEEK' THEN 'WTD' WHEN 'MONTH' THEN 'MTD' WHEN 'QUARTER' THEN 'QTD' WHEN 'YEAR' THEN 'YTD' END AS P, round(mv_delta,0) AS MVDelta, round(monthly_income_delta,2) AS IncDelta, round(twr_period_pct,2) AS TWR FROM period_summary WHERE period_type IN ('WEEK','MONTH','QUARTER','YEAR') AND is_rolling=1 ORDER BY CASE period_type WHEN 'WEEK' THEN 1 WHEN 'MONTH' THEN 2 WHEN 'QUARTER' THEN 3 WHEN 'YEAR' THEN 4 END;"
         }
       ],
       "options": {
         "showHeader": true,
-        "cellHeight": "sm"
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
       },
       "fieldConfig": {
         "defaults": {},
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "P"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 44
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "MVDelta"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 84
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red"
+                    },
+                    {
+                      "color": "green",
+                      "value": 0
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "IncDelta"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 84
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red"
+                    },
+                    {
+                      "color": "green",
+                      "value": 0
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "TWR"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 70
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red"
+                    },
+                    {
+                      "color": "green",
+                      "value": 0
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
       }
     }
   ],
@@ -454,7 +673,7 @@
   "timezone": "browser",
   "title": "K01 LMI v4 - Surface Kiosk",
   "uid": "lmi-v4-k01-surface-kiosk",
-  "version": 1,
+  "version": 2,
   "__annotations": {
     "grafana.app/sourcePath": "dashboards/lmi-kiosk-surface.json"
   }

@@ -552,7 +552,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 90
+                "value": 86
               }
             ]
           },
@@ -564,7 +564,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 90
+                "value": 92
               }
             ]
           },
@@ -576,7 +576,32 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 52
+                "value": 46
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green"
+                    },
+                    {
+                      "color": "orange",
+                      "value": 4
+                    },
+                    {
+                      "color": "red",
+                      "value": 6
+                    }
+                  ]
+                }
               }
             ]
           },
@@ -588,7 +613,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 180
+                "value": 156
               }
             ]
           }
@@ -636,7 +661,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 90
+                "value": 86
               }
             ]
           },
@@ -648,7 +673,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 84
+                "value": 52
               }
             ]
           },
@@ -660,7 +685,31 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 60
+                "value": 40
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "0": {
+                        "text": "No",
+                        "color": "red"
+                      },
+                      "1": {
+                        "text": "Yes",
+                        "color": "green"
+                      }
+                    }
+                  }
+                ]
               }
             ]
           },
@@ -672,7 +721,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 140
+                "value": 94
               }
             ]
           }
@@ -701,6 +750,6 @@
   "title": "B06 LMI v4 - Alerts and Data Quality",
   "description": "Operational alerts surface: open/aged risk messages, notification quality, and dataset freshness indicators.",
   "uid": "lmi-v4-b06-alerts-quality",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }

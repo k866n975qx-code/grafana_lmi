@@ -552,7 +552,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 72
+                "value": 54
               }
             ]
           },
@@ -564,7 +564,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 80
+                "value": 72
               }
             ]
           },
@@ -576,7 +576,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 82
+                "value": 72
               }
             ]
           },
@@ -588,7 +588,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 82
+                "value": 74
               }
             ]
           }
@@ -636,7 +636,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 72
+                "value": 54
               }
             ]
           },
@@ -648,7 +648,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 84
+                "value": 72
               }
             ]
           },
@@ -660,7 +660,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 84
+                "value": 72
               }
             ]
           },
@@ -672,7 +672,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 92
+                "value": 70
               }
             ]
           }
@@ -701,6 +701,6 @@
   "title": "B03 LMI v4 - Holdings and Risk",
   "description": "Holdings risk matrix for concentration, volatility quality, and fragile-name detection.",
   "uid": "lmi-v4-b03-holdings-risk",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }

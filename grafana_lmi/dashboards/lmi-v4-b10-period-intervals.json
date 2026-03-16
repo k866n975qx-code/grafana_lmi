@@ -230,17 +230,150 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH p AS (SELECT period_type, period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1) SELECT i.interval_label, i.interval_start, i.interval_end, i.mv, i.monthly_income, i.vol_30d_pct, i.var_95_1d_pct, i.cvar_90_1d_pct, i.goal_progress_pct FROM period_intervals i JOIN p ON i.period_type=p.period_type AND i.period_start_date=p.period_start_date AND i.period_end_date=p.period_end_date ORDER BY i.interval_label DESC;",
-          "rawQueryText": "WITH p AS (SELECT period_type, period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1) SELECT i.interval_label, i.interval_start, i.interval_end, i.mv, i.monthly_income, i.vol_30d_pct, i.var_95_1d_pct, i.cvar_90_1d_pct, i.goal_progress_pct FROM period_intervals i JOIN p ON i.period_type=p.period_type AND i.period_start_date=p.period_start_date AND i.period_end_date=p.period_end_date ORDER BY i.interval_label DESC;"
+          "queryText": "WITH p AS (SELECT period_type, period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1) SELECT i.interval_label AS Label, i.interval_start AS Start, i.interval_end AS End, round(i.mv,0) AS MV, round(i.monthly_income,2) AS MoInc, round(i.vol_30d_pct,2) AS Vol30, round(i.var_95_1d_pct,2) AS VaR95, round(i.cvar_90_1d_pct,2) AS CVaR90, round(i.goal_progress_pct,2) AS GoalPct FROM period_intervals i JOIN p ON i.period_type=p.period_type AND i.period_start_date=p.period_start_date AND i.period_end_date=p.period_end_date ORDER BY i.interval_label DESC;",
+          "rawQueryText": "WITH p AS (SELECT period_type, period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1) SELECT i.interval_label AS Label, i.interval_start AS Start, i.interval_end AS End, round(i.mv,0) AS MV, round(i.monthly_income,2) AS MoInc, round(i.vol_30d_pct,2) AS Vol30, round(i.var_95_1d_pct,2) AS VaR95, round(i.cvar_90_1d_pct,2) AS CVaR90, round(i.goal_progress_pct,2) AS GoalPct FROM period_intervals i JOIN p ON i.period_type=p.period_type AND i.period_start_date=p.period_start_date AND i.period_end_date=p.period_end_date ORDER BY i.interval_label DESC;"
         }
       ],
       "options": {
         "showHeader": true,
-        "cellHeight": "sm"
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
       },
       "fieldConfig": {
         "defaults": {},
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Label"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 72
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Start"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 78
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "End"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 78
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "MV"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 82
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "MoInc"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 82
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Vol30"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 72
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "VaR95"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 72
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CVaR90"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 74
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "GoalPct"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 76
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red"
+                    },
+                    {
+                      "color": "green",
+                      "value": 0
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -262,17 +395,114 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH p AS (SELECT period_type, period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1), il AS (SELECT i.interval_label FROM period_intervals i JOIN p ON i.period_type=p.period_type AND i.period_start_date=p.period_start_date AND i.period_end_date=p.period_end_date ORDER BY i.interval_label DESC LIMIT 1) SELECT h.symbol, h.weight_pct, h.market_value, h.pnl_dollar, h.current_yield_pct, h.risk_quality_category FROM period_interval_holdings h JOIN p ON h.period_type=p.period_type AND h.period_start_date=p.period_start_date AND h.period_end_date=p.period_end_date JOIN il ON h.interval_label=il.interval_label ORDER BY h.weight_pct DESC;",
-          "rawQueryText": "WITH p AS (SELECT period_type, period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1), il AS (SELECT i.interval_label FROM period_intervals i JOIN p ON i.period_type=p.period_type AND i.period_start_date=p.period_start_date AND i.period_end_date=p.period_end_date ORDER BY i.interval_label DESC LIMIT 1) SELECT h.symbol, h.weight_pct, h.market_value, h.pnl_dollar, h.current_yield_pct, h.risk_quality_category FROM period_interval_holdings h JOIN p ON h.period_type=p.period_type AND h.period_start_date=p.period_start_date AND h.period_end_date=p.period_end_date JOIN il ON h.interval_label=il.interval_label ORDER BY h.weight_pct DESC;"
+          "queryText": "WITH p AS (SELECT period_type, period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1), il AS (SELECT i.interval_label FROM period_intervals i JOIN p ON i.period_type=p.period_type AND i.period_start_date=p.period_start_date AND i.period_end_date=p.period_end_date ORDER BY i.interval_label DESC LIMIT 1) SELECT substr(h.symbol,1,8) AS Sym, round(h.weight_pct,2) AS WtPct, round(h.market_value,0) AS MV, round(h.pnl_dollar,0) AS PnL, round(h.current_yield_pct,2) AS YieldPct, COALESCE(h.risk_quality_category,'n/a') AS Risk FROM period_interval_holdings h JOIN p ON h.period_type=p.period_type AND h.period_start_date=p.period_start_date AND h.period_end_date=p.period_end_date JOIN il ON h.interval_label=il.interval_label ORDER BY h.weight_pct DESC;",
+          "rawQueryText": "WITH p AS (SELECT period_type, period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1), il AS (SELECT i.interval_label FROM period_intervals i JOIN p ON i.period_type=p.period_type AND i.period_start_date=p.period_start_date AND i.period_end_date=p.period_end_date ORDER BY i.interval_label DESC LIMIT 1) SELECT substr(h.symbol,1,8) AS Sym, round(h.weight_pct,2) AS WtPct, round(h.market_value,0) AS MV, round(h.pnl_dollar,0) AS PnL, round(h.current_yield_pct,2) AS YieldPct, COALESCE(h.risk_quality_category,'n/a') AS Risk FROM period_interval_holdings h JOIN p ON h.period_type=p.period_type AND h.period_start_date=p.period_start_date AND h.period_end_date=p.period_end_date JOIN il ON h.interval_label=il.interval_label ORDER BY h.weight_pct DESC;"
         }
       ],
       "options": {
         "showHeader": true,
-        "cellHeight": "sm"
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
       },
       "fieldConfig": {
         "defaults": {},
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Sym"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 54
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "WtPct"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 72
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "MV"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 82
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "PnL"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 78
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red"
+                    },
+                    {
+                      "color": "green",
+                      "value": 0
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "YieldPct"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 74
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Risk"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 96
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -294,17 +524,66 @@
           "refId": "A",
           "format": "table",
           "queryType": "table",
-          "queryText": "WITH p AS (SELECT period_type, period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1), il AS (SELECT i.interval_label FROM period_intervals i JOIN p ON i.period_type=p.period_type AND i.period_start_date=p.period_start_date AND i.period_end_date=p.period_end_date ORDER BY i.interval_label DESC LIMIT 1) SELECT a.window, a.total_return_pct FROM period_interval_attribution a JOIN p ON a.period_type=p.period_type AND a.period_start_date=p.period_start_date AND a.period_end_date=p.period_end_date JOIN il ON a.interval_label=il.interval_label ORDER BY CASE a.window WHEN '1m' THEN 1 WHEN '3m' THEN 2 WHEN '6m' THEN 3 WHEN '12m' THEN 4 ELSE 9 END;",
-          "rawQueryText": "WITH p AS (SELECT period_type, period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1), il AS (SELECT i.interval_label FROM period_intervals i JOIN p ON i.period_type=p.period_type AND i.period_start_date=p.period_start_date AND i.period_end_date=p.period_end_date ORDER BY i.interval_label DESC LIMIT 1) SELECT a.window, a.total_return_pct FROM period_interval_attribution a JOIN p ON a.period_type=p.period_type AND a.period_start_date=p.period_start_date AND a.period_end_date=p.period_end_date JOIN il ON a.interval_label=il.interval_label ORDER BY CASE a.window WHEN '1m' THEN 1 WHEN '3m' THEN 2 WHEN '6m' THEN 3 WHEN '12m' THEN 4 ELSE 9 END;"
+          "queryText": "WITH p AS (SELECT period_type, period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1), il AS (SELECT i.interval_label FROM period_intervals i JOIN p ON i.period_type=p.period_type AND i.period_start_date=p.period_start_date AND i.period_end_date=p.period_end_date ORDER BY i.interval_label DESC LIMIT 1) SELECT a.window AS Win, round(a.total_return_pct,2) AS TRPct FROM period_interval_attribution a JOIN p ON a.period_type=p.period_type AND a.period_start_date=p.period_start_date AND a.period_end_date=p.period_end_date JOIN il ON a.interval_label=il.interval_label ORDER BY CASE a.window WHEN '1m' THEN 1 WHEN '3m' THEN 2 WHEN '6m' THEN 3 WHEN '12m' THEN 4 ELSE 9 END;",
+          "rawQueryText": "WITH p AS (SELECT period_type, period_start_date, period_end_date FROM period_summary WHERE period_type='MONTH' AND is_rolling=1 ORDER BY period_end_date DESC LIMIT 1), il AS (SELECT i.interval_label FROM period_intervals i JOIN p ON i.period_type=p.period_type AND i.period_start_date=p.period_start_date AND i.period_end_date=p.period_end_date ORDER BY i.interval_label DESC LIMIT 1) SELECT a.window AS Win, round(a.total_return_pct,2) AS TRPct FROM period_interval_attribution a JOIN p ON a.period_type=p.period_type AND a.period_start_date=p.period_start_date AND a.period_end_date=p.period_end_date JOIN il ON a.interval_label=il.interval_label ORDER BY CASE a.window WHEN '1m' THEN 1 WHEN '3m' THEN 2 WHEN '6m' THEN 3 WHEN '12m' THEN 4 ELSE 9 END;"
         }
       ],
       "options": {
         "showHeader": true,
-        "cellHeight": "sm"
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
       },
       "fieldConfig": {
         "defaults": {},
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Win"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 56
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "TRPct"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 74
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red"
+                    },
+                    {
+                      "color": "green",
+                      "value": 0
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -396,7 +675,7 @@
   "timezone": "browser",
   "title": "B10 LMI v4 - Period Intervals",
   "uid": "lmi-v4-b10-period-intervals",
-  "version": 1,
+  "version": 2,
   "__annotations": {
     "grafana.app/sourcePath": "dashboards/lmi-period-interval-pro.json"
   }
